@@ -229,7 +229,6 @@ func (r *EmploymentDataResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Individual Ids Request Body
 type HRISIndividualEmploymentDataGetManyParams struct {
 	// The array of batch requests.
 	Requests param.Field[[]HRISIndividualEmploymentDataGetManyParamsRequests] `json:"requests,required"`
@@ -244,6 +243,10 @@ type HRISIndividualEmploymentDataGetManyParamsRequests struct {
 	// limit to the number of `individual_id` to send per request. It is preferantial
 	// to send all ids in a single request for Finch to optimize provider rate-limits.
 	IndividualID param.Field[string] `json:"individual_id,required"`
+}
+
+func (r HRISIndividualEmploymentDataGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type HRISIndividualEmploymentDataGetManyResponse struct {

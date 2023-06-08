@@ -33,9 +33,9 @@ func NewATSCandidateService(opts ...option.RequestOption) (r *ATSCandidateServic
 
 // Gets a candidate from an organization. A candidate represents an individual
 // associated with one or more applications.
-func (r *ATSCandidateService) Get(ctx context.Context, candidate_id string, opts ...option.RequestOption) (res *Candidate, err error) {
+func (r *ATSCandidateService) Get(ctx context.Context, candidateID string, opts ...option.RequestOption) (res *Candidate, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ats/candidates/%s", candidate_id)
+	path := fmt.Sprintf("ats/candidates/%s", candidateID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

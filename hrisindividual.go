@@ -180,11 +180,19 @@ func (r *IndividualResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type HRISIndividualGetManyParams struct {
+	Options  param.Field[HRISIndividualGetManyParamsOptions]    `json:"options"`
 	Requests param.Field[[]HRISIndividualGetManyParamsRequests] `json:"requests"`
-	Options  param.Field[HRISIndividualGetManyParamsOptions]    `json:"options,nullable"`
 }
 
 func (r HRISIndividualGetManyParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISIndividualGetManyParamsOptions struct {
+	Include param.Field[[]string] `json:"include"`
+}
+
+func (r HRISIndividualGetManyParamsOptions) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -192,8 +200,8 @@ type HRISIndividualGetManyParamsRequests struct {
 	IndividualID param.Field[string] `json:"individual_id"`
 }
 
-type HRISIndividualGetManyParamsOptions struct {
-	Include param.Field[[]string] `json:"include"`
+func (r HRISIndividualGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 type HRISIndividualGetManyResponse struct {

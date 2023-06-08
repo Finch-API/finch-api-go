@@ -45,9 +45,9 @@ func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams,
 // **Availability: Automated Benefits providers only**
 //
 // Lists benefit information for a given benefit
-func (r *HRISBenefitService) Get(ctx context.Context, benefit_id string, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
+func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("employer/benefits/%s", benefit_id)
+	path := fmt.Sprintf("employer/benefits/%s", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -55,9 +55,9 @@ func (r *HRISBenefitService) Get(ctx context.Context, benefit_id string, opts ..
 // **Availability: Automated and Assisted Benefits providers**
 //
 // Updates an existing company-wide benefit
-func (r *HRISBenefitService) Update(ctx context.Context, benefit_id string, body HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
+func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("employer/benefits/%s", benefit_id)
+	path := fmt.Sprintf("employer/benefits/%s", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
@@ -302,10 +302,10 @@ func (r *UpdateCompanyBenefitResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type HRISBenefitNewParams struct {
-	// Type of benefit.
-	Type        param.Field[BenefitType]      `json:"type,nullable"`
 	Description param.Field[string]           `json:"description"`
-	Frequency   param.Field[BenefitFrequency] `json:"frequency,nullable"`
+	Frequency   param.Field[BenefitFrequency] `json:"frequency"`
+	// Type of benefit.
+	Type param.Field[BenefitType] `json:"type"`
 }
 
 func (r HRISBenefitNewParams) MarshalJSON() (data []byte, err error) {

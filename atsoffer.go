@@ -32,9 +32,9 @@ func NewATSOfferService(opts ...option.RequestOption) (r *ATSOfferService) {
 }
 
 // Get a single offer from an organization.
-func (r *ATSOfferService) Get(ctx context.Context, offer_id string, opts ...option.RequestOption) (res *Offer, err error) {
+func (r *ATSOfferService) Get(ctx context.Context, offerID string, opts ...option.RequestOption) (res *Offer, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ats/offers/%s", offer_id)
+	path := fmt.Sprintf("ats/offers/%s", offerID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

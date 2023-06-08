@@ -35,9 +35,9 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 // **Availability: Automated Benefits providers only**
 //
 // Lists individuals currently enrolled in a given benefit.
-func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefit_id string, opts ...option.RequestOption) (res *IndividualEnrolledIDsResponse, err error) {
+func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *IndividualEnrolledIDsResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefit_id)
+	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
@@ -45,11 +45,11 @@ func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefit_
 // **Availability: Automated Benefits providers only**
 //
 // Get enrolled benefit information for the given individuals.
-func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefit_id string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *shared.SinglePage[IndividualBenefit], err error) {
+func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *shared.SinglePage[IndividualBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
-	path := fmt.Sprintf("employer/benefits/%s/individuals", benefit_id)
+	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
@@ -65,18 +65,18 @@ func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, bene
 // **Availability: Automated Benefits providers only**
 //
 // Get enrolled benefit information for the given individuals.
-func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Context, benefit_id string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[IndividualBenefit] {
-	return shared.NewSinglePageAutoPager(r.GetManyBenefits(ctx, benefit_id, query, opts...))
+func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[IndividualBenefit] {
+	return shared.NewSinglePageAutoPager(r.GetManyBenefits(ctx, benefitID, query, opts...))
 }
 
 // **Availability: Automated and Assisted Benefits providers**
 //
 // Unenroll individuals from a benefit
-func (r *HRISBenefitIndividualService) Unenroll(ctx context.Context, benefit_id string, body HRISBenefitIndividualUnenrollParams, opts ...option.RequestOption) (res *shared.SinglePage[UnenrolledIndividual], err error) {
+func (r *HRISBenefitIndividualService) Unenroll(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollParams, opts ...option.RequestOption) (res *shared.SinglePage[UnenrolledIndividual], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
-	path := fmt.Sprintf("employer/benefits/%s/individuals", benefit_id)
+	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodDelete, path, body, &res, opts...)
 	if err != nil {
 		return nil, err
@@ -92,8 +92,8 @@ func (r *HRISBenefitIndividualService) Unenroll(ctx context.Context, benefit_id 
 // **Availability: Automated and Assisted Benefits providers**
 //
 // Unenroll individuals from a benefit
-func (r *HRISBenefitIndividualService) UnenrollAutoPaging(ctx context.Context, benefit_id string, body HRISBenefitIndividualUnenrollParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[UnenrolledIndividual] {
-	return shared.NewSinglePageAutoPager(r.Unenroll(ctx, benefit_id, body, opts...))
+func (r *HRISBenefitIndividualService) UnenrollAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[UnenrolledIndividual] {
+	return shared.NewSinglePageAutoPager(r.Unenroll(ctx, benefitID, body, opts...))
 }
 
 type IndividualBenefit struct {

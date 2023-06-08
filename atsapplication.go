@@ -32,9 +32,9 @@ func NewATSApplicationService(opts ...option.RequestOption) (r *ATSApplicationSe
 }
 
 // Gets an application from an organization.
-func (r *ATSApplicationService) Get(ctx context.Context, application_id string, opts ...option.RequestOption) (res *Application, err error) {
+func (r *ATSApplicationService) Get(ctx context.Context, applicationID string, opts ...option.RequestOption) (res *Application, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ats/applications/%s", application_id)
+	path := fmt.Sprintf("ats/applications/%s", applicationID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

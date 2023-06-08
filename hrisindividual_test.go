@@ -11,7 +11,10 @@ import (
 
 func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequests{{IndividualID: finchgo.F("string")}, {IndividualID: finchgo.F("string")}, {IndividualID: finchgo.F("string")}}), Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{Include: finchgo.F([]string{"string", "string", "string"})})})
+	_, err := c.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
+		Options:  finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{Include: finchgo.F([]string{"string", "string", "string"})}),
+		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequests{{IndividualID: finchgo.F("string")}, {IndividualID: finchgo.F("string")}, {IndividualID: finchgo.F("string")}}),
+	})
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

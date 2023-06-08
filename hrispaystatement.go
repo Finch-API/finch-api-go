@@ -318,6 +318,10 @@ type HRISPayStatementGetManyParamsRequests struct {
 	Offset param.Field[int64] `json:"offset"`
 }
 
+func (r HRISPayStatementGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type HRISPayStatementGetManyResponse struct {
 	Responses []PayStatementResponse `json:"responses,required"`
 	JSON      hrisPayStatementGetManyResponseJSON

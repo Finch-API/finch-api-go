@@ -98,6 +98,7 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	}
 
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Finch-API-Version", "2020-09-17")
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
 	}

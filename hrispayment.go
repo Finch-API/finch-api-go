@@ -112,12 +112,12 @@ func (r *PaymentPayPeriod) UnmarshalJSON(data []byte) (err error) {
 }
 
 type HRISPaymentListParams struct {
-	// The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
-	// format.
-	StartDate param.Field[time.Time] `query:"start_date,required" format:"date"`
 	// The end date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
 	// format.
 	EndDate param.Field[time.Time] `query:"end_date,required" format:"date"`
+	// The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
+	// format.
+	StartDate param.Field[time.Time] `query:"start_date,required" format:"date"`
 }
 
 // URLQuery serializes [HRISPaymentListParams]'s query parameters as `url.Values`.

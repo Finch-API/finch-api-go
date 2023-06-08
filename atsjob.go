@@ -32,9 +32,9 @@ func NewATSJobService(opts ...option.RequestOption) (r *ATSJobService) {
 }
 
 // Gets a job from an organization.
-func (r *ATSJobService) Get(ctx context.Context, job_id string, opts ...option.RequestOption) (res *Job, err error) {
+func (r *ATSJobService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *Job, err error) {
 	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("ats/jobs/%s", job_id)
+	path := fmt.Sprintf("ats/jobs/%s", jobID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }

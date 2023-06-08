@@ -29,7 +29,9 @@ func TestHRISBenefitIndividualGetManyBenefitsWithOptionalParams(t *testing.T) {
 	_, err := c.HRIS.Benefits.Individuals.GetManyBenefits(
 		context.TODO(),
 		"string",
-		finchgo.HRISBenefitIndividualGetManyBenefitsParams{IndividualIDs: finchgo.F("d675d2b7-6d7b-41a8-b2d3-001eb3fb88f6,d02a6346-1f08-4312-a064-49ff3cafaa7a")},
+		finchgo.HRISBenefitIndividualGetManyBenefitsParams{
+			IndividualIDs: finchgo.F("d675d2b7-6d7b-41a8-b2d3-001eb3fb88f6,d02a6346-1f08-4312-a064-49ff3cafaa7a"),
+		},
 	)
 	if err != nil {
 		var apierr *finchgo.Error
@@ -45,7 +47,9 @@ func TestHRISBenefitIndividualUnenrollWithOptionalParams(t *testing.T) {
 	_, err := c.HRIS.Benefits.Individuals.Unenroll(
 		context.TODO(),
 		"string",
-		finchgo.HRISBenefitIndividualUnenrollParams{IndividualIDs: finchgo.F([]string{"string", "string", "string"})},
+		finchgo.HRISBenefitIndividualUnenrollParams{
+			IndividualIDs: finchgo.F([]string{"string", "string", "string"}),
+		},
 	)
 	if err != nil {
 		var apierr *finchgo.Error
