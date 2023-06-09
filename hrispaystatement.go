@@ -101,6 +101,7 @@ func (r *PayStatement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of the payment associated with the pay statement.
 type PayStatementType string
 
 const (
@@ -109,6 +110,7 @@ const (
 	PayStatementTypeOneTimePayment  PayStatementType = "one_time_payment"
 )
 
+// The payment method.
 type PayStatementPaymentMethod string
 
 const (
@@ -147,6 +149,7 @@ func (r *PayStatementEarnings) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of earning.
 type PayStatementEarningsType string
 
 const (
@@ -195,6 +198,7 @@ func (r *PayStatementTaxes) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of taxes.
 type PayStatementTaxesType string
 
 const (
