@@ -151,6 +151,7 @@ const (
 	IndividualPhoneNumbersTypePersonal IndividualPhoneNumbersType = "personal"
 )
 
+// The gender of the individual.
 type IndividualGender string
 
 const (

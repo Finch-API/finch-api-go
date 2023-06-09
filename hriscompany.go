@@ -97,6 +97,7 @@ func (r *CompanyEntity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The tax payer type of the company.
 type CompanyEntityType string
 
 const (
@@ -108,6 +109,7 @@ const (
 	CompanyEntityTypeCooperative    CompanyEntityType = "cooperative"
 )
 
+// The tax payer subtype of the company.
 type CompanyEntitySubtype string
 
 const (
@@ -186,6 +188,7 @@ func (r *CompanyAccounts) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The type of bank account.
 type CompanyAccountsAccountType string
 
 const (

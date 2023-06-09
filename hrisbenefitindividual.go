@@ -148,6 +148,7 @@ func (r *IndividualBenefitBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Type for HSA contribution limit if the benefit is a HSA.
 type IndividualBenefitBodyHsaContributionLimit string
 
 const (

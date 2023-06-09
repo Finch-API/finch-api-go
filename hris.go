@@ -66,6 +66,8 @@ func (r *Income) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
+// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
 type IncomeUnit string
 
 const (
