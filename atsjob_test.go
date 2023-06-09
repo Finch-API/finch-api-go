@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
+	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
 func TestATSJobGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ATS.Jobs.Get(
 		context.TODO(),
@@ -27,6 +31,9 @@ func TestATSJobGet(t *testing.T) {
 }
 
 func TestATSJobListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{
 		Limit:  finchgo.F(int64(0)),

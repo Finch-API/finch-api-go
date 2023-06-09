@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
+	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
 func TestManualPagination(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	client := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
 	page, err := client.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{})
 	if err != nil {

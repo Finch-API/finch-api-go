@@ -8,10 +8,14 @@ import (
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
+	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
 func TestATSApplicationGet(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ATS.Applications.Get(
 		context.TODO(),
@@ -27,6 +31,9 @@ func TestATSApplicationGet(t *testing.T) {
 }
 
 func TestATSApplicationListWithOptionalParams(t *testing.T) {
+	if !testutil.CheckTestServer(t) {
+		return
+	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
 	_, err := c.ATS.Applications.List(context.TODO(), finchgo.ATSApplicationListParams{
 		Limit:  finchgo.F(int64(0)),
