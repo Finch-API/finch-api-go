@@ -192,7 +192,6 @@ func (r *EmploymentDataEmployment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The main employment type of the individual.
 type EmploymentDataEmploymentType string
 
 const (
@@ -200,7 +199,6 @@ const (
 	EmploymentDataEmploymentTypeContractor EmploymentDataEmploymentType = "contractor"
 )
 
-// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 type EmploymentDataEmploymentSubtype string
 
 const (

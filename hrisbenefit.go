@@ -127,7 +127,6 @@ const (
 	BenefitFrequencyEveryPaycheck BenefitFrequency = "every_paycheck"
 )
 
-// Type of benefit.
 type BenefitType string
 
 const (
@@ -173,7 +172,6 @@ func (r *BenfitContribution) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Contribution type.
 type BenfitContributionType string
 
 const (
