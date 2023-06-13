@@ -25,7 +25,7 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -43,7 +43,7 @@ func TestHRISBenefitGet(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -64,7 +64,7 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -81,7 +81,7 @@ func TestHRISBenefitList(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -98,7 +98,7 @@ func TestHRISBenefitListSupportedBenefits(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}

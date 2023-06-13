@@ -4,7 +4,6 @@ package finchgo_test
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
@@ -21,7 +20,7 @@ func TestAutoPagination(t *testing.T) {
 	// Prism mock isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
 		job := iter.Current()
-		fmt.Printf("%+v\n", job)
+		t.Logf("%+v\n", job)
 	}
 	if err := iter.Err(); err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

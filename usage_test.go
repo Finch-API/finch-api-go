@@ -4,7 +4,6 @@ package finchgo_test
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
@@ -21,5 +20,5 @@ func TestUsage(t *testing.T) {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", directories)
+	t.Logf("%+v\n", directories)
 }

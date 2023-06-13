@@ -24,7 +24,7 @@ func TestATSJobGet(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
@@ -42,7 +42,7 @@ func TestATSJobListWithOptionalParams(t *testing.T) {
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
-			println(apierr.DumpRequest(true))
+			t.Log(string(apierr.DumpRequest(true)))
 		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}

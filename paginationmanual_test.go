@@ -4,7 +4,6 @@ package finchgo_test
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
@@ -22,7 +21,7 @@ func TestManualPagination(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 	for _, job := range page.Jobs {
-		fmt.Printf("%+v\n", job)
+		t.Logf("%+v\n", job)
 	}
 	// Prism mock isn't going to give us real pagination
 	page, err = page.GetNextPage()
@@ -31,7 +30,7 @@ func TestManualPagination(t *testing.T) {
 	}
 	if page != nil {
 		for _, job := range page.Jobs {
-			fmt.Printf("%+v\n", job)
+			t.Logf("%+v\n", job)
 		}
 	}
 }
