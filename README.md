@@ -285,6 +285,4 @@ This package is in beta. Its internals and interfaces are not stable and
 subject to change without a major version bump; please reach out if you rely on
 any undocumented behavior.
 
-We are keen for your feedback; please email us at
-[founders@tryfinch.com](mailto:founders@tryfinch.com) or open an issue with questions, bugs, or
-suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Finch-API/finch-api-go/issues) with questions, bugs, or suggestions.
