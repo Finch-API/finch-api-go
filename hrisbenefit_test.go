@@ -36,10 +36,7 @@ func TestHRISBenefitGet(t *testing.T) {
 		return
 	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.HRIS.Benefits.Get(
-		context.TODO(),
-		"string",
-	)
+	_, err := c.HRIS.Benefits.Get(context.TODO(), "string")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -75,9 +72,7 @@ func TestHRISBenefitList(t *testing.T) {
 		return
 	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.HRIS.Benefits.List(
-		context.TODO(),
-	)
+	_, err := c.HRIS.Benefits.List(context.TODO())
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -92,9 +87,7 @@ func TestHRISBenefitListSupportedBenefits(t *testing.T) {
 		return
 	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.HRIS.Benefits.ListSupportedBenefits(
-		context.TODO(),
-	)
+	_, err := c.HRIS.Benefits.ListSupportedBenefits(context.TODO())
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

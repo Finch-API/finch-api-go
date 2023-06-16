@@ -17,10 +17,7 @@ func TestATSCandidateGet(t *testing.T) {
 		return
 	}
 	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ATS.Candidates.Get(
-		context.TODO(),
-		"string",
-	)
+	_, err := c.ATS.Candidates.Get(context.TODO(), "string")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
