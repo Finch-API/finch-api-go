@@ -16,8 +16,11 @@ func TestATSJobGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ATS.Jobs.Get(context.TODO(), "string")
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ATS.Jobs.Get(context.TODO(), "string")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -31,8 +34,11 @@ func TestATSJobListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{
 		Limit:  finchgo.F(int64(0)),
 		Offset: finchgo.F(int64(0)),
 	})

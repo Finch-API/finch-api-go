@@ -16,8 +16,11 @@ func TestAccountDisconnect(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Account.Disconnect(context.TODO())
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Account.Disconnect(context.TODO())
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -31,8 +34,11 @@ func TestAccountIntrospect(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Account.Introspect(context.TODO())
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Account.Introspect(context.TODO())
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

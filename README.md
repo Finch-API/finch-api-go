@@ -39,11 +39,11 @@ func main() {
 	client := finchgo.NewClient(
 		option.WithAccessToken("my access token"),
 	)
-	directories, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+	candidate, err := client.ATS.Candidates.Get(context.TODO(), "string")
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", directories)
+	fmt.Printf("%+v\n", candidate.FirstName)
 }
 
 ```
@@ -132,7 +132,7 @@ client := finchgo.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.HRIS.Directory.ListIndividuals(context.TODO(), ...,
+client.ATS.Candidates.Get(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax

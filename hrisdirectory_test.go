@@ -16,8 +16,11 @@ func TestHRISDirectoryListIndividualsWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{
 		Limit:  finchgo.F(int64(0)),
 		Offset: finchgo.F(int64(0)),
 	})

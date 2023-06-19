@@ -16,8 +16,11 @@ func TestATSApplicationGet(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ATS.Applications.Get(context.TODO(), "string")
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ATS.Applications.Get(context.TODO(), "string")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -31,8 +34,11 @@ func TestATSApplicationListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.ATS.Applications.List(context.TODO(), finchgo.ATSApplicationListParams{
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.ATS.Applications.List(context.TODO(), finchgo.ATSApplicationListParams{
 		Limit:  finchgo.F(int64(0)),
 		Offset: finchgo.F(int64(0)),
 	})

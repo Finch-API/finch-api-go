@@ -15,10 +15,13 @@ func TestUsage(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	client := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	directories, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	candidate, err := client.ATS.Candidates.Get(context.TODO(), "string")
 	if err != nil {
-		panic(err.Error())
+		t.Error(err)
 	}
-	t.Logf("%+v\n", directories)
+	t.Logf("%+v\n", candidate.FirstName)
 }

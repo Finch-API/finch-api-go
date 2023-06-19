@@ -16,10 +16,21 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
-		Options:  finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{Include: finchgo.F([]string{"string", "string", "string"})}),
-		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequests{{IndividualID: finchgo.F("string")}, {IndividualID: finchgo.F("string")}, {IndividualID: finchgo.F("string")}}),
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
+		Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{
+			Include: finchgo.F([]string{"string", "string", "string"}),
+		}),
+		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequests{{
+			IndividualID: finchgo.F("string"),
+		}, {
+			IndividualID: finchgo.F("string"),
+		}, {
+			IndividualID: finchgo.F("string"),
+		}}),
 	})
 	if err != nil {
 		var apierr *finchgo.Error

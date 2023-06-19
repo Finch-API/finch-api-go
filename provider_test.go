@@ -16,8 +16,11 @@ func TestProviderList(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
-	c := finchgo.NewClient(option.WithAccessToken("AccessToken"), option.WithBaseURL("http://127.0.0.1:4010"))
-	_, err := c.Providers.List(context.TODO())
+	client := finchgo.NewClient(
+		option.WithAccessToken("AccessToken"),
+		option.WithBaseURL("http://127.0.0.1:4010"),
+	)
+	_, err := client.Providers.List(context.TODO())
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
