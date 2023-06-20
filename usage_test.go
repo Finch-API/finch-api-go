@@ -19,7 +19,7 @@ func TestUsage(t *testing.T) {
 		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
 	)
-	candidate, err := client.ATS.Candidates.Get(context.TODO(), "string")
+	candidate, err := client.ATS.Candidates.Get(context.TODO(), "<candidate id>")
 	if err != nil {
 		t.Error(err)
 	}

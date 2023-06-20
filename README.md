@@ -39,7 +39,7 @@ func main() {
 	client := finchgo.NewClient(
 		option.WithAccessToken("my access token"),
 	)
-	candidate, err := client.ATS.Candidates.Get(context.TODO(), "string")
+	candidate, err := client.ATS.Candidates.Get(context.TODO(), "<candidate id>")
 	if err != nil {
 		panic(err.Error())
 	}
