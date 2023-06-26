@@ -206,20 +206,3 @@ type HRISIndividualGetManyParamsRequests struct {
 func (r HRISIndividualGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
-
-type HRISIndividualGetManyResponse struct {
-	Responses []IndividualResponse `json:"responses,required"`
-	JSON      hrisIndividualGetManyResponseJSON
-}
-
-// hrisIndividualGetManyResponseJSON contains the JSON metadata for the struct
-// [HRISIndividualGetManyResponse]
-type hrisIndividualGetManyResponseJSON struct {
-	Responses   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *HRISIndividualGetManyResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

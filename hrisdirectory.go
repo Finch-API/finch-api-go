@@ -234,23 +234,3 @@ func (r HRISDirectoryListIndividualsParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
-
-type HRISDirectoryListIndividualsResponse struct {
-	Paging Paging `json:"paging,required"`
-	// The array of employees.
-	Individuals []IndividualInDirectory `json:"individuals,required"`
-	JSON        hrisDirectoryListIndividualsResponseJSON
-}
-
-// hrisDirectoryListIndividualsResponseJSON contains the JSON metadata for the
-// struct [HRISDirectoryListIndividualsResponse]
-type hrisDirectoryListIndividualsResponseJSON struct {
-	Paging      apijson.Field
-	Individuals apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *HRISDirectoryListIndividualsResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

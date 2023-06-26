@@ -252,20 +252,3 @@ type HRISIndividualEmploymentDataGetManyParamsRequests struct {
 func (r HRISIndividualEmploymentDataGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
-
-type HRISIndividualEmploymentDataGetManyResponse struct {
-	Responses []EmploymentDataResponse `json:"responses,required"`
-	JSON      hrisIndividualEmploymentDataGetManyResponseJSON
-}
-
-// hrisIndividualEmploymentDataGetManyResponseJSON contains the JSON metadata for
-// the struct [HRISIndividualEmploymentDataGetManyResponse]
-type hrisIndividualEmploymentDataGetManyResponseJSON struct {
-	Responses   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *HRISIndividualEmploymentDataGetManyResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

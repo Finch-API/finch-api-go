@@ -274,22 +274,3 @@ func (r ATSJobListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
-
-type ATSJobListResponse struct {
-	Paging Paging `json:"paging,required"`
-	Jobs   []Job  `json:"jobs,required"`
-	JSON   atsJobListResponseJSON
-}
-
-// atsJobListResponseJSON contains the JSON metadata for the struct
-// [ATSJobListResponse]
-type atsJobListResponseJSON struct {
-	Paging      apijson.Field
-	Jobs        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ATSJobListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

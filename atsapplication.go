@@ -215,22 +215,3 @@ func (r ATSApplicationListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
-
-type ATSApplicationListResponse struct {
-	Paging       Paging        `json:"paging,required"`
-	Applications []Application `json:"applications,required"`
-	JSON         atsApplicationListResponseJSON
-}
-
-// atsApplicationListResponseJSON contains the JSON metadata for the struct
-// [ATSApplicationListResponse]
-type atsApplicationListResponseJSON struct {
-	Paging       apijson.Field
-	Applications apijson.Field
-	raw          string
-	ExtraFields  map[string]apijson.Field
-}
-
-func (r *ATSApplicationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

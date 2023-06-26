@@ -37,7 +37,7 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 // **Availability: Automated Benefits providers only**
 //
 // Lists individuals currently enrolled in a given benefit.
-func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *IndividualEnrolledIDsResponse, err error) {
+func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -202,22 +202,22 @@ func (r *UnenrolledIndividualBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type IndividualEnrolledIDsResponse struct {
+type HRISBenefitIndividualEnrolledIDsResponse struct {
 	BenefitID     string   `json:"benefit_id,required"`
 	IndividualIDs []string `json:"individual_ids,required"`
-	JSON          individualEnrolledIDsResponseJSON
+	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON
 }
 
-// individualEnrolledIDsResponseJSON contains the JSON metadata for the struct
-// [IndividualEnrolledIDsResponse]
-type individualEnrolledIDsResponseJSON struct {
+// hrisBenefitIndividualEnrolledIDsResponseJSON contains the JSON metadata for the
+// struct [HRISBenefitIndividualEnrolledIDsResponse]
+type hrisBenefitIndividualEnrolledIDsResponseJSON struct {
 	BenefitID     apijson.Field
 	IndividualIDs apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *IndividualEnrolledIDsResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *HRISBenefitIndividualEnrolledIDsResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

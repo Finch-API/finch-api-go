@@ -242,22 +242,3 @@ func (r ATSCandidateListParams) URLQuery() (v url.Values) {
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
-
-type ATSCandidateListResponse struct {
-	Paging     Paging      `json:"paging,required"`
-	Candidates []Candidate `json:"candidates,required"`
-	JSON       atsCandidateListResponseJSON
-}
-
-// atsCandidateListResponseJSON contains the JSON metadata for the struct
-// [ATSCandidateListResponse]
-type atsCandidateListResponseJSON struct {
-	Paging      apijson.Field
-	Candidates  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ATSCandidateListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}

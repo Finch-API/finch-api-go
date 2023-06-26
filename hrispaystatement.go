@@ -327,20 +327,3 @@ type HRISPayStatementGetManyParamsRequests struct {
 func (r HRISPayStatementGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
-
-type HRISPayStatementGetManyResponse struct {
-	Responses []PayStatementResponse `json:"responses,required"`
-	JSON      hrisPayStatementGetManyResponseJSON
-}
-
-// hrisPayStatementGetManyResponseJSON contains the JSON metadata for the struct
-// [HRISPayStatementGetManyResponse]
-type hrisPayStatementGetManyResponseJSON struct {
-	Responses   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *HRISPayStatementGetManyResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
