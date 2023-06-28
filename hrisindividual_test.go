@@ -24,7 +24,7 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 		Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{
 			Include: finchgo.F([]string{"string", "string", "string"}),
 		}),
-		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequests{{
+		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequest{{
 			IndividualID: finchgo.F("string"),
 		}, {
 			IndividualID: finchgo.F("string"),

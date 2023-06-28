@@ -199,8 +199,8 @@ func (r *JobDepartment) UnmarshalJSON(data []byte) (err error) {
 }
 
 type JobHiringTeam struct {
-	HiringManagers []JobHiringTeamHiringManagers `json:"hiring_managers,nullable"`
-	Recruiters     []JobHiringTeamRecruiters     `json:"recruiters,nullable"`
+	HiringManagers []JobHiringTeamHiringManager `json:"hiring_managers,nullable"`
+	Recruiters     []JobHiringTeamRecruiter     `json:"recruiters,nullable"`
 	JSON           jobHiringTeamJSON
 }
 
@@ -216,37 +216,37 @@ func (r *JobHiringTeam) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type JobHiringTeamHiringManagers struct {
+type JobHiringTeamHiringManager struct {
 	Name string `json:"name"`
-	JSON jobHiringTeamHiringManagersJSON
+	JSON jobHiringTeamHiringManagerJSON
 }
 
-// jobHiringTeamHiringManagersJSON contains the JSON metadata for the struct
-// [JobHiringTeamHiringManagers]
-type jobHiringTeamHiringManagersJSON struct {
+// jobHiringTeamHiringManagerJSON contains the JSON metadata for the struct
+// [JobHiringTeamHiringManager]
+type jobHiringTeamHiringManagerJSON struct {
 	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *JobHiringTeamHiringManagers) UnmarshalJSON(data []byte) (err error) {
+func (r *JobHiringTeamHiringManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type JobHiringTeamRecruiters struct {
+type JobHiringTeamRecruiter struct {
 	Name string `json:"name"`
-	JSON jobHiringTeamRecruitersJSON
+	JSON jobHiringTeamRecruiterJSON
 }
 
-// jobHiringTeamRecruitersJSON contains the JSON metadata for the struct
-// [JobHiringTeamRecruiters]
-type jobHiringTeamRecruitersJSON struct {
+// jobHiringTeamRecruiterJSON contains the JSON metadata for the struct
+// [JobHiringTeamRecruiter]
+type jobHiringTeamRecruiterJSON struct {
 	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *JobHiringTeamRecruiters) UnmarshalJSON(data []byte) (err error) {
+func (r *JobHiringTeamRecruiter) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

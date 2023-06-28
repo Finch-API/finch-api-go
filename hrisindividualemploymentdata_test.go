@@ -21,7 +21,7 @@ func TestHRISIndividualEmploymentDataGetMany(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 	)
 	_, err := client.HRIS.Individuals.EmploymentData.GetMany(context.TODO(), finchgo.HRISIndividualEmploymentDataGetManyParams{
-		Requests: finchgo.F([]finchgo.HRISIndividualEmploymentDataGetManyParamsRequests{{
+		Requests: finchgo.F([]finchgo.HRISIndividualEmploymentDataGetManyParamsRequest{{
 			IndividualID: finchgo.F("string"),
 		}, {
 			IndividualID: finchgo.F("string"),

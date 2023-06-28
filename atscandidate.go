@@ -161,14 +161,14 @@ func (r *CandidatesPageAutoPager) Index() int {
 type Candidate struct {
 	ID string `json:"id,required"`
 	// Array of Finch uuids corresponding to `application`s for this individual
-	ApplicationIDs []string                `json:"application_ids,required"`
-	CreatedAt      time.Time               `json:"created_at,required" format:"date-time"`
-	Emails         []CandidateEmails       `json:"emails,required"`
-	FirstName      string                  `json:"first_name,required,nullable"`
-	FullName       string                  `json:"full_name,required,nullable"`
-	LastActivityAt time.Time               `json:"last_activity_at,required" format:"date-time"`
-	LastName       string                  `json:"last_name,required,nullable"`
-	PhoneNumbers   []CandidatePhoneNumbers `json:"phone_numbers,required"`
+	ApplicationIDs []string               `json:"application_ids,required"`
+	CreatedAt      time.Time              `json:"created_at,required" format:"date-time"`
+	Emails         []CandidateEmail       `json:"emails,required"`
+	FirstName      string                 `json:"first_name,required,nullable"`
+	FullName       string                 `json:"full_name,required,nullable"`
+	LastActivityAt time.Time              `json:"last_activity_at,required" format:"date-time"`
+	LastName       string                 `json:"last_name,required,nullable"`
+	PhoneNumbers   []CandidatePhoneNumber `json:"phone_numbers,required"`
 	JSON           candidateJSON
 }
 
@@ -191,40 +191,40 @@ func (r *Candidate) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type CandidateEmails struct {
+type CandidateEmail struct {
 	Data string `json:"data,nullable"`
 	Type string `json:"type,nullable"`
-	JSON candidateEmailsJSON
+	JSON candidateEmailJSON
 }
 
-// candidateEmailsJSON contains the JSON metadata for the struct [CandidateEmails]
-type candidateEmailsJSON struct {
+// candidateEmailJSON contains the JSON metadata for the struct [CandidateEmail]
+type candidateEmailJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *CandidateEmails) UnmarshalJSON(data []byte) (err error) {
+func (r *CandidateEmail) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type CandidatePhoneNumbers struct {
+type CandidatePhoneNumber struct {
 	Data string `json:"data,nullable"`
 	Type string `json:"type,nullable"`
-	JSON candidatePhoneNumbersJSON
+	JSON candidatePhoneNumberJSON
 }
 
-// candidatePhoneNumbersJSON contains the JSON metadata for the struct
-// [CandidatePhoneNumbers]
-type candidatePhoneNumbersJSON struct {
+// candidatePhoneNumberJSON contains the JSON metadata for the struct
+// [CandidatePhoneNumber]
+type candidatePhoneNumberJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *CandidatePhoneNumbers) UnmarshalJSON(data []byte) (err error) {
+func (r *CandidatePhoneNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

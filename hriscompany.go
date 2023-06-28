@@ -40,9 +40,9 @@ type Company struct {
 	// A stable Finch `id` (UUID v4) for the company.
 	ID string `json:"id,required"`
 	// An array of bank account objects associated with the payroll/HRIS system.
-	Accounts []CompanyAccounts `json:"accounts,required,nullable"`
+	Accounts []CompanyAccount `json:"accounts,required,nullable"`
 	// The array of company departments.
-	Departments []CompanyDepartments `json:"departments,required,nullable"`
+	Departments []CompanyDepartment `json:"departments,required,nullable"`
 	// The employer identification number.
 	Ein string `json:"ein,required,nullable"`
 	// The entity type object.
@@ -76,7 +76,7 @@ func (r *Company) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type CompanyAccounts struct {
+type CompanyAccount struct {
 	// The name of the bank associated in the payroll/HRIS system.
 	AccountName string `json:"account_name,nullable"`
 	// 10-12 digit number to specify the bank account
@@ -88,11 +88,11 @@ type CompanyAccounts struct {
 	// A nine-digit code that's based on the U.S. Bank location where your account was
 	// opened.
 	RoutingNumber string `json:"routing_number,nullable"`
-	JSON          companyAccountsJSON
+	JSON          companyAccountJSON
 }
 
-// companyAccountsJSON contains the JSON metadata for the struct [CompanyAccounts]
-type companyAccountsJSON struct {
+// companyAccountJSON contains the JSON metadata for the struct [CompanyAccount]
+type companyAccountJSON struct {
 	AccountName     apijson.Field
 	AccountNumber   apijson.Field
 	AccountType     apijson.Field
@@ -102,7 +102,7 @@ type companyAccountsJSON struct {
 	ExtraFields     map[string]apijson.Field
 }
 
-func (r *CompanyAccounts) UnmarshalJSON(data []byte) (err error) {
+func (r *CompanyAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -114,24 +114,24 @@ const (
 	CompanyAccountsAccountTypeSavings  CompanyAccountsAccountType = "savings"
 )
 
-type CompanyDepartments struct {
+type CompanyDepartment struct {
 	// The department name.
 	Name string `json:"name,nullable"`
 	// The parent department, if present.
 	Parent CompanyDepartmentsParent `json:"parent,nullable"`
-	JSON   companyDepartmentsJSON
+	JSON   companyDepartmentJSON
 }
 
-// companyDepartmentsJSON contains the JSON metadata for the struct
-// [CompanyDepartments]
-type companyDepartmentsJSON struct {
+// companyDepartmentJSON contains the JSON metadata for the struct
+// [CompanyDepartment]
+type companyDepartmentJSON struct {
 	Name        apijson.Field
 	Parent      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *CompanyDepartments) UnmarshalJSON(data []byte) (err error) {
+func (r *CompanyDepartment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

@@ -57,9 +57,9 @@ func (r *HRISIndividualService) GetManyAutoPaging(ctx context.Context, body HRIS
 
 type Individual struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID     string             `json:"id"`
-	Dob    string             `json:"dob,nullable"`
-	Emails []IndividualEmails `json:"emails,nullable"`
+	ID     string            `json:"id"`
+	Dob    string            `json:"dob,nullable"`
+	Emails []IndividualEmail `json:"emails,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name,nullable"`
 	// The gender of the individual.
@@ -67,8 +67,8 @@ type Individual struct {
 	// The legal last name of the individual.
 	LastName string `json:"last_name,nullable"`
 	// The legal middle name of the individual.
-	MiddleName   string                   `json:"middle_name,nullable"`
-	PhoneNumbers []IndividualPhoneNumbers `json:"phone_numbers,nullable"`
+	MiddleName   string                  `json:"middle_name,nullable"`
+	PhoneNumbers []IndividualPhoneNumber `json:"phone_numbers,nullable"`
 	// The preferred name of the individual.
 	PreferredName string   `json:"preferred_name,nullable"`
 	Residence     Location `json:"residence,nullable"`
@@ -99,22 +99,21 @@ func (r *Individual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type IndividualEmails struct {
+type IndividualEmail struct {
 	Data string               `json:"data"`
 	Type IndividualEmailsType `json:"type"`
-	JSON individualEmailsJSON
+	JSON individualEmailJSON
 }
 
-// individualEmailsJSON contains the JSON metadata for the struct
-// [IndividualEmails]
-type individualEmailsJSON struct {
+// individualEmailJSON contains the JSON metadata for the struct [IndividualEmail]
+type individualEmailJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualEmails) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualEmail) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -135,22 +134,22 @@ const (
 	IndividualGenderDeclineToSpecify IndividualGender = "decline_to_specify"
 )
 
-type IndividualPhoneNumbers struct {
+type IndividualPhoneNumber struct {
 	Data string                     `json:"data,nullable"`
 	Type IndividualPhoneNumbersType `json:"type,nullable"`
-	JSON individualPhoneNumbersJSON
+	JSON individualPhoneNumberJSON
 }
 
-// individualPhoneNumbersJSON contains the JSON metadata for the struct
-// [IndividualPhoneNumbers]
-type individualPhoneNumbersJSON struct {
+// individualPhoneNumberJSON contains the JSON metadata for the struct
+// [IndividualPhoneNumber]
+type individualPhoneNumberJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualPhoneNumbers) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualPhoneNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -183,8 +182,8 @@ func (r *IndividualResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type HRISIndividualGetManyParams struct {
-	Options  param.Field[HRISIndividualGetManyParamsOptions]    `json:"options"`
-	Requests param.Field[[]HRISIndividualGetManyParamsRequests] `json:"requests"`
+	Options  param.Field[HRISIndividualGetManyParamsOptions]   `json:"options"`
+	Requests param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests"`
 }
 
 func (r HRISIndividualGetManyParams) MarshalJSON() (data []byte, err error) {
@@ -199,10 +198,10 @@ func (r HRISIndividualGetManyParamsOptions) MarshalJSON() (data []byte, err erro
 	return apijson.MarshalRoot(r)
 }
 
-type HRISIndividualGetManyParamsRequests struct {
+type HRISIndividualGetManyParamsRequest struct {
 	IndividualID param.Field[string] `json:"individual_id"`
 }
 
-func (r HRISIndividualGetManyParamsRequests) MarshalJSON() (data []byte, err error) {
+func (r HRISIndividualGetManyParamsRequest) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
