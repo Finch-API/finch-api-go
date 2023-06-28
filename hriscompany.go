@@ -39,35 +39,35 @@ func (r *HRISCompanyService) Get(ctx context.Context, opts ...option.RequestOpti
 type Company struct {
 	// A stable Finch `id` (UUID v4) for the company.
 	ID string `json:"id,required"`
-	// The legal name of the company.
-	LegalName string `json:"legal_name,required,nullable"`
+	// An array of bank account objects associated with the payroll/HRIS system.
+	Accounts []CompanyAccounts `json:"accounts,required,nullable"`
+	// The array of company departments.
+	Departments []CompanyDepartments `json:"departments,required,nullable"`
+	// The employer identification number.
+	Ein string `json:"ein,required,nullable"`
 	// The entity type object.
 	Entity CompanyEntity `json:"entity,required,nullable"`
+	// The legal name of the company.
+	LegalName string     `json:"legal_name,required,nullable"`
+	Locations []Location `json:"locations,required,nullable"`
 	// The email of the main administrator on the account.
 	PrimaryEmail string `json:"primary_email,required,nullable"`
 	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
 	PrimaryPhoneNumber string `json:"primary_phone_number,required,nullable"`
-	// The array of company departments.
-	Departments []CompanyDepartments `json:"departments,required,nullable"`
-	// The employer identification number.
-	Ein       string     `json:"ein,required,nullable"`
-	Locations []Location `json:"locations,required,nullable"`
-	// An array of bank account objects associated with the payroll/HRIS system.
-	Accounts []CompanyAccounts `json:"accounts,required,nullable"`
-	JSON     companyJSON
+	JSON               companyJSON
 }
 
 // companyJSON contains the JSON metadata for the struct [Company]
 type companyJSON struct {
 	ID                 apijson.Field
-	LegalName          apijson.Field
-	Entity             apijson.Field
-	PrimaryEmail       apijson.Field
-	PrimaryPhoneNumber apijson.Field
+	Accounts           apijson.Field
 	Departments        apijson.Field
 	Ein                apijson.Field
+	Entity             apijson.Field
+	LegalName          apijson.Field
 	Locations          apijson.Field
-	Accounts           apijson.Field
+	PrimaryEmail       apijson.Field
+	PrimaryPhoneNumber apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -76,46 +76,42 @@ func (r *Company) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The entity type object.
-type CompanyEntity struct {
-	// The tax payer type of the company.
-	Type CompanyEntityType `json:"type,nullable"`
-	// The tax payer subtype of the company.
-	Subtype CompanyEntitySubtype `json:"subtype,nullable"`
-	JSON    companyEntityJSON
+type CompanyAccounts struct {
+	// The name of the bank associated in the payroll/HRIS system.
+	AccountName string `json:"account_name,nullable"`
+	// 10-12 digit number to specify the bank account
+	AccountNumber string `json:"account_number,nullable"`
+	// The type of bank account.
+	AccountType CompanyAccountsAccountType `json:"account_type,nullable"`
+	// Name of the banking institution.
+	InstitutionName string `json:"institution_name,nullable"`
+	// A nine-digit code that's based on the U.S. Bank location where your account was
+	// opened.
+	RoutingNumber string `json:"routing_number,nullable"`
+	JSON          companyAccountsJSON
 }
 
-// companyEntityJSON contains the JSON metadata for the struct [CompanyEntity]
-type companyEntityJSON struct {
-	Type        apijson.Field
-	Subtype     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+// companyAccountsJSON contains the JSON metadata for the struct [CompanyAccounts]
+type companyAccountsJSON struct {
+	AccountName     apijson.Field
+	AccountNumber   apijson.Field
+	AccountType     apijson.Field
+	InstitutionName apijson.Field
+	RoutingNumber   apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
 }
 
-func (r *CompanyEntity) UnmarshalJSON(data []byte) (err error) {
+func (r *CompanyAccounts) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The tax payer type of the company.
-type CompanyEntityType string
+// The type of bank account.
+type CompanyAccountsAccountType string
 
 const (
-	CompanyEntityTypeLlc            CompanyEntityType = "llc"
-	CompanyEntityTypeCorporation    CompanyEntityType = "corporation"
-	CompanyEntityTypeSoleProprietor CompanyEntityType = "sole_proprietor"
-	CompanyEntityTypeNonProfit      CompanyEntityType = "non_profit"
-	CompanyEntityTypePartnership    CompanyEntityType = "partnership"
-	CompanyEntityTypeCooperative    CompanyEntityType = "cooperative"
-)
-
-// The tax payer subtype of the company.
-type CompanyEntitySubtype string
-
-const (
-	CompanyEntitySubtypeSCorporation CompanyEntitySubtype = "s_corporation"
-	CompanyEntitySubtypeCCorporation CompanyEntitySubtype = "c_corporation"
-	CompanyEntitySubtypeBCorporation CompanyEntitySubtype = "b_corporation"
+	CompanyAccountsAccountTypeChecking CompanyAccountsAccountType = "checking"
+	CompanyAccountsAccountTypeSavings  CompanyAccountsAccountType = "savings"
 )
 
 type CompanyDepartments struct {
@@ -158,40 +154,44 @@ func (r *CompanyDepartmentsParent) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type CompanyAccounts struct {
-	// A nine-digit code that's based on the U.S. Bank location where your account was
-	// opened.
-	RoutingNumber string `json:"routing_number,nullable"`
-	// The name of the bank associated in the payroll/HRIS system.
-	AccountName string `json:"account_name,nullable"`
-	// Name of the banking institution.
-	InstitutionName string `json:"institution_name,nullable"`
-	// The type of bank account.
-	AccountType CompanyAccountsAccountType `json:"account_type,nullable"`
-	// 10-12 digit number to specify the bank account
-	AccountNumber string `json:"account_number,nullable"`
-	JSON          companyAccountsJSON
+// The entity type object.
+type CompanyEntity struct {
+	// The tax payer subtype of the company.
+	Subtype CompanyEntitySubtype `json:"subtype,nullable"`
+	// The tax payer type of the company.
+	Type CompanyEntityType `json:"type,nullable"`
+	JSON companyEntityJSON
 }
 
-// companyAccountsJSON contains the JSON metadata for the struct [CompanyAccounts]
-type companyAccountsJSON struct {
-	RoutingNumber   apijson.Field
-	AccountName     apijson.Field
-	InstitutionName apijson.Field
-	AccountType     apijson.Field
-	AccountNumber   apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+// companyEntityJSON contains the JSON metadata for the struct [CompanyEntity]
+type companyEntityJSON struct {
+	Subtype     apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
-func (r *CompanyAccounts) UnmarshalJSON(data []byte) (err error) {
+func (r *CompanyEntity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The type of bank account.
-type CompanyAccountsAccountType string
+// The tax payer subtype of the company.
+type CompanyEntitySubtype string
 
 const (
-	CompanyAccountsAccountTypeChecking CompanyAccountsAccountType = "checking"
-	CompanyAccountsAccountTypeSavings  CompanyAccountsAccountType = "savings"
+	CompanyEntitySubtypeSCorporation CompanyEntitySubtype = "s_corporation"
+	CompanyEntitySubtypeCCorporation CompanyEntitySubtype = "c_corporation"
+	CompanyEntitySubtypeBCorporation CompanyEntitySubtype = "b_corporation"
+)
+
+// The tax payer type of the company.
+type CompanyEntityType string
+
+const (
+	CompanyEntityTypeLlc            CompanyEntityType = "llc"
+	CompanyEntityTypeCorporation    CompanyEntityType = "corporation"
+	CompanyEntityTypeSoleProprietor CompanyEntityType = "sole_proprietor"
+	CompanyEntityTypeNonProfit      CompanyEntityType = "non_profit"
+	CompanyEntityTypePartnership    CompanyEntityType = "partnership"
+	CompanyEntityTypeCooperative    CompanyEntityType = "cooperative"
 )

@@ -57,21 +57,21 @@ func (r *HRISIndividualService) GetManyAutoPaging(ctx context.Context, body HRIS
 
 type Individual struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id"`
+	ID     string             `json:"id"`
+	Dob    string             `json:"dob,nullable"`
+	Emails []IndividualEmails `json:"emails,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name,nullable"`
-	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	// The gender of the individual.
+	Gender IndividualGender `json:"gender,nullable"`
 	// The legal last name of the individual.
 	LastName string `json:"last_name,nullable"`
+	// The legal middle name of the individual.
+	MiddleName   string                   `json:"middle_name,nullable"`
+	PhoneNumbers []IndividualPhoneNumbers `json:"phone_numbers,nullable"`
 	// The preferred name of the individual.
-	PreferredName string                   `json:"preferred_name,nullable"`
-	Emails        []IndividualEmails       `json:"emails,nullable"`
-	PhoneNumbers  []IndividualPhoneNumbers `json:"phone_numbers,nullable"`
-	// The gender of the individual.
-	Gender    IndividualGender `json:"gender,nullable"`
-	Dob       string           `json:"dob,nullable"`
-	Residence Location         `json:"residence,nullable"`
+	PreferredName string   `json:"preferred_name,nullable"`
+	Residence     Location `json:"residence,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
 	Ssn  string `json:"ssn,nullable"`
@@ -81,14 +81,14 @@ type Individual struct {
 // individualJSON contains the JSON metadata for the struct [Individual]
 type individualJSON struct {
 	ID            apijson.Field
-	FirstName     apijson.Field
-	MiddleName    apijson.Field
-	LastName      apijson.Field
-	PreferredName apijson.Field
-	Emails        apijson.Field
-	PhoneNumbers  apijson.Field
-	Gender        apijson.Field
 	Dob           apijson.Field
+	Emails        apijson.Field
+	FirstName     apijson.Field
+	Gender        apijson.Field
+	LastName      apijson.Field
+	MiddleName    apijson.Field
+	PhoneNumbers  apijson.Field
+	PreferredName apijson.Field
 	Residence     apijson.Field
 	Ssn           apijson.Field
 	raw           string
@@ -125,6 +125,16 @@ const (
 	IndividualEmailsTypePersonal IndividualEmailsType = "personal"
 )
 
+// The gender of the individual.
+type IndividualGender string
+
+const (
+	IndividualGenderFemale           IndividualGender = "female"
+	IndividualGenderMale             IndividualGender = "male"
+	IndividualGenderOther            IndividualGender = "other"
+	IndividualGenderDeclineToSpecify IndividualGender = "decline_to_specify"
+)
+
 type IndividualPhoneNumbers struct {
 	Data string                     `json:"data,nullable"`
 	Type IndividualPhoneNumbersType `json:"type,nullable"`
@@ -151,29 +161,19 @@ const (
 	IndividualPhoneNumbersTypePersonal IndividualPhoneNumbersType = "personal"
 )
 
-// The gender of the individual.
-type IndividualGender string
-
-const (
-	IndividualGenderFemale           IndividualGender = "female"
-	IndividualGenderMale             IndividualGender = "male"
-	IndividualGenderOther            IndividualGender = "other"
-	IndividualGenderDeclineToSpecify IndividualGender = "decline_to_specify"
-)
-
 type IndividualResponse struct {
-	IndividualID string     `json:"individual_id"`
-	Code         int64      `json:"code"`
 	Body         Individual `json:"body"`
+	Code         int64      `json:"code"`
+	IndividualID string     `json:"individual_id"`
 	JSON         individualResponseJSON
 }
 
 // individualResponseJSON contains the JSON metadata for the struct
 // [IndividualResponse]
 type individualResponseJSON struct {
-	IndividualID apijson.Field
-	Code         apijson.Field
 	Body         apijson.Field
+	Code         apijson.Field
+	IndividualID apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }

@@ -55,9 +55,9 @@ func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, qu
 }
 
 type IndividualsPage struct {
-	Paging Paging `json:"paging,required"`
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals,required"`
+	Paging      Paging                  `json:"paging,required"`
 	JSON        individualsPageJSON
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
@@ -65,8 +65,8 @@ type IndividualsPage struct {
 
 // individualsPageJSON contains the JSON metadata for the struct [IndividualsPage]
 type individualsPageJSON struct {
-	Paging      apijson.Field
 	Individuals apijson.Field
+	Paging      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -148,55 +148,36 @@ func (r *IndividualsPageAutoPager) Index() int {
 type IndividualInDirectory struct {
 	// A stable Finch id (UUID v4) for an individual in the company.
 	ID string `json:"id"`
+	// The department object.
+	Department IndividualInDirectoryDepartment `json:"department,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name,nullable"`
-	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	// `true` if the individual is an active employee or contractor at the company.
+	IsActive bool `json:"is_active,nullable"`
 	// The legal last name of the individual.
 	LastName string `json:"last_name,nullable"`
 	// The manager object.
 	Manager IndividualInDirectoryManager `json:"manager,nullable"`
-	// The department object.
-	Department IndividualInDirectoryDepartment `json:"department,nullable"`
-	// `true` if the individual is an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
-	JSON     individualInDirectoryJSON
+	// The legal middle name of the individual.
+	MiddleName string `json:"middle_name,nullable"`
+	JSON       individualInDirectoryJSON
 }
 
 // individualInDirectoryJSON contains the JSON metadata for the struct
 // [IndividualInDirectory]
 type individualInDirectoryJSON struct {
 	ID          apijson.Field
+	Department  apijson.Field
 	FirstName   apijson.Field
-	MiddleName  apijson.Field
+	IsActive    apijson.Field
 	LastName    apijson.Field
 	Manager     apijson.Field
-	Department  apijson.Field
-	IsActive    apijson.Field
+	MiddleName  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
 func (r *IndividualInDirectory) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The manager object.
-type IndividualInDirectoryManager struct {
-	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string `json:"id"`
-	JSON individualInDirectoryManagerJSON
-}
-
-// individualInDirectoryManagerJSON contains the JSON metadata for the struct
-// [IndividualInDirectoryManager]
-type individualInDirectoryManagerJSON struct {
-	ID          apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *IndividualInDirectoryManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -216,6 +197,25 @@ type individualInDirectoryDepartmentJSON struct {
 }
 
 func (r *IndividualInDirectoryDepartment) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The manager object.
+type IndividualInDirectoryManager struct {
+	// A stable Finch `id` (UUID v4) for an individual in the company.
+	ID   string `json:"id"`
+	JSON individualInDirectoryManagerJSON
+}
+
+// individualInDirectoryManagerJSON contains the JSON metadata for the struct
+// [IndividualInDirectoryManager]
+type individualInDirectoryManagerJSON struct {
+	ID          apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualInDirectoryManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

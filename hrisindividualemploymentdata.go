@@ -65,89 +65,70 @@ func (r *HRISIndividualEmploymentDataService) GetManyAutoPaging(ctx context.Cont
 type EmploymentData struct {
 	// string A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id"`
-	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
-	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
-	// The legal last name of the individual.
-	LastName string `json:"last_name,nullable"`
-	// The current title of the individual.
-	Title string `json:"title,nullable"`
-	// The manager object representing the manager of the individual within the org.
-	Manager EmploymentDataManager `json:"manager,nullable"`
+	// Worker's compensation classification code for this employee
+	ClassCode string `json:"class_code,nullable"`
 	// The department object.
 	Department EmploymentDataDepartment `json:"department,nullable"`
 	// The employment object.
 	Employment EmploymentDataEmployment `json:"employment,nullable"`
-	StartDate  string                   `json:"start_date,nullable"`
 	EndDate    string                   `json:"end_date,nullable"`
-	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
-	// Worker's compensation classification code for this employee
-	ClassCode string   `json:"class_code,nullable"`
-	Location  Location `json:"location,nullable"`
+	// The legal first name of the individual.
+	FirstName string `json:"first_name,nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
 	Income Income `json:"income,nullable"`
 	// The array of income history.
 	IncomeHistory []Income `json:"income_history,nullable"`
+	// `true` if the individual an an active employee or contractor at the company.
+	IsActive bool `json:"is_active,nullable"`
+	// The legal last name of the individual.
+	LastName string   `json:"last_name,nullable"`
+	Location Location `json:"location,nullable"`
+	// The manager object representing the manager of the individual within the org.
+	Manager EmploymentDataManager `json:"manager,nullable"`
+	// The legal middle name of the individual.
+	MiddleName string `json:"middle_name,nullable"`
+	// Note: This property is only available if enabled for your account. Please reach
+	// out to your Finch representative if you would like access.
+	PayGroupIDs []string `json:"pay_group_ids,nullable"`
+	StartDate   string   `json:"start_date,nullable"`
+	// The current title of the individual.
+	Title string `json:"title,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
 	WorkID string `json:"work_id,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
 	WorkID2 string `json:"work_id_2,nullable"`
-	// Note: This property is only available if enabled for your account. Please reach
-	// out to your Finch representative if you would like access.
-	PayGroupIDs []string `json:"pay_group_ids,nullable"`
-	JSON        employmentDataJSON
+	JSON    employmentDataJSON
 }
 
 // employmentDataJSON contains the JSON metadata for the struct [EmploymentData]
 type employmentDataJSON struct {
 	ID            apijson.Field
-	FirstName     apijson.Field
-	MiddleName    apijson.Field
-	LastName      apijson.Field
-	Title         apijson.Field
-	Manager       apijson.Field
+	ClassCode     apijson.Field
 	Department    apijson.Field
 	Employment    apijson.Field
-	StartDate     apijson.Field
 	EndDate       apijson.Field
-	IsActive      apijson.Field
-	ClassCode     apijson.Field
-	Location      apijson.Field
+	FirstName     apijson.Field
 	Income        apijson.Field
 	IncomeHistory apijson.Field
+	IsActive      apijson.Field
+	LastName      apijson.Field
+	Location      apijson.Field
+	Manager       apijson.Field
+	MiddleName    apijson.Field
+	PayGroupIDs   apijson.Field
+	StartDate     apijson.Field
+	Title         apijson.Field
 	WorkID        apijson.Field
 	WorkID2       apijson.Field
-	PayGroupIDs   apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
 
 func (r *EmploymentData) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The manager object representing the manager of the individual within the org.
-type EmploymentDataManager struct {
-	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string `json:"id"`
-	JSON employmentDataManagerJSON
-}
-
-// employmentDataManagerJSON contains the JSON metadata for the struct
-// [EmploymentDataManager]
-type employmentDataManagerJSON struct {
-	ID          apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *EmploymentDataManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -172,18 +153,18 @@ func (r *EmploymentDataDepartment) UnmarshalJSON(data []byte) (err error) {
 
 // The employment object.
 type EmploymentDataEmployment struct {
-	// The main employment type of the individual.
-	Type EmploymentDataEmploymentType `json:"type,nullable"`
 	// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 	Subtype EmploymentDataEmploymentSubtype `json:"subtype,nullable"`
-	JSON    employmentDataEmploymentJSON
+	// The main employment type of the individual.
+	Type EmploymentDataEmploymentType `json:"type,nullable"`
+	JSON employmentDataEmploymentJSON
 }
 
 // employmentDataEmploymentJSON contains the JSON metadata for the struct
 // [EmploymentDataEmployment]
 type employmentDataEmploymentJSON struct {
-	Type        apijson.Field
 	Subtype     apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -191,14 +172,6 @@ type employmentDataEmploymentJSON struct {
 func (r *EmploymentDataEmployment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-// The main employment type of the individual.
-type EmploymentDataEmploymentType string
-
-const (
-	EmploymentDataEmploymentTypeEmployee   EmploymentDataEmploymentType = "employee"
-	EmploymentDataEmploymentTypeContractor EmploymentDataEmploymentType = "contractor"
-)
 
 // The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 type EmploymentDataEmploymentSubtype string
@@ -212,19 +185,46 @@ const (
 	EmploymentDataEmploymentSubtypeIndividualContractor EmploymentDataEmploymentSubtype = "individual_contractor"
 )
 
+// The main employment type of the individual.
+type EmploymentDataEmploymentType string
+
+const (
+	EmploymentDataEmploymentTypeEmployee   EmploymentDataEmploymentType = "employee"
+	EmploymentDataEmploymentTypeContractor EmploymentDataEmploymentType = "contractor"
+)
+
+// The manager object representing the manager of the individual within the org.
+type EmploymentDataManager struct {
+	// A stable Finch `id` (UUID v4) for an individual in the company.
+	ID   string `json:"id"`
+	JSON employmentDataManagerJSON
+}
+
+// employmentDataManagerJSON contains the JSON metadata for the struct
+// [EmploymentDataManager]
+type employmentDataManagerJSON struct {
+	ID          apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EmploymentDataManager) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type EmploymentDataResponse struct {
-	IndividualID string         `json:"individual_id"`
-	Code         int64          `json:"code"`
 	Body         EmploymentData `json:"body"`
+	Code         int64          `json:"code"`
+	IndividualID string         `json:"individual_id"`
 	JSON         employmentDataResponseJSON
 }
 
 // employmentDataResponseJSON contains the JSON metadata for the struct
 // [EmploymentDataResponse]
 type employmentDataResponseJSON struct {
-	IndividualID apijson.Field
-	Code         apijson.Field
 	Body         apijson.Field
+	Code         apijson.Field
+	IndividualID apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }

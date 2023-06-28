@@ -68,8 +68,8 @@ func (r *ATSCandidateService) ListAutoPaging(ctx context.Context, query ATSCandi
 }
 
 type CandidatesPage struct {
-	Paging     Paging      `json:"paging,required"`
 	Candidates []Candidate `json:"candidates,required"`
+	Paging     Paging      `json:"paging,required"`
 	JSON       candidatesPageJSON
 	cfg        *requestconfig.RequestConfig
 	res        *http.Response
@@ -77,8 +77,8 @@ type CandidatesPage struct {
 
 // candidatesPageJSON contains the JSON metadata for the struct [CandidatesPage]
 type candidatesPageJSON struct {
-	Paging      apijson.Field
 	Candidates  apijson.Field
+	Paging      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -159,30 +159,30 @@ func (r *CandidatesPageAutoPager) Index() int {
 
 // A candidate represents an individual associated with one or more applications.
 type Candidate struct {
-	ID             string                  `json:"id,required"`
-	FirstName      string                  `json:"first_name,required,nullable"`
-	LastName       string                  `json:"last_name,required,nullable"`
-	FullName       string                  `json:"full_name,required,nullable"`
-	Emails         []CandidateEmails       `json:"emails,required"`
-	PhoneNumbers   []CandidatePhoneNumbers `json:"phone_numbers,required"`
-	CreatedAt      time.Time               `json:"created_at,required" format:"date-time"`
-	LastActivityAt time.Time               `json:"last_activity_at,required" format:"date-time"`
+	ID string `json:"id,required"`
 	// Array of Finch uuids corresponding to `application`s for this individual
-	ApplicationIDs []string `json:"application_ids,required"`
+	ApplicationIDs []string                `json:"application_ids,required"`
+	CreatedAt      time.Time               `json:"created_at,required" format:"date-time"`
+	Emails         []CandidateEmails       `json:"emails,required"`
+	FirstName      string                  `json:"first_name,required,nullable"`
+	FullName       string                  `json:"full_name,required,nullable"`
+	LastActivityAt time.Time               `json:"last_activity_at,required" format:"date-time"`
+	LastName       string                  `json:"last_name,required,nullable"`
+	PhoneNumbers   []CandidatePhoneNumbers `json:"phone_numbers,required"`
 	JSON           candidateJSON
 }
 
 // candidateJSON contains the JSON metadata for the struct [Candidate]
 type candidateJSON struct {
 	ID             apijson.Field
-	FirstName      apijson.Field
-	LastName       apijson.Field
-	FullName       apijson.Field
-	Emails         apijson.Field
-	PhoneNumbers   apijson.Field
-	CreatedAt      apijson.Field
-	LastActivityAt apijson.Field
 	ApplicationIDs apijson.Field
+	CreatedAt      apijson.Field
+	Emails         apijson.Field
+	FirstName      apijson.Field
+	FullName       apijson.Field
+	LastActivityAt apijson.Field
+	LastName       apijson.Field
+	PhoneNumbers   apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }

@@ -65,8 +65,8 @@ func (r *ATSJobService) ListAutoPaging(ctx context.Context, query ATSJobListPara
 }
 
 type JobsPage struct {
-	Paging Paging `json:"paging,required"`
 	Jobs   []Job  `json:"jobs,required"`
+	Paging Paging `json:"paging,required"`
 	JSON   jobsPageJSON
 	cfg    *requestconfig.RequestConfig
 	res    *http.Response
@@ -74,8 +74,8 @@ type JobsPage struct {
 
 // jobsPageJSON contains the JSON metadata for the struct [JobsPage]
 type jobsPageJSON struct {
-	Paging      apijson.Field
 	Jobs        apijson.Field
+	Paging      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -156,24 +156,24 @@ func (r *JobsPageAutoPager) Index() int {
 
 type Job struct {
 	ID         string        `json:"id,required" format:"uuid"`
+	ClosedAt   time.Time     `json:"closed_at,required,nullable" format:"date-time"`
+	CreatedAt  time.Time     `json:"created_at,required,nullable" format:"date-time"`
+	Department JobDepartment `json:"department,required"`
+	HiringTeam JobHiringTeam `json:"hiring_team,required"`
 	Name       string        `json:"name,required,nullable"`
 	Status     JobStatus     `json:"status,required,nullable"`
-	Department JobDepartment `json:"department,required"`
-	CreatedAt  time.Time     `json:"created_at,required,nullable" format:"date-time"`
-	ClosedAt   time.Time     `json:"closed_at,required,nullable" format:"date-time"`
-	HiringTeam JobHiringTeam `json:"hiring_team,required"`
 	JSON       jobJSON
 }
 
 // jobJSON contains the JSON metadata for the struct [Job]
 type jobJSON struct {
 	ID          apijson.Field
+	ClosedAt    apijson.Field
+	CreatedAt   apijson.Field
+	Department  apijson.Field
+	HiringTeam  apijson.Field
 	Name        apijson.Field
 	Status      apijson.Field
-	Department  apijson.Field
-	CreatedAt   apijson.Field
-	ClosedAt    apijson.Field
-	HiringTeam  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -181,16 +181,6 @@ type jobJSON struct {
 func (r *Job) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
-
-type JobStatus string
-
-const (
-	JobStatusOpen     JobStatus = "open"
-	JobStatusClosed   JobStatus = "closed"
-	JobStatusOnHold   JobStatus = "on_hold"
-	JobStatusDraft    JobStatus = "draft"
-	JobStatusArchived JobStatus = "archived"
-)
 
 type JobDepartment struct {
 	Name string `json:"name,nullable"`
@@ -259,6 +249,16 @@ type jobHiringTeamRecruitersJSON struct {
 func (r *JobHiringTeamRecruiters) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+type JobStatus string
+
+const (
+	JobStatusOpen     JobStatus = "open"
+	JobStatusClosed   JobStatus = "closed"
+	JobStatusOnHold   JobStatus = "on_hold"
+	JobStatusDraft    JobStatus = "draft"
+	JobStatusArchived JobStatus = "archived"
+)
 
 type ATSJobListParams struct {
 	// Number of jobs to return (defaults to all)

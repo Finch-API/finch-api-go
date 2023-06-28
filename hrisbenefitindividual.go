@@ -99,18 +99,18 @@ func (r *HRISBenefitIndividualService) UnenrollAutoPaging(ctx context.Context, b
 }
 
 type IndividualBenefit struct {
-	IndividualID string                `json:"individual_id"`
-	Code         int64                 `json:"code"`
 	Body         IndividualBenefitBody `json:"body"`
+	Code         int64                 `json:"code"`
+	IndividualID string                `json:"individual_id"`
 	JSON         individualBenefitJSON
 }
 
 // individualBenefitJSON contains the JSON metadata for the struct
 // [IndividualBenefit]
 type individualBenefitJSON struct {
-	IndividualID apijson.Field
-	Code         apijson.Field
 	Body         apijson.Field
+	Code         apijson.Field
+	IndividualID apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -120,13 +120,13 @@ func (r *IndividualBenefit) UnmarshalJSON(data []byte) (err error) {
 }
 
 type IndividualBenefitBody struct {
-	EmployeeDeduction   BenfitContribution `json:"employee_deduction,nullable"`
-	CompanyContribution BenfitContribution `json:"company_contribution,nullable"`
 	// If the benefit supports annual maximum, the amount in cents for this individual.
 	AnnualMaximum int64 `json:"annual_maximum,nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp bool `json:"catch_up,nullable"`
+	CatchUp             bool               `json:"catch_up,nullable"`
+	CompanyContribution BenfitContribution `json:"company_contribution,nullable"`
+	EmployeeDeduction   BenfitContribution `json:"employee_deduction,nullable"`
 	// Type for HSA contribution limit if the benefit is a HSA.
 	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
 	JSON                 individualBenefitBodyJSON
@@ -135,10 +135,10 @@ type IndividualBenefitBody struct {
 // individualBenefitBodyJSON contains the JSON metadata for the struct
 // [IndividualBenefitBody]
 type individualBenefitBodyJSON struct {
-	EmployeeDeduction    apijson.Field
-	CompanyContribution  apijson.Field
 	AnnualMaximum        apijson.Field
 	CatchUp              apijson.Field
+	CompanyContribution  apijson.Field
+	EmployeeDeduction    apijson.Field
 	HsaContributionLimit apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
@@ -157,19 +157,19 @@ const (
 )
 
 type UnenrolledIndividual struct {
-	IndividualID string `json:"individual_id"`
-	// HTTP status code
-	Code int64                    `json:"code"`
 	Body UnenrolledIndividualBody `json:"body"`
-	JSON unenrolledIndividualJSON
+	// HTTP status code
+	Code         int64  `json:"code"`
+	IndividualID string `json:"individual_id"`
+	JSON         unenrolledIndividualJSON
 }
 
 // unenrolledIndividualJSON contains the JSON metadata for the struct
 // [UnenrolledIndividual]
 type unenrolledIndividualJSON struct {
-	IndividualID apijson.Field
-	Code         apijson.Field
 	Body         apijson.Field
+	Code         apijson.Field
+	IndividualID apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -179,21 +179,21 @@ func (r *UnenrolledIndividual) UnmarshalJSON(data []byte) (err error) {
 }
 
 type UnenrolledIndividualBody struct {
-	// Identifier indicating whether the benefit was newly enrolled or updated.
-	Name string `json:"name,nullable"`
 	// A descriptive identifier for the response.
 	FinchCode string `json:"finch_code,nullable"`
 	// Short description in English that provides more information about the response.
 	Message string `json:"message,nullable"`
-	JSON    unenrolledIndividualBodyJSON
+	// Identifier indicating whether the benefit was newly enrolled or updated.
+	Name string `json:"name,nullable"`
+	JSON unenrolledIndividualBodyJSON
 }
 
 // unenrolledIndividualBodyJSON contains the JSON metadata for the struct
 // [UnenrolledIndividualBody]
 type unenrolledIndividualBodyJSON struct {
-	Name        apijson.Field
 	FinchCode   apijson.Field
 	Message     apijson.Field
+	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

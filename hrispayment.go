@@ -58,33 +58,33 @@ func (r *HRISPaymentService) ListAutoPaging(ctx context.Context, query HRISPayme
 
 type Payment struct {
 	// The unique id for the payment.
-	ID string `json:"id"`
-	// The pay period object.
-	PayPeriod     PaymentPayPeriod `json:"pay_period,nullable"`
-	PayDate       string           `json:"pay_date,nullable"`
-	DebitDate     string           `json:"debit_date,nullable"`
-	CompanyDebit  Money            `json:"company_debit,nullable"`
-	GrossPay      Money            `json:"gross_pay,nullable"`
-	NetPay        Money            `json:"net_pay,nullable"`
-	EmployerTaxes Money            `json:"employer_taxes,nullable"`
-	EmployeeTaxes Money            `json:"employee_taxes,nullable"`
+	ID            string `json:"id"`
+	CompanyDebit  Money  `json:"company_debit,nullable"`
+	DebitDate     string `json:"debit_date,nullable"`
+	EmployeeTaxes Money  `json:"employee_taxes,nullable"`
+	EmployerTaxes Money  `json:"employer_taxes,nullable"`
+	GrossPay      Money  `json:"gross_pay,nullable"`
 	// Array of every individual on this payment.
 	IndividualIDs []string `json:"individual_ids,nullable"`
-	JSON          paymentJSON
+	NetPay        Money    `json:"net_pay,nullable"`
+	PayDate       string   `json:"pay_date,nullable"`
+	// The pay period object.
+	PayPeriod PaymentPayPeriod `json:"pay_period,nullable"`
+	JSON      paymentJSON
 }
 
 // paymentJSON contains the JSON metadata for the struct [Payment]
 type paymentJSON struct {
 	ID            apijson.Field
-	PayPeriod     apijson.Field
-	PayDate       apijson.Field
-	DebitDate     apijson.Field
 	CompanyDebit  apijson.Field
-	GrossPay      apijson.Field
-	NetPay        apijson.Field
-	EmployerTaxes apijson.Field
+	DebitDate     apijson.Field
 	EmployeeTaxes apijson.Field
+	EmployerTaxes apijson.Field
+	GrossPay      apijson.Field
 	IndividualIDs apijson.Field
+	NetPay        apijson.Field
+	PayDate       apijson.Field
+	PayPeriod     apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -95,16 +95,16 @@ func (r *Payment) UnmarshalJSON(data []byte) (err error) {
 
 // The pay period object.
 type PaymentPayPeriod struct {
-	StartDate string `json:"start_date,nullable"`
 	EndDate   string `json:"end_date,nullable"`
+	StartDate string `json:"start_date,nullable"`
 	JSON      paymentPayPeriodJSON
 }
 
 // paymentPayPeriodJSON contains the JSON metadata for the struct
 // [PaymentPayPeriod]
 type paymentPayPeriodJSON struct {
-	StartDate   apijson.Field
 	EndDate     apijson.Field
+	StartDate   apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

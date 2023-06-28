@@ -57,32 +57,32 @@ type Provider struct {
 	ID string `json:"id"`
 	// The display name of the payroll provider.
 	DisplayName string `json:"display_name"`
-	// The list of Finch products supported on this payroll provider.
-	Products []string `json:"products"`
 	// The url to the official icon of the payroll provider.
 	Icon string `json:"icon"`
 	// The url to the official logo of the payroll provider.
 	Logo string `json:"logo"`
+	// Whether the Finch integration with this provider uses the Assisted Connect Flow
+	// by default.
+	Manual bool `json:"manual"`
 	// whether MFA is required for the provider.
 	MfaRequired bool `json:"mfa_required"`
 	// The hex code for the primary color of the payroll provider.
 	PrimaryColor string `json:"primary_color"`
-	// Whether the Finch integration with this provider uses the Assisted Connect Flow
-	// by default.
-	Manual bool `json:"manual"`
-	JSON   providerJSON
+	// The list of Finch products supported on this payroll provider.
+	Products []string `json:"products"`
+	JSON     providerJSON
 }
 
 // providerJSON contains the JSON metadata for the struct [Provider]
 type providerJSON struct {
 	ID           apijson.Field
 	DisplayName  apijson.Field
-	Products     apijson.Field
 	Icon         apijson.Field
 	Logo         apijson.Field
+	Manual       apijson.Field
 	MfaRequired  apijson.Field
 	PrimaryColor apijson.Field
-	Manual       apijson.Field
+	Products     apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }

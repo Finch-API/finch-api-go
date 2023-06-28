@@ -65,8 +65,8 @@ func (r *ATSApplicationService) ListAutoPaging(ctx context.Context, query ATSApp
 }
 
 type ApplicationsPage struct {
-	Paging       Paging        `json:"paging,required"`
 	Applications []Application `json:"applications,required"`
+	Paging       Paging        `json:"paging,required"`
 	JSON         applicationsPageJSON
 	cfg          *requestconfig.RequestConfig
 	res          *http.Response
@@ -75,8 +75,8 @@ type ApplicationsPage struct {
 // applicationsPageJSON contains the JSON metadata for the struct
 // [ApplicationsPage]
 type applicationsPageJSON struct {
-	Paging       apijson.Field
 	Applications apijson.Field
+	Paging       apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -160,9 +160,9 @@ type Application struct {
 	CandidateID    string                    `json:"candidate_id,required" format:"uuid"`
 	JobID          string                    `json:"job_id,required" format:"uuid"`
 	OfferID        string                    `json:"offer_id,required,nullable" format:"uuid"`
-	Stage          Stage                     `json:"stage,required,nullable"`
 	RejectedAt     time.Time                 `json:"rejected_at,required,nullable" format:"date-time"`
 	RejectedReason ApplicationRejectedReason `json:"rejected_reason,required,nullable"`
+	Stage          Stage                     `json:"stage,required,nullable"`
 	JSON           applicationJSON
 }
 
@@ -172,9 +172,9 @@ type applicationJSON struct {
 	CandidateID    apijson.Field
 	JobID          apijson.Field
 	OfferID        apijson.Field
-	Stage          apijson.Field
 	RejectedAt     apijson.Field
 	RejectedReason apijson.Field
+	Stage          apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }

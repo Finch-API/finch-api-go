@@ -153,18 +153,18 @@ const (
 )
 
 type BenfitContribution struct {
-	// Contribution type.
-	Type BenfitContributionType `json:"type,nullable"`
 	// Contribution amount in cents (if `fixed`) or basis points (if `percent`).
 	Amount int64 `json:"amount,nullable"`
-	JSON   benfitContributionJSON
+	// Contribution type.
+	Type BenfitContributionType `json:"type,nullable"`
+	JSON benfitContributionJSON
 }
 
 // benfitContributionJSON contains the JSON metadata for the struct
 // [BenfitContribution]
 type benfitContributionJSON struct {
-	Type        apijson.Field
 	Amount      apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -182,24 +182,24 @@ const (
 )
 
 type CompanyBenefit struct {
-	BenefitID string `json:"benefit_id,required"`
-	// Type of benefit.
-	Type                BenefitType        `json:"type,required,nullable"`
-	Description         string             `json:"description,required,nullable"`
-	Frequency           BenefitFrequency   `json:"frequency,required,nullable"`
+	BenefitID           string             `json:"benefit_id,required"`
 	CompanyContribution BenfitContribution `json:"company_contribution,required,nullable"`
+	Description         string             `json:"description,required,nullable"`
 	EmployeeDeduction   BenfitContribution `json:"employee_deduction,required,nullable"`
-	JSON                companyBenefitJSON
+	Frequency           BenefitFrequency   `json:"frequency,required,nullable"`
+	// Type of benefit.
+	Type BenefitType `json:"type,required,nullable"`
+	JSON companyBenefitJSON
 }
 
 // companyBenefitJSON contains the JSON metadata for the struct [CompanyBenefit]
 type companyBenefitJSON struct {
 	BenefitID           apijson.Field
-	Type                apijson.Field
-	Description         apijson.Field
-	Frequency           apijson.Field
 	CompanyContribution apijson.Field
+	Description         apijson.Field
 	EmployeeDeduction   apijson.Field
+	Frequency           apijson.Field
+	Type                apijson.Field
 	raw                 string
 	ExtraFields         map[string]apijson.Field
 }
@@ -226,39 +226,39 @@ func (r *CreateCompanyBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type SupportedBenefit struct {
-	// Type of benefit.
-	Type        BenefitType `json:"type,nullable"`
-	Description string      `json:"description,nullable"`
-	// The list of frequencies supported by the provider for this benefit
-	Frequencies []BenefitFrequency `json:"frequencies"`
-	// Supported deduction types. An empty array indicates deductions are not
-	// supported.
-	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction,nullable"`
-	// Supported contribution types. An empty array indicates contributions are not
-	// supported.
-	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution,nullable"`
 	// Whether the provider supports an annual maximum for this benefit.
 	AnnualMaximum bool `json:"annual_maximum,nullable"`
 	// Whether the provider supports catch up for this benefit. This field will only be
 	// true for retirement benefits.
 	CatchUp bool `json:"catch_up,nullable"`
+	// Supported contribution types. An empty array indicates contributions are not
+	// supported.
+	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution,nullable"`
+	Description         string                                `json:"description,nullable"`
+	// Supported deduction types. An empty array indicates deductions are not
+	// supported.
+	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction,nullable"`
+	// The list of frequencies supported by the provider for this benefit
+	Frequencies []BenefitFrequency `json:"frequencies"`
 	// Whether the provider supports HSA contribution limits. Empty if this feature is
 	// not supported for the benefit. This array only has values for HSA benefits.
 	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
-	JSON                 supportedBenefitJSON
+	// Type of benefit.
+	Type BenefitType `json:"type,nullable"`
+	JSON supportedBenefitJSON
 }
 
 // supportedBenefitJSON contains the JSON metadata for the struct
 // [SupportedBenefit]
 type supportedBenefitJSON struct {
-	Type                 apijson.Field
-	Description          apijson.Field
-	Frequencies          apijson.Field
-	EmployeeDeduction    apijson.Field
-	CompanyContribution  apijson.Field
 	AnnualMaximum        apijson.Field
 	CatchUp              apijson.Field
+	CompanyContribution  apijson.Field
+	Description          apijson.Field
+	EmployeeDeduction    apijson.Field
+	Frequencies          apijson.Field
 	HsaContributionLimit apijson.Field
+	Type                 apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -267,18 +267,18 @@ func (r *SupportedBenefit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SupportedBenefitEmployeeDeduction string
-
-const (
-	SupportedBenefitEmployeeDeductionFixed   SupportedBenefitEmployeeDeduction = "fixed"
-	SupportedBenefitEmployeeDeductionPercent SupportedBenefitEmployeeDeduction = "percent"
-)
-
 type SupportedBenefitCompanyContribution string
 
 const (
 	SupportedBenefitCompanyContributionFixed   SupportedBenefitCompanyContribution = "fixed"
 	SupportedBenefitCompanyContributionPercent SupportedBenefitCompanyContribution = "percent"
+)
+
+type SupportedBenefitEmployeeDeduction string
+
+const (
+	SupportedBenefitEmployeeDeductionFixed   SupportedBenefitEmployeeDeduction = "fixed"
+	SupportedBenefitEmployeeDeductionPercent SupportedBenefitEmployeeDeduction = "percent"
 )
 
 type SupportedBenefitHsaContributionLimit string

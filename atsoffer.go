@@ -65,8 +65,8 @@ func (r *ATSOfferService) ListAutoPaging(ctx context.Context, query ATSOfferList
 }
 
 type OffersPage struct {
-	Paging Paging  `json:"paging,required"`
 	Offers []Offer `json:"offers,required"`
+	Paging Paging  `json:"paging,required"`
 	JSON   offersPageJSON
 	cfg    *requestconfig.RequestConfig
 	res    *http.Response
@@ -74,8 +74,8 @@ type OffersPage struct {
 
 // offersPageJSON contains the JSON metadata for the struct [OffersPage]
 type offersPageJSON struct {
-	Paging      apijson.Field
 	Offers      apijson.Field
+	Paging      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -158,10 +158,10 @@ type Offer struct {
 	ID            string      `json:"id,required" format:"uuid"`
 	ApplicationID string      `json:"application_id,required" format:"uuid"`
 	CandidateID   string      `json:"candidate_id,required" format:"uuid"`
-	JobID         string      `json:"job_id,required" format:"uuid"`
 	CreatedAt     time.Time   `json:"created_at,required" format:"date-time"`
-	UpdatedAt     time.Time   `json:"updated_at,required" format:"date-time"`
+	JobID         string      `json:"job_id,required" format:"uuid"`
 	Status        OfferStatus `json:"status,required"`
+	UpdatedAt     time.Time   `json:"updated_at,required" format:"date-time"`
 	JSON          offerJSON
 }
 
@@ -170,10 +170,10 @@ type offerJSON struct {
 	ID            apijson.Field
 	ApplicationID apijson.Field
 	CandidateID   apijson.Field
-	JobID         apijson.Field
 	CreatedAt     apijson.Field
-	UpdatedAt     apijson.Field
+	JobID         apijson.Field
 	Status        apijson.Field
+	UpdatedAt     apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }

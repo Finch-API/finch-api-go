@@ -61,38 +61,38 @@ func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HR
 }
 
 type PayStatement struct {
-	// A stable Finch `id` (UUID v4) for an individual in the company
-	IndividualID string `json:"individual_id"`
-	// The type of the payment associated with the pay statement.
-	Type PayStatementType `json:"type,nullable"`
-	// The payment method.
-	PaymentMethod PayStatementPaymentMethod `json:"payment_method,nullable"`
-	// The number of hours worked for this pay period
-	TotalHours int64 `json:"total_hours,nullable"`
-	GrossPay   Money `json:"gross_pay,nullable"`
-	NetPay     Money `json:"net_pay,nullable"`
 	// The array of earnings objects associated with this pay statement
 	Earnings []PayStatementEarnings `json:"earnings,nullable"`
-	// The array of taxes objects associated with this pay statement.
-	Taxes []PayStatementTaxes `json:"taxes,nullable"`
 	// The array of deductions objects associated with this pay statement.
 	EmployeeDeductions    []PayStatementEmployeeDeductions    `json:"employee_deductions,nullable"`
 	EmployerContributions []PayStatementEmployerContributions `json:"employer_contributions,nullable"`
-	JSON                  payStatementJSON
+	GrossPay              Money                               `json:"gross_pay,nullable"`
+	// A stable Finch `id` (UUID v4) for an individual in the company
+	IndividualID string `json:"individual_id"`
+	NetPay       Money  `json:"net_pay,nullable"`
+	// The payment method.
+	PaymentMethod PayStatementPaymentMethod `json:"payment_method,nullable"`
+	// The array of taxes objects associated with this pay statement.
+	Taxes []PayStatementTaxes `json:"taxes,nullable"`
+	// The number of hours worked for this pay period
+	TotalHours int64 `json:"total_hours,nullable"`
+	// The type of the payment associated with the pay statement.
+	Type PayStatementType `json:"type,nullable"`
+	JSON payStatementJSON
 }
 
 // payStatementJSON contains the JSON metadata for the struct [PayStatement]
 type payStatementJSON struct {
-	IndividualID          apijson.Field
-	Type                  apijson.Field
-	PaymentMethod         apijson.Field
-	TotalHours            apijson.Field
-	GrossPay              apijson.Field
-	NetPay                apijson.Field
 	Earnings              apijson.Field
-	Taxes                 apijson.Field
 	EmployeeDeductions    apijson.Field
 	EmployerContributions apijson.Field
+	GrossPay              apijson.Field
+	IndividualID          apijson.Field
+	NetPay                apijson.Field
+	PaymentMethod         apijson.Field
+	Taxes                 apijson.Field
+	TotalHours            apijson.Field
+	Type                  apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
 }
@@ -101,28 +101,7 @@ func (r *PayStatement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The type of the payment associated with the pay statement.
-type PayStatementType string
-
-const (
-	PayStatementTypeRegularPayroll  PayStatementType = "regular_payroll"
-	PayStatementTypeOffCyclePayroll PayStatementType = "off_cycle_payroll"
-	PayStatementTypeOneTimePayment  PayStatementType = "one_time_payment"
-)
-
-// The payment method.
-type PayStatementPaymentMethod string
-
-const (
-	PayStatementPaymentMethodCheck         PayStatementPaymentMethod = "check"
-	PayStatementPaymentMethodDirectDeposit PayStatementPaymentMethod = "direct_deposit"
-)
-
 type PayStatementEarnings struct {
-	// The type of earning.
-	Type PayStatementEarningsType `json:"type,nullable"`
-	// The exact name of the deduction from the pay statement.
-	Name string `json:"name,nullable"`
 	// The earnings amount in cents.
 	Amount int64 `json:"amount,nullable"`
 	// The earnings currency code.
@@ -130,17 +109,21 @@ type PayStatementEarnings struct {
 	// The number of hours associated with this earning. (For salaried employees, this
 	// could be hours per pay period, `0` or `null`, depending on the provider).
 	Hours float64 `json:"hours,nullable"`
-	JSON  payStatementEarningsJSON
+	// The exact name of the deduction from the pay statement.
+	Name string `json:"name,nullable"`
+	// The type of earning.
+	Type PayStatementEarningsType `json:"type,nullable"`
+	JSON payStatementEarningsJSON
 }
 
 // payStatementEarningsJSON contains the JSON metadata for the struct
 // [PayStatementEarnings]
 type payStatementEarningsJSON struct {
-	Type        apijson.Field
-	Name        apijson.Field
 	Amount      apijson.Field
 	Currency    apijson.Field
 	Hours       apijson.Field
+	Name        apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -168,28 +151,93 @@ const (
 	PayStatementEarningsTypeOther          PayStatementEarningsType = "other"
 )
 
-type PayStatementTaxes struct {
-	// The type of taxes.
-	Type PayStatementTaxesType `json:"type,nullable"`
-	// The exact name of tax from the pay statement.
+type PayStatementEmployeeDeductions struct {
+	// The deduction amount in cents.
+	Amount int64 `json:"amount,nullable"`
+	// The deduction currency.
+	Currency string `json:"currency,nullable"`
+	// The deduction name from the pay statement.
 	Name string `json:"name,nullable"`
-	// `true` if the amount is paid by the employers.
-	Employer bool `json:"employer,nullable"`
+	// Boolean indicating if the deduction is pre-tax.
+	PreTax bool `json:"pre_tax,nullable"`
+	// Type of benefit.
+	Type BenefitType `json:"type,nullable"`
+	JSON payStatementEmployeeDeductionsJSON
+}
+
+// payStatementEmployeeDeductionsJSON contains the JSON metadata for the struct
+// [PayStatementEmployeeDeductions]
+type payStatementEmployeeDeductionsJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	Name        apijson.Field
+	PreTax      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PayStatementEmployeeDeductions) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type PayStatementEmployerContributions struct {
+	// The contribution amount in cents.
+	Amount int64 `json:"amount,nullable"`
+	// The contribution currency.
+	Currency string `json:"currency,nullable"`
+	// The contribution name from the pay statement.
+	Name string `json:"name,nullable"`
+	// Type of benefit.
+	Type BenefitType `json:"type,nullable"`
+	JSON payStatementEmployerContributionsJSON
+}
+
+// payStatementEmployerContributionsJSON contains the JSON metadata for the struct
+// [PayStatementEmployerContributions]
+type payStatementEmployerContributionsJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	Name        apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PayStatementEmployerContributions) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The payment method.
+type PayStatementPaymentMethod string
+
+const (
+	PayStatementPaymentMethodCheck         PayStatementPaymentMethod = "check"
+	PayStatementPaymentMethodDirectDeposit PayStatementPaymentMethod = "direct_deposit"
+)
+
+type PayStatementTaxes struct {
 	// The tax amount in cents.
 	Amount int64 `json:"amount,nullable"`
 	// The currency code.
 	Currency string `json:"currency,nullable"`
-	JSON     payStatementTaxesJSON
+	// `true` if the amount is paid by the employers.
+	Employer bool `json:"employer,nullable"`
+	// The exact name of tax from the pay statement.
+	Name string `json:"name,nullable"`
+	// The type of taxes.
+	Type PayStatementTaxesType `json:"type,nullable"`
+	JSON payStatementTaxesJSON
 }
 
 // payStatementTaxesJSON contains the JSON metadata for the struct
 // [PayStatementTaxes]
 type payStatementTaxesJSON struct {
-	Type        apijson.Field
-	Name        apijson.Field
-	Employer    apijson.Field
 	Amount      apijson.Field
 	Currency    apijson.Field
+	Employer    apijson.Field
+	Name        apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -208,76 +256,28 @@ const (
 	PayStatementTaxesTypeFica    PayStatementTaxesType = "fica"
 )
 
-type PayStatementEmployeeDeductions struct {
-	// The deduction name from the pay statement.
-	Name string `json:"name,nullable"`
-	// The deduction amount in cents.
-	Amount int64 `json:"amount,nullable"`
-	// The deduction currency.
-	Currency string `json:"currency,nullable"`
-	// Boolean indicating if the deduction is pre-tax.
-	PreTax bool `json:"pre_tax,nullable"`
-	// Type of benefit.
-	Type BenefitType `json:"type,nullable"`
-	JSON payStatementEmployeeDeductionsJSON
-}
+// The type of the payment associated with the pay statement.
+type PayStatementType string
 
-// payStatementEmployeeDeductionsJSON contains the JSON metadata for the struct
-// [PayStatementEmployeeDeductions]
-type payStatementEmployeeDeductionsJSON struct {
-	Name        apijson.Field
-	Amount      apijson.Field
-	Currency    apijson.Field
-	PreTax      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PayStatementEmployeeDeductions) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type PayStatementEmployerContributions struct {
-	// The contribution name from the pay statement.
-	Name string `json:"name,nullable"`
-	// The contribution amount in cents.
-	Amount int64 `json:"amount,nullable"`
-	// The contribution currency.
-	Currency string `json:"currency,nullable"`
-	// Type of benefit.
-	Type BenefitType `json:"type,nullable"`
-	JSON payStatementEmployerContributionsJSON
-}
-
-// payStatementEmployerContributionsJSON contains the JSON metadata for the struct
-// [PayStatementEmployerContributions]
-type payStatementEmployerContributionsJSON struct {
-	Name        apijson.Field
-	Amount      apijson.Field
-	Currency    apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PayStatementEmployerContributions) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
+const (
+	PayStatementTypeRegularPayroll  PayStatementType = "regular_payroll"
+	PayStatementTypeOffCyclePayroll PayStatementType = "off_cycle_payroll"
+	PayStatementTypeOneTimePayment  PayStatementType = "one_time_payment"
+)
 
 type PayStatementResponse struct {
-	PaymentID string                   `json:"payment_id"`
-	Code      int64                    `json:"code"`
 	Body      PayStatementResponseBody `json:"body"`
+	Code      int64                    `json:"code"`
+	PaymentID string                   `json:"payment_id"`
 	JSON      payStatementResponseJSON
 }
 
 // payStatementResponseJSON contains the JSON metadata for the struct
 // [PayStatementResponse]
 type payStatementResponseJSON struct {
-	PaymentID   apijson.Field
-	Code        apijson.Field
 	Body        apijson.Field
+	Code        apijson.Field
+	PaymentID   apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

@@ -40,24 +40,24 @@ func NewHRISService(opts ...option.RequestOption) (r *HRISService) {
 // annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 // depending on what information the provider returns.
 type Income struct {
-	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
-	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
-	Unit IncomeUnit `json:"unit,nullable"`
 	// The income amount in cents.
 	Amount int64 `json:"amount,nullable"`
 	// The currency code.
 	Currency string `json:"currency,nullable"`
 	// The date the income amount went into effect.
 	EffectiveDate string `json:"effective_date,nullable"`
-	JSON          incomeJSON
+	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
+	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
+	Unit IncomeUnit `json:"unit,nullable"`
+	JSON incomeJSON
 }
 
 // incomeJSON contains the JSON metadata for the struct [Income]
 type incomeJSON struct {
-	Unit          apijson.Field
 	Amount        apijson.Field
 	Currency      apijson.Field
 	EffectiveDate apijson.Field
+	Unit          apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -83,33 +83,33 @@ const (
 )
 
 type Location struct {
+	// City, district, suburb, town, or village.
+	City string `json:"city,nullable"`
+	// The 2-letter ISO 3166 country code.
+	Country string `json:"country,nullable"`
 	// Street address or PO box.
 	Line1 string `json:"line1,nullable"`
 	// Apartment, suite, unit, or building.
 	Line2 string `json:"line2,nullable"`
-	// City, district, suburb, town, or village.
-	City string `json:"city,nullable"`
-	// The state code.
-	State string `json:"state,nullable"`
+	Name  string `json:"name,nullable"`
 	// The postal code or zip code.
 	PostalCode string `json:"postal_code,nullable"`
-	// The 2-letter ISO 3166 country code.
-	Country  string `json:"country,nullable"`
-	Name     string `json:"name,nullable"`
-	SourceID string `json:"source_id,nullable"`
-	JSON     locationJSON
+	SourceID   string `json:"source_id,nullable"`
+	// The state code.
+	State string `json:"state,nullable"`
+	JSON  locationJSON
 }
 
 // locationJSON contains the JSON metadata for the struct [Location]
 type locationJSON struct {
+	City        apijson.Field
+	Country     apijson.Field
 	Line1       apijson.Field
 	Line2       apijson.Field
-	City        apijson.Field
-	State       apijson.Field
-	PostalCode  apijson.Field
-	Country     apijson.Field
 	Name        apijson.Field
+	PostalCode  apijson.Field
 	SourceID    apijson.Field
+	State       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
