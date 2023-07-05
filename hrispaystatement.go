@@ -136,7 +136,6 @@ func (r *PayStatementEarning) UnmarshalJSON(data []byte) (err error) {
 type PayStatementEarningsType string
 
 const (
-	PayStatementEarningsType1099           PayStatementEarningsType = "1099"
 	PayStatementEarningsTypeSalary         PayStatementEarningsType = "salary"
 	PayStatementEarningsTypeWage           PayStatementEarningsType = "wage"
 	PayStatementEarningsTypeReimbursement  PayStatementEarningsType = "reimbursement"
@@ -148,6 +147,7 @@ const (
 	PayStatementEarningsTypeBonus          PayStatementEarningsType = "bonus"
 	PayStatementEarningsTypeCommission     PayStatementEarningsType = "commission"
 	PayStatementEarningsTypeTips           PayStatementEarningsType = "tips"
+	PayStatementEarningsType1099           PayStatementEarningsType = "1099"
 	PayStatementEarningsTypeOther          PayStatementEarningsType = "other"
 )
 

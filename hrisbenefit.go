@@ -131,12 +131,12 @@ const (
 type BenefitType string
 
 const (
-	BenefitType457              BenefitType = "457"
 	BenefitType401k             BenefitType = "401k"
 	BenefitType401kRoth         BenefitType = "401k_roth"
 	BenefitType401kLoan         BenefitType = "401k_loan"
 	BenefitType403b             BenefitType = "403b"
 	BenefitType403bRoth         BenefitType = "403b_roth"
+	BenefitType457              BenefitType = "457"
 	BenefitType457Roth          BenefitType = "457_roth"
 	BenefitTypeS125Medical      BenefitType = "s125_medical"
 	BenefitTypeS125Dental       BenefitType = "s125_dental"
