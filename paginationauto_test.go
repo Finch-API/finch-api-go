@@ -16,8 +16,8 @@ func TestAutoPagination(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	iter := client.ATS.Jobs.ListAutoPaging(context.TODO(), finchgo.ATSJobListParams{})
 	// Prism mock isn't going to give us real pagination

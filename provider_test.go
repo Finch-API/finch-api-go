@@ -17,8 +17,8 @@ func TestProviderList(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.Providers.List(context.TODO())
 	if err != nil {

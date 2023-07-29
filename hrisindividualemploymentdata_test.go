@@ -17,8 +17,8 @@ func TestHRISIndividualEmploymentDataGetMany(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Individuals.EmploymentData.GetMany(context.TODO(), finchgo.HRISIndividualEmploymentDataGetManyParams{
 		Requests: finchgo.F([]finchgo.HRISIndividualEmploymentDataGetManyParamsRequest{{

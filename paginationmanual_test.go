@@ -16,8 +16,8 @@ func TestManualPagination(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	page, err := client.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{})
 	if err != nil {

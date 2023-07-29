@@ -17,8 +17,8 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
 		Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{

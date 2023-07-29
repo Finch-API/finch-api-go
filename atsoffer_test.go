@@ -17,8 +17,8 @@ func TestATSOfferGet(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.ATS.Offers.Get(context.TODO(), "string")
 	if err != nil {
@@ -35,8 +35,8 @@ func TestATSOfferListWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.ATS.Offers.List(context.TODO(), finchgo.ATSOfferListParams{
 		Limit:  finchgo.F(int64(0)),

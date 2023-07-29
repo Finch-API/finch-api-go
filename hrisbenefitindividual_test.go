@@ -17,8 +17,8 @@ func TestHRISBenefitIndividualEnrolledIDs(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.Individuals.EnrolledIDs(context.TODO(), "string")
 	if err != nil {
@@ -35,8 +35,8 @@ func TestHRISBenefitIndividualGetManyBenefitsWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.Individuals.GetManyBenefits(
 		context.TODO(),
@@ -59,8 +59,8 @@ func TestHRISBenefitIndividualUnenrollWithOptionalParams(t *testing.T) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithAccessToken("AccessToken"),
 		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.Individuals.Unenroll(
 		context.TODO(),
