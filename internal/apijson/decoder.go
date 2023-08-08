@@ -49,7 +49,7 @@ func (d *decoder) unmarshal(raw []byte, to any) error {
 	value := reflect.ValueOf(to).Elem()
 	result := gjson.ParseBytes(raw)
 	if !value.IsValid() {
-		return fmt.Errorf("apijson: cannot marshal into invalid value")
+		return fmt.Errorf("json: cannot marshal into invalid value")
 	}
 	return d.typeDecoder(value.Type())(result, value)
 }
@@ -113,7 +113,7 @@ func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
 
 		return func(n gjson.Result, v reflect.Value) error {
 			if !v.IsValid() {
-				return fmt.Errorf("apijson: unexpected invalid reflection value %+#v", v)
+				return fmt.Errorf("json: unexpected invalid reflection value %+#v", v)
 			}
 
 			newValue := reflect.New(inner).Elem()
@@ -136,7 +136,7 @@ func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
 	case reflect.Interface:
 		return func(node gjson.Result, value reflect.Value) error {
 			if !value.IsValid() {
-				return fmt.Errorf("apijson: unexpected invalid value %+#v", value)
+				return fmt.Errorf("json: unexpected invalid value %+#v", value)
 			}
 			if node.Value() != nil {
 				value.Set(reflect.ValueOf(node.Value()))
@@ -151,7 +151,7 @@ func (d *decoder) newTypeDecoder(t reflect.Type) decoderFunc {
 func (d *decoder) newUnionDecoder(t reflect.Type) decoderFunc {
 	unionEntry, ok := unionRegistry[t]
 	if !ok {
-		panic("apijson: couldn't find union of type " + t.String() + " in union registry")
+		panic("json: couldn't find union of type " + t.String() + " in union registry")
 	}
 	decoders := []decoderFunc{}
 	for _, variant := range unionEntry.variants {
@@ -174,7 +174,7 @@ func (d *decoder) newUnionDecoder(t reflect.Type) decoderFunc {
 			}
 			v.Set(inner)
 		}
-		return errors.New("apijson: was not able to coerce type as union")
+		return errors.New("json: was not able to coerce type as union")
 	}
 }
 
@@ -190,25 +190,14 @@ func (d *decoder) newMapDecoder(t reflect.Type) decoderFunc {
 			// It's fine for us to just use `ValueOf` here because the key types will
 			// always be primitive types so we don't need to decode it using the standard pattern
 			keyValue := reflect.ValueOf(key.Value())
-			if !keyValue.IsValid() {
-				if err == nil {
-					err = fmt.Errorf("apijson: received invalid key type %v", keyValue.String())
-				}
-				return false
-			}
 			if keyValue.Type() != keyType {
-				if err == nil {
-					err = fmt.Errorf("apijson: expected key type %v but got %v", keyType, keyValue.Type())
-				}
+				err = fmt.Errorf("json: expected key type %v but got %v", keyType, keyValue.Type())
 				return false
 			}
 
 			itemValue := reflect.New(itemType).Elem()
-			itemerr := itemDecoder(value, itemValue)
-			if itemerr != nil {
-				if err == nil {
-					err = itemerr
-				}
+			err = itemDecoder(value, itemValue)
+			if err != nil {
 				return false
 			}
 
@@ -324,7 +313,7 @@ func (d *decoder) newStructTypeDecoder(t reflect.Type) decoderFunc {
 			}
 
 			isValid := false
-			if dest.IsValid() && itemNode.Type != gjson.Null {
+			if dest.IsValid() {
 				err = fn(itemNode, dest)
 				if err == nil {
 					isValid = true
@@ -382,7 +371,7 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 		return func(n gjson.Result, v reflect.Value) error {
 			v.SetString(n.String())
 			if n.Type == gjson.JSON {
-				return fmt.Errorf("apijson: failed to parse string")
+				return fmt.Errorf("json: failed to parse string")
 			}
 			return nil
 		}
@@ -390,7 +379,7 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 		return func(n gjson.Result, v reflect.Value) error {
 			v.SetBool(n.Bool())
 			if n.Type == gjson.String && (n.Raw != "true" && n.Raw != "false") || n.Type == gjson.JSON {
-				return fmt.Errorf("apijson: failed to parse bool")
+				return fmt.Errorf("json: failed to parse bool")
 			}
 			return nil
 		}
@@ -399,7 +388,7 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 			v.SetInt(n.Int())
 			_, err := strconv.ParseFloat(n.Str, 64)
 			if n.Type == gjson.JSON || (n.Type == gjson.String && err != nil) {
-				return fmt.Errorf("apijson: failed to parse int")
+				return fmt.Errorf("json: failed to parse int")
 			}
 			return nil
 		}
@@ -408,7 +397,7 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 			v.SetUint(n.Uint())
 			_, err := strconv.ParseFloat(n.Str, 64)
 			if n.Type == gjson.JSON || (n.Type == gjson.String && err != nil) {
-				return fmt.Errorf("apijson: failed to parse uint")
+				return fmt.Errorf("json: failed to parse uint")
 			}
 			return nil
 		}
@@ -417,7 +406,7 @@ func (d *decoder) newPrimitiveTypeDecoder(t reflect.Type) decoderFunc {
 			v.SetFloat(n.Float())
 			_, err := strconv.ParseFloat(n.Str, 64)
 			if n.Type == gjson.JSON || (n.Type == gjson.String && err != nil) {
-				return fmt.Errorf("apijson: failed to parse float")
+				return fmt.Errorf("json: failed to parse float")
 			}
 			return nil
 		}
@@ -441,5 +430,7 @@ func (d *decoder) newTimeTypeDecoder(t reflect.Type) decoderFunc {
 }
 
 func setUnexportedField(field reflect.Value, value interface{}) {
-	reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())).Elem().Set(reflect.ValueOf(value))
+	reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())).
+		Elem().
+		Set(reflect.ValueOf(value))
 }

@@ -82,10 +82,11 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	}
 	if body, ok := body.(apiform.Marshaler); ok {
 		var err error
-		b, contentType, err = body.MarshalMultipart()
+		b, err = body.MarshalMultipart()
 		if err != nil {
 			return nil, err
 		}
+		contentType = "multipart/form-data"
 	}
 	if body, ok := body.(apiquery.Queryer); ok {
 		u = u + "?" + body.URLQuery().Encode()
@@ -224,10 +225,6 @@ func (cfg *RequestConfig) Execute() error {
 	if res.StatusCode > 399 {
 		aerr := apierror.Error{Request: cfg.Request, Response: res, StatusCode: res.StatusCode}
 		contents, err := io.ReadAll(res.Body)
-		if err != nil {
-			return err
-		}
-		res.Body = io.NopCloser(bytes.NewBuffer(contents))
 		err = aerr.UnmarshalJSON(contents)
 		if err != nil {
 			return err
