@@ -74,7 +74,7 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 // **Availability: Automated and Assisted Benefits providers**
 //
 // Unenroll individuals from a benefit
-func (r *HRISBenefitIndividualService) Unenroll(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollParams, opts ...option.RequestOption) (res *shared.SinglePage[UnenrolledIndividual], err error) {
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *shared.SinglePage[UnenrolledIndividual], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -94,8 +94,8 @@ func (r *HRISBenefitIndividualService) Unenroll(ctx context.Context, benefitID s
 // **Availability: Automated and Assisted Benefits providers**
 //
 // Unenroll individuals from a benefit
-func (r *HRISBenefitIndividualService) UnenrollAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[UnenrolledIndividual] {
-	return shared.NewSinglePageAutoPager(r.Unenroll(ctx, benefitID, body, opts...))
+func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[UnenrolledIndividual] {
+	return shared.NewSinglePageAutoPager(r.UnenrollMany(ctx, benefitID, body, opts...))
 }
 
 type IndividualBenefit struct {
@@ -236,11 +236,11 @@ func (r HRISBenefitIndividualGetManyBenefitsParams) URLQuery() (v url.Values) {
 	})
 }
 
-type HRISBenefitIndividualUnenrollParams struct {
+type HRISBenefitIndividualUnenrollManyParams struct {
 	// Array of individual_ids to unenroll.
 	IndividualIDs param.Field[[]string] `json:"individual_ids"`
 }
 
-func (r HRISBenefitIndividualUnenrollParams) MarshalJSON() (data []byte, err error) {
+func (r HRISBenefitIndividualUnenrollManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

@@ -13,20 +13,19 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-// HRISIndividualEmploymentDataService contains methods and other services that
-// help with interacting with the Finch API. Note, unlike clients, this service
-// does not read variables from the environment automatically. You should not
-// instantiate this service directly, and instead use the
-// [NewHRISIndividualEmploymentDataService] method instead.
-type HRISIndividualEmploymentDataService struct {
+// HRISEmploymentService contains methods and other services that help with
+// interacting with the Finch API. Note, unlike clients, this service does not read
+// variables from the environment automatically. You should not instantiate this
+// service directly, and instead use the [NewHRISEmploymentService] method instead.
+type HRISEmploymentService struct {
 	Options []option.RequestOption
 }
 
-// NewHRISIndividualEmploymentDataService generates a new service that applies the
-// given options to each request. These options are applied after the parent
-// client's options (if there is one), and before any request-specific options.
-func NewHRISIndividualEmploymentDataService(opts ...option.RequestOption) (r *HRISIndividualEmploymentDataService) {
-	r = &HRISIndividualEmploymentDataService{}
+// NewHRISEmploymentService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewHRISEmploymentService(opts ...option.RequestOption) (r *HRISEmploymentService) {
+	r = &HRISEmploymentService{}
 	r.Options = opts
 	return
 }
@@ -36,7 +35,7 @@ func NewHRISIndividualEmploymentDataService(opts ...option.RequestOption) (r *HR
 // Note: Income information is returned as reported by the provider. This may not
 // always be annualized income, but may be in units of bi-weekly, semi-monthly,
 // daily, etc, depending on what information the provider returns.
-func (r *HRISIndividualEmploymentDataService) GetMany(ctx context.Context, body HRISIndividualEmploymentDataGetManyParams, opts ...option.RequestOption) (res *shared.ResponsesPage[EmploymentDataResponse], err error) {
+func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *shared.ResponsesPage[EmploymentDataResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -58,7 +57,7 @@ func (r *HRISIndividualEmploymentDataService) GetMany(ctx context.Context, body 
 // Note: Income information is returned as reported by the provider. This may not
 // always be annualized income, but may be in units of bi-weekly, semi-monthly,
 // daily, etc, depending on what information the provider returns.
-func (r *HRISIndividualEmploymentDataService) GetManyAutoPaging(ctx context.Context, body HRISIndividualEmploymentDataGetManyParams, opts ...option.RequestOption) *shared.ResponsesPageAutoPager[EmploymentDataResponse] {
+func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) *shared.ResponsesPageAutoPager[EmploymentDataResponse] {
 	return shared.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
 }
 
@@ -233,22 +232,22 @@ func (r *EmploymentDataResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type HRISIndividualEmploymentDataGetManyParams struct {
+type HRISEmploymentGetManyParams struct {
 	// The array of batch requests.
-	Requests param.Field[[]HRISIndividualEmploymentDataGetManyParamsRequest] `json:"requests,required"`
+	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests,required"`
 }
 
-func (r HRISIndividualEmploymentDataGetManyParams) MarshalJSON() (data []byte, err error) {
+func (r HRISEmploymentGetManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type HRISIndividualEmploymentDataGetManyParamsRequest struct {
+type HRISEmploymentGetManyParamsRequest struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company. There is no
 	// limit to the number of `individual_id` to send per request. It is preferantial
 	// to send all ids in a single request for Finch to optimize provider rate-limits.
 	IndividualID param.Field[string] `json:"individual_id,required"`
 }
 
-func (r HRISIndividualEmploymentDataGetManyParamsRequest) MarshalJSON() (data []byte, err error) {
+func (r HRISEmploymentGetManyParamsRequest) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

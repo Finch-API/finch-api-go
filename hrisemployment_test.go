@@ -12,7 +12,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestHRISIndividualEmploymentDataGetMany(t *testing.T) {
+func TestHRISEmploymentGetMany(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
@@ -20,8 +20,8 @@ func TestHRISIndividualEmploymentDataGetMany(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 		option.WithAccessToken("AccessToken"),
 	)
-	_, err := client.HRIS.Individuals.EmploymentData.GetMany(context.TODO(), finchgo.HRISIndividualEmploymentDataGetManyParams{
-		Requests: finchgo.F([]finchgo.HRISIndividualEmploymentDataGetManyParamsRequest{{
+	_, err := client.HRIS.Employments.GetMany(context.TODO(), finchgo.HRISEmploymentGetManyParams{
+		Requests: finchgo.F([]finchgo.HRISEmploymentGetManyParamsRequest{{
 			IndividualID: finchgo.F("string"),
 		}, {
 			IndividualID: finchgo.F("string"),

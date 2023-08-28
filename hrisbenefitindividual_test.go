@@ -54,7 +54,7 @@ func TestHRISBenefitIndividualGetManyBenefitsWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISBenefitIndividualUnenrollWithOptionalParams(t *testing.T) {
+func TestHRISBenefitIndividualUnenrollManyWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t) {
 		return
 	}
@@ -62,10 +62,10 @@ func TestHRISBenefitIndividualUnenrollWithOptionalParams(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 		option.WithAccessToken("AccessToken"),
 	)
-	_, err := client.HRIS.Benefits.Individuals.Unenroll(
+	_, err := client.HRIS.Benefits.Individuals.UnenrollMany(
 		context.TODO(),
 		"string",
-		finchgo.HRISBenefitIndividualUnenrollParams{
+		finchgo.HRISBenefitIndividualUnenrollManyParams{
 			IndividualIDs: finchgo.F([]string{"string", "string", "string"}),
 		},
 	)

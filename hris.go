@@ -14,10 +14,11 @@ import (
 type HRISService struct {
 	Options       []option.RequestOption
 	Company       *HRISCompanyService
-	Payments      *HRISPaymentService
-	PayStatements *HRISPayStatementService
 	Directory     *HRISDirectoryService
 	Individuals   *HRISIndividualService
+	Employments   *HRISEmploymentService
+	Payments      *HRISPaymentService
+	PayStatements *HRISPayStatementService
 	Benefits      *HRISBenefitService
 }
 
@@ -28,10 +29,11 @@ func NewHRISService(opts ...option.RequestOption) (r *HRISService) {
 	r = &HRISService{}
 	r.Options = opts
 	r.Company = NewHRISCompanyService(opts...)
-	r.Payments = NewHRISPaymentService(opts...)
-	r.PayStatements = NewHRISPayStatementService(opts...)
 	r.Directory = NewHRISDirectoryService(opts...)
 	r.Individuals = NewHRISIndividualService(opts...)
+	r.Employments = NewHRISEmploymentService(opts...)
+	r.Payments = NewHRISPaymentService(opts...)
+	r.PayStatements = NewHRISPayStatementService(opts...)
 	r.Benefits = NewHRISBenefitService(opts...)
 	return
 }

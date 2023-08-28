@@ -18,8 +18,7 @@ import (
 // variables from the environment automatically. You should not instantiate this
 // service directly, and instead use the [NewHRISIndividualService] method instead.
 type HRISIndividualService struct {
-	Options        []option.RequestOption
-	EmploymentData *HRISIndividualEmploymentDataService
+	Options []option.RequestOption
 }
 
 // NewHRISIndividualService generates a new service that applies the given options
@@ -28,7 +27,6 @@ type HRISIndividualService struct {
 func NewHRISIndividualService(opts ...option.RequestOption) (r *HRISIndividualService) {
 	r = &HRISIndividualService{}
 	r.Options = opts
-	r.EmploymentData = NewHRISIndividualEmploymentDataService(opts...)
 	return
 }
 
