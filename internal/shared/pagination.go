@@ -10,7 +10,7 @@ import (
 )
 
 type SinglePage[T any] struct {
-	Items []T `json:"items"`
+	Items []T `json:"-,inline"`
 	JSON  singlePageJSON
 	cfg   *requestconfig.RequestConfig
 	res   *http.Response
