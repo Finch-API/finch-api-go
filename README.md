@@ -25,6 +25,8 @@ This library requires Go 1.18+.
 
 ## Usage
 
+The full API of this library can be found in [api.md](https://www.github.com/Finch-API/finch-api-go/blob/main/api.md).
+
 ```go
 package main
 
