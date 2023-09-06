@@ -137,10 +137,11 @@ type RequestConfig struct {
 	ResponseBodyInto interface{}
 	// ResponseInto copies the \*http.Response of the corresponding request into the
 	// given address
-	ResponseInto **http.Response
-	ClientID     string
-	ClientSecret string
-	Buffer       []byte
+	ResponseInto  **http.Response
+	ClientID      string
+	ClientSecret  string
+	WebhookSecret string
+	Buffer        []byte
 }
 
 // middleware is exactly the same type as the Middleware type found in the [option] package,

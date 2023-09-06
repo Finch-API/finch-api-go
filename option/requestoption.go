@@ -212,3 +212,11 @@ func WithClientSecret(value string) RequestOption {
 		return nil
 	}
 }
+
+// WithWebhookSecret returns a RequestOption that sets the client setting "webhook_secret".
+func WithWebhookSecret(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.WebhookSecret = value
+		return nil
+	}
+}

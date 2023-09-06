@@ -17,12 +17,13 @@ type Client struct {
 	ATS       *ATSService
 	Providers *ProviderService
 	Account   *AccountService
+	Webhooks  *WebhookService
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET). The option passed in as
-// arguments are applied after these default arguments, and all option will be
-// passed down to the services and requests that this client makes.
+// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). The
+// option passed in as arguments are applied after these default arguments, and all
+// option will be passed down to the services and requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("FINCH_CLIENT_ID"); ok {
@@ -30,6 +31,9 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	}
 	if o, ok := os.LookupEnv("FINCH_CLIENT_SECRET"); ok {
 		defaults = append(defaults, option.WithClientSecret(o))
+	}
+	if o, ok := os.LookupEnv("FINCH_WEBHOOK_SECRET"); ok {
+		defaults = append(defaults, option.WithWebhookSecret(o))
 	}
 	opts = append(defaults, opts...)
 
@@ -39,6 +43,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.ATS = NewATSService(opts...)
 	r.Providers = NewProviderService(opts...)
 	r.Account = NewAccountService(opts...)
+	r.Webhooks = NewWebhookService(opts...)
 
 	return
 }
