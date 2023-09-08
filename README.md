@@ -7,17 +7,25 @@ API](https://developer.tryfinch.com/) from applications written in Go.
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
 	"github.com/Finch-API/finch-api-go" // imported as finchgo
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
+
+<!-- x-release-please-start-version -->
 
 ```sh
 go get -u 'github.com/Finch-API/finch-api-go@v0.0.1'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
