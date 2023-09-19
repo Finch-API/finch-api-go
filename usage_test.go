@@ -19,9 +19,9 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 		option.WithAccessToken("AccessToken"),
 	)
-	candidate, err := client.ATS.Candidates.Get(context.TODO(), "<candidate id>")
+	page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", candidate.FirstName)
+	t.Logf("%+v\n", page)
 }

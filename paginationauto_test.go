@@ -19,11 +19,11 @@ func TestAutoPagination(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 		option.WithAccessToken("AccessToken"),
 	)
-	iter := client.ATS.Jobs.ListAutoPaging(context.TODO(), finchgo.ATSJobListParams{})
+	iter := client.HRIS.Directory.ListIndividualsAutoPaging(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 	// Prism mock isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
-		job := iter.Current()
-		t.Logf("%+v\n", job)
+		directory := iter.Current()
+		t.Logf("%+v\n", directory)
 	}
 	if err := iter.Err(); err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

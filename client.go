@@ -14,7 +14,6 @@ import (
 type Client struct {
 	Options   []option.RequestOption
 	HRIS      *HRISService
-	ATS       *ATSService
 	Providers *ProviderService
 	Account   *AccountService
 	Webhooks  *WebhookService
@@ -40,7 +39,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r = &Client{Options: opts}
 
 	r.HRIS = NewHRISService(opts...)
-	r.ATS = NewATSService(opts...)
 	r.Providers = NewProviderService(opts...)
 	r.Account = NewAccountService(opts...)
 	r.Webhooks = NewWebhookService(opts...)
