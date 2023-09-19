@@ -49,11 +49,11 @@ func main() {
 	client := finchgo.NewClient(
 		option.WithAccessToken("my access token"),
 	)
-	candidate, err := client.ATS.Candidates.Get(context.TODO(), "<candidate id>")
+	page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", candidate.FirstName)
+	fmt.Printf("%+v\n", page)
 }
 
 ```
@@ -142,7 +142,7 @@ client := finchgo.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.ATS.Candidates.Get(context.TODO(), ...,
+client.HRIS.Directory.ListIndividuals(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -159,11 +159,11 @@ This library provides some conveniences for working with paginated list endpoint
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
 ```go
-iter := client.ATS.Jobs.ListAutoPaging(context.TODO(), finchgo.ATSJobListParams{})
+iter := client.HRIS.Directory.ListIndividualsAutoPaging(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
-	job := iter.Current()
-	fmt.Printf("%+v\n", job)
+	directory := iter.Current()
+	fmt.Printf("%+v\n", directory)
 }
 if err := iter.Err(); err != nil {
 	panic(err.Error())
@@ -174,10 +174,10 @@ Or you can use simple `.List()` methods to fetch a single page and receive a sta
 with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
-page, err := client.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{})
+page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 for page != nil {
-	for _, job := range page.Jobs {
-		fmt.Printf("%+v\n", job)
+	for _, directory := range page.Individuals {
+		fmt.Printf("%+v\n", directory)
 	}
 	page, err = page.GetNextPage()
 }

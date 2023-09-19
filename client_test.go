@@ -20,7 +20,7 @@ func TestCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.ATS.Candidates.Get(cancelCtx, "<candidate id>")
+	res, err := client.HRIS.Directory.ListIndividuals(cancelCtx, finchgo.HRISDirectoryListIndividualsParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -44,7 +44,7 @@ func TestCancelDelay(t *testing.T) {
 		time.Sleep(time.Millisecond * time.Duration(2))
 		cancel()
 	}()
-	res, err := client.ATS.Candidates.Get(cancelCtx, "<candidate id>")
+	res, err := client.HRIS.Directory.ListIndividuals(cancelCtx, finchgo.HRISDirectoryListIndividualsParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
