@@ -162,8 +162,8 @@ You can use `.ListAutoPaging()` methods to iterate through items across all page
 iter := client.HRIS.Directory.ListIndividualsAutoPaging(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
-	directory := iter.Current()
-	fmt.Printf("%+v\n", directory)
+	individualInDirectory := iter.Current()
+	fmt.Printf("%+v\n", individualInDirectory)
 }
 if err := iter.Err(); err != nil {
 	panic(err.Error())
