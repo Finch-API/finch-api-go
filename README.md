@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/Finch-API/finch-api-go@v0.0.2'
+go get -u 'github.com/Finch-API/finch-api-go@v0.0.3'
 ```
 
 <!-- x-release-please-end -->
@@ -49,11 +49,11 @@ func main() {
 	client := finchgo.NewClient(
 		option.WithAccessToken("my access token"),
 	)
-	candidate, err := client.ATS.Candidates.Get(context.TODO(), "<candidate id>")
+	page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", candidate.FirstName)
+	fmt.Printf("%+v\n", page)
 }
 
 ```
@@ -142,7 +142,7 @@ client := finchgo.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.ATS.Candidates.Get(context.TODO(), ...,
+client.HRIS.Directory.ListIndividuals(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -159,11 +159,11 @@ This library provides some conveniences for working with paginated list endpoint
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
 ```go
-iter := client.ATS.Jobs.ListAutoPaging(context.TODO(), finchgo.ATSJobListParams{})
+iter := client.HRIS.Directory.ListIndividualsAutoPaging(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
-	job := iter.Current()
-	fmt.Printf("%+v\n", job)
+	individualInDirectory := iter.Current()
+	fmt.Printf("%+v\n", individualInDirectory)
 }
 if err := iter.Err(); err != nil {
 	panic(err.Error())
@@ -174,10 +174,10 @@ Or you can use simple `.List()` methods to fetch a single page and receive a sta
 with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
-page, err := client.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{})
+page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 for page != nil {
-	for _, job := range page.Jobs {
-		fmt.Printf("%+v\n", job)
+	for _, directory := range page.Individuals {
+		fmt.Printf("%+v\n", directory)
 	}
 	page, err = page.GetNextPage()
 }
@@ -202,7 +202,6 @@ if err != nil {
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
-
 	}
 	panic(err.Error()) // GET "/employer/directory": 400 Bad Request { ... }
 }
@@ -233,8 +232,8 @@ client.HRIS.Directory.ListIndividuals(
 ## Retries
 
 Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
-Connection errors (for example, due to a network connectivity problem), 409 Conflict, 429 Rate Limit,
-and >=500 Internal errors will all be retried by default.
+We retry by default all connection errors, 408 Request Timeout, 409 Conflict, 429 Rate Limit,
+and >=500 Internal errors.
 
 You can use the `WithMaxRetries` option to configure or disable this:
 

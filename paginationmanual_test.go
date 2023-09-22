@@ -19,12 +19,12 @@ func TestManualPagination(t *testing.T) {
 		option.WithBaseURL("http://127.0.0.1:4010"),
 		option.WithAccessToken("AccessToken"),
 	)
-	page, err := client.ATS.Jobs.List(context.TODO(), finchgo.ATSJobListParams{})
+	page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	for _, job := range page.Jobs {
-		t.Logf("%+v\n", job)
+	for _, directory := range page.Individuals {
+		t.Logf("%+v\n", directory)
 	}
 	// Prism mock isn't going to give us real pagination
 	page, err = page.GetNextPage()
@@ -32,8 +32,8 @@ func TestManualPagination(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 	if page != nil {
-		for _, job := range page.Jobs {
-			t.Logf("%+v\n", job)
+		for _, directory := range page.Individuals {
+			t.Logf("%+v\n", directory)
 		}
 	}
 }
