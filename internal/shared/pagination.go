@@ -75,7 +75,7 @@ func (r *SinglePageAutoPager[T]) Next() bool {
 	if r.idx >= len(r.page.Items) {
 		r.idx = 0
 		r.page, r.err = r.page.GetNextPage()
-		if r.err != nil || r.page == nil {
+		if r.err != nil || r.page == nil || len(r.page.Items) == 0 {
 			return false
 		}
 	}
@@ -163,7 +163,7 @@ func (r *ResponsesPageAutoPager[T]) Next() bool {
 	if r.idx >= len(r.page.Responses) {
 		r.idx = 0
 		r.page, r.err = r.page.GetNextPage()
-		if r.err != nil || r.page == nil {
+		if r.err != nil || r.page == nil || len(r.page.Responses) == 0 {
 			return false
 		}
 	}
