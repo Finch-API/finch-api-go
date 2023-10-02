@@ -5,6 +5,7 @@ package finchgo_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
@@ -13,11 +14,15 @@ import (
 )
 
 func TestHRISDirectoryListIndividualsWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{
