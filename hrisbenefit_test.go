@@ -5,6 +5,7 @@ package finchgo_test
 import (
 	"context"
 	"errors"
+	"os"
 	"testing"
 
 	finchgo "github.com/Finch-API/finch-api-go"
@@ -13,11 +14,15 @@ import (
 )
 
 func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
@@ -35,11 +40,15 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 }
 
 func TestHRISBenefitGet(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.Get(context.TODO(), "string")
@@ -53,11 +62,15 @@ func TestHRISBenefitGet(t *testing.T) {
 }
 
 func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.Update(
@@ -77,11 +90,15 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestHRISBenefitList(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.List(context.TODO())
@@ -95,11 +112,15 @@ func TestHRISBenefitList(t *testing.T) {
 }
 
 func TestHRISBenefitListSupportedBenefits(t *testing.T) {
-	if !testutil.CheckTestServer(t) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
 	client := finchgo.NewClient(
-		option.WithBaseURL("http://127.0.0.1:4010"),
+		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
 	_, err := client.HRIS.Benefits.ListSupportedBenefits(context.TODO())
