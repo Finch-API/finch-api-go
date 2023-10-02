@@ -123,7 +123,7 @@ func (r *IndividualsPageAutoPager) Next() bool {
 	if r.idx >= len(r.page.Individuals) {
 		r.idx = 0
 		r.page, r.err = r.page.GetNextPage()
-		if r.err != nil || r.page == nil {
+		if r.err != nil || r.page == nil || len(r.page.Individuals) == 0 {
 			return false
 		}
 	}
