@@ -122,7 +122,7 @@ func (r *Location) UnmarshalJSON(data []byte) (err error) {
 
 type Money struct {
 	// Amount for money object (in cents)
-	Amount   int64  `json:"amount"`
+	Amount   int64  `json:"amount,nullable"`
 	Currency string `json:"currency"`
 	JSON     moneyJSON
 }
