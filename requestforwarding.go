@@ -108,8 +108,8 @@ func (r *RequestForwardingForwardResponseRequest) UnmarshalJSON(data []byte) (er
 }
 
 type RequestForwardingForwardParams struct {
-	// The HTTP method for the forwarded request. Valid values include: `GET` , `POST`
-	// , `PUT` , `DELETE` , and `PATCH`.
+	// The HTTP method for the forwarded request. Valid values include: `GET`, `POST`,
+	// `PUT`, `DELETE`, and `PATCH`.
 	Method param.Field[string] `json:"method,required"`
 	// The URL route path for the forwarded request. This value must begin with a
 	// forward-slash ( / ) and may only contain alphanumeric characters, hyphens, and
