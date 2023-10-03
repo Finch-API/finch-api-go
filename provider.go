@@ -61,9 +61,8 @@ type Provider struct {
 	Icon string `json:"icon"`
 	// The url to the official logo of the payroll provider.
 	Logo string `json:"logo"`
-	// [DEPRECATED] Whether the Finch integration with this provider uses the Assisted
-	// Connect Flow by default. This field is now deprecated. Please check for a `type`
-	// of `assisted` in the `authentication_methods` field instead.
+	// Whether the Finch integration with this provider uses the Assisted Connect Flow
+	// by default.
 	Manual bool `json:"manual"`
 	// whether MFA is required for the provider.
 	MfaRequired bool `json:"mfa_required"`
