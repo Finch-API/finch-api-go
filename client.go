@@ -12,11 +12,12 @@ import (
 // interacting with the Finch API. You should not instantiate this client directly,
 // and instead use the [NewClient] method instead.
 type Client struct {
-	Options   []option.RequestOption
-	HRIS      *HRISService
-	Providers *ProviderService
-	Account   *AccountService
-	Webhooks  *WebhookService
+	Options           []option.RequestOption
+	HRIS              *HRISService
+	Providers         *ProviderService
+	Account           *AccountService
+	Webhooks          *WebhookService
+	RequestForwarding *RequestForwardingService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -42,6 +43,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Providers = NewProviderService(opts...)
 	r.Account = NewAccountService(opts...)
 	r.Webhooks = NewWebhookService(opts...)
+	r.RequestForwarding = NewRequestForwardingService(opts...)
 
 	return
 }
