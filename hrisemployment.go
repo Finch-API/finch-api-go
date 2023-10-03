@@ -91,7 +91,9 @@ type EmploymentData struct {
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
 	PayGroupIDs []string `json:"pay_group_ids,nullable"`
-	StartDate   string   `json:"start_date,nullable"`
+	// The source system's unique employment identifier for this individual
+	SourceID  string `json:"source_id,nullable"`
+	StartDate string `json:"start_date,nullable"`
 	// The current title of the individual.
 	Title string `json:"title,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
@@ -119,6 +121,7 @@ type employmentDataJSON struct {
 	Manager       apijson.Field
 	MiddleName    apijson.Field
 	PayGroupIDs   apijson.Field
+	SourceID      apijson.Field
 	StartDate     apijson.Field
 	Title         apijson.Field
 	WorkID        apijson.Field

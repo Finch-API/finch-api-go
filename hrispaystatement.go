@@ -75,7 +75,7 @@ type PayStatement struct {
 	// The array of taxes objects associated with this pay statement.
 	Taxes []PayStatementTax `json:"taxes,nullable"`
 	// The number of hours worked for this pay period
-	TotalHours int64 `json:"total_hours,nullable"`
+	TotalHours float64 `json:"total_hours,nullable"`
 	// The type of the payment associated with the pay statement.
 	Type PayStatementType `json:"type,nullable"`
 	JSON payStatementJSON
