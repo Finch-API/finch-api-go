@@ -81,7 +81,7 @@ type RequestForwardingForwardResponseRequest struct {
 	// headers were specified, this will be returned as `null`.
 	Headers interface{} `json:"headers,required,nullable"`
 	// The HTTP method that was specified for the forwarded request. Valid values
-	// include: `GET` , `POST` , `PUT` , `DELETE` , and `PATCH`.
+	// include: `GET`, `POST`, `PUT` , `DELETE`, and `PATCH`.
 	Method string `json:"method,required"`
 	// The query parameters that were included in the forwarded request. If no query
 	// parameters were specified, this will be returned as `null`.
