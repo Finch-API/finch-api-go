@@ -125,6 +125,7 @@ type BenefitFrequency string
 const (
 	BenefitFrequencyOneTime       BenefitFrequency = "one_time"
 	BenefitFrequencyEveryPaycheck BenefitFrequency = "every_paycheck"
+	BenefitFrequencyMonthly       BenefitFrequency = "monthly"
 )
 
 // Type of benefit.

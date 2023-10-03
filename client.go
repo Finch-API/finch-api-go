@@ -3,8 +3,11 @@
 package finchgo
 
 import (
+	"context"
+	"net/http"
 	"os"
 
+	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -17,6 +20,7 @@ type Client struct {
 	Providers *ProviderService
 	Account   *AccountService
 	Webhooks  *WebhookService
+	Employer  *EmployerService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -42,6 +46,18 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Providers = NewProviderService(opts...)
 	r.Account = NewAccountService(opts...)
 	r.Webhooks = NewWebhookService(opts...)
+	r.Employer = NewEmployerService(opts...)
 
+	return
+}
+
+// The Forward API allows you to make direct requests to an employment system. If
+// Finch’s unified API doesn’t have a data model that cleanly fits your needs, then
+// Forward allows you to push or pull data models directly against an integration’s
+// API.
+func (r *Client) Forward(ctx context.Context, body FinchgoForwardParams, opts ...option.RequestOption) (res *FinchgoForwardResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "forward"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }

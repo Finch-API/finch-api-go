@@ -1,5 +1,13 @@
 # finchgo
 
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoForwardResponse">FinchgoForwardResponse</a>
+
+Methods:
+
+- <code title="post /forward">client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.Forward">Forward</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoForwardParams">FinchgoForwardParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoForwardResponse">FinchgoForwardResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # HRIS
 
 Response Types:
@@ -116,6 +124,7 @@ Methods:
 
 Response Types:
 
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#BenefitSupportType">BenefitSupportType</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#Provider">Provider</a>
 
 Methods:
@@ -139,3 +148,15 @@ Methods:
 Custom Methods:
 
 - VerifySignature
+
+# Employer
+
+## Benefits
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#RegisterCompanyBenefitsResponse">RegisterCompanyBenefitsResponse</a>
+
+Methods:
+
+- <code title="post /employer/benefits/register">client.Employer.Benefits.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#EmployerBenefitService.Register">Register</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#EmployerBenefitRegisterParams">EmployerBenefitRegisterParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#RegisterCompanyBenefitsResponse">RegisterCompanyBenefitsResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

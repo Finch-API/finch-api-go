@@ -58,6 +58,8 @@ type Individual struct {
 	ID     string            `json:"id"`
 	Dob    string            `json:"dob,nullable"`
 	Emails []IndividualEmail `json:"emails,nullable"`
+	// The EEOC-defined ethnicity of the individual.
+	Ethnicity IndividualEthnicity `json:"ethnicity,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name,nullable"`
 	// The gender of the individual.
@@ -81,6 +83,7 @@ type individualJSON struct {
 	ID            apijson.Field
 	Dob           apijson.Field
 	Emails        apijson.Field
+	Ethnicity     apijson.Field
 	FirstName     apijson.Field
 	Gender        apijson.Field
 	LastName      apijson.Field
@@ -120,6 +123,20 @@ type IndividualEmailsType string
 const (
 	IndividualEmailsTypeWork     IndividualEmailsType = "work"
 	IndividualEmailsTypePersonal IndividualEmailsType = "personal"
+)
+
+// The EEOC-defined ethnicity of the individual.
+type IndividualEthnicity string
+
+const (
+	IndividualEthnicityAsian                           IndividualEthnicity = "asian"
+	IndividualEthnicityWhite                           IndividualEthnicity = "white"
+	IndividualEthnicityBlackOrAfricanAmerican          IndividualEthnicity = "black_or_african_american"
+	IndividualEthnicityNativeHawaiianOrPacificIslander IndividualEthnicity = "native_hawaiian_or_pacific_islander"
+	IndividualEthnicityAmericanIndianOrAlaskaNative    IndividualEthnicity = "american_indian_or_alaska_native"
+	IndividualEthnicityHispanicOrLatino                IndividualEthnicity = "hispanic_or_latino"
+	IndividualEthnicityTwoOrMoreRaces                  IndividualEthnicity = "two_or_more_races"
+	IndividualEthnicityDeclineToSpecify                IndividualEthnicity = "decline_to_specify"
 )
 
 // The gender of the individual.
