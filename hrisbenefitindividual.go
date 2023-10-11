@@ -124,9 +124,9 @@ type IndividualBenefitBody struct {
 	AnnualMaximum int64 `json:"annual_maximum,nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp             bool               `json:"catch_up,nullable"`
-	CompanyContribution BenfitContribution `json:"company_contribution,nullable"`
-	EmployeeDeduction   BenfitContribution `json:"employee_deduction,nullable"`
+	CatchUp             bool                `json:"catch_up,nullable"`
+	CompanyContribution BenefitContribution `json:"company_contribution,nullable"`
+	EmployeeDeduction   BenefitContribution `json:"employee_deduction,nullable"`
 	// Type for HSA contribution limit if the benefit is a HSA.
 	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
 	JSON                 individualBenefitBodyJSON

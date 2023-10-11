@@ -49,7 +49,7 @@ func main() {
 	client := finchgo.NewClient(
 		option.WithAccessToken("my access token"),
 	)
-	page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 	if err != nil {
 		panic(err.Error())
 	}
@@ -142,7 +142,7 @@ client := finchgo.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.HRIS.Directory.ListIndividuals(context.TODO(), ...,
+client.HRIS.Directory.List(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -159,7 +159,7 @@ This library provides some conveniences for working with paginated list endpoint
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
 ```go
-iter := client.HRIS.Directory.ListIndividualsAutoPaging(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+iter := client.HRIS.Directory.ListAutoPaging(context.TODO(), finchgo.HRISDirectoryListParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
 	individualInDirectory := iter.Current()
@@ -174,7 +174,7 @@ Or you can use simple `.List()` methods to fetch a single page and receive a sta
 with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
-page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 for page != nil {
 	for _, directory := range page.Individuals {
 		fmt.Printf("%+v\n", directory)
@@ -196,7 +196,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+_, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 if err != nil {
 	var apierr *finchgo.Error
 	if errors.As(err, &apierr) {
@@ -221,9 +221,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.HRIS.Directory.ListIndividuals(
+client.HRIS.Directory.List(
 	ctx,
-	finchgo.HRISDirectoryListIndividualsParams{},
+	finchgo.HRISDirectoryListParams{},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -244,9 +244,9 @@ client := finchgo.NewClient(
 )
 
 // Override per-request:
-client.HRIS.Directory.ListIndividuals(
+client.HRIS.Directory.List(
 	context.TODO(),
-	finchgo.HRISDirectoryListIndividualsParams{},
+	finchgo.HRISDirectoryListParams{},
 	option.WithMaxRetries(5),
 )
 ```
@@ -290,7 +290,7 @@ middleware has been applied.
 
 ## Semantic Versioning
 
-This package generally attempts to follow [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
+This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 
 1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals)_.
 2. Changes that we do not expect to impact the vast majority of users in practice.
