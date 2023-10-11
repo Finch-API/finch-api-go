@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.6 (2023-10-11)
+
+Full Changelog: [v0.0.5...v0.0.6](https://github.com/Finch-API/finch-api-go/compare/v0.0.5...v0.0.6)
+
 ## 0.0.5 (2023-10-03)
 
 Full Changelog: [v0.0.4...v0.0.5](https://github.com/Finch-API/finch-api-go/compare/v0.0.4...v0.0.5)
