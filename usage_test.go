@@ -24,7 +24,7 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("AccessToken"),
 	)
-	page, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{})
+	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 	if err != nil {
 		t.Error(err)
 	}
