@@ -120,6 +120,35 @@ func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context
 	return shared.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
 }
 
+type BenefitContribution struct {
+	// Contribution amount in cents (if `fixed`) or basis points (if `percent`).
+	Amount int64 `json:"amount,nullable"`
+	// Contribution type.
+	Type BenefitContributionType `json:"type,nullable"`
+	JSON benefitContributionJSON
+}
+
+// benefitContributionJSON contains the JSON metadata for the struct
+// [BenefitContribution]
+type benefitContributionJSON struct {
+	Amount      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *BenefitContribution) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Contribution type.
+type BenefitContributionType string
+
+const (
+	BenefitContributionTypeFixed   BenefitContributionType = "fixed"
+	BenefitContributionTypePercent BenefitContributionType = "percent"
+)
+
 type BenefitFrequency string
 
 const (
@@ -152,41 +181,12 @@ const (
 	BenefitTypeCustomPreTax     BenefitType = "custom_pre_tax"
 )
 
-type BenfitContribution struct {
-	// Contribution amount in cents (if `fixed`) or basis points (if `percent`).
-	Amount int64 `json:"amount,nullable"`
-	// Contribution type.
-	Type BenfitContributionType `json:"type,nullable"`
-	JSON benfitContributionJSON
-}
-
-// benfitContributionJSON contains the JSON metadata for the struct
-// [BenfitContribution]
-type benfitContributionJSON struct {
-	Amount      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *BenfitContribution) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Contribution type.
-type BenfitContributionType string
-
-const (
-	BenfitContributionTypeFixed   BenfitContributionType = "fixed"
-	BenfitContributionTypePercent BenfitContributionType = "percent"
-)
-
 type CompanyBenefit struct {
-	BenefitID           string             `json:"benefit_id,required"`
-	CompanyContribution BenfitContribution `json:"company_contribution,required,nullable"`
-	Description         string             `json:"description,required,nullable"`
-	EmployeeDeduction   BenfitContribution `json:"employee_deduction,required,nullable"`
-	Frequency           BenefitFrequency   `json:"frequency,required,nullable"`
+	BenefitID           string              `json:"benefit_id,required"`
+	CompanyContribution BenefitContribution `json:"company_contribution,required,nullable"`
+	Description         string              `json:"description,required,nullable"`
+	EmployeeDeduction   BenefitContribution `json:"employee_deduction,required,nullable"`
+	Frequency           BenefitFrequency    `json:"frequency,required,nullable"`
 	// Type of benefit.
 	Type BenefitType `json:"type,required,nullable"`
 	JSON companyBenefitJSON

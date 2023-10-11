@@ -29,7 +29,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.HRIS.Directory.ListIndividuals(cancelCtx, finchgo.HRISDirectoryListIndividualsParams{})
+	res, err := client.HRIS.Directory.List(cancelCtx, finchgo.HRISDirectoryListParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -61,7 +61,7 @@ func TestContextCancelDelay(t *testing.T) {
 		time.Sleep(time.Millisecond * time.Duration(2))
 		cancel()
 	}()
-	res, err := client.HRIS.Directory.ListIndividuals(cancelCtx, finchgo.HRISDirectoryListIndividualsParams{})
+	res, err := client.HRIS.Directory.List(cancelCtx, finchgo.HRISDirectoryListParams{})
 	if err == nil || res != nil {
 		t.Error("expected there to be a cancel error and for the response to be nil")
 	}
@@ -89,7 +89,7 @@ func TestContextDeadline(t *testing.T) {
 			option.WithAccessToken("AccessToken"),
 			option.WithHTTPClient(&http.Client{Transport: &neverTransport{}}),
 		)
-		res, err := client.HRIS.Directory.ListIndividuals(deadlineCtx, finchgo.HRISDirectoryListIndividualsParams{})
+		res, err := client.HRIS.Directory.List(deadlineCtx, finchgo.HRISDirectoryListParams{})
 		if err == nil || res != nil {
 			t.Error("expected there to be a deadline error and for the response to be nil")
 		}
