@@ -23,7 +23,7 @@ func TestHRISPayStatementGetMany(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.PayStatements.GetMany(context.TODO(), finchgo.HRISPayStatementGetManyParams{
 		Requests: finchgo.F([]finchgo.HRISPayStatementGetManyParamsRequest{{

@@ -23,7 +23,7 @@ func TestRequestForwardingForwardWithOptionalParams(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.RequestForwarding.Forward(context.TODO(), finchgo.RequestForwardingForwardParams{
 		Method: finchgo.F("POST"),

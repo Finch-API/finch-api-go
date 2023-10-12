@@ -25,7 +25,7 @@ func TestContextCancel(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
@@ -53,7 +53,7 @@ func TestContextCancelDelay(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 		option.WithHTTPClient(&http.Client{Transport: &neverTransport{}}),
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
@@ -86,7 +86,7 @@ func TestContextDeadline(t *testing.T) {
 	go func() {
 		client := finchgo.NewClient(
 			option.WithBaseURL(baseURL),
-			option.WithAccessToken("AccessToken"),
+			option.WithAccessToken("My Access Token"),
 			option.WithHTTPClient(&http.Client{Transport: &neverTransport{}}),
 		)
 		res, err := client.HRIS.Directory.List(deadlineCtx, finchgo.HRISDirectoryListParams{})

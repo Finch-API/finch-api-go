@@ -22,7 +22,7 @@ func TestAutoPagination(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	iter := client.HRIS.Directory.ListAutoPaging(context.TODO(), finchgo.HRISDirectoryListParams{})
 	// Prism mock isn't going to give us real pagination

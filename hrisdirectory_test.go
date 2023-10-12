@@ -23,7 +23,7 @@ func TestHRISDirectoryListWithOptionalParams(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{
 		Limit:  finchgo.F(int64(0)),
@@ -48,7 +48,7 @@ func TestHRISDirectoryListIndividualsWithOptionalParams(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Directory.ListIndividuals(context.TODO(), finchgo.HRISDirectoryListIndividualsParams{
 		Limit:  finchgo.F(int64(0)),

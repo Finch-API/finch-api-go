@@ -23,7 +23,7 @@ func TestHRISEmploymentGetMany(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Employments.GetMany(context.TODO(), finchgo.HRISEmploymentGetManyParams{
 		Requests: finchgo.F([]finchgo.HRISEmploymentGetManyParamsRequest{{
