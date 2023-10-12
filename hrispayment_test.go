@@ -24,7 +24,7 @@ func TestHRISPaymentList(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Payments.List(context.TODO(), finchgo.HRISPaymentListParams{
 		EndDate:   finchgo.F(time.Now()),

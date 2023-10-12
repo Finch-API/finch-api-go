@@ -23,7 +23,7 @@ func TestProviderList(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.Providers.List(context.TODO())
 	if err != nil {

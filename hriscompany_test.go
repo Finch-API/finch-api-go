@@ -23,7 +23,7 @@ func TestHRISCompanyGet(t *testing.T) {
 	}
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAccessToken("AccessToken"),
+		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Company.Get(context.TODO())
 	if err != nil {

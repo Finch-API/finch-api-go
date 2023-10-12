@@ -47,7 +47,7 @@ import (
 
 func main() {
 	client := finchgo.NewClient(
-		option.WithAccessToken("my access token"),
+		option.WithAccessToken("My Access Token"),
 	)
 	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 	if err != nil {
