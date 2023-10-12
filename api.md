@@ -136,9 +136,9 @@ Methods:
 
 # Webhooks
 
-Custom Methods:
+Methods:
 
-- VerifySignature
+- <code>client.Webhooks.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookService.VerifySignature">VerifySignature</a>(payload []byte, headers http.Header, secret string, now time.Time) <a href="https://pkg.go.dev/builtin#error">error</a></code>
 
 # RequestForwarding
 
