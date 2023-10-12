@@ -181,20 +181,19 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 	}
 }
 
-// WithAccessToken returns a RequestOption that specifies a Access Token
-// to be used as the basis for authentication.
-func WithAccessToken(key string) RequestOption {
-	return func(r *requestconfig.RequestConfig) error {
-		r.AccessToken = key
-		return r.Apply(WithHeader("Authorization", fmt.Sprintf("Bearer %s", r.AccessToken)))
-	}
-}
-
 // WithEnvironmentProduction returns a RequestOption that sets the current
 // environment to be the "production" environment. An environment specifies which base URL
 // to use by default.
 func WithEnvironmentProduction() RequestOption {
 	return WithBaseURL("https://api.tryfinch.com/")
+}
+
+// WithAccessToken returns a RequestOption that sets the client setting "access_token".
+func WithAccessToken(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.AccessToken = value
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.AccessToken)))
+	}
 }
 
 // WithClientID returns a RequestOption that sets the client setting "client_id".
