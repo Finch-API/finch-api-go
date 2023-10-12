@@ -16,7 +16,7 @@ func TestVerifySignature(t *testing.T) {
 	payload := `{"company_id":"720be419-0293-4d32-a707-32179b0827ab"}`
 
 	header := http.Header{}
-	header.Add("finch-event-id", "msg_2Lh9KRb0pzN4LePd3XiA4v12Axj")
+	header.Add("Finch-Event-Id", "msg_2Lh9KRb0pzN4LePd3XiA4v12Axj")
 	header.Add("finch-timestamp", "1676312382")
 	header.Add("finch-signature", "v1,m7y0TV2C+hlHxU42wCieApTSTaA8/047OAplBqxIV/s=")
 
