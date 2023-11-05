@@ -196,14 +196,14 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
+_, err := client.HRIS.Company.Get(context.TODO())
 if err != nil {
 	var apierr *finchgo.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/employer/directory": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/employer/company": 400 Bad Request { ... }
 }
 ```
 
