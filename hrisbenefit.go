@@ -149,24 +149,104 @@ const (
 	BenefitContributionTypePercent BenefitContributionType = "percent"
 )
 
+type BenefitFeaturesAndOperations struct {
+	SupportedFeatures   BenefitFeaturesAndOperationsSupportedFeatures `json:"supported_features"`
+	SupportedOperations SupportPerBenefitType                         `json:"supported_operations"`
+	JSON                benefitFeaturesAndOperationsJSON
+}
+
+// benefitFeaturesAndOperationsJSON contains the JSON metadata for the struct
+// [BenefitFeaturesAndOperations]
+type benefitFeaturesAndOperationsJSON struct {
+	SupportedFeatures   apijson.Field
+	SupportedOperations apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
+}
+
+func (r *BenefitFeaturesAndOperations) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type BenefitFeaturesAndOperationsSupportedFeatures struct {
+	// Whether the provider supports an annual maximum for this benefit.
+	AnnualMaximum bool `json:"annual_maximum,nullable"`
+	// Whether the provider supports catch up for this benefit. This field will only be
+	// true for retirement benefits.
+	CatchUp bool `json:"catch_up,nullable"`
+	// Supported contribution types. An empty array indicates contributions are not
+	// supported.
+	CompanyContribution []BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution `json:"company_contribution,nullable"`
+	Description         string                                                             `json:"description,nullable"`
+	// Supported deduction types. An empty array indicates deductions are not
+	// supported.
+	EmployeeDeduction []BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction `json:"employee_deduction,nullable"`
+	// The list of frequencies supported by the provider for this benefit
+	Frequencies []BenefitFrequency `json:"frequencies"`
+	// Whether the provider supports HSA contribution limits. Empty if this feature is
+	// not supported for the benefit. This array only has values for HSA benefits.
+	HsaContributionLimit []BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	JSON                 benefitFeaturesAndOperationsSupportedFeaturesJSON
+}
+
+// benefitFeaturesAndOperationsSupportedFeaturesJSON contains the JSON metadata for
+// the struct [BenefitFeaturesAndOperationsSupportedFeatures]
+type benefitFeaturesAndOperationsSupportedFeaturesJSON struct {
+	AnnualMaximum        apijson.Field
+	CatchUp              apijson.Field
+	CompanyContribution  apijson.Field
+	Description          apijson.Field
+	EmployeeDeduction    apijson.Field
+	Frequencies          apijson.Field
+	HsaContributionLimit apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *BenefitFeaturesAndOperationsSupportedFeatures) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution string
+
+const (
+	BenefitFeaturesAndOperationsSupportedFeaturesCompanyContributionFixed   BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution = "fixed"
+	BenefitFeaturesAndOperationsSupportedFeaturesCompanyContributionPercent BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution = "percent"
+)
+
+type BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction string
+
+const (
+	BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeductionFixed   BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction = "fixed"
+	BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeductionPercent BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction = "percent"
+)
+
+type BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit string
+
+const (
+	BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimitIndividual BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit = "individual"
+	BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimitFamily     BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit = "family"
+)
+
 type BenefitFrequency string
 
 const (
 	BenefitFrequencyOneTime       BenefitFrequency = "one_time"
 	BenefitFrequencyEveryPaycheck BenefitFrequency = "every_paycheck"
+	BenefitFrequencyMonthly       BenefitFrequency = "monthly"
 )
 
 // Type of benefit.
 type BenefitType string
 
 const (
-	BenefitType401k             BenefitType = "401k"
-	BenefitType401kRoth         BenefitType = "401k_roth"
-	BenefitType401kLoan         BenefitType = "401k_loan"
-	BenefitType403b             BenefitType = "403b"
-	BenefitType403bRoth         BenefitType = "403b_roth"
-	BenefitType457              BenefitType = "457"
-	BenefitType457Roth          BenefitType = "457_roth"
+	BenefitType_401k            BenefitType = "401k"
+	BenefitType_401kRoth        BenefitType = "401k_roth"
+	BenefitType_401kLoan        BenefitType = "401k_loan"
+	BenefitType_403b            BenefitType = "403b"
+	BenefitType_403bRoth        BenefitType = "403b_roth"
+	BenefitType_457             BenefitType = "457"
+	BenefitType_457Roth         BenefitType = "457_roth"
 	BenefitTypeS125Medical      BenefitType = "s125_medical"
 	BenefitTypeS125Dental       BenefitType = "s125_dental"
 	BenefitTypeS125Vision       BenefitType = "s125_vision"
@@ -174,12 +254,53 @@ const (
 	BenefitTypeHsaPost          BenefitType = "hsa_post"
 	BenefitTypeFsaMedical       BenefitType = "fsa_medical"
 	BenefitTypeFsaDependentCare BenefitType = "fsa_dependent_care"
-	BenefitTypeSimpleIra        BenefitType = "simple_ira"
+	BenefitTypeSimpleIRA        BenefitType = "simple_ira"
 	BenefitTypeSimple           BenefitType = "simple"
 	BenefitTypeCommuter         BenefitType = "commuter"
 	BenefitTypeCustomPostTax    BenefitType = "custom_post_tax"
 	BenefitTypeCustomPreTax     BenefitType = "custom_pre_tax"
 )
+
+// Each benefit type and their supported features. If the benefit type is not
+// supported, the property will be null
+type BenefitsSupport struct {
+	Commuter         BenefitFeaturesAndOperations            `json:"commuter,nullable"`
+	CustomPostTax    BenefitFeaturesAndOperations            `json:"custom_post_tax,nullable"`
+	CustomPreTax     BenefitFeaturesAndOperations            `json:"custom_pre_tax,nullable"`
+	FsaDependentCare BenefitFeaturesAndOperations            `json:"fsa_dependent_care,nullable"`
+	FsaMedical       BenefitFeaturesAndOperations            `json:"fsa_medical,nullable"`
+	HsaPost          BenefitFeaturesAndOperations            `json:"hsa_post,nullable"`
+	HsaPre           BenefitFeaturesAndOperations            `json:"hsa_pre,nullable"`
+	S125Dental       BenefitFeaturesAndOperations            `json:"s125_dental,nullable"`
+	S125Medical      BenefitFeaturesAndOperations            `json:"s125_medical,nullable"`
+	S125Vision       BenefitFeaturesAndOperations            `json:"s125_vision,nullable"`
+	Simple           BenefitFeaturesAndOperations            `json:"simple,nullable"`
+	SimpleIRA        BenefitFeaturesAndOperations            `json:"simple_ira,nullable"`
+	ExtraFields      map[string]BenefitFeaturesAndOperations `json:"-,extras"`
+	JSON             benefitsSupportJSON
+}
+
+// benefitsSupportJSON contains the JSON metadata for the struct [BenefitsSupport]
+type benefitsSupportJSON struct {
+	Commuter         apijson.Field
+	CustomPostTax    apijson.Field
+	CustomPreTax     apijson.Field
+	FsaDependentCare apijson.Field
+	FsaMedical       apijson.Field
+	HsaPost          apijson.Field
+	HsaPre           apijson.Field
+	S125Dental       apijson.Field
+	S125Medical      apijson.Field
+	S125Vision       apijson.Field
+	Simple           apijson.Field
+	SimpleIRA        apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *BenefitsSupport) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
 
 type CompanyBenefit struct {
 	BenefitID           string              `json:"benefit_id,required"`
@@ -222,6 +343,25 @@ type createCompanyBenefitsResponseJSON struct {
 }
 
 func (r *CreateCompanyBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type SupportPerBenefitType struct {
+	CompanyBenefits    shared.OperationSupportMatrix `json:"company_benefits"`
+	IndividualBenefits shared.OperationSupportMatrix `json:"individual_benefits"`
+	JSON               supportPerBenefitTypeJSON
+}
+
+// supportPerBenefitTypeJSON contains the JSON metadata for the struct
+// [SupportPerBenefitType]
+type supportPerBenefitTypeJSON struct {
+	CompanyBenefits    apijson.Field
+	IndividualBenefits apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *SupportPerBenefitType) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 

@@ -66,6 +66,9 @@ type EmploymentData struct {
 	ID string `json:"id"`
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code,nullable"`
+	// Custom fields for the individual. These are fields which are defined by the
+	// employer in the system.
+	CustomFields []EmploymentDataCustomField `json:"custom_fields,nullable"`
 	// The department object.
 	Department EmploymentDataDepartment `json:"department,nullable"`
 	// The employment object.
@@ -109,6 +112,7 @@ type EmploymentData struct {
 type employmentDataJSON struct {
 	ID            apijson.Field
 	ClassCode     apijson.Field
+	CustomFields  apijson.Field
 	Department    apijson.Field
 	Employment    apijson.Field
 	EndDate       apijson.Field
@@ -131,6 +135,25 @@ type employmentDataJSON struct {
 }
 
 func (r *EmploymentData) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type EmploymentDataCustomField struct {
+	Name  string      `json:"name"`
+	Value interface{} `json:"value"`
+	JSON  employmentDataCustomFieldJSON
+}
+
+// employmentDataCustomFieldJSON contains the JSON metadata for the struct
+// [EmploymentDataCustomField]
+type employmentDataCustomFieldJSON struct {
+	Name        apijson.Field
+	Value       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EmploymentDataCustomField) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
