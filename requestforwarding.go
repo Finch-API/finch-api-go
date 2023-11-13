@@ -30,7 +30,10 @@ func NewRequestForwardingService(opts ...option.RequestOption) (r *RequestForwar
 	return
 }
 
-// The Forward API allows you to make direct requests to an employment system.
+// The Forward API allows you to make direct requests to an employment system. If
+// Finch’s unified API doesn’t have a data model that cleanly fits your needs, then
+// Forward allows you to push or pull data models directly against an integration’s
+// API.
 func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForwardingForwardParams, opts ...option.RequestOption) (res *RequestForwardingForwardResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "forward"
@@ -81,7 +84,7 @@ type RequestForwardingForwardResponseRequest struct {
 	// headers were specified, this will be returned as `null`.
 	Headers interface{} `json:"headers,required,nullable"`
 	// The HTTP method that was specified for the forwarded request. Valid values
-	// include: `GET`, `POST`, `PUT` , `DELETE`, and `PATCH`.
+	// include: `GET` , `POST` , `PUT` , `DELETE` , and `PATCH`.
 	Method string `json:"method,required"`
 	// The query parameters that were included in the forwarded request. If no query
 	// parameters were specified, this will be returned as `null`.
@@ -108,8 +111,8 @@ func (r *RequestForwardingForwardResponseRequest) UnmarshalJSON(data []byte) (er
 }
 
 type RequestForwardingForwardParams struct {
-	// The HTTP method for the forwarded request. Valid values include: `GET`, `POST`,
-	// `PUT`, `DELETE`, and `PATCH`.
+	// The HTTP method for the forwarded request. Valid values include: `GET` , `POST`
+	// , `PUT` , `DELETE` , and `PATCH`.
 	Method param.Field[string] `json:"method,required"`
 	// The URL route path for the forwarded request. This value must begin with a
 	// forward-slash ( / ) and may only contain alphanumeric characters, hyphens, and

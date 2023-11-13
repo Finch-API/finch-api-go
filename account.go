@@ -65,6 +65,8 @@ func (r *DisconnectResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type Introspection struct {
+	// The Finch uuid of the account used to connect this company.
+	AccountID string `json:"account_id,required"`
 	// The client id of the application associated with the `access_token`.
 	ClientID string `json:"client_id,required"`
 	// The Finch uuid of the company associated with the `access_token`.
@@ -84,6 +86,7 @@ type Introspection struct {
 
 // introspectionJSON contains the JSON metadata for the struct [Introspection]
 type introspectionJSON struct {
+	AccountID         apijson.Field
 	ClientID          apijson.Field
 	CompanyID         apijson.Field
 	Manual            apijson.Field

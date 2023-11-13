@@ -28,7 +28,7 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
 		Description: finchgo.F("string"),
 		Frequency:   finchgo.F(finchgo.BenefitFrequencyOneTime),
-		Type:        finchgo.F(finchgo.BenefitType401k),
+		Type:        finchgo.F(finchgo.BenefitType_401k),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
