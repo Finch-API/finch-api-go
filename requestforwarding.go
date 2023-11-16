@@ -54,8 +54,8 @@ type RequestForwardingForwardResponse struct {
 	Request RequestForwardingForwardResponseRequest `json:"request,required"`
 	// The HTTP status code of the forwarded request’s response, exactly received from
 	// the underlying integration’s API. This value will be returned as an integer.
-	StatusCode int64 `json:"statusCode,required"`
-	JSON       requestForwardingForwardResponseJSON
+	StatusCode int64                                `json:"statusCode,required"`
+	JSON       requestForwardingForwardResponseJSON `json:"-"`
 }
 
 // requestForwardingForwardResponseJSON contains the JSON metadata for the struct
@@ -90,8 +90,8 @@ type RequestForwardingForwardResponseRequest struct {
 	// parameters were specified, this will be returned as `null`.
 	Params interface{} `json:"params,required,nullable"`
 	// The URL route path that was specified for the forwarded request.
-	Route string `json:"route,required"`
-	JSON  requestForwardingForwardResponseRequestJSON
+	Route string                                      `json:"route,required"`
+	JSON  requestForwardingForwardResponseRequestJSON `json:"-"`
 }
 
 // requestForwardingForwardResponseRequestJSON contains the JSON metadata for the

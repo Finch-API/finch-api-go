@@ -72,8 +72,8 @@ type Provider struct {
 	// The hex code for the primary color of the payroll provider.
 	PrimaryColor string `json:"primary_color"`
 	// The list of Finch products supported on this payroll provider.
-	Products []string `json:"products"`
-	JSON     providerJSON
+	Products []string     `json:"products"`
+	JSON     providerJSON `json:"-"`
 }
 
 // providerJSON contains the JSON metadata for the struct [Provider]
@@ -103,7 +103,7 @@ type ProviderAuthenticationMethod struct {
 	SupportedFields ProviderAuthenticationMethodsSupportedFields `json:"supported_fields,nullable"`
 	// The type of authentication method.
 	Type ProviderAuthenticationMethodsType `json:"type"`
-	JSON providerAuthenticationMethodJSON
+	JSON providerAuthenticationMethodJSON  `json:"-"`
 }
 
 // providerAuthenticationMethodJSON contains the JSON metadata for the struct
@@ -128,7 +128,7 @@ type ProviderAuthenticationMethodsSupportedFields struct {
 	Individual   ProviderAuthenticationMethodsSupportedFieldsIndividual   `json:"individual"`
 	PayStatement ProviderAuthenticationMethodsSupportedFieldsPayStatement `json:"pay_statement"`
 	Payment      ProviderAuthenticationMethodsSupportedFieldsPayment      `json:"payment"`
-	JSON         providerAuthenticationMethodsSupportedFieldsJSON
+	JSON         providerAuthenticationMethodsSupportedFieldsJSON         `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsJSON contains the JSON metadata for
@@ -158,7 +158,7 @@ type ProviderAuthenticationMethodsSupportedFieldsCompany struct {
 	Locations          ProviderAuthenticationMethodsSupportedFieldsCompanyLocations   `json:"locations"`
 	PrimaryEmail       bool                                                           `json:"primary_email"`
 	PrimaryPhoneNumber bool                                                           `json:"primary_phone_number"`
-	JSON               providerAuthenticationMethodsSupportedFieldsCompanyJSON
+	JSON               providerAuthenticationMethodsSupportedFieldsCompanyJSON        `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsCompanyJSON contains the JSON
@@ -182,12 +182,12 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompany) UnmarshalJSON(data
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompanyAccounts struct {
-	AccountName     bool `json:"account_name"`
-	AccountNumber   bool `json:"account_number"`
-	AccountType     bool `json:"account_type"`
-	InstitutionName bool `json:"institution_name"`
-	RoutingNumber   bool `json:"routing_number"`
-	JSON            providerAuthenticationMethodsSupportedFieldsCompanyAccountsJSON
+	AccountName     bool                                                            `json:"account_name"`
+	AccountNumber   bool                                                            `json:"account_number"`
+	AccountType     bool                                                            `json:"account_type"`
+	InstitutionName bool                                                            `json:"institution_name"`
+	RoutingNumber   bool                                                            `json:"routing_number"`
+	JSON            providerAuthenticationMethodsSupportedFieldsCompanyAccountsJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsCompanyAccountsJSON contains the
@@ -210,7 +210,7 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyAccounts) UnmarshalJ
 type ProviderAuthenticationMethodsSupportedFieldsCompanyDepartments struct {
 	Name   bool                                                                 `json:"name"`
 	Parent ProviderAuthenticationMethodsSupportedFieldsCompanyDepartmentsParent `json:"parent"`
-	JSON   providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsJSON
+	JSON   providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsJSON   `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsJSON contains the
@@ -228,8 +228,8 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyDepartments) Unmarsh
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompanyDepartmentsParent struct {
-	Name bool `json:"name"`
-	JSON providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsParentJSON
+	Name bool                                                                     `json:"name"`
+	JSON providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsParentJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsParentJSON
@@ -246,9 +246,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyDepartmentsParent) U
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompanyEntity struct {
-	Subtype bool `json:"subtype"`
-	Type    bool `json:"type"`
-	JSON    providerAuthenticationMethodsSupportedFieldsCompanyEntityJSON
+	Subtype bool                                                          `json:"subtype"`
+	Type    bool                                                          `json:"type"`
+	JSON    providerAuthenticationMethodsSupportedFieldsCompanyEntityJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsCompanyEntityJSON contains the JSON
@@ -266,13 +266,13 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyEntity) UnmarshalJSO
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompanyLocations struct {
-	City       bool `json:"city"`
-	Country    bool `json:"country"`
-	Line1      bool `json:"line1"`
-	Line2      bool `json:"line2"`
-	PostalCode bool `json:"postal_code"`
-	State      bool `json:"state"`
-	JSON       providerAuthenticationMethodsSupportedFieldsCompanyLocationsJSON
+	City       bool                                                             `json:"city"`
+	Country    bool                                                             `json:"country"`
+	Line1      bool                                                             `json:"line1"`
+	Line2      bool                                                             `json:"line2"`
+	PostalCode bool                                                             `json:"postal_code"`
+	State      bool                                                             `json:"state"`
+	JSON       providerAuthenticationMethodsSupportedFieldsCompanyLocationsJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsCompanyLocationsJSON contains the
@@ -296,7 +296,7 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyLocations) Unmarshal
 type ProviderAuthenticationMethodsSupportedFieldsDirectory struct {
 	Individuals ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividuals `json:"individuals"`
 	Paging      ProviderAuthenticationMethodsSupportedFieldsDirectoryPaging      `json:"paging"`
-	JSON        providerAuthenticationMethodsSupportedFieldsDirectoryJSON
+	JSON        providerAuthenticationMethodsSupportedFieldsDirectoryJSON        `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsDirectoryJSON contains the JSON
@@ -320,7 +320,7 @@ type ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividuals struct {
 	LastName   bool                                                                    `json:"last_name"`
 	Manager    ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividualsManager `json:"manager"`
 	MiddleName bool                                                                    `json:"middle_name"`
-	JSON       providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsJSON
+	JSON       providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsJSON    `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsJSON contains
@@ -343,8 +343,8 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividuals) Unmar
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividualsManager struct {
-	ID   bool `json:"id"`
-	JSON providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsManagerJSON
+	ID   bool                                                                        `json:"id"`
+	JSON providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsManagerJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsManagerJSON
@@ -361,9 +361,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividualsManager
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsDirectoryPaging struct {
-	Count  bool `json:"count"`
-	Offset bool `json:"offset"`
-	JSON   providerAuthenticationMethodsSupportedFieldsDirectoryPagingJSON
+	Count  bool                                                            `json:"count"`
+	Offset bool                                                            `json:"offset"`
+	JSON   providerAuthenticationMethodsSupportedFieldsDirectoryPagingJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsDirectoryPagingJSON contains the
@@ -397,7 +397,7 @@ type ProviderAuthenticationMethodsSupportedFieldsEmployment struct {
 	MiddleName    bool                                                             `json:"middle_name"`
 	StartDate     bool                                                             `json:"start_date"`
 	Title         bool                                                             `json:"title"`
-	JSON          providerAuthenticationMethodsSupportedFieldsEmploymentJSON
+	JSON          providerAuthenticationMethodsSupportedFieldsEmploymentJSON       `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsEmploymentJSON contains the JSON
@@ -428,8 +428,8 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmployment) UnmarshalJSON(d
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentDepartment struct {
-	Name bool `json:"name"`
-	JSON providerAuthenticationMethodsSupportedFieldsEmploymentDepartmentJSON
+	Name bool                                                                 `json:"name"`
+	JSON providerAuthenticationMethodsSupportedFieldsEmploymentDepartmentJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsEmploymentDepartmentJSON contains
@@ -446,9 +446,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentDepartment) Unmar
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentEmployment struct {
-	Subtype bool `json:"subtype"`
-	Type    bool `json:"type"`
-	JSON    providerAuthenticationMethodsSupportedFieldsEmploymentEmploymentJSON
+	Subtype bool                                                                 `json:"subtype"`
+	Type    bool                                                                 `json:"type"`
+	JSON    providerAuthenticationMethodsSupportedFieldsEmploymentEmploymentJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsEmploymentEmploymentJSON contains
@@ -466,10 +466,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentEmployment) Unmar
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentIncome struct {
-	Amount   bool `json:"amount"`
-	Currency bool `json:"currency"`
-	Unit     bool `json:"unit"`
-	JSON     providerAuthenticationMethodsSupportedFieldsEmploymentIncomeJSON
+	Amount   bool                                                             `json:"amount"`
+	Currency bool                                                             `json:"currency"`
+	Unit     bool                                                             `json:"unit"`
+	JSON     providerAuthenticationMethodsSupportedFieldsEmploymentIncomeJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsEmploymentIncomeJSON contains the
@@ -488,13 +488,13 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentIncome) Unmarshal
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation struct {
-	City       bool `json:"city"`
-	Country    bool `json:"country"`
-	Line1      bool `json:"line1"`
-	Line2      bool `json:"line2"`
-	PostalCode bool `json:"postal_code"`
-	State      bool `json:"state"`
-	JSON       providerAuthenticationMethodsSupportedFieldsEmploymentLocationJSON
+	City       bool                                                               `json:"city"`
+	Country    bool                                                               `json:"country"`
+	Line1      bool                                                               `json:"line1"`
+	Line2      bool                                                               `json:"line2"`
+	PostalCode bool                                                               `json:"postal_code"`
+	State      bool                                                               `json:"state"`
+	JSON       providerAuthenticationMethodsSupportedFieldsEmploymentLocationJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsEmploymentLocationJSON contains the
@@ -528,7 +528,7 @@ type ProviderAuthenticationMethodsSupportedFieldsIndividual struct {
 	PreferredName bool                                                               `json:"preferred_name"`
 	Residence     ProviderAuthenticationMethodsSupportedFieldsIndividualResidence    `json:"residence"`
 	Ssn           bool                                                               `json:"ssn"`
-	JSON          providerAuthenticationMethodsSupportedFieldsIndividualJSON
+	JSON          providerAuthenticationMethodsSupportedFieldsIndividualJSON         `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsIndividualJSON contains the JSON
@@ -555,9 +555,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividual) UnmarshalJSON(d
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsIndividualEmails struct {
-	Data bool `json:"data"`
-	Type bool `json:"type"`
-	JSON providerAuthenticationMethodsSupportedFieldsIndividualEmailsJSON
+	Data bool                                                             `json:"data"`
+	Type bool                                                             `json:"type"`
+	JSON providerAuthenticationMethodsSupportedFieldsIndividualEmailsJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsIndividualEmailsJSON contains the
@@ -575,9 +575,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualEmails) Unmarshal
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsIndividualPhoneNumbers struct {
-	Data bool `json:"data"`
-	Type bool `json:"type"`
-	JSON providerAuthenticationMethodsSupportedFieldsIndividualPhoneNumbersJSON
+	Data bool                                                                   `json:"data"`
+	Type bool                                                                   `json:"type"`
+	JSON providerAuthenticationMethodsSupportedFieldsIndividualPhoneNumbersJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsIndividualPhoneNumbersJSON contains
@@ -595,13 +595,13 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualPhoneNumbers) Unm
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsIndividualResidence struct {
-	City       bool `json:"city"`
-	Country    bool `json:"country"`
-	Line1      bool `json:"line1"`
-	Line2      bool `json:"line2"`
-	PostalCode bool `json:"postal_code"`
-	State      bool `json:"state"`
-	JSON       providerAuthenticationMethodsSupportedFieldsIndividualResidenceJSON
+	City       bool                                                                `json:"city"`
+	Country    bool                                                                `json:"country"`
+	Line1      bool                                                                `json:"line1"`
+	Line2      bool                                                                `json:"line2"`
+	PostalCode bool                                                                `json:"postal_code"`
+	State      bool                                                                `json:"state"`
+	JSON       providerAuthenticationMethodsSupportedFieldsIndividualResidenceJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsIndividualResidenceJSON contains the
@@ -625,7 +625,7 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualResidence) Unmars
 type ProviderAuthenticationMethodsSupportedFieldsPayStatement struct {
 	Paging        ProviderAuthenticationMethodsSupportedFieldsPayStatementPaging        `json:"paging"`
 	PayStatements ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements `json:"pay_statements"`
-	JSON          providerAuthenticationMethodsSupportedFieldsPayStatementJSON
+	JSON          providerAuthenticationMethodsSupportedFieldsPayStatementJSON          `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementJSON contains the JSON
@@ -643,9 +643,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatement) UnmarshalJSON
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPaging struct {
-	Count  bool `json:"count,required"`
-	Offset bool `json:"offset,required"`
-	JSON   providerAuthenticationMethodsSupportedFieldsPayStatementPagingJSON
+	Count  bool                                                               `json:"count,required"`
+	Offset bool                                                               `json:"offset,required"`
+	JSON   providerAuthenticationMethodsSupportedFieldsPayStatementPagingJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPagingJSON contains the
@@ -673,7 +673,7 @@ type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements struc
 	Taxes              ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxes              `json:"taxes"`
 	TotalHours         bool                                                                                    `json:"total_hours"`
 	Type               bool                                                                                    `json:"type"`
-	JSON               providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON
+	JSON               providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON               `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON
@@ -699,11 +699,11 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements) 
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarnings struct {
-	Amount   bool `json:"amount"`
-	Currency bool `json:"currency"`
-	Name     bool `json:"name"`
-	Type     bool `json:"type"`
-	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarningsJSON
+	Amount   bool                                                                              `json:"amount"`
+	Currency bool                                                                              `json:"currency"`
+	Name     bool                                                                              `json:"name"`
+	Type     bool                                                                              `json:"type"`
+	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarningsJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarningsJSON
@@ -723,12 +723,12 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEa
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductions struct {
-	Amount   bool `json:"amount"`
-	Currency bool `json:"currency"`
-	Name     bool `json:"name"`
-	PreTax   bool `json:"pre_tax"`
-	Type     bool `json:"type"`
-	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductionsJSON
+	Amount   bool                                                                                        `json:"amount"`
+	Currency bool                                                                                        `json:"currency"`
+	Name     bool                                                                                        `json:"name"`
+	PreTax   bool                                                                                        `json:"pre_tax"`
+	Type     bool                                                                                        `json:"type"`
+	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductionsJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductionsJSON
@@ -749,10 +749,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEm
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductions struct {
-	Amount   bool `json:"amount"`
-	Currency bool `json:"currency"`
-	Name     bool `json:"name"`
-	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON
+	Amount   bool                                                                                        `json:"amount"`
+	Currency bool                                                                                        `json:"currency"`
+	Name     bool                                                                                        `json:"name"`
+	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON
@@ -771,12 +771,12 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEm
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxes struct {
-	Amount   bool `json:"amount"`
-	Currency bool `json:"currency"`
-	Employer bool `json:"employer"`
-	Name     bool `json:"name"`
-	Type     bool `json:"type"`
-	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxesJSON
+	Amount   bool                                                                           `json:"amount"`
+	Currency bool                                                                           `json:"currency"`
+	Employer bool                                                                           `json:"employer"`
+	Name     bool                                                                           `json:"name"`
+	Type     bool                                                                           `json:"type"`
+	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxesJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxesJSON
@@ -807,7 +807,7 @@ type ProviderAuthenticationMethodsSupportedFieldsPayment struct {
 	NetPay        bool                                                         `json:"net_pay"`
 	PayDate       bool                                                         `json:"pay_date"`
 	PayPeriod     ProviderAuthenticationMethodsSupportedFieldsPaymentPayPeriod `json:"pay_period"`
-	JSON          providerAuthenticationMethodsSupportedFieldsPaymentJSON
+	JSON          providerAuthenticationMethodsSupportedFieldsPaymentJSON      `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPaymentJSON contains the JSON
@@ -832,9 +832,9 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayment) UnmarshalJSON(data
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPaymentPayPeriod struct {
-	EndDate   bool `json:"end_date"`
-	StartDate bool `json:"start_date"`
-	JSON      providerAuthenticationMethodsSupportedFieldsPaymentPayPeriodJSON
+	EndDate   bool                                                             `json:"end_date"`
+	StartDate bool                                                             `json:"start_date"`
+	JSON      providerAuthenticationMethodsSupportedFieldsPaymentPayPeriodJSON `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPaymentPayPeriodJSON contains the

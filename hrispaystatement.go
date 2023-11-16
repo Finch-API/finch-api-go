@@ -78,7 +78,7 @@ type PayStatement struct {
 	TotalHours float64 `json:"total_hours,nullable"`
 	// The type of the payment associated with the pay statement.
 	Type PayStatementType `json:"type,nullable"`
-	JSON payStatementJSON
+	JSON payStatementJSON `json:"-"`
 }
 
 // payStatementJSON contains the JSON metadata for the struct [PayStatement]
@@ -113,7 +113,7 @@ type PayStatementEarning struct {
 	Name string `json:"name,nullable"`
 	// The type of earning.
 	Type PayStatementEarningsType `json:"type,nullable"`
-	JSON payStatementEarningJSON
+	JSON payStatementEarningJSON  `json:"-"`
 }
 
 // payStatementEarningJSON contains the JSON metadata for the struct
@@ -161,8 +161,8 @@ type PayStatementEmployeeDeduction struct {
 	// Boolean indicating if the deduction is pre-tax.
 	PreTax bool `json:"pre_tax,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,nullable"`
-	JSON payStatementEmployeeDeductionJSON
+	Type BenefitType                       `json:"type,nullable"`
+	JSON payStatementEmployeeDeductionJSON `json:"-"`
 }
 
 // payStatementEmployeeDeductionJSON contains the JSON metadata for the struct
@@ -189,8 +189,8 @@ type PayStatementEmployerContribution struct {
 	// The contribution name from the pay statement.
 	Name string `json:"name,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,nullable"`
-	JSON payStatementEmployerContributionJSON
+	Type BenefitType                          `json:"type,nullable"`
+	JSON payStatementEmployerContributionJSON `json:"-"`
 }
 
 // payStatementEmployerContributionJSON contains the JSON metadata for the struct
@@ -227,7 +227,7 @@ type PayStatementTax struct {
 	Name string `json:"name,nullable"`
 	// The type of taxes.
 	Type PayStatementTaxesType `json:"type,nullable"`
-	JSON payStatementTaxJSON
+	JSON payStatementTaxJSON   `json:"-"`
 }
 
 // payStatementTaxJSON contains the JSON metadata for the struct [PayStatementTax]
@@ -268,7 +268,7 @@ type PayStatementResponse struct {
 	Body      PayStatementResponseBody `json:"body"`
 	Code      int64                    `json:"code"`
 	PaymentID string                   `json:"payment_id"`
-	JSON      payStatementResponseJSON
+	JSON      payStatementResponseJSON `json:"-"`
 }
 
 // payStatementResponseJSON contains the JSON metadata for the struct
@@ -288,8 +288,8 @@ func (r *PayStatementResponse) UnmarshalJSON(data []byte) (err error) {
 type PayStatementResponseBody struct {
 	Paging Paging `json:"paging"`
 	// The array of pay statements for the current payment.
-	PayStatements []PayStatement `json:"pay_statements"`
-	JSON          payStatementResponseBodyJSON
+	PayStatements []PayStatement               `json:"pay_statements"`
+	JSON          payStatementResponseBodyJSON `json:"-"`
 }
 
 // payStatementResponseBodyJSON contains the JSON metadata for the struct

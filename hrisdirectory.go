@@ -85,7 +85,7 @@ type IndividualsPage struct {
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals,required"`
 	Paging      Paging                  `json:"paging,required"`
-	JSON        individualsPageJSON
+	JSON        individualsPageJSON     `json:"-"`
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
 }
@@ -186,8 +186,8 @@ type IndividualInDirectory struct {
 	// The manager object.
 	Manager IndividualInDirectoryManager `json:"manager,nullable"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
-	JSON       individualInDirectoryJSON
+	MiddleName string                    `json:"middle_name,nullable"`
+	JSON       individualInDirectoryJSON `json:"-"`
 }
 
 // individualInDirectoryJSON contains the JSON metadata for the struct
@@ -211,8 +211,8 @@ func (r *IndividualInDirectory) UnmarshalJSON(data []byte) (err error) {
 // The department object.
 type IndividualInDirectoryDepartment struct {
 	// The name of the department.
-	Name string `json:"name,nullable"`
-	JSON individualInDirectoryDepartmentJSON
+	Name string                              `json:"name,nullable"`
+	JSON individualInDirectoryDepartmentJSON `json:"-"`
 }
 
 // individualInDirectoryDepartmentJSON contains the JSON metadata for the struct
@@ -230,8 +230,8 @@ func (r *IndividualInDirectoryDepartment) UnmarshalJSON(data []byte) (err error)
 // The manager object.
 type IndividualInDirectoryManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string `json:"id"`
-	JSON individualInDirectoryManagerJSON
+	ID   string                           `json:"id"`
+	JSON individualInDirectoryManagerJSON `json:"-"`
 }
 
 // individualInDirectoryManagerJSON contains the JSON metadata for the struct

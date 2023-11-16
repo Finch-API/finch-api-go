@@ -53,8 +53,8 @@ type Company struct {
 	// The email of the main administrator on the account.
 	PrimaryEmail string `json:"primary_email,required,nullable"`
 	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
-	PrimaryPhoneNumber string `json:"primary_phone_number,required,nullable"`
-	JSON               companyJSON
+	PrimaryPhoneNumber string      `json:"primary_phone_number,required,nullable"`
+	JSON               companyJSON `json:"-"`
 }
 
 // companyJSON contains the JSON metadata for the struct [Company]
@@ -87,8 +87,8 @@ type CompanyAccount struct {
 	InstitutionName string `json:"institution_name,nullable"`
 	// A nine-digit code that's based on the U.S. Bank location where your account was
 	// opened.
-	RoutingNumber string `json:"routing_number,nullable"`
-	JSON          companyAccountJSON
+	RoutingNumber string             `json:"routing_number,nullable"`
+	JSON          companyAccountJSON `json:"-"`
 }
 
 // companyAccountJSON contains the JSON metadata for the struct [CompanyAccount]
@@ -119,7 +119,7 @@ type CompanyDepartment struct {
 	Name string `json:"name,nullable"`
 	// The parent department, if present.
 	Parent CompanyDepartmentsParent `json:"parent,nullable"`
-	JSON   companyDepartmentJSON
+	JSON   companyDepartmentJSON    `json:"-"`
 }
 
 // companyDepartmentJSON contains the JSON metadata for the struct
@@ -138,8 +138,8 @@ func (r *CompanyDepartment) UnmarshalJSON(data []byte) (err error) {
 // The parent department, if present.
 type CompanyDepartmentsParent struct {
 	// The parent department's name.
-	Name string `json:"name,nullable"`
-	JSON companyDepartmentsParentJSON
+	Name string                       `json:"name,nullable"`
+	JSON companyDepartmentsParentJSON `json:"-"`
 }
 
 // companyDepartmentsParentJSON contains the JSON metadata for the struct
@@ -160,7 +160,7 @@ type CompanyEntity struct {
 	Subtype CompanyEntitySubtype `json:"subtype,nullable"`
 	// The tax payer type of the company.
 	Type CompanyEntityType `json:"type,nullable"`
-	JSON companyEntityJSON
+	JSON companyEntityJSON `json:"-"`
 }
 
 // companyEntityJSON contains the JSON metadata for the struct [CompanyEntity]
