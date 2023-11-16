@@ -51,7 +51,7 @@ type Income struct {
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
 	Unit IncomeUnit `json:"unit,nullable"`
-	JSON incomeJSON
+	JSON incomeJSON `json:"-"`
 }
 
 // incomeJSON contains the JSON metadata for the struct [Income]
@@ -98,8 +98,8 @@ type Location struct {
 	PostalCode string `json:"postal_code,nullable"`
 	SourceID   string `json:"source_id,nullable"`
 	// The state code.
-	State string `json:"state,nullable"`
-	JSON  locationJSON
+	State string       `json:"state,nullable"`
+	JSON  locationJSON `json:"-"`
 }
 
 // locationJSON contains the JSON metadata for the struct [Location]
@@ -122,9 +122,9 @@ func (r *Location) UnmarshalJSON(data []byte) (err error) {
 
 type Money struct {
 	// Amount for money object (in cents)
-	Amount   int64  `json:"amount,nullable"`
-	Currency string `json:"currency"`
-	JSON     moneyJSON
+	Amount   int64     `json:"amount,nullable"`
+	Currency string    `json:"currency"`
+	JSON     moneyJSON `json:"-"`
 }
 
 // moneyJSON contains the JSON metadata for the struct [Money]
@@ -143,8 +143,8 @@ type Paging struct {
 	// The total number of elements for the entire query (not just the given page)
 	Count int64 `json:"count"`
 	// The current start index of the returned list of elements
-	Offset int64 `json:"offset"`
-	JSON   pagingJSON
+	Offset int64      `json:"offset"`
+	JSON   pagingJSON `json:"-"`
 }
 
 // pagingJSON contains the JSON metadata for the struct [Paging]

@@ -74,8 +74,8 @@ type Individual struct {
 	Residence     Location `json:"residence,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
-	Ssn  string `json:"ssn,nullable"`
-	JSON individualJSON
+	Ssn  string         `json:"ssn,nullable"`
+	JSON individualJSON `json:"-"`
 }
 
 // individualJSON contains the JSON metadata for the struct [Individual]
@@ -103,7 +103,7 @@ func (r *Individual) UnmarshalJSON(data []byte) (err error) {
 type IndividualEmail struct {
 	Data string               `json:"data"`
 	Type IndividualEmailsType `json:"type"`
-	JSON individualEmailJSON
+	JSON individualEmailJSON  `json:"-"`
 }
 
 // individualEmailJSON contains the JSON metadata for the struct [IndividualEmail]
@@ -152,7 +152,7 @@ const (
 type IndividualPhoneNumber struct {
 	Data string                     `json:"data,nullable"`
 	Type IndividualPhoneNumbersType `json:"type,nullable"`
-	JSON individualPhoneNumberJSON
+	JSON individualPhoneNumberJSON  `json:"-"`
 }
 
 // individualPhoneNumberJSON contains the JSON metadata for the struct
@@ -176,10 +176,10 @@ const (
 )
 
 type IndividualResponse struct {
-	Body         Individual `json:"body"`
-	Code         int64      `json:"code"`
-	IndividualID string     `json:"individual_id"`
-	JSON         individualResponseJSON
+	Body         Individual             `json:"body"`
+	Code         int64                  `json:"code"`
+	IndividualID string                 `json:"individual_id"`
+	JSON         individualResponseJSON `json:"-"`
 }
 
 // individualResponseJSON contains the JSON metadata for the struct

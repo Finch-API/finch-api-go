@@ -48,8 +48,8 @@ func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestO
 
 type DisconnectResponse struct {
 	// If the request is successful, Finch will return “success” (HTTP 200 status).
-	Status string `json:"status,required"`
-	JSON   disconnectResponseJSON
+	Status string                 `json:"status,required"`
+	JSON   disconnectResponseJSON `json:"-"`
 }
 
 // disconnectResponseJSON contains the JSON metadata for the struct
@@ -80,8 +80,8 @@ type Introspection struct {
 	// An array of the authorized products associated with the `access_token`.
 	Products []string `json:"products,required"`
 	// The account username used for login associated with the `access_token`.
-	Username string `json:"username,required"`
-	JSON     introspectionJSON
+	Username string            `json:"username,required"`
+	JSON     introspectionJSON `json:"-"`
 }
 
 // introspectionJSON contains the JSON metadata for the struct [Introspection]

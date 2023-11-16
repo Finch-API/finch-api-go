@@ -125,7 +125,7 @@ type BenefitContribution struct {
 	Amount int64 `json:"amount,nullable"`
 	// Contribution type.
 	Type BenefitContributionType `json:"type,nullable"`
-	JSON benefitContributionJSON
+	JSON benefitContributionJSON `json:"-"`
 }
 
 // benefitContributionJSON contains the JSON metadata for the struct
@@ -152,7 +152,7 @@ const (
 type BenefitFeaturesAndOperations struct {
 	SupportedFeatures   BenefitFeaturesAndOperationsSupportedFeatures `json:"supported_features"`
 	SupportedOperations SupportPerBenefitType                         `json:"supported_operations"`
-	JSON                benefitFeaturesAndOperationsJSON
+	JSON                benefitFeaturesAndOperationsJSON              `json:"-"`
 }
 
 // benefitFeaturesAndOperationsJSON contains the JSON metadata for the struct
@@ -186,7 +186,7 @@ type BenefitFeaturesAndOperationsSupportedFeatures struct {
 	// Whether the provider supports HSA contribution limits. Empty if this feature is
 	// not supported for the benefit. This array only has values for HSA benefits.
 	HsaContributionLimit []BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
-	JSON                 benefitFeaturesAndOperationsSupportedFeaturesJSON
+	JSON                 benefitFeaturesAndOperationsSupportedFeaturesJSON                   `json:"-"`
 }
 
 // benefitFeaturesAndOperationsSupportedFeaturesJSON contains the JSON metadata for
@@ -277,7 +277,7 @@ type BenefitsSupport struct {
 	Simple           BenefitFeaturesAndOperations            `json:"simple,nullable"`
 	SimpleIRA        BenefitFeaturesAndOperations            `json:"simple_ira,nullable"`
 	ExtraFields      map[string]BenefitFeaturesAndOperations `json:"-,extras"`
-	JSON             benefitsSupportJSON
+	JSON             benefitsSupportJSON                     `json:"-"`
 }
 
 // benefitsSupportJSON contains the JSON metadata for the struct [BenefitsSupport]
@@ -309,8 +309,8 @@ type CompanyBenefit struct {
 	EmployeeDeduction   BenefitContribution `json:"employee_deduction,required,nullable"`
 	Frequency           BenefitFrequency    `json:"frequency,required,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,required,nullable"`
-	JSON companyBenefitJSON
+	Type BenefitType        `json:"type,required,nullable"`
+	JSON companyBenefitJSON `json:"-"`
 }
 
 // companyBenefitJSON contains the JSON metadata for the struct [CompanyBenefit]
@@ -330,8 +330,8 @@ func (r *CompanyBenefit) UnmarshalJSON(data []byte) (err error) {
 }
 
 type CreateCompanyBenefitsResponse struct {
-	BenefitID string `json:"benefit_id,required"`
-	JSON      createCompanyBenefitsResponseJSON
+	BenefitID string                            `json:"benefit_id,required"`
+	JSON      createCompanyBenefitsResponseJSON `json:"-"`
 }
 
 // createCompanyBenefitsResponseJSON contains the JSON metadata for the struct
@@ -349,7 +349,7 @@ func (r *CreateCompanyBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
 type SupportPerBenefitType struct {
 	CompanyBenefits    shared.OperationSupportMatrix `json:"company_benefits"`
 	IndividualBenefits shared.OperationSupportMatrix `json:"individual_benefits"`
-	JSON               supportPerBenefitTypeJSON
+	JSON               supportPerBenefitTypeJSON     `json:"-"`
 }
 
 // supportPerBenefitTypeJSON contains the JSON metadata for the struct
@@ -384,8 +384,8 @@ type SupportedBenefit struct {
 	// not supported for the benefit. This array only has values for HSA benefits.
 	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,nullable"`
-	JSON supportedBenefitJSON
+	Type BenefitType          `json:"type,nullable"`
+	JSON supportedBenefitJSON `json:"-"`
 }
 
 // supportedBenefitJSON contains the JSON metadata for the struct
@@ -429,8 +429,8 @@ const (
 )
 
 type UpdateCompanyBenefitResponse struct {
-	BenefitID string `json:"benefit_id,required"`
-	JSON      updateCompanyBenefitResponseJSON
+	BenefitID string                           `json:"benefit_id,required"`
+	JSON      updateCompanyBenefitResponseJSON `json:"-"`
 }
 
 // updateCompanyBenefitResponseJSON contains the JSON metadata for the struct

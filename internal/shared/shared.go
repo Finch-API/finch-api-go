@@ -54,8 +54,8 @@ type OperationSupportMatrix struct {
 	//     so Finch cannot support <br>
 	//   - `client_access_only`: This behavior is supported by the provider, but only
 	//     available to the client and not to Finch
-	Update OperationSupport `json:"update"`
-	JSON   operationSupportMatrixJSON
+	Update OperationSupport           `json:"update"`
+	JSON   operationSupportMatrixJSON `json:"-"`
 }
 
 // operationSupportMatrixJSON contains the JSON metadata for the struct
