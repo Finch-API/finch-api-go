@@ -102,7 +102,7 @@ type IndividualBenefit struct {
 	Body         IndividualBenefitBody `json:"body"`
 	Code         int64                 `json:"code"`
 	IndividualID string                `json:"individual_id"`
-	JSON         individualBenefitJSON
+	JSON         individualBenefitJSON `json:"-"`
 }
 
 // individualBenefitJSON contains the JSON metadata for the struct
@@ -129,7 +129,7 @@ type IndividualBenefitBody struct {
 	EmployeeDeduction   BenefitContribution `json:"employee_deduction,nullable"`
 	// Type for HSA contribution limit if the benefit is a HSA.
 	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
-	JSON                 individualBenefitBodyJSON
+	JSON                 individualBenefitBodyJSON                 `json:"-"`
 }
 
 // individualBenefitBodyJSON contains the JSON metadata for the struct
@@ -159,9 +159,9 @@ const (
 type UnenrolledIndividual struct {
 	Body UnenrolledIndividualBody `json:"body"`
 	// HTTP status code
-	Code         int64  `json:"code"`
-	IndividualID string `json:"individual_id"`
-	JSON         unenrolledIndividualJSON
+	Code         int64                    `json:"code"`
+	IndividualID string                   `json:"individual_id"`
+	JSON         unenrolledIndividualJSON `json:"-"`
 }
 
 // unenrolledIndividualJSON contains the JSON metadata for the struct
@@ -184,8 +184,8 @@ type UnenrolledIndividualBody struct {
 	// Short description in English that provides more information about the response.
 	Message string `json:"message,nullable"`
 	// Identifier indicating whether the benefit was newly enrolled or updated.
-	Name string `json:"name,nullable"`
-	JSON unenrolledIndividualBodyJSON
+	Name string                       `json:"name,nullable"`
+	JSON unenrolledIndividualBodyJSON `json:"-"`
 }
 
 // unenrolledIndividualBodyJSON contains the JSON metadata for the struct
@@ -203,9 +203,9 @@ func (r *UnenrolledIndividualBody) UnmarshalJSON(data []byte) (err error) {
 }
 
 type HRISBenefitIndividualEnrolledIDsResponse struct {
-	BenefitID     string   `json:"benefit_id,required"`
-	IndividualIDs []string `json:"individual_ids,required"`
-	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON
+	BenefitID     string                                       `json:"benefit_id,required"`
+	IndividualIDs []string                                     `json:"individual_ids,required"`
+	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON `json:"-"`
 }
 
 // hrisBenefitIndividualEnrolledIDsResponseJSON contains the JSON metadata for the

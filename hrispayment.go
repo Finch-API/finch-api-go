@@ -70,7 +70,7 @@ type Payment struct {
 	PayDate       string   `json:"pay_date,nullable"`
 	// The pay period object.
 	PayPeriod PaymentPayPeriod `json:"pay_period,nullable"`
-	JSON      paymentJSON
+	JSON      paymentJSON      `json:"-"`
 }
 
 // paymentJSON contains the JSON metadata for the struct [Payment]
@@ -95,9 +95,9 @@ func (r *Payment) UnmarshalJSON(data []byte) (err error) {
 
 // The pay period object.
 type PaymentPayPeriod struct {
-	EndDate   string `json:"end_date,nullable"`
-	StartDate string `json:"start_date,nullable"`
-	JSON      paymentPayPeriodJSON
+	EndDate   string               `json:"end_date,nullable"`
+	StartDate string               `json:"start_date,nullable"`
+	JSON      paymentPayPeriodJSON `json:"-"`
 }
 
 // paymentPayPeriodJSON contains the JSON metadata for the struct

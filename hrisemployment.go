@@ -104,8 +104,8 @@ type EmploymentData struct {
 	WorkID string `json:"work_id,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
-	WorkID2 string `json:"work_id_2,nullable"`
-	JSON    employmentDataJSON
+	WorkID2 string             `json:"work_id_2,nullable"`
+	JSON    employmentDataJSON `json:"-"`
 }
 
 // employmentDataJSON contains the JSON metadata for the struct [EmploymentData]
@@ -139,9 +139,9 @@ func (r *EmploymentData) UnmarshalJSON(data []byte) (err error) {
 }
 
 type EmploymentDataCustomField struct {
-	Name  string      `json:"name"`
-	Value interface{} `json:"value"`
-	JSON  employmentDataCustomFieldJSON
+	Name  string                        `json:"name"`
+	Value interface{}                   `json:"value"`
+	JSON  employmentDataCustomFieldJSON `json:"-"`
 }
 
 // employmentDataCustomFieldJSON contains the JSON metadata for the struct
@@ -160,8 +160,8 @@ func (r *EmploymentDataCustomField) UnmarshalJSON(data []byte) (err error) {
 // The department object.
 type EmploymentDataDepartment struct {
 	// The name of the department associated with the individual.
-	Name string `json:"name,nullable"`
-	JSON employmentDataDepartmentJSON
+	Name string                       `json:"name,nullable"`
+	JSON employmentDataDepartmentJSON `json:"-"`
 }
 
 // employmentDataDepartmentJSON contains the JSON metadata for the struct
@@ -182,7 +182,7 @@ type EmploymentDataEmployment struct {
 	Subtype EmploymentDataEmploymentSubtype `json:"subtype,nullable"`
 	// The main employment type of the individual.
 	Type EmploymentDataEmploymentType `json:"type,nullable"`
-	JSON employmentDataEmploymentJSON
+	JSON employmentDataEmploymentJSON `json:"-"`
 }
 
 // employmentDataEmploymentJSON contains the JSON metadata for the struct
@@ -221,8 +221,8 @@ const (
 // The manager object representing the manager of the individual within the org.
 type EmploymentDataManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string `json:"id"`
-	JSON employmentDataManagerJSON
+	ID   string                    `json:"id"`
+	JSON employmentDataManagerJSON `json:"-"`
 }
 
 // employmentDataManagerJSON contains the JSON metadata for the struct
@@ -238,10 +238,10 @@ func (r *EmploymentDataManager) UnmarshalJSON(data []byte) (err error) {
 }
 
 type EmploymentDataResponse struct {
-	Body         EmploymentData `json:"body"`
-	Code         int64          `json:"code"`
-	IndividualID string         `json:"individual_id"`
-	JSON         employmentDataResponseJSON
+	Body         EmploymentData             `json:"body"`
+	Code         int64                      `json:"code"`
+	IndividualID string                     `json:"individual_id"`
+	JSON         employmentDataResponseJSON `json:"-"`
 }
 
 // employmentDataResponseJSON contains the JSON metadata for the struct

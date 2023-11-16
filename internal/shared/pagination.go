@@ -10,8 +10,8 @@ import (
 )
 
 type SinglePage[T any] struct {
-	Items []T `json:"-,inline"`
-	JSON  singlePageJSON
+	Items []T            `json:"-,inline"`
+	JSON  singlePageJSON `json:"-"`
 	cfg   *requestconfig.RequestConfig
 	res   *http.Response
 }
@@ -98,8 +98,8 @@ func (r *SinglePageAutoPager[T]) Index() int {
 }
 
 type ResponsesPage[T any] struct {
-	Responses []T `json:"responses,required"`
-	JSON      responsesPageJSON
+	Responses []T               `json:"responses,required"`
+	JSON      responsesPageJSON `json:"-"`
 	cfg       *requestconfig.RequestConfig
 	res       *http.Response
 }
