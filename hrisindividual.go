@@ -58,6 +58,9 @@ type Individual struct {
 	ID     string            `json:"id"`
 	Dob    string            `json:"dob,nullable"`
 	Emails []IndividualEmail `json:"emails,nullable"`
+	// Note: This property is only available if enabled for your account. Please reach
+	// out to your Finch representative if you would like access.
+	EncryptedSsn string `json:"encrypted_ssn,nullable"`
 	// The EEOC-defined ethnicity of the individual.
 	Ethnicity IndividualEthnicity `json:"ethnicity,nullable"`
 	// The legal first name of the individual.
@@ -83,6 +86,7 @@ type individualJSON struct {
 	ID            apijson.Field
 	Dob           apijson.Field
 	Emails        apijson.Field
+	EncryptedSsn  apijson.Field
 	Ethnicity     apijson.Field
 	FirstName     apijson.Field
 	Gender        apijson.Field
