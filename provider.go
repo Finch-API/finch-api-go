@@ -393,7 +393,7 @@ type ProviderAuthenticationMethodsSupportedFieldsEmployment struct {
 	IsActive      bool                                                             `json:"is_active"`
 	LastName      bool                                                             `json:"last_name"`
 	Location      ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation   `json:"location"`
-	Manager       interface{}                                                      `json:"manager"`
+	Manager       ProviderAuthenticationMethodsSupportedFieldsEmploymentManager    `json:"manager"`
 	MiddleName    bool                                                             `json:"middle_name"`
 	StartDate     bool                                                             `json:"start_date"`
 	Title         bool                                                             `json:"title"`
@@ -515,10 +515,29 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type ProviderAuthenticationMethodsSupportedFieldsEmploymentManager struct {
+	ID   bool                                                              `json:"id"`
+	JSON providerAuthenticationMethodsSupportedFieldsEmploymentManagerJSON `json:"-"`
+}
+
+// providerAuthenticationMethodsSupportedFieldsEmploymentManagerJSON contains the
+// JSON metadata for the struct
+// [ProviderAuthenticationMethodsSupportedFieldsEmploymentManager]
+type providerAuthenticationMethodsSupportedFieldsEmploymentManagerJSON struct {
+	ID          apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentManager) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsIndividual struct {
 	ID            bool                                                               `json:"id"`
 	Dob           bool                                                               `json:"dob"`
 	Emails        ProviderAuthenticationMethodsSupportedFieldsIndividualEmails       `json:"emails"`
+	EncryptedSsn  bool                                                               `json:"encrypted_ssn"`
 	Ethnicity     bool                                                               `json:"ethnicity"`
 	FirstName     bool                                                               `json:"first_name"`
 	Gender        bool                                                               `json:"gender"`
@@ -537,6 +556,7 @@ type providerAuthenticationMethodsSupportedFieldsIndividualJSON struct {
 	ID            apijson.Field
 	Dob           apijson.Field
 	Emails        apijson.Field
+	EncryptedSsn  apijson.Field
 	Ethnicity     apijson.Field
 	FirstName     apijson.Field
 	Gender        apijson.Field
