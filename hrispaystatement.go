@@ -286,7 +286,7 @@ func (r *PayStatementResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type PayStatementResponseBody struct {
-	Paging Paging `json:"paging"`
+	Paging shared.Paging `json:"paging"`
 	// The array of pay statements for the current payment.
 	PayStatements []PayStatement               `json:"pay_statements"`
 	JSON          payStatementResponseBodyJSON `json:"-"`
