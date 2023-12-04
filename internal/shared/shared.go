@@ -72,3 +72,23 @@ type operationSupportMatrixJSON struct {
 func (r *OperationSupportMatrix) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+type Paging struct {
+	// The total number of elements for the entire query (not just the given page)
+	Count int64 `json:"count"`
+	// The current start index of the returned list of elements
+	Offset int64      `json:"offset"`
+	JSON   pagingJSON `json:"-"`
+}
+
+// pagingJSON contains the JSON metadata for the struct [Paging]
+type pagingJSON struct {
+	Count       apijson.Field
+	Offset      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *Paging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}

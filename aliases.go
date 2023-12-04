@@ -34,3 +34,6 @@ const OperationSupportClientAccessOnly = shared.OperationSupportClientAccessOnly
 
 // This is an alias to an internal type.
 type OperationSupportMatrix = shared.OperationSupportMatrix
+
+// This is an alias to an internal type.
+type Paging = shared.Paging

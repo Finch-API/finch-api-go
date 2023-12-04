@@ -11,6 +11,7 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -84,7 +85,7 @@ func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, qu
 type IndividualsPage struct {
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals,required"`
-	Paging      Paging                  `json:"paging,required"`
+	Paging      shared.Paging           `json:"paging,required"`
 	JSON        individualsPageJSON     `json:"-"`
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
