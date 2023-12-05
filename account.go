@@ -69,8 +69,13 @@ type Introspection struct {
 	AccountID string `json:"account_id,required"`
 	// The client id of the application associated with the `access_token`.
 	ClientID string `json:"client_id,required"`
+	// The type of application associated with a token.
+	ClientType IntrospectionClientType `json:"client_type,required"`
 	// The Finch uuid of the company associated with the `access_token`.
 	CompanyID string `json:"company_id,required"`
+	// The type of the connection associated with the token.<br> `provider` -
+	// connection to an external provider<br> `finch` - finch-generated data.
+	ConnectionType IntrospectionConnectionType `json:"connection_type,required"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
@@ -88,7 +93,9 @@ type Introspection struct {
 type introspectionJSON struct {
 	AccountID         apijson.Field
 	ClientID          apijson.Field
+	ClientType        apijson.Field
 	CompanyID         apijson.Field
+	ConnectionType    apijson.Field
 	Manual            apijson.Field
 	PayrollProviderID apijson.Field
 	Products          apijson.Field
@@ -100,3 +107,21 @@ type introspectionJSON struct {
 func (r *Introspection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The type of application associated with a token.
+type IntrospectionClientType string
+
+const (
+	IntrospectionClientTypeProduction  IntrospectionClientType = "production"
+	IntrospectionClientTypeDevelopment IntrospectionClientType = "development"
+	IntrospectionClientTypeSandbox     IntrospectionClientType = "sandbox"
+)
+
+// The type of the connection associated with the token.<br> `provider` -
+// connection to an external provider<br> `finch` - finch-generated data.
+type IntrospectionConnectionType string
+
+const (
+	IntrospectionConnectionTypeProvider IntrospectionConnectionType = "provider"
+	IntrospectionConnectionTypeFinch    IntrospectionConnectionType = "finch"
+)
