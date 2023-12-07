@@ -189,6 +189,7 @@ type CompanyEntityType string
 
 const (
 	CompanyEntityTypeLlc            CompanyEntityType = "llc"
+	CompanyEntityTypeLp             CompanyEntityType = "lp"
 	CompanyEntityTypeCorporation    CompanyEntityType = "corporation"
 	CompanyEntityTypeSoleProprietor CompanyEntityType = "sole_proprietor"
 	CompanyEntityTypeNonProfit      CompanyEntityType = "non_profit"
