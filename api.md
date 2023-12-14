@@ -6,6 +6,11 @@
 
 # finchgo
 
+Methods:
+
+- <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.GetAccessToken">GetAccessToken</a>(ctx context.Context, code string, redirectUri string, opts ...option.RequestOption) (string, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.GetAuthURL">GetAuthURL</a>(products string, redirectUri string, sandbox bool, opts ...option.RequestOption) (string, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # HRIS
 
 Response Types:
