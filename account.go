@@ -73,8 +73,11 @@ type Introspection struct {
 	ClientType IntrospectionClientType `json:"client_type,required"`
 	// The Finch uuid of the company associated with the `access_token`.
 	CompanyID string `json:"company_id,required"`
-	// The type of the connection associated with the token.<br> `provider` -
-	// connection to an external provider<br> `finch` - finch-generated data.
+	// The type of the connection associated with the token.
+	//
+	// `provider` - connection to an external provider
+	//
+	// `finch` - finch-generated data.
 	ConnectionType IntrospectionConnectionType `json:"connection_type,required"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
@@ -117,8 +120,11 @@ const (
 	IntrospectionClientTypeSandbox     IntrospectionClientType = "sandbox"
 )
 
-// The type of the connection associated with the token.<br> `provider` -
-// connection to an external provider<br> `finch` - finch-generated data.
+// The type of the connection associated with the token.
+//
+// `provider` - connection to an external provider
+//
+// `finch` - finch-generated data.
 type IntrospectionConnectionType string
 
 const (
