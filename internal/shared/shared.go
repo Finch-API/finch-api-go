@@ -6,11 +6,14 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 )
 
-//   - `supported`: This operation is supported by both the provider and Finch <br>
+// - `supported`: This operation is supported by both the provider and Finch
+//
 //   - `not_supported_by_finch`: This operation is not supported by Finch but
-//     supported by the provider <br>
+//     supported by the provider
+//
 //   - `not_supported_by_provider`: This operation is not supported by the provider,
-//     so Finch cannot support <br>
+//     so Finch cannot support
+//
 //   - `client_access_only`: This behavior is supported by the provider, but only
 //     available to the client and not to Finch
 type OperationSupport string
@@ -23,35 +26,47 @@ const (
 )
 
 type OperationSupportMatrix struct {
-	//   - `supported`: This operation is supported by both the provider and Finch <br>
+	// - `supported`: This operation is supported by both the provider and Finch
+	//
 	//   - `not_supported_by_finch`: This operation is not supported by Finch but
-	//     supported by the provider <br>
+	//     supported by the provider
+	//
 	//   - `not_supported_by_provider`: This operation is not supported by the provider,
-	//     so Finch cannot support <br>
+	//     so Finch cannot support
+	//
 	//   - `client_access_only`: This behavior is supported by the provider, but only
 	//     available to the client and not to Finch
 	Create OperationSupport `json:"create"`
-	//   - `supported`: This operation is supported by both the provider and Finch <br>
+	// - `supported`: This operation is supported by both the provider and Finch
+	//
 	//   - `not_supported_by_finch`: This operation is not supported by Finch but
-	//     supported by the provider <br>
+	//     supported by the provider
+	//
 	//   - `not_supported_by_provider`: This operation is not supported by the provider,
-	//     so Finch cannot support <br>
+	//     so Finch cannot support
+	//
 	//   - `client_access_only`: This behavior is supported by the provider, but only
 	//     available to the client and not to Finch
 	Delete OperationSupport `json:"delete"`
-	//   - `supported`: This operation is supported by both the provider and Finch <br>
+	// - `supported`: This operation is supported by both the provider and Finch
+	//
 	//   - `not_supported_by_finch`: This operation is not supported by Finch but
-	//     supported by the provider <br>
+	//     supported by the provider
+	//
 	//   - `not_supported_by_provider`: This operation is not supported by the provider,
-	//     so Finch cannot support <br>
+	//     so Finch cannot support
+	//
 	//   - `client_access_only`: This behavior is supported by the provider, but only
 	//     available to the client and not to Finch
 	Read OperationSupport `json:"read"`
-	//   - `supported`: This operation is supported by both the provider and Finch <br>
+	// - `supported`: This operation is supported by both the provider and Finch
+	//
 	//   - `not_supported_by_finch`: This operation is not supported by Finch but
-	//     supported by the provider <br>
+	//     supported by the provider
+	//
 	//   - `not_supported_by_provider`: This operation is not supported by the provider,
-	//     so Finch cannot support <br>
+	//     so Finch cannot support
+	//
 	//   - `client_access_only`: This behavior is supported by the provider, but only
 	//     available to the client and not to Finch
 	Update OperationSupport           `json:"update"`
