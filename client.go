@@ -104,7 +104,6 @@ func (r *Client) GetAccessToken(ctx context.Context, code string, redirectUri st
 	}
 
 	return accessToken, nil
-
 }
 
 // Returns the authorization URL which can be visited in order to obtain an
@@ -129,5 +128,4 @@ func (r *Client) GetAuthURL(products string, redirectUri string, sandbox bool, o
 	q.Set("sandbox", strconv.FormatBool(sandbox))
 	u.RawQuery = q.Encode()
 	return u.String(), nil
-
 }
