@@ -20,6 +20,7 @@ import (
 // and instead use the [NewClient] method instead.
 type Client struct {
 	Options           []option.RequestOption
+	AccessTokens      *AccessTokenService
 	HRIS              *HRISService
 	Providers         *ProviderService
 	Account           *AccountService
@@ -47,6 +48,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r = &Client{Options: opts}
 
+	r.AccessTokens = NewAccessTokenService(opts...)
 	r.HRIS = NewHRISService(opts...)
 	r.Providers = NewProviderService(opts...)
 	r.Account = NewAccountService(opts...)
@@ -128,4 +130,11 @@ func (r *Client) GetAuthURL(products string, redirectUri string, sandbox bool, o
 	q.Set("sandbox", strconv.FormatBool(sandbox))
 	u.RawQuery = q.Encode()
 	return u.String(), nil
+}
+
+// Returns a copy of the current Finch client with the given access token for
+// authentication.
+func (r *Client) WithAccessToken(accessToken string) (res Client, err error) {
+	opts := append(r.Options[:], option.WithAccessToken(accessToken))
+	return Client{Options: opts}, nil
 }
