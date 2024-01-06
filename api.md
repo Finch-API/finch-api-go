@@ -10,6 +10,17 @@ Methods:
 
 - <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.GetAccessToken">GetAccessToken</a>(ctx context.Context, code string, redirectUri string, opts ...option.RequestOption) (string, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.GetAuthURL">GetAuthURL</a>(products string, redirectUri string, sandbox bool, opts ...option.RequestOption) (string, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.WithAccessToken">WithAccessToken</a>(accessToken string) (Client, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# AccessTokens
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#CreateAccessTokenResponse">CreateAccessTokenResponse</a>
+
+Methods:
+
+- <code title="post /auth/token">client.AccessTokens.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AccessTokenService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AccessTokenNewParams">AccessTokenNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#CreateAccessTokenResponse">CreateAccessTokenResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # HRIS
 
