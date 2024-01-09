@@ -1,10 +1,10 @@
 # Shared Params Types
 
-- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#IntrospectResponseConnectionStatus">IntrospectResponseConnectionStatus</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#ConnectionStatusType">ConnectionStatusType</a>
 
 # Shared Response Types
 
-- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#IntrospectResponseConnectionStatus">IntrospectResponseConnectionStatus</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#ConnectionStatusType">ConnectionStatusType</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#OperationSupport">OperationSupport</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#OperationSupportMatrix">OperationSupportMatrix</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#Paging">Paging</a>
