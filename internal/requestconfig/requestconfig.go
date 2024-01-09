@@ -139,17 +139,19 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 // Editing the variables inside RequestConfig directly is unstable api. Prefer
 // composing func(\*RequestConfig) error instead if possible.
 type RequestConfig struct {
-	MaxRetries     int
-	RequestTimeout time.Duration
-	Context        context.Context
-	Request        *http.Request
-	BaseURL        *url.URL
-	HTTPClient     *http.Client
-	Middlewares    []middleware
-	AccessToken    string
-	ClientID       string
-	ClientSecret   string
-	WebhookSecret  string
+	MaxRetries          int
+	RequestTimeout      time.Duration
+	Context             context.Context
+	Request             *http.Request
+	BaseURL             *url.URL
+	HTTPClient          *http.Client
+	Middlewares         []middleware
+	AccessToken         string
+	ClientID            string
+	ClientSecret        string
+	SandboxClientID     string
+	SandboxClientSecret string
+	WebhookSecret       string
 	// If ResponseBodyInto not nil, then we will attempt to deserialize into
 	// ResponseBodyInto. If Destination is a []byte, then it will return the body as
 	// is.

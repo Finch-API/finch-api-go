@@ -212,6 +212,22 @@ func WithClientSecret(value string) RequestOption {
 	}
 }
 
+// WithSandboxClientID returns a RequestOption that sets the client setting "sandbox_client_id".
+func WithSandboxClientID(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.SandboxClientID = value
+		return nil
+	}
+}
+
+// WithSandboxClientSecret returns a RequestOption that sets the client setting "sandbox_client_secret".
+func WithSandboxClientSecret(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.SandboxClientSecret = value
+		return nil
+	}
+}
+
 // WithWebhookSecret returns a RequestOption that sets the client setting "webhook_secret".
 func WithWebhookSecret(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
