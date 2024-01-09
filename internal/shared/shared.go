@@ -6,6 +6,17 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 )
 
+type IntrospectResponseConnectionStatus string
+
+const (
+	IntrospectResponseConnectionStatusPending             IntrospectResponseConnectionStatus = "pending"
+	IntrospectResponseConnectionStatusProcessing          IntrospectResponseConnectionStatus = "processing"
+	IntrospectResponseConnectionStatusConnected           IntrospectResponseConnectionStatus = "connected"
+	IntrospectResponseConnectionStatusErrorNoAccountSetup IntrospectResponseConnectionStatus = "error_no_account_setup"
+	IntrospectResponseConnectionStatusErrorPermissions    IntrospectResponseConnectionStatus = "error_permissions"
+	IntrospectResponseConnectionStatusReauth              IntrospectResponseConnectionStatus = "reauth"
+)
+
 // - `supported`: This operation is supported by both the provider and Finch
 //
 //   - `not_supported_by_finch`: This operation is not supported by Finch but

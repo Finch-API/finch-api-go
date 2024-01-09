@@ -1,5 +1,10 @@
+# Shared Params Types
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#IntrospectResponseConnectionStatus">IntrospectResponseConnectionStatus</a>
+
 # Shared Response Types
 
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#IntrospectResponseConnectionStatus">IntrospectResponseConnectionStatus</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#OperationSupport">OperationSupport</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#OperationSupportMatrix">OperationSupportMatrix</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#Paging">Paging</a>
@@ -23,6 +28,12 @@ Methods:
 - <code title="post /auth/token">client.AccessTokens.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AccessTokenService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AccessTokenNewParams">AccessTokenNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#CreateAccessTokenResponse">CreateAccessTokenResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # HRIS
+
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#IncomeParam">IncomeParam</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#LocationParam">LocationParam</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#MoneyParam">MoneyParam</a>
 
 Response Types:
 
@@ -198,3 +209,96 @@ Response Types:
 Methods:
 
 - <code title="get /jobs/manual/{job_id}">client.Jobs.Manual.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#JobManualService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, jobID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#ManualAsyncJob">ManualAsyncJob</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# Auth
+
+Methods:
+
+- <code title="post /auth/token">client.Auth.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AuthService.NewToken">NewToken</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AuthNewTokenParams">AuthNewTokenParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#CreateAccessTokenResponse">CreateAccessTokenResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# Sandbox
+
+## Connections
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionNewResponse">SandboxConnectionNewResponse</a>
+
+Methods:
+
+- <code title="post /sandbox/connections">client.Sandbox.Connections.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionNewParams">SandboxConnectionNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionNewResponse">SandboxConnectionNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+### Accounts
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountNewResponse">SandboxConnectionAccountNewResponse</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountUpdateResponse">SandboxConnectionAccountUpdateResponse</a>
+
+Methods:
+
+- <code title="post /sandbox/connections/accounts">client.Sandbox.Connections.Accounts.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountNewParams">SandboxConnectionAccountNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountNewResponse">SandboxConnectionAccountNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /sandbox/connections/accounts">client.Sandbox.Connections.Accounts.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountUpdateParams">SandboxConnectionAccountUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxConnectionAccountUpdateResponse">SandboxConnectionAccountUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Company
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxCompanyUpdateResponse">SandboxCompanyUpdateResponse</a>
+
+Methods:
+
+- <code title="put /sandbox/company">client.Sandbox.Company.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxCompanyService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxCompanyUpdateParams">SandboxCompanyUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxCompanyUpdateResponse">SandboxCompanyUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Directory
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxDirectoryNewResponse">SandboxDirectoryNewResponse</a>
+
+Methods:
+
+- <code title="post /sandbox/directory">client.Sandbox.Directory.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxDirectoryService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxDirectoryNewParams">SandboxDirectoryNewParams</a>) ([]<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxDirectoryNewResponse">SandboxDirectoryNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Individual
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxIndividualUpdateResponse">SandboxIndividualUpdateResponse</a>
+
+Methods:
+
+- <code title="put /sandbox/individual/{individual_id}">client.Sandbox.Individual.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxIndividualService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, individualID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxIndividualUpdateParams">SandboxIndividualUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxIndividualUpdateResponse">SandboxIndividualUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Employment
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxEmploymentUpdateResponse">SandboxEmploymentUpdateResponse</a>
+
+Methods:
+
+- <code title="put /sandbox/employment/{individual_id}">client.Sandbox.Employment.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxEmploymentService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, individualID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxEmploymentUpdateParams">SandboxEmploymentUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxEmploymentUpdateResponse">SandboxEmploymentUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Payment
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxPaymentNewResponse">SandboxPaymentNewResponse</a>
+
+Methods:
+
+- <code title="post /sandbox/payment">client.Sandbox.Payment.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxPaymentService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxPaymentNewParams">SandboxPaymentNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxPaymentNewResponse">SandboxPaymentNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Jobs
+
+### Configuration
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfiguration">SandboxJobConfiguration</a>
+
+Methods:
+
+- <code title="get /sandbox/jobs/configuration">client.Sandbox.Jobs.Configuration.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) ([]<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfiguration">SandboxJobConfiguration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /sandbox/jobs/configuration">client.Sandbox.Jobs.Configuration.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationUpdateParams">SandboxJobConfigurationUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfiguration">SandboxJobConfiguration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

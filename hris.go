@@ -4,6 +4,7 @@ package finchgo
 
 import (
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -84,6 +85,25 @@ const (
 	IncomeUnitFixed       IncomeUnit = "fixed"
 )
 
+// The employee's income as reported by the provider. This may not always be
+// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
+// depending on what information the provider returns.
+type IncomeParam struct {
+	// The income amount in cents.
+	Amount param.Field[int64] `json:"amount"`
+	// The currency code.
+	Currency param.Field[string] `json:"currency"`
+	// The date the income amount went into effect.
+	EffectiveDate param.Field[string] `json:"effective_date"`
+	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
+	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
+	Unit param.Field[IncomeUnit] `json:"unit"`
+}
+
+func (r IncomeParam) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type Location struct {
 	// City, district, suburb, town, or village.
 	City string `json:"city,nullable"`
@@ -120,6 +140,27 @@ func (r *Location) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type LocationParam struct {
+	// City, district, suburb, town, or village.
+	City param.Field[string] `json:"city"`
+	// The 2-letter ISO 3166 country code.
+	Country param.Field[string] `json:"country"`
+	// Street address or PO box.
+	Line1 param.Field[string] `json:"line1"`
+	// Apartment, suite, unit, or building.
+	Line2 param.Field[string] `json:"line2"`
+	Name  param.Field[string] `json:"name"`
+	// The postal code or zip code.
+	PostalCode param.Field[string] `json:"postal_code"`
+	SourceID   param.Field[string] `json:"source_id"`
+	// The state code.
+	State param.Field[string] `json:"state"`
+}
+
+func (r LocationParam) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type Money struct {
 	// Amount for money object (in cents)
 	Amount   int64     `json:"amount,nullable"`
@@ -137,4 +178,14 @@ type moneyJSON struct {
 
 func (r *Money) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+type MoneyParam struct {
+	// Amount for money object (in cents)
+	Amount   param.Field[int64]  `json:"amount"`
+	Currency param.Field[string] `json:"currency"`
+}
+
+func (r MoneyParam) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }

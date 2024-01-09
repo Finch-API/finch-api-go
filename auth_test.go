@@ -13,7 +13,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestHRISPayStatementGetMany(t *testing.T) {
+func TestAuthNewToken(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,12 +25,11 @@ func TestHRISPayStatementGetMany(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.PayStatements.GetMany(context.TODO(), finchgo.HRISPayStatementGetManyParams{
-		Requests: finchgo.F([]finchgo.HRISPayStatementGetManyParamsRequest{{
-			PaymentID: finchgo.F("string"),
-			Limit:     finchgo.F(int64(0)),
-			Offset:    finchgo.F(int64(0)),
-		}}),
+	_, err := client.Auth.NewToken(context.TODO(), finchgo.AuthNewTokenParams{
+		ClientID:     finchgo.F("<your_client_id>"),
+		ClientSecret: finchgo.F("<your_client_secret>"),
+		Code:         finchgo.F("<your_authorization_code>"),
+		RedirectUri:  finchgo.F("https://example.com"),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
