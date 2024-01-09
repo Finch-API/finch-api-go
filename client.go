@@ -27,6 +27,8 @@ type Client struct {
 	Webhooks          *WebhookService
 	RequestForwarding *RequestForwardingService
 	Jobs              *JobService
+	Auth              *AuthService
+	Sandbox           *SandboxService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -55,6 +57,8 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Webhooks = NewWebhookService(opts...)
 	r.RequestForwarding = NewRequestForwardingService(opts...)
 	r.Jobs = NewJobService(opts...)
+	r.Auth = NewAuthService(opts...)
+	r.Sandbox = NewSandboxService(opts...)
 
 	return
 }
