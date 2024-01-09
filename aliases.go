@@ -10,25 +10,25 @@ import (
 type Error = apierror.Error
 
 // This is an alias to an internal type.
-type IntrospectResponseConnectionStatus = shared.IntrospectResponseConnectionStatus
+type ConnectionStatusType = shared.ConnectionStatusType
 
 // This is an alias to an internal value.
-const IntrospectResponseConnectionStatusPending = shared.IntrospectResponseConnectionStatusPending
+const ConnectionStatusTypePending = shared.ConnectionStatusTypePending
 
 // This is an alias to an internal value.
-const IntrospectResponseConnectionStatusProcessing = shared.IntrospectResponseConnectionStatusProcessing
+const ConnectionStatusTypeProcessing = shared.ConnectionStatusTypeProcessing
 
 // This is an alias to an internal value.
-const IntrospectResponseConnectionStatusConnected = shared.IntrospectResponseConnectionStatusConnected
+const ConnectionStatusTypeConnected = shared.ConnectionStatusTypeConnected
 
 // This is an alias to an internal value.
-const IntrospectResponseConnectionStatusErrorNoAccountSetup = shared.IntrospectResponseConnectionStatusErrorNoAccountSetup
+const ConnectionStatusTypeErrorNoAccountSetup = shared.ConnectionStatusTypeErrorNoAccountSetup
 
 // This is an alias to an internal value.
-const IntrospectResponseConnectionStatusErrorPermissions = shared.IntrospectResponseConnectionStatusErrorPermissions
+const ConnectionStatusTypeErrorPermissions = shared.ConnectionStatusTypeErrorPermissions
 
 // This is an alias to an internal value.
-const IntrospectResponseConnectionStatusReauth = shared.IntrospectResponseConnectionStatusReauth
+const ConnectionStatusTypeReauth = shared.ConnectionStatusTypeReauth
 
 // - `supported`: This operation is supported by both the provider and Finch
 //

@@ -141,7 +141,7 @@ const (
 )
 
 type SandboxConnectionAccountUpdateParams struct {
-	ConnectionStatus param.Field[shared.IntrospectResponseConnectionStatus] `json:"connection_status"`
+	ConnectionStatus param.Field[shared.ConnectionStatusType] `json:"connection_status"`
 }
 
 func (r SandboxConnectionAccountUpdateParams) MarshalJSON() (data []byte, err error) {

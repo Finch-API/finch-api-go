@@ -135,7 +135,7 @@ func (r *IntrospectionAuthenticationMethods) UnmarshalJSON(data []byte) (err err
 
 type IntrospectionAuthenticationMethodsConnectionStatus struct {
 	Message string                                                 `json:"message"`
-	Status  shared.IntrospectResponseConnectionStatus              `json:"status"`
+	Status  shared.ConnectionStatusType                            `json:"status"`
 	JSON    introspectionAuthenticationMethodsConnectionStatusJSON `json:"-"`
 }
 
