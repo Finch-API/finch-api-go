@@ -3,6 +3,7 @@
 package option
 
 import (
+	"encoding/base64"
 	"fmt"
 	"log"
 	"net/http"
@@ -216,7 +217,7 @@ func WithClientSecret(value string) RequestOption {
 func WithSandboxClientID(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
 		r.SandboxClientID = value
-		return nil
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.SandboxClientID+":"+r.SandboxClientSecret)))))
 	}
 }
 
@@ -224,7 +225,7 @@ func WithSandboxClientID(value string) RequestOption {
 func WithSandboxClientSecret(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
 		r.SandboxClientSecret = value
-		return nil
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.SandboxClientID+":"+r.SandboxClientSecret)))))
 	}
 }
 
