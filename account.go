@@ -8,6 +8,7 @@ import (
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -66,7 +67,8 @@ func (r *DisconnectResponse) UnmarshalJSON(data []byte) (err error) {
 
 type Introspection struct {
 	// The Finch uuid of the account used to connect this company.
-	AccountID string `json:"account_id,required"`
+	AccountID             string                             `json:"account_id,required"`
+	AuthenticationMethods IntrospectionAuthenticationMethods `json:"authentication_methods,required"`
 	// The client id of the application associated with the `access_token`.
 	ClientID string `json:"client_id,required"`
 	// The type of application associated with a token.
@@ -94,20 +96,59 @@ type Introspection struct {
 
 // introspectionJSON contains the JSON metadata for the struct [Introspection]
 type introspectionJSON struct {
-	AccountID         apijson.Field
-	ClientID          apijson.Field
-	ClientType        apijson.Field
-	CompanyID         apijson.Field
-	ConnectionType    apijson.Field
-	Manual            apijson.Field
-	PayrollProviderID apijson.Field
-	Products          apijson.Field
-	Username          apijson.Field
-	raw               string
-	ExtraFields       map[string]apijson.Field
+	AccountID             apijson.Field
+	AuthenticationMethods apijson.Field
+	ClientID              apijson.Field
+	ClientType            apijson.Field
+	CompanyID             apijson.Field
+	ConnectionType        apijson.Field
+	Manual                apijson.Field
+	PayrollProviderID     apijson.Field
+	Products              apijson.Field
+	Username              apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *Introspection) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type IntrospectionAuthenticationMethods struct {
+	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
+	Type             string                                             `json:"type"`
+	JSON             introspectionAuthenticationMethodsJSON             `json:"-"`
+}
+
+// introspectionAuthenticationMethodsJSON contains the JSON metadata for the struct
+// [IntrospectionAuthenticationMethods]
+type introspectionAuthenticationMethodsJSON struct {
+	ConnectionStatus apijson.Field
+	Type             apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
+}
+
+func (r *IntrospectionAuthenticationMethods) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type IntrospectionAuthenticationMethodsConnectionStatus struct {
+	Message string                                                 `json:"message"`
+	Status  shared.IntrospectResponseConnectionStatus              `json:"status"`
+	JSON    introspectionAuthenticationMethodsConnectionStatusJSON `json:"-"`
+}
+
+// introspectionAuthenticationMethodsConnectionStatusJSON contains the JSON
+// metadata for the struct [IntrospectionAuthenticationMethodsConnectionStatus]
+type introspectionAuthenticationMethodsConnectionStatusJSON struct {
+	Message     apijson.Field
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IntrospectionAuthenticationMethodsConnectionStatus) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
