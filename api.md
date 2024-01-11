@@ -171,8 +171,22 @@ Methods:
 
 # Webhooks
 
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#AccountUpdateEvent">AccountUpdateEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#BaseWebhookEvent">BaseWebhookEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#CompanyEvent">CompanyEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#DirectoryEvent">DirectoryEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#EmploymentEvent">EmploymentEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#IndividualEvent">IndividualEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#JobCompletionEvent">JobCompletionEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayStatementEvent">PayStatementEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PaymentEvent">PaymentEvent</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookEvent">WebhookEvent</a>
+
 Methods:
 
+- <code>client.Webhooks.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookService.Unwrap">Unwrap</a>(payload []byte, headers http.Header, secret string, now time.Time) (WebhookEvent, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code>client.Webhooks.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookService.VerifySignature">VerifySignature</a>(payload []byte, headers http.Header, secret string, now time.Time) <a href="https://pkg.go.dev/builtin#error">error</a></code>
 
 # RequestForwarding
