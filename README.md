@@ -3,7 +3,7 @@
 <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go"><img src="https://pkg.go.dev/badge/github.com/Finch-API/finch-api-go.svg" alt="Go Reference"></a>
 
 The Finch Go library provides convenient access to [the Finch REST
-API](https://developer.tryfinch.com/) from applications written in Go.
+API](https://developer.tryfinch.com/) from applications written in Go. The full API of this library can be found in [api.md](https://www.github.com/Finch-API/finch-api-go/blob/main/api.md).
 
 ## Installation
 
