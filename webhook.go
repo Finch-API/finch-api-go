@@ -747,8 +747,10 @@ func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPa
 }
 
 type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatements struct {
-	Earnings           AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEarnings           `json:"earnings"`
-	EmployeeDeductions AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployeeDeductions `json:"employee_deductions"`
+	Earnings              AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEarnings              `json:"earnings"`
+	EmployeeDeductions    AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployeeDeductions    `json:"employee_deductions"`
+	EmployerContributions AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributions `json:"employer_contributions"`
+	// [DEPRECATED] Use `employer_contributions` instead
 	EmployerDeductions AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductions `json:"employer_deductions"`
 	GrossPay           bool                                                                                                 `json:"gross_pay"`
 	IndividualID       bool                                                                                                 `json:"individual_id"`
@@ -764,18 +766,19 @@ type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPaySta
 // contains the JSON metadata for the struct
 // [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatements]
 type accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsJSON struct {
-	Earnings           apijson.Field
-	EmployeeDeductions apijson.Field
-	EmployerDeductions apijson.Field
-	GrossPay           apijson.Field
-	IndividualID       apijson.Field
-	NetPay             apijson.Field
-	PaymentMethod      apijson.Field
-	Taxes              apijson.Field
-	TotalHours         apijson.Field
-	Type               apijson.Field
-	raw                string
-	ExtraFields        map[string]apijson.Field
+	Earnings              apijson.Field
+	EmployeeDeductions    apijson.Field
+	EmployerContributions apijson.Field
+	EmployerDeductions    apijson.Field
+	GrossPay              apijson.Field
+	IndividualID          apijson.Field
+	NetPay                apijson.Field
+	PaymentMethod         apijson.Field
+	Taxes                 apijson.Field
+	TotalHours            apijson.Field
+	Type                  apijson.Field
+	raw                   string
+	ExtraFields           map[string]apijson.Field
 }
 
 func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatements) UnmarshalJSON(data []byte) (err error) {
@@ -832,6 +835,29 @@ func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPa
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributions struct {
+	Amount   bool                                                                                                        `json:"amount"`
+	Currency bool                                                                                                        `json:"currency"`
+	Name     bool                                                                                                        `json:"name"`
+	JSON     accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributionsJSON `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributionsJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributions]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributionsJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributions) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// [DEPRECATED] Use `employer_contributions` instead
 type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductions struct {
 	Amount   bool                                                                                                     `json:"amount"`
 	Currency bool                                                                                                     `json:"currency"`
