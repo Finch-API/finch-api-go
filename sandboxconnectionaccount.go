@@ -80,7 +80,7 @@ type SandboxConnectionAccountNewResponseAuthenticationType string
 const (
 	SandboxConnectionAccountNewResponseAuthenticationTypeCredentials SandboxConnectionAccountNewResponseAuthenticationType = "credentials"
 	SandboxConnectionAccountNewResponseAuthenticationTypeAPIToken    SandboxConnectionAccountNewResponseAuthenticationType = "api_token"
-	SandboxConnectionAccountNewResponseAuthenticationTypeOauth       SandboxConnectionAccountNewResponseAuthenticationType = "oauth"
+	SandboxConnectionAccountNewResponseAuthenticationTypeOAuth       SandboxConnectionAccountNewResponseAuthenticationType = "oauth"
 	SandboxConnectionAccountNewResponseAuthenticationTypeAssisted    SandboxConnectionAccountNewResponseAuthenticationType = "assisted"
 )
 
@@ -114,7 +114,7 @@ type SandboxConnectionAccountUpdateResponseAuthenticationType string
 const (
 	SandboxConnectionAccountUpdateResponseAuthenticationTypeCredentials SandboxConnectionAccountUpdateResponseAuthenticationType = "credentials"
 	SandboxConnectionAccountUpdateResponseAuthenticationTypeAPIToken    SandboxConnectionAccountUpdateResponseAuthenticationType = "api_token"
-	SandboxConnectionAccountUpdateResponseAuthenticationTypeOauth       SandboxConnectionAccountUpdateResponseAuthenticationType = "oauth"
+	SandboxConnectionAccountUpdateResponseAuthenticationTypeOAuth       SandboxConnectionAccountUpdateResponseAuthenticationType = "oauth"
 	SandboxConnectionAccountUpdateResponseAuthenticationTypeAssisted    SandboxConnectionAccountUpdateResponseAuthenticationType = "assisted"
 )
 
@@ -136,7 +136,7 @@ type SandboxConnectionAccountNewParamsAuthenticationType string
 const (
 	SandboxConnectionAccountNewParamsAuthenticationTypeCredentials SandboxConnectionAccountNewParamsAuthenticationType = "credentials"
 	SandboxConnectionAccountNewParamsAuthenticationTypeAPIToken    SandboxConnectionAccountNewParamsAuthenticationType = "api_token"
-	SandboxConnectionAccountNewParamsAuthenticationTypeOauth       SandboxConnectionAccountNewParamsAuthenticationType = "oauth"
+	SandboxConnectionAccountNewParamsAuthenticationTypeOAuth       SandboxConnectionAccountNewParamsAuthenticationType = "oauth"
 	SandboxConnectionAccountNewParamsAuthenticationTypeAssisted    SandboxConnectionAccountNewParamsAuthenticationType = "assisted"
 )
 
