@@ -72,7 +72,7 @@ type SandboxConnectionNewResponseAuthenticationType string
 const (
 	SandboxConnectionNewResponseAuthenticationTypeCredentials SandboxConnectionNewResponseAuthenticationType = "credentials"
 	SandboxConnectionNewResponseAuthenticationTypeAPIToken    SandboxConnectionNewResponseAuthenticationType = "api_token"
-	SandboxConnectionNewResponseAuthenticationTypeOauth       SandboxConnectionNewResponseAuthenticationType = "oauth"
+	SandboxConnectionNewResponseAuthenticationTypeOAuth       SandboxConnectionNewResponseAuthenticationType = "oauth"
 	SandboxConnectionNewResponseAuthenticationTypeAssisted    SandboxConnectionNewResponseAuthenticationType = "assisted"
 )
 
@@ -94,6 +94,6 @@ type SandboxConnectionNewParamsAuthenticationType string
 const (
 	SandboxConnectionNewParamsAuthenticationTypeCredentials SandboxConnectionNewParamsAuthenticationType = "credentials"
 	SandboxConnectionNewParamsAuthenticationTypeAPIToken    SandboxConnectionNewParamsAuthenticationType = "api_token"
-	SandboxConnectionNewParamsAuthenticationTypeOauth       SandboxConnectionNewParamsAuthenticationType = "oauth"
+	SandboxConnectionNewParamsAuthenticationTypeOAuth       SandboxConnectionNewParamsAuthenticationType = "oauth"
 	SandboxConnectionNewParamsAuthenticationTypeAssisted    SandboxConnectionNewParamsAuthenticationType = "assisted"
 )

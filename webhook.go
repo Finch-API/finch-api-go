@@ -970,7 +970,7 @@ const (
 	AccountUpdateEventDataAuthenticationMethodTypeCredential    AccountUpdateEventDataAuthenticationMethodType = "credential"
 	AccountUpdateEventDataAuthenticationMethodTypeAPIToken      AccountUpdateEventDataAuthenticationMethodType = "api_token"
 	AccountUpdateEventDataAuthenticationMethodTypeAPICredential AccountUpdateEventDataAuthenticationMethodType = "api_credential"
-	AccountUpdateEventDataAuthenticationMethodTypeOauth         AccountUpdateEventDataAuthenticationMethodType = "oauth"
+	AccountUpdateEventDataAuthenticationMethodTypeOAuth         AccountUpdateEventDataAuthenticationMethodType = "oauth"
 )
 
 type AccountUpdateEventEventType string
