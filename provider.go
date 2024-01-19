@@ -905,5 +905,5 @@ const (
 	ProviderAuthenticationMethodsTypeCredential    ProviderAuthenticationMethodsType = "credential"
 	ProviderAuthenticationMethodsTypeAPIToken      ProviderAuthenticationMethodsType = "api_token"
 	ProviderAuthenticationMethodsTypeAPICredential ProviderAuthenticationMethodsType = "api_credential"
-	ProviderAuthenticationMethodsTypeOauth         ProviderAuthenticationMethodsType = "oauth"
+	ProviderAuthenticationMethodsTypeOAuth         ProviderAuthenticationMethodsType = "oauth"
 )
