@@ -102,6 +102,7 @@ func (r *Client) GetAccessToken(ctx context.Context, code string, redirectUri st
 	}
 	cfg.Apply(func(rc *requestconfig.RequestConfig) (err error) {
 		rc.Buffer, err = json.Marshal(body)
+		rc.Request.Header.Set("Content-Type", "application/json")
 		return err
 	})
 
