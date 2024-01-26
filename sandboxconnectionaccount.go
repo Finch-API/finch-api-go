@@ -78,10 +78,10 @@ func (r *SandboxConnectionAccountNewResponse) UnmarshalJSON(data []byte) (err er
 type SandboxConnectionAccountNewResponseAuthenticationType string
 
 const (
-	SandboxConnectionAccountNewResponseAuthenticationTypeCredentials SandboxConnectionAccountNewResponseAuthenticationType = "credentials"
-	SandboxConnectionAccountNewResponseAuthenticationTypeAPIToken    SandboxConnectionAccountNewResponseAuthenticationType = "api_token"
-	SandboxConnectionAccountNewResponseAuthenticationTypeOAuth       SandboxConnectionAccountNewResponseAuthenticationType = "oauth"
-	SandboxConnectionAccountNewResponseAuthenticationTypeAssisted    SandboxConnectionAccountNewResponseAuthenticationType = "assisted"
+	SandboxConnectionAccountNewResponseAuthenticationTypeCredential SandboxConnectionAccountNewResponseAuthenticationType = "credential"
+	SandboxConnectionAccountNewResponseAuthenticationTypeAPIToken   SandboxConnectionAccountNewResponseAuthenticationType = "api_token"
+	SandboxConnectionAccountNewResponseAuthenticationTypeOAuth      SandboxConnectionAccountNewResponseAuthenticationType = "oauth"
+	SandboxConnectionAccountNewResponseAuthenticationTypeAssisted   SandboxConnectionAccountNewResponseAuthenticationType = "assisted"
 )
 
 type SandboxConnectionAccountUpdateResponse struct {
@@ -112,10 +112,10 @@ func (r *SandboxConnectionAccountUpdateResponse) UnmarshalJSON(data []byte) (err
 type SandboxConnectionAccountUpdateResponseAuthenticationType string
 
 const (
-	SandboxConnectionAccountUpdateResponseAuthenticationTypeCredentials SandboxConnectionAccountUpdateResponseAuthenticationType = "credentials"
-	SandboxConnectionAccountUpdateResponseAuthenticationTypeAPIToken    SandboxConnectionAccountUpdateResponseAuthenticationType = "api_token"
-	SandboxConnectionAccountUpdateResponseAuthenticationTypeOAuth       SandboxConnectionAccountUpdateResponseAuthenticationType = "oauth"
-	SandboxConnectionAccountUpdateResponseAuthenticationTypeAssisted    SandboxConnectionAccountUpdateResponseAuthenticationType = "assisted"
+	SandboxConnectionAccountUpdateResponseAuthenticationTypeCredential SandboxConnectionAccountUpdateResponseAuthenticationType = "credential"
+	SandboxConnectionAccountUpdateResponseAuthenticationTypeAPIToken   SandboxConnectionAccountUpdateResponseAuthenticationType = "api_token"
+	SandboxConnectionAccountUpdateResponseAuthenticationTypeOAuth      SandboxConnectionAccountUpdateResponseAuthenticationType = "oauth"
+	SandboxConnectionAccountUpdateResponseAuthenticationTypeAssisted   SandboxConnectionAccountUpdateResponseAuthenticationType = "assisted"
 )
 
 type SandboxConnectionAccountNewParams struct {
@@ -134,10 +134,10 @@ func (r SandboxConnectionAccountNewParams) MarshalJSON() (data []byte, err error
 type SandboxConnectionAccountNewParamsAuthenticationType string
 
 const (
-	SandboxConnectionAccountNewParamsAuthenticationTypeCredentials SandboxConnectionAccountNewParamsAuthenticationType = "credentials"
-	SandboxConnectionAccountNewParamsAuthenticationTypeAPIToken    SandboxConnectionAccountNewParamsAuthenticationType = "api_token"
-	SandboxConnectionAccountNewParamsAuthenticationTypeOAuth       SandboxConnectionAccountNewParamsAuthenticationType = "oauth"
-	SandboxConnectionAccountNewParamsAuthenticationTypeAssisted    SandboxConnectionAccountNewParamsAuthenticationType = "assisted"
+	SandboxConnectionAccountNewParamsAuthenticationTypeCredential SandboxConnectionAccountNewParamsAuthenticationType = "credential"
+	SandboxConnectionAccountNewParamsAuthenticationTypeAPIToken   SandboxConnectionAccountNewParamsAuthenticationType = "api_token"
+	SandboxConnectionAccountNewParamsAuthenticationTypeOAuth      SandboxConnectionAccountNewParamsAuthenticationType = "oauth"
+	SandboxConnectionAccountNewParamsAuthenticationTypeAssisted   SandboxConnectionAccountNewParamsAuthenticationType = "assisted"
 )
 
 type SandboxConnectionAccountUpdateParams struct {
