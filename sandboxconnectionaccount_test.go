@@ -30,7 +30,7 @@ func TestSandboxConnectionAccountNewWithOptionalParams(t *testing.T) {
 	_, err := client.Sandbox.Connections.Accounts.New(context.TODO(), finchgo.SandboxConnectionAccountNewParams{
 		CompanyID:          finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
 		ProviderID:         finchgo.F("string"),
-		AuthenticationType: finchgo.F(finchgo.SandboxConnectionAccountNewParamsAuthenticationTypeCredentials),
+		AuthenticationType: finchgo.F(finchgo.SandboxConnectionAccountNewParamsAuthenticationTypeCredential),
 		Products:           finchgo.F([]string{"string", "string", "string"}),
 	})
 	if err != nil {

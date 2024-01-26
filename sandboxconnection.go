@@ -70,10 +70,10 @@ func (r *SandboxConnectionNewResponse) UnmarshalJSON(data []byte) (err error) {
 type SandboxConnectionNewResponseAuthenticationType string
 
 const (
-	SandboxConnectionNewResponseAuthenticationTypeCredentials SandboxConnectionNewResponseAuthenticationType = "credentials"
-	SandboxConnectionNewResponseAuthenticationTypeAPIToken    SandboxConnectionNewResponseAuthenticationType = "api_token"
-	SandboxConnectionNewResponseAuthenticationTypeOAuth       SandboxConnectionNewResponseAuthenticationType = "oauth"
-	SandboxConnectionNewResponseAuthenticationTypeAssisted    SandboxConnectionNewResponseAuthenticationType = "assisted"
+	SandboxConnectionNewResponseAuthenticationTypeCredential SandboxConnectionNewResponseAuthenticationType = "credential"
+	SandboxConnectionNewResponseAuthenticationTypeAPIToken   SandboxConnectionNewResponseAuthenticationType = "api_token"
+	SandboxConnectionNewResponseAuthenticationTypeOAuth      SandboxConnectionNewResponseAuthenticationType = "oauth"
+	SandboxConnectionNewResponseAuthenticationTypeAssisted   SandboxConnectionNewResponseAuthenticationType = "assisted"
 )
 
 type SandboxConnectionNewParams struct {
@@ -92,8 +92,8 @@ func (r SandboxConnectionNewParams) MarshalJSON() (data []byte, err error) {
 type SandboxConnectionNewParamsAuthenticationType string
 
 const (
-	SandboxConnectionNewParamsAuthenticationTypeCredentials SandboxConnectionNewParamsAuthenticationType = "credentials"
-	SandboxConnectionNewParamsAuthenticationTypeAPIToken    SandboxConnectionNewParamsAuthenticationType = "api_token"
-	SandboxConnectionNewParamsAuthenticationTypeOAuth       SandboxConnectionNewParamsAuthenticationType = "oauth"
-	SandboxConnectionNewParamsAuthenticationTypeAssisted    SandboxConnectionNewParamsAuthenticationType = "assisted"
+	SandboxConnectionNewParamsAuthenticationTypeCredential SandboxConnectionNewParamsAuthenticationType = "credential"
+	SandboxConnectionNewParamsAuthenticationTypeAPIToken   SandboxConnectionNewParamsAuthenticationType = "api_token"
+	SandboxConnectionNewParamsAuthenticationTypeOAuth      SandboxConnectionNewParamsAuthenticationType = "oauth"
+	SandboxConnectionNewParamsAuthenticationTypeAssisted   SandboxConnectionNewParamsAuthenticationType = "assisted"
 )
