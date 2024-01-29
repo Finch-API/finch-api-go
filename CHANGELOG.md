@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.3 (2024-01-29)
+
+Full Changelog: [v0.10.2...v0.10.3](https://github.com/Finch-API/finch-api-go/compare/v0.10.2...v0.10.3)
+
+### Bug Fixes
+
+* **api:** update `employer_size` parameter to `employee_size` ([#92](https://github.com/Finch-API/finch-api-go/issues/92)) ([eb47c23](https://github.com/Finch-API/finch-api-go/commit/eb47c23a8e191df096dd042134487816de718bae))
+
 ## 0.10.2 (2024-01-29)
 
 Full Changelog: [v0.10.1...v0.10.2](https://github.com/Finch-Api/finch-api-go/compare/v0.10.1...v0.10.2)
