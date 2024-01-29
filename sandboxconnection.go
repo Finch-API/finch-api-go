@@ -81,7 +81,7 @@ type SandboxConnectionNewParams struct {
 	AuthenticationType param.Field[SandboxConnectionNewParamsAuthenticationType] `json:"authentication_type"`
 	// Optional: the size of the employer to be created with this connection. Defaults
 	// to 20
-	EmployerSize param.Field[int64]    `json:"employer_size"`
+	EmployeeSize param.Field[int64]    `json:"employee_size"`
 	Products     param.Field[[]string] `json:"products"`
 }
 
