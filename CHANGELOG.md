@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.4 (2024-01-29)
+
+Full Changelog: [v0.10.3...v0.10.4](https://github.com/Finch-API/finch-api-go/compare/v0.10.3...v0.10.4)
+
+### Chores
+
+* **internal:** parse date-time strings more leniently ([#94](https://github.com/Finch-API/finch-api-go/issues/94)) ([8f4dafc](https://github.com/Finch-API/finch-api-go/commit/8f4dafc03d1cfe122aa17bef8684fd5d6b5a9d26))
+
 ## 0.10.3 (2024-01-29)
 
 Full Changelog: [v0.10.2...v0.10.3](https://github.com/Finch-API/finch-api-go/compare/v0.10.2...v0.10.3)
