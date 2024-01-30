@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.5 (2024-01-30)
+
+Full Changelog: [v0.10.4...v0.10.5](https://github.com/Finch-API/finch-api-go/compare/v0.10.4...v0.10.5)
+
+### Chores
+
+* **internal:** support pre-release versioning ([#96](https://github.com/Finch-API/finch-api-go/issues/96)) ([5d95e24](https://github.com/Finch-API/finch-api-go/commit/5d95e24c9b4fb1749c76b86fe89000c6eca559d6))
+
 ## 0.10.4 (2024-01-29)
 
 Full Changelog: [v0.10.3...v0.10.4](https://github.com/Finch-API/finch-api-go/compare/v0.10.3...v0.10.4)
