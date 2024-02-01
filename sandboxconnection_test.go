@@ -25,6 +25,8 @@ func TestSandboxConnectionNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Connections.New(context.TODO(), finchgo.SandboxConnectionNewParams{
 		ProviderID:         finchgo.F("string"),

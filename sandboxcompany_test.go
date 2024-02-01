@@ -24,6 +24,8 @@ func TestSandboxCompanyUpdateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Company.Update(context.TODO(), finchgo.SandboxCompanyUpdateParams{
 		Accounts: finchgo.F([]finchgo.SandboxCompanyUpdateParamsAccount{{

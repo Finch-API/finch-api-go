@@ -24,6 +24,8 @@ func TestAccountDisconnect(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Account.Disconnect(context.TODO())
 	if err != nil {
@@ -46,6 +48,8 @@ func TestAccountIntrospect(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Account.Introspect(context.TODO())
 	if err != nil {
