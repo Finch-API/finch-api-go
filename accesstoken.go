@@ -4,12 +4,15 @@ package finchgo
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 // AccessTokenService contains methods and other services that help with
@@ -32,9 +35,39 @@ func NewAccessTokenService(opts ...option.RequestOption) (r *AccessTokenService)
 // Exchange the authorization code for an access token
 func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams, opts ...option.RequestOption) (res *CreateAccessTokenResponse, err error) {
 	opts = append(r.Options[:], opts...)
+
+	opts = append(opts[:], func(rc *requestconfig.RequestConfig) error {
+		bodyClientID := gjson.Get(string(rc.Buffer), "client_id")
+		if !bodyClientID.Exists() {
+			if rc.ClientID == "" {
+				return errors.New("client_id must be provided as an argument or with the FINCH_CLIENT_ID environment variable")
+			}
+			updatedBody, err := sjson.Set(string(rc.Buffer), "client_id", rc.ClientID)
+			if err != nil {
+				return err
+			}
+			rc.Buffer = []byte(updatedBody)
+		}
+
+		bodyClientSecret := gjson.Get(string(rc.Buffer), "client_secret")
+		if !bodyClientSecret.Exists() {
+			if rc.ClientSecret == "" {
+				return errors.New("client_secret must be provided as an argument or with the FINCH_CLIENT_SECRET environment variable")
+			}
+			updatedBody, err := sjson.Set(string(rc.Buffer), "client_secret", rc.ClientSecret)
+			if err != nil {
+				return err
+			}
+			rc.Buffer = []byte(updatedBody)
+		}
+
+		return nil
+	})
+
 	path := "auth/token"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
+
 }
 
 type CreateAccessTokenResponse struct {
@@ -55,10 +88,10 @@ func (r *CreateAccessTokenResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 type AccessTokenNewParams struct {
-	ClientID     param.Field[string] `json:"client_id,required"`
-	ClientSecret param.Field[string] `json:"client_secret,required"`
 	Code         param.Field[string] `json:"code,required"`
 	RedirectUri  param.Field[string] `json:"redirect_uri,required"`
+	ClientID     param.Field[string] `json:"client_id"`
+	ClientSecret param.Field[string] `json:"client_secret"`
 }
 
 func (r AccessTokenNewParams) MarshalJSON() (data []byte, err error) {

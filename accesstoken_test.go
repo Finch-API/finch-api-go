@@ -13,7 +13,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestAccessTokenNew(t *testing.T) {
+func TestAccessTokenNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,12 +24,14 @@ func TestAccessTokenNew(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.AccessTokens.New(context.TODO(), finchgo.AccessTokenNewParams{
-		ClientID:     finchgo.F("<your_client_id>"),
-		ClientSecret: finchgo.F("<your_client_secret>"),
 		Code:         finchgo.F("<your_authorization_code>"),
 		RedirectUri:  finchgo.F("https://example.com"),
+		ClientID:     finchgo.F("<your_client_id>"),
+		ClientSecret: finchgo.F("<your_client_secret>"),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
