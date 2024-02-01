@@ -24,6 +24,8 @@ func TestJobAutomatedNew(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Jobs.Automated.New(context.TODO(), finchgo.JobAutomatedNewParams{
 		Type: finchgo.F(finchgo.JobAutomatedNewParamsTypeDataSyncAll),
@@ -48,6 +50,8 @@ func TestJobAutomatedGet(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Jobs.Automated.Get(context.TODO(), "string")
 	if err != nil {
@@ -70,6 +74,8 @@ func TestJobAutomatedListWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Jobs.Automated.List(context.TODO(), finchgo.JobAutomatedListParams{
 		Limit:  finchgo.F(int64(0)),

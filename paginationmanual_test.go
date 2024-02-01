@@ -23,6 +23,8 @@ func TestManualPagination(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 	if err != nil {

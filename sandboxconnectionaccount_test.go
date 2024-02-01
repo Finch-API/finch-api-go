@@ -26,6 +26,8 @@ func TestSandboxConnectionAccountNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Connections.Accounts.New(context.TODO(), finchgo.SandboxConnectionAccountNewParams{
 		CompanyID:          finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
@@ -53,6 +55,8 @@ func TestSandboxConnectionAccountUpdateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Connections.Accounts.Update(context.TODO(), finchgo.SandboxConnectionAccountUpdateParams{
 		ConnectionStatus: finchgo.F(shared.ConnectionStatusTypeReauth),

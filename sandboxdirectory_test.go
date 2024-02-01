@@ -24,6 +24,8 @@ func TestSandboxDirectoryNew(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Directory.New(context.TODO(), finchgo.SandboxDirectoryNewParams{
 		Body: finchgo.F([]finchgo.SandboxDirectoryNewParamsBody{{

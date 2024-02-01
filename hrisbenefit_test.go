@@ -24,6 +24,8 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
 		Description: finchgo.F("string"),
@@ -50,6 +52,8 @@ func TestHRISBenefitGet(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.Get(context.TODO(), "string")
 	if err != nil {
@@ -72,6 +76,8 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.Update(
 		context.TODO(),
@@ -100,6 +106,8 @@ func TestHRISBenefitList(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.List(context.TODO())
 	if err != nil {
@@ -122,6 +130,8 @@ func TestHRISBenefitListSupportedBenefits(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("My Client ID"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.ListSupportedBenefits(context.TODO())
 	if err != nil {
