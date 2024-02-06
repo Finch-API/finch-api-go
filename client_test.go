@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	finchgo "github.com/Finch-API/finch-api-go"
+	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
