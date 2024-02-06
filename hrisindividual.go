@@ -73,8 +73,8 @@ type Individual struct {
 	MiddleName   string                  `json:"middle_name,nullable"`
 	PhoneNumbers []IndividualPhoneNumber `json:"phone_numbers,nullable"`
 	// The preferred name of the individual.
-	PreferredName string   `json:"preferred_name,nullable"`
-	Residence     Location `json:"residence,nullable"`
+	PreferredName string `json:"preferred_name,nullable"`
+	Residence Location `json:"residence,nullable"`
 	// Note: This property is only available if enabled for your account. Please reach
 	// out to your Finch representative if you would like access.
 	Ssn  string         `json:"ssn,nullable"`
