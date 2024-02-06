@@ -98,7 +98,7 @@ func (r *SinglePageAutoPager[T]) Index() int {
 }
 
 type ResponsesPage[T any] struct {
-	Responses []T               `json:"responses,required"`
+	Responses []T               `json:"responses"`
 	JSON      responsesPageJSON `json:"-"`
 	cfg       *requestconfig.RequestConfig
 	res       *http.Response
@@ -186,8 +186,8 @@ func (r *ResponsesPageAutoPager[T]) Index() int {
 }
 
 type Page[T any] struct {
-	Paging Paging   `json:"paging,required"`
 	Data   []T      `json:"data"`
+	Paging Paging   `json:"paging,required"`
 	JSON   pageJSON `json:"-"`
 	cfg    *requestconfig.RequestConfig
 	res    *http.Response
@@ -195,8 +195,8 @@ type Page[T any] struct {
 
 // pageJSON contains the JSON metadata for the struct [Page[T]]
 type pageJSON struct {
-	Paging      apijson.Field
 	Data        apijson.Field
+	Paging      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
