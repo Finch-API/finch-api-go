@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.11.0 (2024-02-09)
+
+Full Changelog: [v0.10.5...v0.11.0](https://github.com/Finch-API/finch-api-go/compare/v0.10.5...v0.11.0)
+
+### Features
+
+* **api:** create access token reads client opts if not provided ([#98](https://github.com/Finch-API/finch-api-go/issues/98)) ([2b02a6c](https://github.com/Finch-API/finch-api-go/commit/2b02a6ce9b2bd84ea3389ce2951a33c3fcb81abc))
+
+
+### Chores
+
+* **interal:** make link to api.md relative ([#100](https://github.com/Finch-API/finch-api-go/issues/100)) ([041fa16](https://github.com/Finch-API/finch-api-go/commit/041fa16178cb196e158361afc6a13849ecf19352))
+* **internal:** adjust formatting ([#102](https://github.com/Finch-API/finch-api-go/issues/102)) ([6a39496](https://github.com/Finch-API/finch-api-go/commit/6a39496840312848a81061776724ac03f6e9fbba))
+* **internal:** bump timeout threshold in tests ([#103](https://github.com/Finch-API/finch-api-go/issues/103)) ([9839c83](https://github.com/Finch-API/finch-api-go/commit/9839c834fe830b6e8df1d74b7d7b1e8387e51bdc))
+* **internal:** minor pagination restructuring ([#101](https://github.com/Finch-API/finch-api-go/issues/101)) ([dba623c](https://github.com/Finch-API/finch-api-go/commit/dba623c6c9c936aa31516ab0664581b40e1639e9))
+
 ## 0.10.5 (2024-01-30)
 
 Full Changelog: [v0.10.4...v0.10.5](https://github.com/Finch-API/finch-api-go/compare/v0.10.4...v0.10.5)
