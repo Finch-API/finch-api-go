@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/Finch-API/finch-api-go@v0.10.5'
+go get -u 'github.com/Finch-API/finch-api-go@v0.11.0'
 ```
 
 <!-- x-release-please-end -->
