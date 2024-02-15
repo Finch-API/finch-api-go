@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.1 (2024-02-15)
+
+Full Changelog: [v0.11.0...v0.11.1](https://github.com/Finch-API/finch-api-go/compare/v0.11.0...v0.11.1)
+
+### Chores
+
+* **internal:** refactor release environment script ([#104](https://github.com/Finch-API/finch-api-go/issues/104)) ([4b9567a](https://github.com/Finch-API/finch-api-go/commit/4b9567a8565c54214ae2261033c8daaee610772f))
+
 ## 0.11.0 (2024-02-09)
 
 Full Changelog: [v0.10.5...v0.11.0](https://github.com/Finch-API/finch-api-go/compare/v0.10.5...v0.11.0)
