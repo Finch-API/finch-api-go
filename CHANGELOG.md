@@ -1,5 +1,56 @@
 # Changelog
 
+## 0.0.1 (2024-02-15)
+
+Full Changelog: [...abc-v0.0.1](https://github.com/Finch-API/finch-api-go/compare/...abc-v0.0.1)
+
+### ⚠ BREAKING CHANGES
+
+* fix oauth casing ([#88](https://github.com/Finch-API/finch-api-go/issues/88))
+
+### Features
+
+* add GetAuthURL and GetAccessToken helpers ([#63](https://github.com/Finch-API/finch-api-go/issues/63)) ([f76b224](https://github.com/Finch-API/finch-api-go/commit/f76b2241ea3784a5127120519acd7d7a42786044))
+* **api:** add `/forward` endpoint and other updates ([#25](https://github.com/Finch-API/finch-api-go/issues/25)) ([62866f9](https://github.com/Finch-API/finch-api-go/commit/62866f951ac4767477c101756933b2332e7fa1e3))
+* **api:** add `/jobs` endpoints ([#59](https://github.com/Finch-API/finch-api-go/issues/59)) ([abadc27](https://github.com/Finch-API/finch-api-go/commit/abadc27de7817fc13f2209eb23e0d95f5b473d67))
+* **api:** add `client_type` and `connection_type` to introspection ([#60](https://github.com/Finch-API/finch-api-go/issues/60)) ([3ae0b6f](https://github.com/Finch-API/finch-api-go/commit/3ae0b6faf5e8875afca9c0aba70e1042a20d1f53))
+* **api:** add `lp` tax payer type enum value ([#62](https://github.com/Finch-API/finch-api-go/issues/62)) ([4808101](https://github.com/Finch-API/finch-api-go/commit/480810119e863d3942db5c39486d27aa1367a6e3))
+* **api:** add employer_contributions field ([#87](https://github.com/Finch-API/finch-api-go/issues/87)) ([fea195e](https://github.com/Finch-API/finch-api-go/commit/fea195e24c2272b76bdbf3120712bb30cd954bfa))
+* **api:** add method to create access token ([#72](https://github.com/Finch-API/finch-api-go/issues/72)) ([1a5c929](https://github.com/Finch-API/finch-api-go/commit/1a5c92971b99c4f55b2ae48c279cabe0b2f0a931))
+* **api:** add sandbox APIs ([#74](https://github.com/Finch-API/finch-api-go/issues/74)) ([bb46ea2](https://github.com/Finch-API/finch-api-go/commit/bb46ea22cc7a0cd8a695f1bca340685f7e7c3752))
+* **api:** create access token reads client opts if not provided ([#98](https://github.com/Finch-API/finch-api-go/issues/98)) ([698e6aa](https://github.com/Finch-API/finch-api-go/commit/698e6aaa7d5d163c558e5225ab222955408c0138))
+* **api:** updates ([#53](https://github.com/Finch-API/finch-api-go/issues/53)) ([bf24720](https://github.com/Finch-API/finch-api-go/commit/bf24720f9bee7664a5afe3ebb95362d9793f5ec7))
+* **api:** updates ([#56](https://github.com/Finch-API/finch-api-go/issues/56)) ([8153ed6](https://github.com/Finch-API/finch-api-go/commit/8153ed6c0f71268fb34d07ff639f796f3f3e76c1))
+* **ci:** add reviewers ([#15](https://github.com/Finch-API/finch-api-go/issues/15)) ([92f2916](https://github.com/Finch-API/finch-api-go/commit/92f2916b6be96031166746330d98063607709878))
+* **client:** adjust retry behavior ([#40](https://github.com/Finch-API/finch-api-go/issues/40)) ([7830f45](https://github.com/Finch-API/finch-api-go/commit/7830f45aa90db45d6bda7e22082317cd318baa27))
+* **client:** allow binary returns ([#48](https://github.com/Finch-API/finch-api-go/issues/48)) ([d78d2c6](https://github.com/Finch-API/finch-api-go/commit/d78d2c633cf71ce87935cd57ff6483675408c500))
+* **client:** hook up sandbox auth ([#79](https://github.com/Finch-API/finch-api-go/issues/79)) ([1620241](https://github.com/Finch-API/finch-api-go/commit/1620241293e442ca5ca9a13ca83143cdbb444e67))
+* **github:** include a devcontainer setup ([#46](https://github.com/Finch-API/finch-api-go/issues/46)) ([4e16dd9](https://github.com/Finch-API/finch-api-go/commit/4e16dd9b79e4b0bf88b3a05cf768869f5d24aec5))
+* improve retry behavior on context deadline ([#18](https://github.com/Finch-API/finch-api-go/issues/18)) ([c1c477e](https://github.com/Finch-API/finch-api-go/commit/c1c477ed80d2578565b40eda8618701826518740))
+* **init:** initial commit ([9f33baa](https://github.com/Finch-API/finch-api-go/commit/9f33baa96aa2259baea5cd2a5fe00c5b57d17bb2))
+* make webhook headers case insensitive ([#38](https://github.com/Finch-API/finch-api-go/issues/38)) ([e8a4e9d](https://github.com/Finch-API/finch-api-go/commit/e8a4e9d49b4b52d88a8f712622da9ce12c1508f5))
+* remove redundant endpoint, add sandbox client options (not yet used) ([#78](https://github.com/Finch-API/finch-api-go/issues/78)) ([a39f0ed](https://github.com/Finch-API/finch-api-go/commit/a39f0ed81b4da27a0552981fc1ddc40a8d04e79a))
+* retry on 408 Request Timeout ([#7](https://github.com/Finch-API/finch-api-go/issues/7)) ([6075488](https://github.com/Finch-API/finch-api-go/commit/6075488158fc1ea2db4bf1d280a3479ad916bd79))
+* **webhooks:** add Unwrap method ([#80](https://github.com/Finch-API/finch-api-go/issues/80)) ([8105600](https://github.com/Finch-API/finch-api-go/commit/8105600866b0c8deeb9489f4d8065cce6d8bd7cd))
+
+
+### Bug Fixes
+
+* **api:** fix authentication_type enum ([#90](https://github.com/Finch-API/finch-api-go/issues/90)) ([a2a30ef](https://github.com/Finch-API/finch-api-go/commit/a2a30efbf80fbebf3dc8f243e332a01cc37bce4d))
+* **api:** update `employer_size` parameter to `employee_size` ([#92](https://github.com/Finch-API/finch-api-go/issues/92)) ([008f03d](https://github.com/Finch-API/finch-api-go/commit/008f03d8c9b57df40263edc507ac0af7c6daed02))
+* **core:** add null check to prevent segfault when canceling context ([#4](https://github.com/Finch-API/finch-api-go/issues/4)) ([253b535](https://github.com/Finch-API/finch-api-go/commit/253b535667efe74ba34a5ab5a610453e0147edd0))
+* **core:** improve retry behavior and related docs ([#9](https://github.com/Finch-API/finch-api-go/issues/9)) ([7107ce5](https://github.com/Finch-API/finch-api-go/commit/7107ce5b8411fa3b44c1de961ddaab4b8f17cf24))
+* correct benfits to benefits ([#31](https://github.com/Finch-API/finch-api-go/issues/31)) ([ac0e3ac](https://github.com/Finch-API/finch-api-go/commit/ac0e3ac729d999c4f4752f4744e3bcf6199c6bed))
+* make options.WithHeader utils case-insensitive ([#51](https://github.com/Finch-API/finch-api-go/issues/51)) ([4eb1227](https://github.com/Finch-API/finch-api-go/commit/4eb12270bc360c240b81e22adf27f1db93ca05e7))
+* prevent index out of range bug during auto-pagination ([#23](https://github.com/Finch-API/finch-api-go/issues/23)) ([926f3bd](https://github.com/Finch-API/finch-api-go/commit/926f3bd71d25297bdd49428e7e9eaabb7319142e))
+* **test:** avoid test failures when SKIP_MOCK_TESTS is not set ([#85](https://github.com/Finch-API/finch-api-go/issues/85)) ([0150470](https://github.com/Finch-API/finch-api-go/commit/0150470e3dbe84c4a3c22ef56912641ac3e72b14))
+* use content-type application/json for request to POST /auth/token ([#89](https://github.com/Finch-API/finch-api-go/issues/89)) ([b4c9a77](https://github.com/Finch-API/finch-api-go/commit/b4c9a771f15f81d01c3194bf2a6bf1aa0be3b973))
+
+
+### Code Refactoring
+
+* fix oauth casing ([#88](https://github.com/Finch-API/finch-api-go/issues/88)) ([ec2e3ad](https://github.com/Finch-API/finch-api-go/commit/ec2e3ada5704132f5fa34558f7b8058e8caa641c))
+
 ## 0.11.0 (2024-02-09)
 
 Full Changelog: [v0.10.5...v0.11.0](https://github.com/Finch-API/finch-api-go/compare/v0.10.5...v0.11.0)
