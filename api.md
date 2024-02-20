@@ -300,6 +300,14 @@ Methods:
 
 ## Jobs
 
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobNewResponse">SandboxJobNewResponse</a>
+
+Methods:
+
+- <code title="post /sandbox/jobs">client.Sandbox.Jobs.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobNewParams">SandboxJobNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobNewResponse">SandboxJobNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ### Configuration
 
 Response Types:
