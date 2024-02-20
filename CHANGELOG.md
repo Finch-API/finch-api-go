@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2024-02-20)
+
+Full Changelog: [v0.11.1...v0.12.0](https://github.com/Finch-API/finch-api-go/compare/v0.11.1...v0.12.0)
+
+### Features
+
+* **api:** create new sandbox job ([#107](https://github.com/Finch-API/finch-api-go/issues/107)) ([0850d5a](https://github.com/Finch-API/finch-api-go/commit/0850d5a15e6967bcf0015e929f0e461becea3dd3))
+
 ## 0.11.1 (2024-02-15)
 
 Full Changelog: [v0.11.0...v0.11.1](https://github.com/Finch-API/finch-api-go/compare/v0.11.0...v0.11.1)
