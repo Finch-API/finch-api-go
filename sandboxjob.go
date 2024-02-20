@@ -3,6 +3,12 @@
 package finchgo
 
 import (
+	"context"
+	"net/http"
+
+	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/param"
+	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -24,3 +30,54 @@ func NewSandboxJobService(opts ...option.RequestOption) (r *SandboxJobService) {
 	r.Configuration = NewSandboxJobConfigurationService(opts...)
 	return
 }
+
+// Enqueue a new sandbox job
+func (r *SandboxJobService) New(ctx context.Context, body SandboxJobNewParams, opts ...option.RequestOption) (res *SandboxJobNewResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "sandbox/jobs"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
+type SandboxJobNewResponse struct {
+	// The number of allowed refreshes per hour (per hour, fixed window)
+	AllowedRefreshes int64 `json:"allowed_refreshes,required"`
+	// The id of the job that has been created.
+	JobID string `json:"job_id,required" format:"uuid"`
+	// The url that can be used to retrieve the job status
+	JobURL string `json:"job_url,required"`
+	// The number of remaining refreshes available (per hour, fixed window)
+	RemainingRefreshes int64                     `json:"remaining_refreshes,required"`
+	JSON               sandboxJobNewResponseJSON `json:"-"`
+}
+
+// sandboxJobNewResponseJSON contains the JSON metadata for the struct
+// [SandboxJobNewResponse]
+type sandboxJobNewResponseJSON struct {
+	AllowedRefreshes   apijson.Field
+	JobID              apijson.Field
+	JobURL             apijson.Field
+	RemainingRefreshes apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *SandboxJobNewResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type SandboxJobNewParams struct {
+	// The type of job to start. Currently the only supported type is `data_sync_all`
+	Type param.Field[SandboxJobNewParamsType] `json:"type,required"`
+}
+
+func (r SandboxJobNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The type of job to start. Currently the only supported type is `data_sync_all`
+type SandboxJobNewParamsType string
+
+const (
+	SandboxJobNewParamsTypeDataSyncAll SandboxJobNewParamsType = "data_sync_all"
+)
