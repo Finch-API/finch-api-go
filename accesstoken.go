@@ -89,9 +89,9 @@ func (r *CreateAccessTokenResponse) UnmarshalJSON(data []byte) (err error) {
 
 type AccessTokenNewParams struct {
 	Code         param.Field[string] `json:"code,required"`
-	RedirectUri  param.Field[string] `json:"redirect_uri,required"`
 	ClientID     param.Field[string] `json:"client_id"`
 	ClientSecret param.Field[string] `json:"client_secret"`
+	RedirectUri  param.Field[string] `json:"redirect_uri"`
 }
 
 func (r AccessTokenNewParams) MarshalJSON() (data []byte, err error) {
