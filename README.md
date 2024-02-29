@@ -151,7 +151,7 @@ client.HRIS.Directory.List(context.TODO(), ...,
 )
 ```
 
-The full list of request options is [here](https://pkg.go.dev/github.com/Finch-API/finch-api-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/Finch-API/finch-api-go/option).
 
 ### Pagination
 
