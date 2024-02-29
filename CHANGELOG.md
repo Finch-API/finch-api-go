@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.13.0 (2024-02-29)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/Finch-API/finch-api-go/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** make redirect_uri optional ([#111](https://github.com/Finch-API/finch-api-go/issues/111)) ([b2c907d](https://github.com/Finch-API/finch-api-go/commit/b2c907db4151cdac43f62025064f3fa5bfbf57da))
+
+
+### Chores
+
+* **internal:** update deps ([#109](https://github.com/Finch-API/finch-api-go/issues/109)) ([0836cd7](https://github.com/Finch-API/finch-api-go/commit/0836cd7b2f614e489b97c7c065aad70cca0e5090))
+
+
+### Documentation
+
+* **readme:** improve wording ([#112](https://github.com/Finch-API/finch-api-go/issues/112)) ([b8c363c](https://github.com/Finch-API/finch-api-go/commit/b8c363cb39889aca9268c1f4936e78971f0672a9))
+
 ## 0.12.0 (2024-02-20)
 
 Full Changelog: [v0.11.1...v0.12.0](https://github.com/Finch-API/finch-api-go/compare/v0.11.1...v0.12.0)
