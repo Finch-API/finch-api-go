@@ -58,8 +58,9 @@ type Individual struct {
 	ID     string            `json:"id"`
 	Dob    string            `json:"dob,nullable"`
 	Emails []IndividualEmail `json:"emails,nullable"`
-	// Note: This property is only available if enabled for your account. Please reach
-	// out to your Finch representative if you would like access.
+	// Social Security Number of the individual in **encrypted** format. This field is
+	// only available with the `ssn` scope enabled and the
+	// `options: { include: ['ssn'] }` param set in the body.
 	EncryptedSsn string `json:"encrypted_ssn,nullable"`
 	// The EEOC-defined ethnicity of the individual.
 	Ethnicity IndividualEthnicity `json:"ethnicity,nullable"`
@@ -75,8 +76,9 @@ type Individual struct {
 	// The preferred name of the individual.
 	PreferredName string `json:"preferred_name,nullable"`
 	Residence Location `json:"residence,nullable"`
-	// Note: This property is only available if enabled for your account. Please reach
-	// out to your Finch representative if you would like access.
+	// Social Security Number of the individual. This field is only available with the
+	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
+	// body.
 	Ssn  string         `json:"ssn,nullable"`
 	JSON individualJSON `json:"-"`
 }
