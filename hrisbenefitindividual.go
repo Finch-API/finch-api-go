@@ -34,9 +34,7 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 	return
 }
 
-// **Availability: Automated Benefits providers only**
-//
-// Lists individuals currently enrolled in a given benefit.
+// Lists individuals currently enrolled in a given deduction.
 func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
@@ -44,9 +42,7 @@ func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitI
 	return
 }
 
-// **Availability: Automated Benefits providers only**
-//
-// Get enrolled benefit information for the given individuals.
+// Get enrollment information for the given individuals.
 func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *shared.SinglePage[IndividualBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -64,16 +60,12 @@ func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, bene
 	return res, nil
 }
 
-// **Availability: Automated Benefits providers only**
-//
-// Get enrolled benefit information for the given individuals.
+// Get enrollment information for the given individuals.
 func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[IndividualBenefit] {
 	return shared.NewSinglePageAutoPager(r.GetManyBenefits(ctx, benefitID, query, opts...))
 }
 
-// **Availability: Automated and Assisted Benefits providers**
-//
-// Unenroll individuals from a benefit
+// Unenroll individuals from a deduction or contribution
 func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *shared.SinglePage[UnenrolledIndividual], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -91,9 +83,7 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 	return res, nil
 }
 
-// **Availability: Automated and Assisted Benefits providers**
-//
-// Unenroll individuals from a benefit
+// Unenroll individuals from a deduction or contribution
 func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[UnenrolledIndividual] {
 	return shared.NewSinglePageAutoPager(r.UnenrollMany(ctx, benefitID, body, opts...))
 }

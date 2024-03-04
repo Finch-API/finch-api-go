@@ -33,10 +33,8 @@ func NewHRISBenefitService(opts ...option.RequestOption) (r *HRISBenefitService)
 	return
 }
 
-// **Availability: Automated and Assisted Benefits providers**
-//
-// Creates a new company-wide benefit. Please use the `/meta` endpoint to view
-// available types for each provider.
+// Creates a new company-wide deduction or contribution. Please use the
+// `/providers` endpoint to view available types for each provider.
 func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams, opts ...option.RequestOption) (res *CreateCompanyBenefitsResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "employer/benefits"
@@ -44,9 +42,7 @@ func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams,
 	return
 }
 
-// **Availability: Automated Benefits providers only**
-//
-// Lists benefit information for a given benefit
+// Lists deductions and contributions information for a given item
 func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
@@ -54,9 +50,7 @@ func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...
 	return
 }
 
-// **Availability: Automated and Assisted Benefits providers**
-//
-// Updates an existing company-wide benefit
+// Updates an existing company-wide deduction or contribution
 func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
@@ -64,9 +58,7 @@ func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body 
 	return
 }
 
-// **Availability: Automated Benefits providers only**
-//
-// List all company-wide benefits.
+// List all company-wide deductions and contributions.
 func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOption) (res *shared.SinglePage[CompanyBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -84,17 +76,12 @@ func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOpt
 	return res, nil
 }
 
-// **Availability: Automated Benefits providers only**
-//
-// List all company-wide benefits.
+// List all company-wide deductions and contributions.
 func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *shared.SinglePageAutoPager[CompanyBenefit] {
 	return shared.NewSinglePageAutoPager(r.List(ctx, opts...))
 }
 
-// **Availability: Automated and Assisted Benefits providers**
-//
-// Lists available types and configurations for the provider associated with the
-// access token.
+// Get deductions metadata
 func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *shared.SinglePage[SupportedBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -112,10 +99,7 @@ func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...
 	return res, nil
 }
 
-// **Availability: Automated and Assisted Benefits providers**
-//
-// Lists available types and configurations for the provider associated with the
-// access token.
+// Get deductions metadata
 func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *shared.SinglePageAutoPager[SupportedBenefit] {
 	return shared.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
 }
