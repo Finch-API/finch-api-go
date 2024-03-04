@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.1 (2024-03-04)
+
+Full Changelog: [v0.13.0...v0.13.1](https://github.com/Finch-API/finch-api-go/compare/v0.13.0...v0.13.1)
+
+### Chores
+
+* update some doc strings ([#113](https://github.com/Finch-API/finch-api-go/issues/113)) ([4894bbe](https://github.com/Finch-API/finch-api-go/commit/4894bbef822bee7fd2be6627c4a044c4071342ba))
+
 ## 0.13.0 (2024-02-29)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/Finch-API/finch-api-go/compare/v0.12.0...v0.13.0)
