@@ -34,7 +34,7 @@ func NewHRISPayStatementService(opts ...option.RequestOption) (r *HRISPayStateme
 // Read detailed pay statements for each individual.
 //
 // Deduction and contribution types are supported by the payroll systems that
-// support Benefits.
+// supports Benefits.
 func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *shared.ResponsesPage[PayStatementResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -55,7 +55,7 @@ func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayState
 // Read detailed pay statements for each individual.
 //
 // Deduction and contribution types are supported by the payroll systems that
-// support Benefits.
+// supports Benefits.
 func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) *shared.ResponsesPageAutoPager[PayStatementResponse] {
 	return shared.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
 }

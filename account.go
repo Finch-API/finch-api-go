@@ -29,9 +29,7 @@ func NewAccountService(opts ...option.RequestOption) (r *AccountService) {
 	return
 }
 
-// Disconnect an employer from your application and invalidate all `access_token`s
-// associated with the employer. We require applications to implement the
-// Disconnect endpoint for billing and security purposes.
+// Disconnect one or more `access_token`s from your application.
 func (r *AccountService) Disconnect(ctx context.Context, opts ...option.RequestOption) (res *DisconnectResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "disconnect"
