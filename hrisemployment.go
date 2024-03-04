@@ -91,13 +91,9 @@ type EmploymentData struct {
 	StartDate string `json:"start_date,nullable"`
 	// The current title of the individual.
 	Title string `json:"title,nullable"`
-	// Note: This property is only available if enabled for your account. Please reach
-	// out to your Finch representative if you would like access.
-	WorkID string `json:"work_id,nullable"`
-	// Note: This property is only available if enabled for your account. Please reach
-	// out to your Finch representative if you would like access.
-	WorkID2 string             `json:"work_id_2,nullable"`
-	JSON    employmentDataJSON `json:"-"`
+	// This field is deprecated in favour of `source_id`
+	WorkID string             `json:"work_id,nullable"`
+	JSON   employmentDataJSON `json:"-"`
 }
 
 // employmentDataJSON contains the JSON metadata for the struct [EmploymentData]
@@ -121,7 +117,6 @@ type employmentDataJSON struct {
 	StartDate     apijson.Field
 	Title         apijson.Field
 	WorkID        apijson.Field
-	WorkID2       apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
