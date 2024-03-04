@@ -31,10 +31,6 @@ func NewHRISEmploymentService(opts ...option.RequestOption) (r *HRISEmploymentSe
 }
 
 // Read individual employment and income data
-//
-// Note: Income information is returned as reported by the provider. This may not
-// always be annualized income, but may be in units of bi-weekly, semi-monthly,
-// daily, etc, depending on what information the provider returns.
 func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *shared.ResponsesPage[EmploymentDataResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
@@ -53,10 +49,6 @@ func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmployment
 }
 
 // Read individual employment and income data
-//
-// Note: Income information is returned as reported by the provider. This may not
-// always be annualized income, but may be in units of bi-weekly, semi-monthly,
-// daily, etc, depending on what information the provider returns.
 func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) *shared.ResponsesPageAutoPager[EmploymentDataResponse] {
 	return shared.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
 }
