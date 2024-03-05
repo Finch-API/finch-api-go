@@ -83,9 +83,6 @@ type EmploymentData struct {
 	Manager EmploymentDataManager `json:"manager,nullable"`
 	// The legal middle name of the individual.
 	MiddleName string `json:"middle_name,nullable"`
-	// Note: This property is only available if enabled for your account. Please reach
-	// out to your Finch representative if you would like access.
-	PayGroupIDs []string `json:"pay_group_ids,nullable"`
 	// The source system's unique employment identifier for this individual
 	SourceID  string `json:"source_id,nullable"`
 	StartDate string `json:"start_date,nullable"`
@@ -112,7 +109,6 @@ type employmentDataJSON struct {
 	Location      apijson.Field
 	Manager       apijson.Field
 	MiddleName    apijson.Field
-	PayGroupIDs   apijson.Field
 	SourceID      apijson.Field
 	StartDate     apijson.Field
 	Title         apijson.Field
