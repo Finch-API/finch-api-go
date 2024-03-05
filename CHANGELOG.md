@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.3 (2024-03-05)
+
+Full Changelog: [v0.13.2...v0.13.3](https://github.com/Finch-API/finch-api-go/compare/v0.13.2...v0.13.3)
+
+### Chores
+
+* remove internal-only field ([#117](https://github.com/Finch-API/finch-api-go/issues/117)) ([d45a652](https://github.com/Finch-API/finch-api-go/commit/d45a652cb44781d2f02553e1e8d88350284d213e))
+
 ## 0.13.2 (2024-03-04)
 
 Full Changelog: [v0.13.1...v0.13.2](https://github.com/Finch-API/finch-api-go/compare/v0.13.1...v0.13.2)
