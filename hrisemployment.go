@@ -121,6 +121,10 @@ func (r *EmploymentData) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r employmentDataJSON) RawJSON() string {
+	return r.raw
+}
+
 type EmploymentDataCustomField struct {
 	Name  string                        `json:"name"`
 	Value interface{}                   `json:"value"`
@@ -140,6 +144,10 @@ func (r *EmploymentDataCustomField) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r employmentDataCustomFieldJSON) RawJSON() string {
+	return r.raw
+}
+
 // The department object.
 type EmploymentDataDepartment struct {
 	// The name of the department associated with the individual.
@@ -157,6 +165,10 @@ type employmentDataDepartmentJSON struct {
 
 func (r *EmploymentDataDepartment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r employmentDataDepartmentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The employment object.
@@ -179,6 +191,10 @@ type employmentDataEmploymentJSON struct {
 
 func (r *EmploymentDataEmployment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r employmentDataEmploymentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
@@ -220,6 +236,10 @@ func (r *EmploymentDataManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r employmentDataManagerJSON) RawJSON() string {
+	return r.raw
+}
+
 type EmploymentDataResponse struct {
 	Body         EmploymentData             `json:"body"`
 	Code         int64                      `json:"code"`
@@ -239,6 +259,10 @@ type employmentDataResponseJSON struct {
 
 func (r *EmploymentDataResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r employmentDataResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISEmploymentGetManyParams struct {

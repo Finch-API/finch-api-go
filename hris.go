@@ -69,6 +69,10 @@ func (r *Income) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r incomeJSON) RawJSON() string {
+	return r.raw
+}
+
 // The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 // `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
 type IncomeUnit string
@@ -140,6 +144,10 @@ func (r *Location) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r locationJSON) RawJSON() string {
+	return r.raw
+}
+
 type LocationParam struct {
 	// City, district, suburb, town, or village.
 	City param.Field[string] `json:"city"`
@@ -178,6 +186,10 @@ type moneyJSON struct {
 
 func (r *Money) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r moneyJSON) RawJSON() string {
+	return r.raw
 }
 
 type MoneyParam struct {

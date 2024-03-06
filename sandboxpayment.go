@@ -58,6 +58,10 @@ func (r *SandboxPaymentNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxPaymentNewResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxPaymentNewParams struct {
 	EndDate       param.Field[string]                                `json:"end_date"`
 	PayStatements param.Field[[]SandboxPaymentNewParamsPayStatement] `json:"pay_statements"`

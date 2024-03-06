@@ -87,6 +87,10 @@ func (r *CreateAccessTokenResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r createAccessTokenResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type AccessTokenNewParams struct {
 	Code         param.Field[string] `json:"code,required"`
 	ClientID     param.Field[string] `json:"client_id"`

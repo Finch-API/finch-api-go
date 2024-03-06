@@ -59,6 +59,10 @@ func (r *ManualAsyncJob) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r manualAsyncJobJSON) RawJSON() string {
+	return r.raw
+}
+
 type ManualAsyncJobStatus string
 
 const (

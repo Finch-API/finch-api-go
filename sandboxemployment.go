@@ -106,6 +106,10 @@ func (r *SandboxEmploymentUpdateResponse) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxEmploymentUpdateResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxEmploymentUpdateResponseCustomField struct {
 	Name  string                                         `json:"name,nullable"`
 	Value interface{}                                    `json:"value"`
@@ -125,6 +129,10 @@ func (r *SandboxEmploymentUpdateResponseCustomField) UnmarshalJSON(data []byte) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxEmploymentUpdateResponseCustomFieldJSON) RawJSON() string {
+	return r.raw
+}
+
 // The department object.
 type SandboxEmploymentUpdateResponseDepartment struct {
 	// The name of the department associated with the individual.
@@ -142,6 +150,10 @@ type sandboxEmploymentUpdateResponseDepartmentJSON struct {
 
 func (r *SandboxEmploymentUpdateResponseDepartment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxEmploymentUpdateResponseDepartmentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The employment object.
@@ -164,6 +176,10 @@ type sandboxEmploymentUpdateResponseEmploymentJSON struct {
 
 func (r *SandboxEmploymentUpdateResponseEmployment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxEmploymentUpdateResponseEmploymentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
@@ -203,6 +219,10 @@ type sandboxEmploymentUpdateResponseManagerJSON struct {
 
 func (r *SandboxEmploymentUpdateResponseManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxEmploymentUpdateResponseManagerJSON) RawJSON() string {
+	return r.raw
 }
 
 type SandboxEmploymentUpdateParams struct {

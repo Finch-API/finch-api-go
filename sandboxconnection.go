@@ -67,6 +67,10 @@ func (r *SandboxConnectionNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxConnectionNewResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxConnectionNewResponseAuthenticationType string
 
 const (
