@@ -17,6 +17,7 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/tidwall/gjson"
 )
 
 // WebhookService contains methods and other services that help with interacting
@@ -1523,7 +1524,125 @@ type WebhookEvent interface {
 }
 
 func init() {
-	apijson.RegisterUnion(reflect.TypeOf((*WebhookEvent)(nil)).Elem(), "")
+	apijson.RegisterUnion(
+		reflect.TypeOf((*WebhookEvent)(nil)).Elem(),
+		"event_type",
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(AccountUpdateEvent{}),
+			DiscriminatorValue: "account.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.benefit_create.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.benefit_enroll.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.benefit_register.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.benefit_unenroll.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.benefit_update.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.data_sync_all.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(CompanyEvent{}),
+			DiscriminatorValue: "company.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(DirectoryEvent{}),
+			DiscriminatorValue: "directory.created",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(DirectoryEvent{}),
+			DiscriminatorValue: "directory.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(DirectoryEvent{}),
+			DiscriminatorValue: "directory.deleted",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(EmploymentEvent{}),
+			DiscriminatorValue: "employment.created",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(EmploymentEvent{}),
+			DiscriminatorValue: "employment.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(EmploymentEvent{}),
+			DiscriminatorValue: "employment.deleted",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(IndividualEvent{}),
+			DiscriminatorValue: "individual.created",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(IndividualEvent{}),
+			DiscriminatorValue: "individual.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(IndividualEvent{}),
+			DiscriminatorValue: "individual.deleted",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(PaymentEvent{}),
+			DiscriminatorValue: "payment.created",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(PaymentEvent{}),
+			DiscriminatorValue: "payment.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(PaymentEvent{}),
+			DiscriminatorValue: "payment.deleted",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(PayStatementEvent{}),
+			DiscriminatorValue: "pay_statement.created",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(PayStatementEvent{}),
+			DiscriminatorValue: "pay_statement.updated",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(PayStatementEvent{}),
+			DiscriminatorValue: "pay_statement.deleted",
+		},
+	)
 }
 
 type WebhookUnwrapParams struct {
