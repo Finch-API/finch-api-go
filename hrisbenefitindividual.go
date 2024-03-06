@@ -109,6 +109,10 @@ func (r *IndividualBenefit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r individualBenefitJSON) RawJSON() string {
+	return r.raw
+}
+
 type IndividualBenefitBody struct {
 	// If the benefit supports annual maximum, the amount in cents for this individual.
 	AnnualMaximum int64 `json:"annual_maximum,nullable"`
@@ -136,6 +140,10 @@ type individualBenefitBodyJSON struct {
 
 func (r *IndividualBenefitBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyJSON) RawJSON() string {
+	return r.raw
 }
 
 // Type for HSA contribution limit if the benefit is a HSA.
@@ -168,6 +176,10 @@ func (r *UnenrolledIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r unenrolledIndividualJSON) RawJSON() string {
+	return r.raw
+}
+
 type UnenrolledIndividualBody struct {
 	// A descriptive identifier for the response.
 	FinchCode string `json:"finch_code,nullable"`
@@ -192,6 +204,10 @@ func (r *UnenrolledIndividualBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r unenrolledIndividualBodyJSON) RawJSON() string {
+	return r.raw
+}
+
 type HRISBenefitIndividualEnrolledIDsResponse struct {
 	BenefitID     string                                       `json:"benefit_id,required"`
 	IndividualIDs []string                                     `json:"individual_ids,required"`
@@ -209,6 +225,10 @@ type hrisBenefitIndividualEnrolledIDsResponseJSON struct {
 
 func (r *HRISBenefitIndividualEnrolledIDsResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISBenefitIndividualGetManyBenefitsParams struct {

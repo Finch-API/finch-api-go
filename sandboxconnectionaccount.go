@@ -75,6 +75,10 @@ func (r *SandboxConnectionAccountNewResponse) UnmarshalJSON(data []byte) (err er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxConnectionAccountNewResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxConnectionAccountNewResponseAuthenticationType string
 
 const (
@@ -107,6 +111,10 @@ type sandboxConnectionAccountUpdateResponseJSON struct {
 
 func (r *SandboxConnectionAccountUpdateResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxConnectionAccountUpdateResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type SandboxConnectionAccountUpdateResponseAuthenticationType string

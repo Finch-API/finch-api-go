@@ -106,6 +106,10 @@ func (r *Individual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r individualJSON) RawJSON() string {
+	return r.raw
+}
+
 type IndividualEmail struct {
 	Data string               `json:"data"`
 	Type IndividualEmailsType `json:"type"`
@@ -122,6 +126,10 @@ type individualEmailJSON struct {
 
 func (r *IndividualEmail) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualEmailJSON) RawJSON() string {
+	return r.raw
 }
 
 type IndividualEmailsType string
@@ -174,6 +182,10 @@ func (r *IndividualPhoneNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r individualPhoneNumberJSON) RawJSON() string {
+	return r.raw
+}
+
 type IndividualPhoneNumbersType string
 
 const (
@@ -200,6 +212,10 @@ type individualResponseJSON struct {
 
 func (r *IndividualResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISIndividualGetManyParams struct {

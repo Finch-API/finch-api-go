@@ -99,6 +99,10 @@ func (r *OperationSupportMatrix) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r operationSupportMatrixJSON) RawJSON() string {
+	return r.raw
+}
+
 type Paging struct {
 	// The total number of elements for the entire query (not just the given page)
 	Count int64 `json:"count"`
@@ -117,4 +121,8 @@ type pagingJSON struct {
 
 func (r *Paging) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pagingJSON) RawJSON() string {
+	return r.raw
 }

@@ -103,6 +103,10 @@ func (r *IndividualsPage) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r individualsPageJSON) RawJSON() string {
+	return r.raw
+}
+
 // NextPage returns the next page as defined by this pagination style. When there
 // is no next page, this function will return a 'nil' for the page value, but will
 // not return an error
@@ -209,6 +213,10 @@ func (r *IndividualInDirectory) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r individualInDirectoryJSON) RawJSON() string {
+	return r.raw
+}
+
 // The department object.
 type IndividualInDirectoryDepartment struct {
 	// The name of the department.
@@ -228,6 +236,10 @@ func (r *IndividualInDirectoryDepartment) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r individualInDirectoryDepartmentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The manager object.
 type IndividualInDirectoryManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
@@ -245,6 +257,10 @@ type individualInDirectoryManagerJSON struct {
 
 func (r *IndividualInDirectoryManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualInDirectoryManagerJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISDirectoryListParams struct {

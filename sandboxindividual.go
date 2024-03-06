@@ -93,6 +93,10 @@ func (r *SandboxIndividualUpdateResponse) UnmarshalJSON(data []byte) (err error)
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxIndividualUpdateResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxIndividualUpdateResponseEmail struct {
 	Data string                                    `json:"data"`
 	Type SandboxIndividualUpdateResponseEmailsType `json:"type"`
@@ -110,6 +114,10 @@ type sandboxIndividualUpdateResponseEmailJSON struct {
 
 func (r *SandboxIndividualUpdateResponseEmail) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxIndividualUpdateResponseEmailJSON) RawJSON() string {
+	return r.raw
 }
 
 type SandboxIndividualUpdateResponseEmailsType string
@@ -160,6 +168,10 @@ type sandboxIndividualUpdateResponsePhoneNumberJSON struct {
 
 func (r *SandboxIndividualUpdateResponsePhoneNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxIndividualUpdateResponsePhoneNumberJSON) RawJSON() string {
+	return r.raw
 }
 
 type SandboxIndividualUpdateResponsePhoneNumbersType string

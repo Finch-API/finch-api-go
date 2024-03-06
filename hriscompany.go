@@ -76,6 +76,10 @@ func (r *Company) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r companyJSON) RawJSON() string {
+	return r.raw
+}
+
 type CompanyAccount struct {
 	// The name of the bank associated in the payroll/HRIS system.
 	AccountName string `json:"account_name,nullable"`
@@ -104,6 +108,10 @@ type companyAccountJSON struct {
 
 func (r *CompanyAccount) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r companyAccountJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of bank account.
@@ -135,6 +143,10 @@ func (r *CompanyDepartment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r companyDepartmentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The parent department, if present.
 type CompanyDepartmentsParent struct {
 	// The parent department's name.
@@ -152,6 +164,10 @@ type companyDepartmentsParentJSON struct {
 
 func (r *CompanyDepartmentsParent) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r companyDepartmentsParentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The entity type object.
@@ -173,6 +189,10 @@ type companyEntityJSON struct {
 
 func (r *CompanyEntity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r companyEntityJSON) RawJSON() string {
+	return r.raw
 }
 
 // The tax payer subtype of the company.

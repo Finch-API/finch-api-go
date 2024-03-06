@@ -75,6 +75,10 @@ func (r *SandboxCompanyUpdateResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxCompanyUpdateResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxCompanyUpdateResponseAccount struct {
 	// The name of the bank associated in the payroll/HRIS system.
 	AccountName string `json:"account_name,nullable"`
@@ -106,6 +110,10 @@ func (r *SandboxCompanyUpdateResponseAccount) UnmarshalJSON(data []byte) (err er
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxCompanyUpdateResponseAccountJSON) RawJSON() string {
+	return r.raw
+}
+
 // The type of bank account.
 type SandboxCompanyUpdateResponseAccountsAccountType string
 
@@ -135,6 +143,10 @@ func (r *SandboxCompanyUpdateResponseDepartment) UnmarshalJSON(data []byte) (err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxCompanyUpdateResponseDepartmentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The parent department, if present.
 type SandboxCompanyUpdateResponseDepartmentsParent struct {
 	// The parent department's name.
@@ -152,6 +164,10 @@ type sandboxCompanyUpdateResponseDepartmentsParentJSON struct {
 
 func (r *SandboxCompanyUpdateResponseDepartmentsParent) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxCompanyUpdateResponseDepartmentsParentJSON) RawJSON() string {
+	return r.raw
 }
 
 // The entity type object.
@@ -174,6 +190,10 @@ type sandboxCompanyUpdateResponseEntityJSON struct {
 
 func (r *SandboxCompanyUpdateResponseEntity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r sandboxCompanyUpdateResponseEntityJSON) RawJSON() string {
+	return r.raw
 }
 
 // The tax payer subtype of the company.

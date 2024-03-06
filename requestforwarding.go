@@ -73,6 +73,10 @@ func (r *RequestForwardingForwardResponse) UnmarshalJSON(data []byte) (err error
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r requestForwardingForwardResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 // An object containing details of your original forwarded request, for your ease
 // of reference.
 type RequestForwardingForwardResponseRequest struct {
@@ -108,6 +112,10 @@ type requestForwardingForwardResponseRequestJSON struct {
 
 func (r *RequestForwardingForwardResponseRequest) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r requestForwardingForwardResponseRequestJSON) RawJSON() string {
+	return r.raw
 }
 
 type RequestForwardingForwardParams struct {

@@ -128,6 +128,10 @@ func (r *AutomatedAsyncJob) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r automatedAsyncJobJSON) RawJSON() string {
+	return r.raw
+}
+
 type AutomatedAsyncJobStatus string
 
 const (
@@ -171,6 +175,10 @@ type jobAutomatedNewResponseJSON struct {
 
 func (r *JobAutomatedNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r jobAutomatedNewResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type JobAutomatedNewParams struct {
