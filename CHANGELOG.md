@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.14.0 (2024-03-06)
+
+Full Changelog: [v0.13.3...v0.14.0](https://github.com/Finch-API/finch-api-go/compare/v0.13.3...v0.14.0)
+
+### Features
+
+* implement public RawJSON of response structs ([#121](https://github.com/Finch-API/finch-api-go/issues/121)) ([d1161a4](https://github.com/Finch-API/finch-api-go/commit/d1161a4d59a1aca535eb7a5e903ce1b4d339aa02))
+
+
+### Bug Fixes
+
+* fix union deserialization for multiple objects ([#122](https://github.com/Finch-API/finch-api-go/issues/122)) ([b72853d](https://github.com/Finch-API/finch-api-go/commit/b72853d933486f5a5adf54bc566e9480360af5ff))
+
+
+### Documentation
+
+* deprecate old access token getter ([#119](https://github.com/Finch-API/finch-api-go/issues/119)) ([0818f5b](https://github.com/Finch-API/finch-api-go/commit/0818f5b24ffa4c03a33ae29cc62fda4e984a7774))
+
 ## 0.13.3 (2024-03-05)
 
 Full Changelog: [v0.13.2...v0.13.3](https://github.com/Finch-API/finch-api-go/compare/v0.13.2...v0.13.3)
