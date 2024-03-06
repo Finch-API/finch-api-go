@@ -65,6 +65,10 @@ func (r *SandboxJobConfiguration) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxJobConfigurationJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxJobConfigurationCompletionStatus string
 
 const (

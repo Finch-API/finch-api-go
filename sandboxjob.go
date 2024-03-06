@@ -66,6 +66,10 @@ func (r *SandboxJobNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r sandboxJobNewResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type SandboxJobNewParams struct {
 	// The type of job to start. Currently the only supported type is `data_sync_all`
 	Type param.Field[SandboxJobNewParamsType] `json:"type,required"`

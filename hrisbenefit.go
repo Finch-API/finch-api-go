@@ -125,6 +125,10 @@ func (r *BenefitContribution) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r benefitContributionJSON) RawJSON() string {
+	return r.raw
+}
+
 // Contribution type.
 type BenefitContributionType string
 
@@ -150,6 +154,10 @@ type benefitFeaturesAndOperationsJSON struct {
 
 func (r *BenefitFeaturesAndOperations) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitFeaturesAndOperationsJSON) RawJSON() string {
+	return r.raw
 }
 
 type BenefitFeaturesAndOperationsSupportedFeatures struct {
@@ -189,6 +197,10 @@ type benefitFeaturesAndOperationsSupportedFeaturesJSON struct {
 
 func (r *BenefitFeaturesAndOperationsSupportedFeatures) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitFeaturesAndOperationsSupportedFeaturesJSON) RawJSON() string {
+	return r.raw
 }
 
 type BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution string
@@ -286,6 +298,10 @@ func (r *BenefitsSupport) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r benefitsSupportJSON) RawJSON() string {
+	return r.raw
+}
+
 type CompanyBenefit struct {
 	BenefitID           string              `json:"benefit_id,required"`
 	CompanyContribution BenefitContribution `json:"company_contribution,required,nullable"`
@@ -313,6 +329,10 @@ func (r *CompanyBenefit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r companyBenefitJSON) RawJSON() string {
+	return r.raw
+}
+
 type CreateCompanyBenefitsResponse struct {
 	BenefitID string                            `json:"benefit_id,required"`
 	JSON      createCompanyBenefitsResponseJSON `json:"-"`
@@ -328,6 +348,10 @@ type createCompanyBenefitsResponseJSON struct {
 
 func (r *CreateCompanyBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r createCompanyBenefitsResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type SupportPerBenefitType struct {
@@ -347,6 +371,10 @@ type supportPerBenefitTypeJSON struct {
 
 func (r *SupportPerBenefitType) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r supportPerBenefitTypeJSON) RawJSON() string {
+	return r.raw
 }
 
 type SupportedBenefit struct {
@@ -391,6 +419,10 @@ func (r *SupportedBenefit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r supportedBenefitJSON) RawJSON() string {
+	return r.raw
+}
+
 type SupportedBenefitCompanyContribution string
 
 const (
@@ -427,6 +459,10 @@ type updateCompanyBenefitResponseJSON struct {
 
 func (r *UpdateCompanyBenefitResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r updateCompanyBenefitResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISBenefitNewParams struct {

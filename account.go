@@ -63,6 +63,10 @@ func (r *DisconnectResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r disconnectResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type Introspection struct {
 	// The Finch uuid of the account used to connect this company.
 	AccountID             string                             `json:"account_id,required"`
@@ -112,6 +116,10 @@ func (r *Introspection) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r introspectionJSON) RawJSON() string {
+	return r.raw
+}
+
 type IntrospectionAuthenticationMethods struct {
 	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
 	Type             string                                             `json:"type"`
@@ -131,6 +139,10 @@ func (r *IntrospectionAuthenticationMethods) UnmarshalJSON(data []byte) (err err
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r introspectionAuthenticationMethodsJSON) RawJSON() string {
+	return r.raw
+}
+
 type IntrospectionAuthenticationMethodsConnectionStatus struct {
 	Message string                                                 `json:"message"`
 	Status  shared.ConnectionStatusType                            `json:"status"`
@@ -148,6 +160,10 @@ type introspectionAuthenticationMethodsConnectionStatusJSON struct {
 
 func (r *IntrospectionAuthenticationMethodsConnectionStatus) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r introspectionAuthenticationMethodsConnectionStatusJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of application associated with a token.

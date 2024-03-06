@@ -93,6 +93,10 @@ func (r *Payment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r paymentJSON) RawJSON() string {
+	return r.raw
+}
+
 // The pay period object.
 type PaymentPayPeriod struct {
 	EndDate   string               `json:"end_date,nullable"`
@@ -111,6 +115,10 @@ type paymentPayPeriodJSON struct {
 
 func (r *PaymentPayPeriod) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r paymentPayPeriodJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISPaymentListParams struct {

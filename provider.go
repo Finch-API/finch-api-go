@@ -95,6 +95,10 @@ func (r *Provider) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethod struct {
 	// Each benefit type and their supported features. If the benefit type is not
 	// supported, the property will be null
@@ -118,6 +122,10 @@ type providerAuthenticationMethodJSON struct {
 
 func (r *ProviderAuthenticationMethod) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodJSON) RawJSON() string {
+	return r.raw
 }
 
 // The supported data fields returned by our HR and payroll endpoints
@@ -146,6 +154,10 @@ type providerAuthenticationMethodsSupportedFieldsJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFields) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompany struct {
@@ -181,6 +193,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompany) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsCompanyJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsCompanyAccounts struct {
 	AccountName     bool                                                            `json:"account_name"`
 	AccountNumber   bool                                                            `json:"account_number"`
@@ -207,6 +223,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyAccounts) UnmarshalJ
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsCompanyAccountsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsCompanyDepartments struct {
 	Name   bool                                                                 `json:"name"`
 	Parent ProviderAuthenticationMethodsSupportedFieldsCompanyDepartmentsParent `json:"parent"`
@@ -227,6 +247,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyDepartments) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsCompanyDepartmentsParent struct {
 	Name bool                                                                     `json:"name"`
 	JSON providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsParentJSON `json:"-"`
@@ -243,6 +267,10 @@ type providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsParentJSON st
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyDepartmentsParent) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsCompanyDepartmentsParentJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompanyEntity struct {
@@ -263,6 +291,10 @@ type providerAuthenticationMethodsSupportedFieldsCompanyEntityJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyEntity) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsCompanyEntityJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsCompanyLocations struct {
@@ -293,6 +325,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsCompanyLocations) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsCompanyLocationsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsDirectory struct {
 	Individuals ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividuals `json:"individuals"`
 	Paging      ProviderAuthenticationMethodsSupportedFieldsDirectoryPaging      `json:"paging"`
@@ -310,6 +346,10 @@ type providerAuthenticationMethodsSupportedFieldsDirectoryJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsDirectory) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsDirectoryJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividuals struct {
@@ -342,6 +382,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividuals) Unmar
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividualsManager struct {
 	ID   bool                                                                        `json:"id"`
 	JSON providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsManagerJSON `json:"-"`
@@ -358,6 +402,10 @@ type providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsManagerJSON
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsDirectoryIndividualsManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsDirectoryIndividualsManagerJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsDirectoryPaging struct {
@@ -378,6 +426,10 @@ type providerAuthenticationMethodsSupportedFieldsDirectoryPagingJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsDirectoryPaging) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsDirectoryPagingJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmployment struct {
@@ -427,6 +479,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmployment) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsEmploymentJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentDepartment struct {
 	Name bool                                                                 `json:"name"`
 	JSON providerAuthenticationMethodsSupportedFieldsEmploymentDepartmentJSON `json:"-"`
@@ -443,6 +499,10 @@ type providerAuthenticationMethodsSupportedFieldsEmploymentDepartmentJSON struct
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentDepartment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsEmploymentDepartmentJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentEmployment struct {
@@ -465,6 +525,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentEmployment) Unmar
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsEmploymentEmploymentJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentIncome struct {
 	Amount   bool                                                             `json:"amount"`
 	Currency bool                                                             `json:"currency"`
@@ -485,6 +549,10 @@ type providerAuthenticationMethodsSupportedFieldsEmploymentIncomeJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentIncome) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsEmploymentIncomeJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation struct {
@@ -515,6 +583,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation) Unmarsh
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsEmploymentLocationJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsEmploymentManager struct {
 	ID   bool                                                              `json:"id"`
 	JSON providerAuthenticationMethodsSupportedFieldsEmploymentManagerJSON `json:"-"`
@@ -531,6 +603,10 @@ type providerAuthenticationMethodsSupportedFieldsEmploymentManagerJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsEmploymentManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsEmploymentManagerJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsIndividual struct {
@@ -574,6 +650,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividual) UnmarshalJSON(d
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsIndividualJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsIndividualEmails struct {
 	Data bool                                                             `json:"data"`
 	Type bool                                                             `json:"type"`
@@ -594,6 +674,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualEmails) Unmarshal
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsIndividualEmailsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsIndividualPhoneNumbers struct {
 	Data bool                                                                   `json:"data"`
 	Type bool                                                                   `json:"type"`
@@ -612,6 +696,10 @@ type providerAuthenticationMethodsSupportedFieldsIndividualPhoneNumbersJSON stru
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualPhoneNumbers) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsIndividualPhoneNumbersJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsIndividualResidence struct {
@@ -642,6 +730,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualResidence) Unmars
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsIndividualResidenceJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsPayStatement struct {
 	Paging        ProviderAuthenticationMethodsSupportedFieldsPayStatementPaging        `json:"paging"`
 	PayStatements ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements `json:"pay_statements"`
@@ -662,6 +754,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatement) UnmarshalJSON
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPaging struct {
 	Count  bool                                                               `json:"count,required"`
 	Offset bool                                                               `json:"offset,required"`
@@ -680,6 +776,10 @@ type providerAuthenticationMethodsSupportedFieldsPayStatementPagingJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPaging) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPagingJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements struct {
@@ -721,6 +821,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarnings struct {
 	Amount   bool                                                                              `json:"amount"`
 	Currency bool                                                                              `json:"currency"`
@@ -743,6 +847,10 @@ type providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarnin
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarnings) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarningsJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductions struct {
@@ -771,6 +879,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEm
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductionsJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerContributions struct {
 	Amount   bool                                                                                           `json:"amount"`
 	Currency bool                                                                                           `json:"currency"`
@@ -791,6 +903,10 @@ type providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmploy
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerContributions) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerContributionsJSON) RawJSON() string {
+	return r.raw
 }
 
 // [DEPRECATED] Use `employer_contributions` instead
@@ -814,6 +930,10 @@ type providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmploy
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductions) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxes struct {
@@ -840,6 +960,10 @@ type providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxesJ
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxes) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxesJSON) RawJSON() string {
+	return r.raw
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsPayment struct {
@@ -877,6 +1001,10 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayment) UnmarshalJSON(data
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r providerAuthenticationMethodsSupportedFieldsPaymentJSON) RawJSON() string {
+	return r.raw
+}
+
 type ProviderAuthenticationMethodsSupportedFieldsPaymentPayPeriod struct {
 	EndDate   bool                                                             `json:"end_date"`
 	StartDate bool                                                             `json:"start_date"`
@@ -895,6 +1023,10 @@ type providerAuthenticationMethodsSupportedFieldsPaymentPayPeriodJSON struct {
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsPaymentPayPeriod) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPaymentPayPeriodJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of authentication method.

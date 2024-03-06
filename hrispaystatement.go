@@ -101,6 +101,10 @@ func (r *PayStatement) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r payStatementJSON) RawJSON() string {
+	return r.raw
+}
+
 type PayStatementEarning struct {
 	// The earnings amount in cents.
 	Amount int64 `json:"amount,nullable"`
@@ -130,6 +134,10 @@ type payStatementEarningJSON struct {
 
 func (r *PayStatementEarning) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementEarningJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of earning.
@@ -181,6 +189,10 @@ func (r *PayStatementEmployeeDeduction) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r payStatementEmployeeDeductionJSON) RawJSON() string {
+	return r.raw
+}
+
 type PayStatementEmployerContribution struct {
 	// The contribution amount in cents.
 	Amount int64 `json:"amount,nullable"`
@@ -206,6 +218,10 @@ type payStatementEmployerContributionJSON struct {
 
 func (r *PayStatementEmployerContribution) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementEmployerContributionJSON) RawJSON() string {
+	return r.raw
 }
 
 // The payment method.
@@ -243,6 +259,10 @@ type payStatementTaxJSON struct {
 
 func (r *PayStatementTax) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementTaxJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of taxes.
@@ -285,6 +305,10 @@ func (r *PayStatementResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+func (r payStatementResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type PayStatementResponseBody struct {
 	Paging shared.Paging `json:"paging"`
 	// The array of pay statements for the current payment.
@@ -303,6 +327,10 @@ type payStatementResponseBodyJSON struct {
 
 func (r *PayStatementResponseBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementResponseBodyJSON) RawJSON() string {
+	return r.raw
 }
 
 type HRISPayStatementGetManyParams struct {
