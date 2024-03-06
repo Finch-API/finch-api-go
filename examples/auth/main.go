@@ -17,10 +17,13 @@ func main() {
 	}
 	fmt.Printf("auth url: %s\n", url)
 
-	accessToken, err := client.GetAccessToken(context.TODO(), "my-code", "https://example.com/redirect")
+	accessTokenResponse, err := client.AccessTokens.New(context.TODO(), finch.AccessTokenNewParams{
+		Code:        finch.F("my-code"),
+		RedirectUri: finch.F("https://example.com/redirect"),
+	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("access token: %s\n", accessToken)
+	fmt.Printf("access token: %s\n", accessTokenResponse.AccessToken)
 
 }

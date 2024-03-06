@@ -68,9 +68,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	return
 }
 
-// Returns an access token for the Finch API given an authorization code. An
-// authorization code can be obtained by visiting the URL returned by
-// `GetAuthURL()`.
+// DEPRECATED: use client.accessTokens().create instead.
 func (r *Client) GetAccessToken(ctx context.Context, code string, redirectUri string, opts ...option.RequestOption) (res string, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append(opts[:], option.WithHeaderDel("authorization"))
