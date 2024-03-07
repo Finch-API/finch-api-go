@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.1 (2024-03-07)
+
+Full Changelog: [v0.14.0...v0.14.1](https://github.com/Finch-API/finch-api-go/compare/v0.14.0...v0.14.1)
+
+### Chores
+
+* **internal:** improve union deserialization logic ([#123](https://github.com/Finch-API/finch-api-go/issues/123)) ([c810956](https://github.com/Finch-API/finch-api-go/commit/c8109566b573efa31ff88cabe30a3adf872bbe71))
+
 ## 0.14.0 (2024-03-06)
 
 Full Changelog: [v0.13.3...v0.14.0](https://github.com/Finch-API/finch-api-go/compare/v0.13.3...v0.14.0)
