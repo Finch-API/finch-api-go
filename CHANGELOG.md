@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.2 (2024-03-07)
+
+Full Changelog: [v0.14.1...v0.14.2](https://github.com/Finch-API/finch-api-go/compare/v0.14.1...v0.14.2)
+
+### Documentation
+
+* **contributing:** add a CONTRIBUTING.md ([#125](https://github.com/Finch-API/finch-api-go/issues/125)) ([5e99acd](https://github.com/Finch-API/finch-api-go/commit/5e99acd0e78c9a70e93043654850132ae5764206))
+
 ## 0.14.1 (2024-03-07)
 
 Full Changelog: [v0.14.0...v0.14.1](https://github.com/Finch-API/finch-api-go/compare/v0.14.0...v0.14.1)
