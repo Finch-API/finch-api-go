@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.14.3 (2024-03-12)
+
+Full Changelog: [v0.14.2...v0.14.3](https://github.com/Finch-API/finch-api-go/compare/v0.14.2...v0.14.3)
+
+### Bug Fixes
+
+* **client:** don't include ? in path unless necessary ([#129](https://github.com/Finch-API/finch-api-go/issues/129)) ([2096a3e](https://github.com/Finch-API/finch-api-go/commit/2096a3e2dedb875524b81203e7f7291eeb1cf672))
+* fix String() behavior of param.Field ([#127](https://github.com/Finch-API/finch-api-go/issues/127)) ([1b81f9f](https://github.com/Finch-API/finch-api-go/commit/1b81f9f0b3010c738d02a926a2596fe5e0c1263b))
+
 ## 0.14.2 (2024-03-07)
 
 Full Changelog: [v0.14.1...v0.14.2](https://github.com/Finch-API/finch-api-go/compare/v0.14.1...v0.14.2)
