@@ -23,6 +23,12 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
 )
 
+func getDefaultHeaders() map[string]string {
+	return map[string]string{
+		"User-Agent": fmt.Sprintf("Finch/Go %s", internal.PackageVersion),
+	}
+}
+
 func getNormalizedOS() string {
 	switch runtime.GOOS {
 	case "ios":
@@ -118,6 +124,9 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	}
 
 	req.Header.Set("Accept", "application/json")
+	for k, v := range getDefaultHeaders() {
+		req.Header.Add(k, v)
+	}
 	req.Header.Set("Finch-API-Version", "2020-09-17")
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
