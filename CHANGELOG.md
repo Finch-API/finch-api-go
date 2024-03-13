@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 (2024-03-13)
+
+Full Changelog: [v0.14.3...v0.15.0](https://github.com/Finch-API/finch-api-go/compare/v0.14.3...v0.15.0)
+
+### Features
+
+* set user-agent header by default when making requests ([#130](https://github.com/Finch-API/finch-api-go/issues/130)) ([bb66a49](https://github.com/Finch-API/finch-api-go/commit/bb66a49c0b01296111d749bc71a19aa4505bd4e0))
+
 ## 0.14.3 (2024-03-12)
 
 Full Changelog: [v0.14.2...v0.14.3](https://github.com/Finch-API/finch-api-go/compare/v0.14.2...v0.14.3)
