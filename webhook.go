@@ -1110,11 +1110,27 @@ const (
 	AccountUpdateEventDataAuthenticationMethodTypeOAuth         AccountUpdateEventDataAuthenticationMethodType = "oauth"
 )
 
+func (r AccountUpdateEventDataAuthenticationMethodType) IsKnown() bool {
+	switch r {
+	case AccountUpdateEventDataAuthenticationMethodTypeAssisted, AccountUpdateEventDataAuthenticationMethodTypeCredential, AccountUpdateEventDataAuthenticationMethodTypeAPIToken, AccountUpdateEventDataAuthenticationMethodTypeAPICredential, AccountUpdateEventDataAuthenticationMethodTypeOAuth:
+		return true
+	}
+	return false
+}
+
 type AccountUpdateEventEventType string
 
 const (
 	AccountUpdateEventEventTypeAccountUpdated AccountUpdateEventEventType = "account.updated"
 )
+
+func (r AccountUpdateEventEventType) IsKnown() bool {
+	switch r {
+	case AccountUpdateEventEventTypeAccountUpdated:
+		return true
+	}
+	return false
+}
 
 type BaseWebhookEvent struct {
 	// Unique Finch id of the employer account that was used to make this connection.
@@ -1172,6 +1188,14 @@ const (
 	CompanyEventEventTypeCompanyUpdated CompanyEventEventType = "company.updated"
 )
 
+func (r CompanyEventEventType) IsKnown() bool {
+	switch r {
+	case CompanyEventEventTypeCompanyUpdated:
+		return true
+	}
+	return false
+}
+
 type DirectoryEvent struct {
 	Data      DirectoryEventData      `json:"data"`
 	EventType DirectoryEventEventType `json:"event_type"`
@@ -1226,6 +1250,14 @@ const (
 	DirectoryEventEventTypeDirectoryUpdated DirectoryEventEventType = "directory.updated"
 	DirectoryEventEventTypeDirectoryDeleted DirectoryEventEventType = "directory.deleted"
 )
+
+func (r DirectoryEventEventType) IsKnown() bool {
+	switch r {
+	case DirectoryEventEventTypeDirectoryCreated, DirectoryEventEventTypeDirectoryUpdated, DirectoryEventEventTypeDirectoryDeleted:
+		return true
+	}
+	return false
+}
 
 type EmploymentEvent struct {
 	Data      EmploymentEventData      `json:"data"`
@@ -1282,6 +1314,14 @@ const (
 	EmploymentEventEventTypeEmploymentDeleted EmploymentEventEventType = "employment.deleted"
 )
 
+func (r EmploymentEventEventType) IsKnown() bool {
+	switch r {
+	case EmploymentEventEventTypeEmploymentCreated, EmploymentEventEventTypeEmploymentUpdated, EmploymentEventEventTypeEmploymentDeleted:
+		return true
+	}
+	return false
+}
+
 type IndividualEvent struct {
 	Data      IndividualEventData      `json:"data"`
 	EventType IndividualEventEventType `json:"event_type"`
@@ -1336,6 +1376,14 @@ const (
 	IndividualEventEventTypeIndividualUpdated IndividualEventEventType = "individual.updated"
 	IndividualEventEventTypeIndividualDeleted IndividualEventEventType = "individual.deleted"
 )
+
+func (r IndividualEventEventType) IsKnown() bool {
+	switch r {
+	case IndividualEventEventTypeIndividualCreated, IndividualEventEventTypeIndividualUpdated, IndividualEventEventTypeIndividualDeleted:
+		return true
+	}
+	return false
+}
 
 type JobCompletionEvent struct {
 	Data      JobCompletionEventData      `json:"data"`
@@ -1399,6 +1447,14 @@ const (
 	JobCompletionEventEventTypeJobDataSyncAllUpdated     JobCompletionEventEventType = "job.data_sync_all.updated"
 )
 
+func (r JobCompletionEventEventType) IsKnown() bool {
+	switch r {
+	case JobCompletionEventEventTypeJobBenefitCreateUpdated, JobCompletionEventEventTypeJobBenefitEnrollUpdated, JobCompletionEventEventTypeJobBenefitRegisterUpdated, JobCompletionEventEventTypeJobBenefitUnenrollUpdated, JobCompletionEventEventTypeJobBenefitUpdateUpdated, JobCompletionEventEventTypeJobDataSyncAllUpdated:
+		return true
+	}
+	return false
+}
+
 type PayStatementEvent struct {
 	Data      PayStatementEventData      `json:"data"`
 	EventType PayStatementEventEventType `json:"event_type"`
@@ -1458,6 +1514,14 @@ const (
 	PayStatementEventEventTypePayStatementDeleted PayStatementEventEventType = "pay_statement.deleted"
 )
 
+func (r PayStatementEventEventType) IsKnown() bool {
+	switch r {
+	case PayStatementEventEventTypePayStatementCreated, PayStatementEventEventTypePayStatementUpdated, PayStatementEventEventTypePayStatementDeleted:
+		return true
+	}
+	return false
+}
+
 type PaymentEvent struct {
 	Data      PaymentEventData      `json:"data"`
 	EventType PaymentEventEventType `json:"event_type"`
@@ -1515,6 +1579,14 @@ const (
 	PaymentEventEventTypePaymentUpdated PaymentEventEventType = "payment.updated"
 	PaymentEventEventTypePaymentDeleted PaymentEventEventType = "payment.deleted"
 )
+
+func (r PaymentEventEventType) IsKnown() bool {
+	switch r {
+	case PaymentEventEventTypePaymentCreated, PaymentEventEventTypePaymentUpdated, PaymentEventEventTypePaymentDeleted:
+		return true
+	}
+	return false
+}
 
 // Union satisfied by [AccountUpdateEvent], [JobCompletionEvent], [CompanyEvent],
 // [DirectoryEvent], [EmploymentEvent], [IndividualEvent], [PaymentEvent] or

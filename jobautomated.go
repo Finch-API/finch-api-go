@@ -143,12 +143,28 @@ const (
 	AutomatedAsyncJobStatusPermissionsError AutomatedAsyncJobStatus = "permissions_error"
 )
 
+func (r AutomatedAsyncJobStatus) IsKnown() bool {
+	switch r {
+	case AutomatedAsyncJobStatusPending, AutomatedAsyncJobStatusInProgress, AutomatedAsyncJobStatusComplete, AutomatedAsyncJobStatusError, AutomatedAsyncJobStatusReauthError, AutomatedAsyncJobStatusPermissionsError:
+		return true
+	}
+	return false
+}
+
 // Only `data_sync_all` currently supported
 type AutomatedAsyncJobType string
 
 const (
 	AutomatedAsyncJobTypeDataSyncAll AutomatedAsyncJobType = "data_sync_all"
 )
+
+func (r AutomatedAsyncJobType) IsKnown() bool {
+	switch r {
+	case AutomatedAsyncJobTypeDataSyncAll:
+		return true
+	}
+	return false
+}
 
 type JobAutomatedNewResponse struct {
 	// The number of allowed refreshes per hour (per hour, fixed window)
@@ -196,6 +212,14 @@ type JobAutomatedNewParamsType string
 const (
 	JobAutomatedNewParamsTypeDataSyncAll JobAutomatedNewParamsType = "data_sync_all"
 )
+
+func (r JobAutomatedNewParamsType) IsKnown() bool {
+	switch r {
+	case JobAutomatedNewParamsTypeDataSyncAll:
+		return true
+	}
+	return false
+}
 
 type JobAutomatedListParams struct {
 	// Number of items to return

@@ -88,6 +88,14 @@ const (
 	SandboxConnectionAccountNewResponseAuthenticationTypeAssisted   SandboxConnectionAccountNewResponseAuthenticationType = "assisted"
 )
 
+func (r SandboxConnectionAccountNewResponseAuthenticationType) IsKnown() bool {
+	switch r {
+	case SandboxConnectionAccountNewResponseAuthenticationTypeCredential, SandboxConnectionAccountNewResponseAuthenticationTypeAPIToken, SandboxConnectionAccountNewResponseAuthenticationTypeOAuth, SandboxConnectionAccountNewResponseAuthenticationTypeAssisted:
+		return true
+	}
+	return false
+}
+
 type SandboxConnectionAccountUpdateResponse struct {
 	AccountID          string                                                   `json:"account_id,required"`
 	AuthenticationType SandboxConnectionAccountUpdateResponseAuthenticationType `json:"authentication_type,required"`
@@ -126,6 +134,14 @@ const (
 	SandboxConnectionAccountUpdateResponseAuthenticationTypeAssisted   SandboxConnectionAccountUpdateResponseAuthenticationType = "assisted"
 )
 
+func (r SandboxConnectionAccountUpdateResponseAuthenticationType) IsKnown() bool {
+	switch r {
+	case SandboxConnectionAccountUpdateResponseAuthenticationTypeCredential, SandboxConnectionAccountUpdateResponseAuthenticationTypeAPIToken, SandboxConnectionAccountUpdateResponseAuthenticationTypeOAuth, SandboxConnectionAccountUpdateResponseAuthenticationTypeAssisted:
+		return true
+	}
+	return false
+}
+
 type SandboxConnectionAccountNewParams struct {
 	CompanyID          param.Field[string]                                              `json:"company_id,required" format:"uuid"`
 	ProviderID         param.Field[string]                                              `json:"provider_id,required"`
@@ -147,6 +163,14 @@ const (
 	SandboxConnectionAccountNewParamsAuthenticationTypeOAuth      SandboxConnectionAccountNewParamsAuthenticationType = "oauth"
 	SandboxConnectionAccountNewParamsAuthenticationTypeAssisted   SandboxConnectionAccountNewParamsAuthenticationType = "assisted"
 )
+
+func (r SandboxConnectionAccountNewParamsAuthenticationType) IsKnown() bool {
+	switch r {
+	case SandboxConnectionAccountNewParamsAuthenticationTypeCredential, SandboxConnectionAccountNewParamsAuthenticationTypeAPIToken, SandboxConnectionAccountNewParamsAuthenticationTypeOAuth, SandboxConnectionAccountNewParamsAuthenticationTypeAssisted:
+		return true
+	}
+	return false
+}
 
 type SandboxConnectionAccountUpdateParams struct {
 	ConnectionStatus param.Field[shared.ConnectionStatusType] `json:"connection_status"`

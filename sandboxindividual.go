@@ -127,6 +127,14 @@ const (
 	SandboxIndividualUpdateResponseEmailsTypePersonal SandboxIndividualUpdateResponseEmailsType = "personal"
 )
 
+func (r SandboxIndividualUpdateResponseEmailsType) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateResponseEmailsTypeWork, SandboxIndividualUpdateResponseEmailsTypePersonal:
+		return true
+	}
+	return false
+}
+
 // The EEOC-defined ethnicity of the individual.
 type SandboxIndividualUpdateResponseEthnicity string
 
@@ -141,6 +149,14 @@ const (
 	SandboxIndividualUpdateResponseEthnicityDeclineToSpecify                SandboxIndividualUpdateResponseEthnicity = "decline_to_specify"
 )
 
+func (r SandboxIndividualUpdateResponseEthnicity) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateResponseEthnicityAsian, SandboxIndividualUpdateResponseEthnicityWhite, SandboxIndividualUpdateResponseEthnicityBlackOrAfricanAmerican, SandboxIndividualUpdateResponseEthnicityNativeHawaiianOrPacificIslander, SandboxIndividualUpdateResponseEthnicityAmericanIndianOrAlaskaNative, SandboxIndividualUpdateResponseEthnicityHispanicOrLatino, SandboxIndividualUpdateResponseEthnicityTwoOrMoreRaces, SandboxIndividualUpdateResponseEthnicityDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
 // The gender of the individual.
 type SandboxIndividualUpdateResponseGender string
 
@@ -150,6 +166,14 @@ const (
 	SandboxIndividualUpdateResponseGenderOther            SandboxIndividualUpdateResponseGender = "other"
 	SandboxIndividualUpdateResponseGenderDeclineToSpecify SandboxIndividualUpdateResponseGender = "decline_to_specify"
 )
+
+func (r SandboxIndividualUpdateResponseGender) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateResponseGenderFemale, SandboxIndividualUpdateResponseGenderMale, SandboxIndividualUpdateResponseGenderOther, SandboxIndividualUpdateResponseGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
 
 type SandboxIndividualUpdateResponsePhoneNumber struct {
 	Data string                                          `json:"data"`
@@ -180,6 +204,14 @@ const (
 	SandboxIndividualUpdateResponsePhoneNumbersTypeWork     SandboxIndividualUpdateResponsePhoneNumbersType = "work"
 	SandboxIndividualUpdateResponsePhoneNumbersTypePersonal SandboxIndividualUpdateResponsePhoneNumbersType = "personal"
 )
+
+func (r SandboxIndividualUpdateResponsePhoneNumbersType) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateResponsePhoneNumbersTypeWork, SandboxIndividualUpdateResponsePhoneNumbersTypePersonal:
+		return true
+	}
+	return false
+}
 
 type SandboxIndividualUpdateParams struct {
 	Dob    param.Field[string]                               `json:"dob"`
@@ -228,6 +260,14 @@ const (
 	SandboxIndividualUpdateParamsEmailsTypePersonal SandboxIndividualUpdateParamsEmailsType = "personal"
 )
 
+func (r SandboxIndividualUpdateParamsEmailsType) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateParamsEmailsTypeWork, SandboxIndividualUpdateParamsEmailsTypePersonal:
+		return true
+	}
+	return false
+}
+
 // The EEOC-defined ethnicity of the individual.
 type SandboxIndividualUpdateParamsEthnicity string
 
@@ -242,6 +282,14 @@ const (
 	SandboxIndividualUpdateParamsEthnicityDeclineToSpecify                SandboxIndividualUpdateParamsEthnicity = "decline_to_specify"
 )
 
+func (r SandboxIndividualUpdateParamsEthnicity) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateParamsEthnicityAsian, SandboxIndividualUpdateParamsEthnicityWhite, SandboxIndividualUpdateParamsEthnicityBlackOrAfricanAmerican, SandboxIndividualUpdateParamsEthnicityNativeHawaiianOrPacificIslander, SandboxIndividualUpdateParamsEthnicityAmericanIndianOrAlaskaNative, SandboxIndividualUpdateParamsEthnicityHispanicOrLatino, SandboxIndividualUpdateParamsEthnicityTwoOrMoreRaces, SandboxIndividualUpdateParamsEthnicityDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
 // The gender of the individual.
 type SandboxIndividualUpdateParamsGender string
 
@@ -251,6 +299,14 @@ const (
 	SandboxIndividualUpdateParamsGenderOther            SandboxIndividualUpdateParamsGender = "other"
 	SandboxIndividualUpdateParamsGenderDeclineToSpecify SandboxIndividualUpdateParamsGender = "decline_to_specify"
 )
+
+func (r SandboxIndividualUpdateParamsGender) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateParamsGenderFemale, SandboxIndividualUpdateParamsGenderMale, SandboxIndividualUpdateParamsGenderOther, SandboxIndividualUpdateParamsGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
 
 type SandboxIndividualUpdateParamsPhoneNumber struct {
 	Data param.Field[string]                                        `json:"data"`
@@ -267,3 +323,11 @@ const (
 	SandboxIndividualUpdateParamsPhoneNumbersTypeWork     SandboxIndividualUpdateParamsPhoneNumbersType = "work"
 	SandboxIndividualUpdateParamsPhoneNumbersTypePersonal SandboxIndividualUpdateParamsPhoneNumbersType = "personal"
 )
+
+func (r SandboxIndividualUpdateParamsPhoneNumbersType) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateParamsPhoneNumbersTypeWork, SandboxIndividualUpdateParamsPhoneNumbersTypePersonal:
+		return true
+	}
+	return false
+}

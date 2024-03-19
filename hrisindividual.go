@@ -139,6 +139,14 @@ const (
 	IndividualEmailsTypePersonal IndividualEmailsType = "personal"
 )
 
+func (r IndividualEmailsType) IsKnown() bool {
+	switch r {
+	case IndividualEmailsTypeWork, IndividualEmailsTypePersonal:
+		return true
+	}
+	return false
+}
+
 // The EEOC-defined ethnicity of the individual.
 type IndividualEthnicity string
 
@@ -153,6 +161,14 @@ const (
 	IndividualEthnicityDeclineToSpecify                IndividualEthnicity = "decline_to_specify"
 )
 
+func (r IndividualEthnicity) IsKnown() bool {
+	switch r {
+	case IndividualEthnicityAsian, IndividualEthnicityWhite, IndividualEthnicityBlackOrAfricanAmerican, IndividualEthnicityNativeHawaiianOrPacificIslander, IndividualEthnicityAmericanIndianOrAlaskaNative, IndividualEthnicityHispanicOrLatino, IndividualEthnicityTwoOrMoreRaces, IndividualEthnicityDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
 // The gender of the individual.
 type IndividualGender string
 
@@ -162,6 +178,14 @@ const (
 	IndividualGenderOther            IndividualGender = "other"
 	IndividualGenderDeclineToSpecify IndividualGender = "decline_to_specify"
 )
+
+func (r IndividualGender) IsKnown() bool {
+	switch r {
+	case IndividualGenderFemale, IndividualGenderMale, IndividualGenderOther, IndividualGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
 
 type IndividualPhoneNumber struct {
 	Data string                     `json:"data,nullable"`
@@ -192,6 +216,14 @@ const (
 	IndividualPhoneNumbersTypeWork     IndividualPhoneNumbersType = "work"
 	IndividualPhoneNumbersTypePersonal IndividualPhoneNumbersType = "personal"
 )
+
+func (r IndividualPhoneNumbersType) IsKnown() bool {
+	switch r {
+	case IndividualPhoneNumbersTypeWork, IndividualPhoneNumbersTypePersonal:
+		return true
+	}
+	return false
+}
 
 type IndividualResponse struct {
 	Body         Individual             `json:"body"`

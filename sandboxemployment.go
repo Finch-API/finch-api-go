@@ -194,6 +194,14 @@ const (
 	SandboxEmploymentUpdateResponseEmploymentSubtypeIndividualContractor SandboxEmploymentUpdateResponseEmploymentSubtype = "individual_contractor"
 )
 
+func (r SandboxEmploymentUpdateResponseEmploymentSubtype) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateResponseEmploymentSubtypeFullTime, SandboxEmploymentUpdateResponseEmploymentSubtypeIntern, SandboxEmploymentUpdateResponseEmploymentSubtypePartTime, SandboxEmploymentUpdateResponseEmploymentSubtypeTemp, SandboxEmploymentUpdateResponseEmploymentSubtypeSeasonal, SandboxEmploymentUpdateResponseEmploymentSubtypeIndividualContractor:
+		return true
+	}
+	return false
+}
+
 // The main employment type of the individual.
 type SandboxEmploymentUpdateResponseEmploymentType string
 
@@ -201,6 +209,14 @@ const (
 	SandboxEmploymentUpdateResponseEmploymentTypeEmployee   SandboxEmploymentUpdateResponseEmploymentType = "employee"
 	SandboxEmploymentUpdateResponseEmploymentTypeContractor SandboxEmploymentUpdateResponseEmploymentType = "contractor"
 )
+
+func (r SandboxEmploymentUpdateResponseEmploymentType) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateResponseEmploymentTypeEmployee, SandboxEmploymentUpdateResponseEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
 
 // The manager object representing the manager of the individual within the org.
 type SandboxEmploymentUpdateResponseManager struct {
@@ -308,6 +324,14 @@ const (
 	SandboxEmploymentUpdateParamsEmploymentSubtypeIndividualContractor SandboxEmploymentUpdateParamsEmploymentSubtype = "individual_contractor"
 )
 
+func (r SandboxEmploymentUpdateParamsEmploymentSubtype) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateParamsEmploymentSubtypeFullTime, SandboxEmploymentUpdateParamsEmploymentSubtypeIntern, SandboxEmploymentUpdateParamsEmploymentSubtypePartTime, SandboxEmploymentUpdateParamsEmploymentSubtypeTemp, SandboxEmploymentUpdateParamsEmploymentSubtypeSeasonal, SandboxEmploymentUpdateParamsEmploymentSubtypeIndividualContractor:
+		return true
+	}
+	return false
+}
+
 // The main employment type of the individual.
 type SandboxEmploymentUpdateParamsEmploymentType string
 
@@ -315,6 +339,14 @@ const (
 	SandboxEmploymentUpdateParamsEmploymentTypeEmployee   SandboxEmploymentUpdateParamsEmploymentType = "employee"
 	SandboxEmploymentUpdateParamsEmploymentTypeContractor SandboxEmploymentUpdateParamsEmploymentType = "contractor"
 )
+
+func (r SandboxEmploymentUpdateParamsEmploymentType) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateParamsEmploymentTypeEmployee, SandboxEmploymentUpdateParamsEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
 
 // The manager object representing the manager of the individual within the org.
 type SandboxEmploymentUpdateParamsManager struct {

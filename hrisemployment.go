@@ -209,6 +209,14 @@ const (
 	EmploymentDataEmploymentSubtypeIndividualContractor EmploymentDataEmploymentSubtype = "individual_contractor"
 )
 
+func (r EmploymentDataEmploymentSubtype) IsKnown() bool {
+	switch r {
+	case EmploymentDataEmploymentSubtypeFullTime, EmploymentDataEmploymentSubtypeIntern, EmploymentDataEmploymentSubtypePartTime, EmploymentDataEmploymentSubtypeTemp, EmploymentDataEmploymentSubtypeSeasonal, EmploymentDataEmploymentSubtypeIndividualContractor:
+		return true
+	}
+	return false
+}
+
 // The main employment type of the individual.
 type EmploymentDataEmploymentType string
 
@@ -216,6 +224,14 @@ const (
 	EmploymentDataEmploymentTypeEmployee   EmploymentDataEmploymentType = "employee"
 	EmploymentDataEmploymentTypeContractor EmploymentDataEmploymentType = "contractor"
 )
+
+func (r EmploymentDataEmploymentType) IsKnown() bool {
+	switch r {
+	case EmploymentDataEmploymentTypeEmployee, EmploymentDataEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
 
 // The manager object representing the manager of the individual within the org.
 type EmploymentDataManager struct {
