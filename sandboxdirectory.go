@@ -143,6 +143,14 @@ const (
 	SandboxDirectoryNewParamsBodyEmailsTypePersonal SandboxDirectoryNewParamsBodyEmailsType = "personal"
 )
 
+func (r SandboxDirectoryNewParamsBodyEmailsType) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyEmailsTypeWork, SandboxDirectoryNewParamsBodyEmailsTypePersonal:
+		return true
+	}
+	return false
+}
+
 // The employment object.
 type SandboxDirectoryNewParamsBodyEmployment struct {
 	// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
@@ -167,6 +175,14 @@ const (
 	SandboxDirectoryNewParamsBodyEmploymentSubtypeIndividualContractor SandboxDirectoryNewParamsBodyEmploymentSubtype = "individual_contractor"
 )
 
+func (r SandboxDirectoryNewParamsBodyEmploymentSubtype) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyEmploymentSubtypeFullTime, SandboxDirectoryNewParamsBodyEmploymentSubtypeIntern, SandboxDirectoryNewParamsBodyEmploymentSubtypePartTime, SandboxDirectoryNewParamsBodyEmploymentSubtypeTemp, SandboxDirectoryNewParamsBodyEmploymentSubtypeSeasonal, SandboxDirectoryNewParamsBodyEmploymentSubtypeIndividualContractor:
+		return true
+	}
+	return false
+}
+
 // The main employment type of the individual.
 type SandboxDirectoryNewParamsBodyEmploymentType string
 
@@ -174,6 +190,14 @@ const (
 	SandboxDirectoryNewParamsBodyEmploymentTypeEmployee   SandboxDirectoryNewParamsBodyEmploymentType = "employee"
 	SandboxDirectoryNewParamsBodyEmploymentTypeContractor SandboxDirectoryNewParamsBodyEmploymentType = "contractor"
 )
+
+func (r SandboxDirectoryNewParamsBodyEmploymentType) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyEmploymentTypeEmployee, SandboxDirectoryNewParamsBodyEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
 
 // The EEOC-defined ethnicity of the individual.
 type SandboxDirectoryNewParamsBodyEthnicity string
@@ -189,6 +213,14 @@ const (
 	SandboxDirectoryNewParamsBodyEthnicityDeclineToSpecify                SandboxDirectoryNewParamsBodyEthnicity = "decline_to_specify"
 )
 
+func (r SandboxDirectoryNewParamsBodyEthnicity) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyEthnicityAsian, SandboxDirectoryNewParamsBodyEthnicityWhite, SandboxDirectoryNewParamsBodyEthnicityBlackOrAfricanAmerican, SandboxDirectoryNewParamsBodyEthnicityNativeHawaiianOrPacificIslander, SandboxDirectoryNewParamsBodyEthnicityAmericanIndianOrAlaskaNative, SandboxDirectoryNewParamsBodyEthnicityHispanicOrLatino, SandboxDirectoryNewParamsBodyEthnicityTwoOrMoreRaces, SandboxDirectoryNewParamsBodyEthnicityDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
 // The gender of the individual.
 type SandboxDirectoryNewParamsBodyGender string
 
@@ -198,6 +230,14 @@ const (
 	SandboxDirectoryNewParamsBodyGenderOther            SandboxDirectoryNewParamsBodyGender = "other"
 	SandboxDirectoryNewParamsBodyGenderDeclineToSpecify SandboxDirectoryNewParamsBodyGender = "decline_to_specify"
 )
+
+func (r SandboxDirectoryNewParamsBodyGender) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyGenderFemale, SandboxDirectoryNewParamsBodyGenderMale, SandboxDirectoryNewParamsBodyGenderOther, SandboxDirectoryNewParamsBodyGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
 
 // The manager object representing the manager of the individual within the org.
 type SandboxDirectoryNewParamsBodyManager struct {
@@ -224,3 +264,11 @@ const (
 	SandboxDirectoryNewParamsBodyPhoneNumbersTypeWork     SandboxDirectoryNewParamsBodyPhoneNumbersType = "work"
 	SandboxDirectoryNewParamsBodyPhoneNumbersTypePersonal SandboxDirectoryNewParamsBodyPhoneNumbersType = "personal"
 )
+
+func (r SandboxDirectoryNewParamsBodyPhoneNumbersType) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyPhoneNumbersTypeWork, SandboxDirectoryNewParamsBodyPhoneNumbersTypePersonal:
+		return true
+	}
+	return false
+}

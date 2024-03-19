@@ -85,3 +85,11 @@ type SandboxJobNewParamsType string
 const (
 	SandboxJobNewParamsTypeDataSyncAll SandboxJobNewParamsType = "data_sync_all"
 )
+
+func (r SandboxJobNewParamsType) IsKnown() bool {
+	switch r {
+	case SandboxJobNewParamsTypeDataSyncAll:
+		return true
+	}
+	return false
+}

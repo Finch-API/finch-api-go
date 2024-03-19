@@ -133,6 +133,14 @@ const (
 	SandboxPaymentNewParamsPayStatementsEarningsTypeOther          SandboxPaymentNewParamsPayStatementsEarningsType = "other"
 )
 
+func (r SandboxPaymentNewParamsPayStatementsEarningsType) IsKnown() bool {
+	switch r {
+	case SandboxPaymentNewParamsPayStatementsEarningsTypeSalary, SandboxPaymentNewParamsPayStatementsEarningsTypeWage, SandboxPaymentNewParamsPayStatementsEarningsTypeReimbursement, SandboxPaymentNewParamsPayStatementsEarningsTypeOvertime, SandboxPaymentNewParamsPayStatementsEarningsTypeSeverance, SandboxPaymentNewParamsPayStatementsEarningsTypeDoubleOvertime, SandboxPaymentNewParamsPayStatementsEarningsTypePto, SandboxPaymentNewParamsPayStatementsEarningsTypeSick, SandboxPaymentNewParamsPayStatementsEarningsTypeBonus, SandboxPaymentNewParamsPayStatementsEarningsTypeCommission, SandboxPaymentNewParamsPayStatementsEarningsTypeTips, SandboxPaymentNewParamsPayStatementsEarningsType1099, SandboxPaymentNewParamsPayStatementsEarningsTypeOther:
+		return true
+	}
+	return false
+}
+
 type SandboxPaymentNewParamsPayStatementsEmployeeDeduction struct {
 	// The deduction amount in cents.
 	Amount param.Field[int64] `json:"amount"`
@@ -173,6 +181,14 @@ const (
 	SandboxPaymentNewParamsPayStatementsPaymentMethodDirectDeposit SandboxPaymentNewParamsPayStatementsPaymentMethod = "direct_deposit"
 )
 
+func (r SandboxPaymentNewParamsPayStatementsPaymentMethod) IsKnown() bool {
+	switch r {
+	case SandboxPaymentNewParamsPayStatementsPaymentMethodCheck, SandboxPaymentNewParamsPayStatementsPaymentMethodDirectDeposit:
+		return true
+	}
+	return false
+}
+
 type SandboxPaymentNewParamsPayStatementsTax struct {
 	// The tax amount in cents.
 	Amount param.Field[int64] `json:"amount"`
@@ -200,6 +216,14 @@ const (
 	SandboxPaymentNewParamsPayStatementsTaxesTypeFica    SandboxPaymentNewParamsPayStatementsTaxesType = "fica"
 )
 
+func (r SandboxPaymentNewParamsPayStatementsTaxesType) IsKnown() bool {
+	switch r {
+	case SandboxPaymentNewParamsPayStatementsTaxesTypeState, SandboxPaymentNewParamsPayStatementsTaxesTypeFederal, SandboxPaymentNewParamsPayStatementsTaxesTypeLocal, SandboxPaymentNewParamsPayStatementsTaxesTypeFica:
+		return true
+	}
+	return false
+}
+
 // The type of the payment associated with the pay statement.
 type SandboxPaymentNewParamsPayStatementsType string
 
@@ -208,3 +232,11 @@ const (
 	SandboxPaymentNewParamsPayStatementsTypeOffCyclePayroll SandboxPaymentNewParamsPayStatementsType = "off_cycle_payroll"
 	SandboxPaymentNewParamsPayStatementsTypeOneTimePayment  SandboxPaymentNewParamsPayStatementsType = "one_time_payment"
 )
+
+func (r SandboxPaymentNewParamsPayStatementsType) IsKnown() bool {
+	switch r {
+	case SandboxPaymentNewParamsPayStatementsTypeRegularPayroll, SandboxPaymentNewParamsPayStatementsTypeOffCyclePayroll, SandboxPaymentNewParamsPayStatementsTypeOneTimePayment:
+		return true
+	}
+	return false
+}

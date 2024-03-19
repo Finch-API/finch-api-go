@@ -80,6 +80,14 @@ const (
 	SandboxConnectionNewResponseAuthenticationTypeAssisted   SandboxConnectionNewResponseAuthenticationType = "assisted"
 )
 
+func (r SandboxConnectionNewResponseAuthenticationType) IsKnown() bool {
+	switch r {
+	case SandboxConnectionNewResponseAuthenticationTypeCredential, SandboxConnectionNewResponseAuthenticationTypeAPIToken, SandboxConnectionNewResponseAuthenticationTypeOAuth, SandboxConnectionNewResponseAuthenticationTypeAssisted:
+		return true
+	}
+	return false
+}
+
 type SandboxConnectionNewParams struct {
 	ProviderID         param.Field[string]                                       `json:"provider_id,required"`
 	AuthenticationType param.Field[SandboxConnectionNewParamsAuthenticationType] `json:"authentication_type"`
@@ -101,3 +109,11 @@ const (
 	SandboxConnectionNewParamsAuthenticationTypeOAuth      SandboxConnectionNewParamsAuthenticationType = "oauth"
 	SandboxConnectionNewParamsAuthenticationTypeAssisted   SandboxConnectionNewParamsAuthenticationType = "assisted"
 )
+
+func (r SandboxConnectionNewParamsAuthenticationType) IsKnown() bool {
+	switch r {
+	case SandboxConnectionNewParamsAuthenticationTypeCredential, SandboxConnectionNewParamsAuthenticationTypeAPIToken, SandboxConnectionNewParamsAuthenticationTypeOAuth, SandboxConnectionNewParamsAuthenticationTypeAssisted:
+		return true
+	}
+	return false
+}
