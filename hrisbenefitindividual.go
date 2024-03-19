@@ -154,6 +154,14 @@ const (
 	IndividualBenefitBodyHsaContributionLimitFamily     IndividualBenefitBodyHsaContributionLimit = "family"
 )
 
+func (r IndividualBenefitBodyHsaContributionLimit) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyHsaContributionLimitIndividual, IndividualBenefitBodyHsaContributionLimitFamily:
+		return true
+	}
+	return false
+}
+
 type UnenrolledIndividual struct {
 	Body UnenrolledIndividualBody `json:"body"`
 	// HTTP status code

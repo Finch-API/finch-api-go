@@ -159,6 +159,14 @@ const (
 	PayStatementEarningsTypeOther          PayStatementEarningsType = "other"
 )
 
+func (r PayStatementEarningsType) IsKnown() bool {
+	switch r {
+	case PayStatementEarningsTypeSalary, PayStatementEarningsTypeWage, PayStatementEarningsTypeReimbursement, PayStatementEarningsTypeOvertime, PayStatementEarningsTypeSeverance, PayStatementEarningsTypeDoubleOvertime, PayStatementEarningsTypePto, PayStatementEarningsTypeSick, PayStatementEarningsTypeBonus, PayStatementEarningsTypeCommission, PayStatementEarningsTypeTips, PayStatementEarningsType1099, PayStatementEarningsTypeOther:
+		return true
+	}
+	return false
+}
+
 type PayStatementEmployeeDeduction struct {
 	// The deduction amount in cents.
 	Amount int64 `json:"amount,nullable"`
@@ -232,6 +240,14 @@ const (
 	PayStatementPaymentMethodDirectDeposit PayStatementPaymentMethod = "direct_deposit"
 )
 
+func (r PayStatementPaymentMethod) IsKnown() bool {
+	switch r {
+	case PayStatementPaymentMethodCheck, PayStatementPaymentMethodDirectDeposit:
+		return true
+	}
+	return false
+}
+
 type PayStatementTax struct {
 	// The tax amount in cents.
 	Amount int64 `json:"amount,nullable"`
@@ -275,6 +291,14 @@ const (
 	PayStatementTaxesTypeFica    PayStatementTaxesType = "fica"
 )
 
+func (r PayStatementTaxesType) IsKnown() bool {
+	switch r {
+	case PayStatementTaxesTypeState, PayStatementTaxesTypeFederal, PayStatementTaxesTypeLocal, PayStatementTaxesTypeFica:
+		return true
+	}
+	return false
+}
+
 // The type of the payment associated with the pay statement.
 type PayStatementType string
 
@@ -283,6 +307,14 @@ const (
 	PayStatementTypeOffCyclePayroll PayStatementType = "off_cycle_payroll"
 	PayStatementTypeOneTimePayment  PayStatementType = "one_time_payment"
 )
+
+func (r PayStatementType) IsKnown() bool {
+	switch r {
+	case PayStatementTypeRegularPayroll, PayStatementTypeOffCyclePayroll, PayStatementTypeOneTimePayment:
+		return true
+	}
+	return false
+}
 
 type PayStatementResponse struct {
 	Body      PayStatementResponseBody `json:"body"`

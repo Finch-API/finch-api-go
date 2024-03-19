@@ -78,11 +78,27 @@ const (
 	SandboxJobConfigurationCompletionStatusError            SandboxJobConfigurationCompletionStatus = "error"
 )
 
+func (r SandboxJobConfigurationCompletionStatus) IsKnown() bool {
+	switch r {
+	case SandboxJobConfigurationCompletionStatusComplete, SandboxJobConfigurationCompletionStatusReauthError, SandboxJobConfigurationCompletionStatusPermissionsError, SandboxJobConfigurationCompletionStatusError:
+		return true
+	}
+	return false
+}
+
 type SandboxJobConfigurationType string
 
 const (
 	SandboxJobConfigurationTypeDataSyncAll SandboxJobConfigurationType = "data_sync_all"
 )
+
+func (r SandboxJobConfigurationType) IsKnown() bool {
+	switch r {
+	case SandboxJobConfigurationTypeDataSyncAll:
+		return true
+	}
+	return false
+}
 
 type SandboxJobConfigurationUpdateParams struct {
 	CompletionStatus param.Field[SandboxJobConfigurationUpdateParamsCompletionStatus] `json:"completion_status,required"`
@@ -102,8 +118,24 @@ const (
 	SandboxJobConfigurationUpdateParamsCompletionStatusError            SandboxJobConfigurationUpdateParamsCompletionStatus = "error"
 )
 
+func (r SandboxJobConfigurationUpdateParamsCompletionStatus) IsKnown() bool {
+	switch r {
+	case SandboxJobConfigurationUpdateParamsCompletionStatusComplete, SandboxJobConfigurationUpdateParamsCompletionStatusReauthError, SandboxJobConfigurationUpdateParamsCompletionStatusPermissionsError, SandboxJobConfigurationUpdateParamsCompletionStatusError:
+		return true
+	}
+	return false
+}
+
 type SandboxJobConfigurationUpdateParamsType string
 
 const (
 	SandboxJobConfigurationUpdateParamsTypeDataSyncAll SandboxJobConfigurationUpdateParamsType = "data_sync_all"
 )
+
+func (r SandboxJobConfigurationUpdateParamsType) IsKnown() bool {
+	switch r {
+	case SandboxJobConfigurationUpdateParamsTypeDataSyncAll:
+		return true
+	}
+	return false
+}

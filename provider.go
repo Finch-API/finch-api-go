@@ -1039,3 +1039,11 @@ const (
 	ProviderAuthenticationMethodsTypeAPICredential ProviderAuthenticationMethodsType = "api_credential"
 	ProviderAuthenticationMethodsTypeOAuth         ProviderAuthenticationMethodsType = "oauth"
 )
+
+func (r ProviderAuthenticationMethodsType) IsKnown() bool {
+	switch r {
+	case ProviderAuthenticationMethodsTypeAssisted, ProviderAuthenticationMethodsTypeCredential, ProviderAuthenticationMethodsTypeAPIToken, ProviderAuthenticationMethodsTypeAPICredential, ProviderAuthenticationMethodsTypeOAuth:
+		return true
+	}
+	return false
+}

@@ -137,6 +137,14 @@ const (
 	BenefitContributionTypePercent BenefitContributionType = "percent"
 )
 
+func (r BenefitContributionType) IsKnown() bool {
+	switch r {
+	case BenefitContributionTypeFixed, BenefitContributionTypePercent:
+		return true
+	}
+	return false
+}
+
 type BenefitFeaturesAndOperations struct {
 	SupportedFeatures   BenefitFeaturesAndOperationsSupportedFeatures `json:"supported_features"`
 	SupportedOperations SupportPerBenefitType                         `json:"supported_operations"`
@@ -210,12 +218,28 @@ const (
 	BenefitFeaturesAndOperationsSupportedFeaturesCompanyContributionPercent BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution = "percent"
 )
 
+func (r BenefitFeaturesAndOperationsSupportedFeaturesCompanyContribution) IsKnown() bool {
+	switch r {
+	case BenefitFeaturesAndOperationsSupportedFeaturesCompanyContributionFixed, BenefitFeaturesAndOperationsSupportedFeaturesCompanyContributionPercent:
+		return true
+	}
+	return false
+}
+
 type BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction string
 
 const (
 	BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeductionFixed   BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction = "fixed"
 	BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeductionPercent BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction = "percent"
 )
+
+func (r BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeduction) IsKnown() bool {
+	switch r {
+	case BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeductionFixed, BenefitFeaturesAndOperationsSupportedFeaturesEmployeeDeductionPercent:
+		return true
+	}
+	return false
+}
 
 type BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit string
 
@@ -224,6 +248,14 @@ const (
 	BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimitFamily     BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit = "family"
 )
 
+func (r BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit) IsKnown() bool {
+	switch r {
+	case BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimitIndividual, BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimitFamily:
+		return true
+	}
+	return false
+}
+
 type BenefitFrequency string
 
 const (
@@ -231,6 +263,14 @@ const (
 	BenefitFrequencyEveryPaycheck BenefitFrequency = "every_paycheck"
 	BenefitFrequencyMonthly       BenefitFrequency = "monthly"
 )
+
+func (r BenefitFrequency) IsKnown() bool {
+	switch r {
+	case BenefitFrequencyOneTime, BenefitFrequencyEveryPaycheck, BenefitFrequencyMonthly:
+		return true
+	}
+	return false
+}
 
 // Type of benefit.
 type BenefitType string
@@ -256,6 +296,14 @@ const (
 	BenefitTypeCustomPostTax    BenefitType = "custom_post_tax"
 	BenefitTypeCustomPreTax     BenefitType = "custom_pre_tax"
 )
+
+func (r BenefitType) IsKnown() bool {
+	switch r {
+	case BenefitType_401k, BenefitType_401kRoth, BenefitType_401kLoan, BenefitType_403b, BenefitType_403bRoth, BenefitType_457, BenefitType_457Roth, BenefitTypeS125Medical, BenefitTypeS125Dental, BenefitTypeS125Vision, BenefitTypeHsaPre, BenefitTypeHsaPost, BenefitTypeFsaMedical, BenefitTypeFsaDependentCare, BenefitTypeSimpleIRA, BenefitTypeSimple, BenefitTypeCommuter, BenefitTypeCustomPostTax, BenefitTypeCustomPreTax:
+		return true
+	}
+	return false
+}
 
 // Each benefit type and their supported features. If the benefit type is not
 // supported, the property will be null
@@ -430,6 +478,14 @@ const (
 	SupportedBenefitCompanyContributionPercent SupportedBenefitCompanyContribution = "percent"
 )
 
+func (r SupportedBenefitCompanyContribution) IsKnown() bool {
+	switch r {
+	case SupportedBenefitCompanyContributionFixed, SupportedBenefitCompanyContributionPercent:
+		return true
+	}
+	return false
+}
+
 type SupportedBenefitEmployeeDeduction string
 
 const (
@@ -437,12 +493,28 @@ const (
 	SupportedBenefitEmployeeDeductionPercent SupportedBenefitEmployeeDeduction = "percent"
 )
 
+func (r SupportedBenefitEmployeeDeduction) IsKnown() bool {
+	switch r {
+	case SupportedBenefitEmployeeDeductionFixed, SupportedBenefitEmployeeDeductionPercent:
+		return true
+	}
+	return false
+}
+
 type SupportedBenefitHsaContributionLimit string
 
 const (
 	SupportedBenefitHsaContributionLimitIndividual SupportedBenefitHsaContributionLimit = "individual"
 	SupportedBenefitHsaContributionLimitFamily     SupportedBenefitHsaContributionLimit = "family"
 )
+
+func (r SupportedBenefitHsaContributionLimit) IsKnown() bool {
+	switch r {
+	case SupportedBenefitHsaContributionLimitIndividual, SupportedBenefitHsaContributionLimitFamily:
+		return true
+	}
+	return false
+}
 
 type UpdateCompanyBenefitResponse struct {
 	BenefitID string                           `json:"benefit_id,required"`

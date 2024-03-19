@@ -175,6 +175,14 @@ const (
 	IntrospectionClientTypeSandbox     IntrospectionClientType = "sandbox"
 )
 
+func (r IntrospectionClientType) IsKnown() bool {
+	switch r {
+	case IntrospectionClientTypeProduction, IntrospectionClientTypeDevelopment, IntrospectionClientTypeSandbox:
+		return true
+	}
+	return false
+}
+
 // The type of the connection associated with the token.
 //
 // `provider` - connection to an external provider
@@ -186,3 +194,11 @@ const (
 	IntrospectionConnectionTypeProvider IntrospectionConnectionType = "provider"
 	IntrospectionConnectionTypeFinch    IntrospectionConnectionType = "finch"
 )
+
+func (r IntrospectionConnectionType) IsKnown() bool {
+	switch r {
+	case IntrospectionConnectionTypeProvider, IntrospectionConnectionTypeFinch:
+		return true
+	}
+	return false
+}

@@ -89,6 +89,14 @@ const (
 	IncomeUnitFixed       IncomeUnit = "fixed"
 )
 
+func (r IncomeUnit) IsKnown() bool {
+	switch r {
+	case IncomeUnitYearly, IncomeUnitQuarterly, IncomeUnitMonthly, IncomeUnitSemiMonthly, IncomeUnitBiWeekly, IncomeUnitWeekly, IncomeUnitDaily, IncomeUnitHourly, IncomeUnitFixed:
+		return true
+	}
+	return false
+}
+
 // The employee's income as reported by the provider. This may not always be
 // annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 // depending on what information the provider returns.

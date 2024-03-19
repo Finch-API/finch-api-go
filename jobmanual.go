@@ -71,3 +71,11 @@ const (
 	ManualAsyncJobStatusError      ManualAsyncJobStatus = "error"
 	ManualAsyncJobStatusComplete   ManualAsyncJobStatus = "complete"
 )
+
+func (r ManualAsyncJobStatus) IsKnown() bool {
+	switch r {
+	case ManualAsyncJobStatusPending, ManualAsyncJobStatusInProgress, ManualAsyncJobStatusError, ManualAsyncJobStatusComplete:
+		return true
+	}
+	return false
+}

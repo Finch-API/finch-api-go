@@ -122,6 +122,14 @@ const (
 	CompanyAccountsAccountTypeSavings  CompanyAccountsAccountType = "savings"
 )
 
+func (r CompanyAccountsAccountType) IsKnown() bool {
+	switch r {
+	case CompanyAccountsAccountTypeChecking, CompanyAccountsAccountTypeSavings:
+		return true
+	}
+	return false
+}
+
 type CompanyDepartment struct {
 	// The department name.
 	Name string `json:"name,nullable"`
@@ -204,6 +212,14 @@ const (
 	CompanyEntitySubtypeBCorporation CompanyEntitySubtype = "b_corporation"
 )
 
+func (r CompanyEntitySubtype) IsKnown() bool {
+	switch r {
+	case CompanyEntitySubtypeSCorporation, CompanyEntitySubtypeCCorporation, CompanyEntitySubtypeBCorporation:
+		return true
+	}
+	return false
+}
+
 // The tax payer type of the company.
 type CompanyEntityType string
 
@@ -216,3 +232,11 @@ const (
 	CompanyEntityTypePartnership    CompanyEntityType = "partnership"
 	CompanyEntityTypeCooperative    CompanyEntityType = "cooperative"
 )
+
+func (r CompanyEntityType) IsKnown() bool {
+	switch r {
+	case CompanyEntityTypeLlc, CompanyEntityTypeLp, CompanyEntityTypeCorporation, CompanyEntityTypeSoleProprietor, CompanyEntityTypeNonProfit, CompanyEntityTypePartnership, CompanyEntityTypeCooperative:
+		return true
+	}
+	return false
+}

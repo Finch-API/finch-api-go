@@ -122,6 +122,14 @@ const (
 	SandboxCompanyUpdateResponseAccountsAccountTypeSavings  SandboxCompanyUpdateResponseAccountsAccountType = "savings"
 )
 
+func (r SandboxCompanyUpdateResponseAccountsAccountType) IsKnown() bool {
+	switch r {
+	case SandboxCompanyUpdateResponseAccountsAccountTypeChecking, SandboxCompanyUpdateResponseAccountsAccountTypeSavings:
+		return true
+	}
+	return false
+}
+
 type SandboxCompanyUpdateResponseDepartment struct {
 	// The department name.
 	Name string `json:"name,nullable"`
@@ -205,6 +213,14 @@ const (
 	SandboxCompanyUpdateResponseEntitySubtypeBCorporation SandboxCompanyUpdateResponseEntitySubtype = "b_corporation"
 )
 
+func (r SandboxCompanyUpdateResponseEntitySubtype) IsKnown() bool {
+	switch r {
+	case SandboxCompanyUpdateResponseEntitySubtypeSCorporation, SandboxCompanyUpdateResponseEntitySubtypeCCorporation, SandboxCompanyUpdateResponseEntitySubtypeBCorporation:
+		return true
+	}
+	return false
+}
+
 // The tax payer type of the company.
 type SandboxCompanyUpdateResponseEntityType string
 
@@ -217,6 +233,14 @@ const (
 	SandboxCompanyUpdateResponseEntityTypePartnership    SandboxCompanyUpdateResponseEntityType = "partnership"
 	SandboxCompanyUpdateResponseEntityTypeCooperative    SandboxCompanyUpdateResponseEntityType = "cooperative"
 )
+
+func (r SandboxCompanyUpdateResponseEntityType) IsKnown() bool {
+	switch r {
+	case SandboxCompanyUpdateResponseEntityTypeLlc, SandboxCompanyUpdateResponseEntityTypeLp, SandboxCompanyUpdateResponseEntityTypeCorporation, SandboxCompanyUpdateResponseEntityTypeSoleProprietor, SandboxCompanyUpdateResponseEntityTypeNonProfit, SandboxCompanyUpdateResponseEntityTypePartnership, SandboxCompanyUpdateResponseEntityTypeCooperative:
+		return true
+	}
+	return false
+}
 
 type SandboxCompanyUpdateParams struct {
 	// An array of bank account objects associated with the payroll/HRIS system.
@@ -266,6 +290,14 @@ const (
 	SandboxCompanyUpdateParamsAccountsAccountTypeSavings  SandboxCompanyUpdateParamsAccountsAccountType = "savings"
 )
 
+func (r SandboxCompanyUpdateParamsAccountsAccountType) IsKnown() bool {
+	switch r {
+	case SandboxCompanyUpdateParamsAccountsAccountTypeChecking, SandboxCompanyUpdateParamsAccountsAccountTypeSavings:
+		return true
+	}
+	return false
+}
+
 type SandboxCompanyUpdateParamsDepartment struct {
 	// The department name.
 	Name param.Field[string] `json:"name"`
@@ -308,6 +340,14 @@ const (
 	SandboxCompanyUpdateParamsEntitySubtypeBCorporation SandboxCompanyUpdateParamsEntitySubtype = "b_corporation"
 )
 
+func (r SandboxCompanyUpdateParamsEntitySubtype) IsKnown() bool {
+	switch r {
+	case SandboxCompanyUpdateParamsEntitySubtypeSCorporation, SandboxCompanyUpdateParamsEntitySubtypeCCorporation, SandboxCompanyUpdateParamsEntitySubtypeBCorporation:
+		return true
+	}
+	return false
+}
+
 // The tax payer type of the company.
 type SandboxCompanyUpdateParamsEntityType string
 
@@ -320,3 +360,11 @@ const (
 	SandboxCompanyUpdateParamsEntityTypePartnership    SandboxCompanyUpdateParamsEntityType = "partnership"
 	SandboxCompanyUpdateParamsEntityTypeCooperative    SandboxCompanyUpdateParamsEntityType = "cooperative"
 )
+
+func (r SandboxCompanyUpdateParamsEntityType) IsKnown() bool {
+	switch r {
+	case SandboxCompanyUpdateParamsEntityTypeLlc, SandboxCompanyUpdateParamsEntityTypeLp, SandboxCompanyUpdateParamsEntityTypeCorporation, SandboxCompanyUpdateParamsEntityTypeSoleProprietor, SandboxCompanyUpdateParamsEntityTypeNonProfit, SandboxCompanyUpdateParamsEntityTypePartnership, SandboxCompanyUpdateParamsEntityTypeCooperative:
+		return true
+	}
+	return false
+}
