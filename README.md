@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/Finch-API/finch-api-go@v0.15.0'
+go get -u 'github.com/Finch-API/finch-api-go@v0.16.0'
 ```
 
 <!-- x-release-please-end -->
@@ -59,7 +59,7 @@ func main() {
 
 ```
 
-### Request Fields
+### Request fields
 
 All request parameters are wrapped in a generic `Field` type,
 which we use to distinguish zero values from null or omitted fields.
@@ -89,7 +89,7 @@ params := FooParams{
 }
 ```
 
-### Response Objects
+### Response objects
 
 All fields in response structs are value types (not pointers or wrappers).
 
@@ -230,6 +230,19 @@ client.HRIS.Directory.List(
 )
 ```
 
+### File uploads
+
+Request parameters that correspond to file uploads in multipart requests are typed as
+`param.Field[io.Reader]`. The contents of the `io.Reader` will by default be sent as a multipart form
+part with the file name of "anonymous_file" and content-type of "application/octet-stream".
+
+The file name and content-type can be customized by implementing `Name() string` or `ContentType()
+string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
+file returned by `os.Open` will be sent with the file name on disk.
+
+We also provide a helper `finchgo.FileParam(reader io.Reader, filename string, contentType string)`
+which can be used to wrap any `io.Reader` with the appropriate file name and content type.
+
 ## Retries
 
 Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
@@ -289,7 +302,7 @@ You may also replace the default `http.Client` with
 accepted (this overwrites any previous client) and receives requests after any
 middleware has been applied.
 
-## Semantic Versioning
+## Semantic versioning
 
 This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 

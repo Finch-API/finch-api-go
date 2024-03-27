@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package finchgo
 
@@ -153,6 +153,14 @@ const (
 	IndividualBenefitBodyHsaContributionLimitIndividual IndividualBenefitBodyHsaContributionLimit = "individual"
 	IndividualBenefitBodyHsaContributionLimitFamily     IndividualBenefitBodyHsaContributionLimit = "family"
 )
+
+func (r IndividualBenefitBodyHsaContributionLimit) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyHsaContributionLimitIndividual, IndividualBenefitBodyHsaContributionLimitFamily:
+		return true
+	}
+	return false
+}
 
 type UnenrolledIndividual struct {
 	Body UnenrolledIndividualBody `json:"body"`

@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package finchgo
 
@@ -85,3 +85,11 @@ type SandboxJobNewParamsType string
 const (
 	SandboxJobNewParamsTypeDataSyncAll SandboxJobNewParamsType = "data_sync_all"
 )
+
+func (r SandboxJobNewParamsType) IsKnown() bool {
+	switch r {
+	case SandboxJobNewParamsTypeDataSyncAll:
+		return true
+	}
+	return false
+}

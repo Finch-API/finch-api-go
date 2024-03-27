@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package shared
 
@@ -16,6 +16,14 @@ const (
 	ConnectionStatusTypeErrorPermissions    ConnectionStatusType = "error_permissions"
 	ConnectionStatusTypeReauth              ConnectionStatusType = "reauth"
 )
+
+func (r ConnectionStatusType) IsKnown() bool {
+	switch r {
+	case ConnectionStatusTypePending, ConnectionStatusTypeProcessing, ConnectionStatusTypeConnected, ConnectionStatusTypeErrorNoAccountSetup, ConnectionStatusTypeErrorPermissions, ConnectionStatusTypeReauth:
+		return true
+	}
+	return false
+}
 
 // - `supported`: This operation is supported by both the provider and Finch
 //
@@ -35,6 +43,14 @@ const (
 	OperationSupportNotSupportedByProvider OperationSupport = "not_supported_by_provider"
 	OperationSupportClientAccessOnly       OperationSupport = "client_access_only"
 )
+
+func (r OperationSupport) IsKnown() bool {
+	switch r {
+	case OperationSupportSupported, OperationSupportNotSupportedByFinch, OperationSupportNotSupportedByProvider, OperationSupportClientAccessOnly:
+		return true
+	}
+	return false
+}
 
 type OperationSupportMatrix struct {
 	// - `supported`: This operation is supported by both the provider and Finch

@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package finchgo
 
@@ -71,3 +71,11 @@ const (
 	ManualAsyncJobStatusError      ManualAsyncJobStatus = "error"
 	ManualAsyncJobStatusComplete   ManualAsyncJobStatus = "complete"
 )
+
+func (r ManualAsyncJobStatus) IsKnown() bool {
+	switch r {
+	case ManualAsyncJobStatusPending, ManualAsyncJobStatusInProgress, ManualAsyncJobStatusError, ManualAsyncJobStatusComplete:
+		return true
+	}
+	return false
+}
