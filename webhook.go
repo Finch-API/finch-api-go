@@ -3,7 +3,16 @@
 package finchgo
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
+	"errors"
+	"fmt"
+	"net/http"
 	"reflect"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/shared"
@@ -26,6 +35,83 @@ func NewWebhookService(opts ...option.RequestOption) (r *WebhookService) {
 	r = &WebhookService{}
 	r.Options = opts
 	return
+}
+
+// Validates that the given payload was sent by Finch and parses the payload.
+func (r *WebhookService) Unwrap(payload []byte, headers http.Header, secret string, now time.Time) (res WebhookEvent, err error) {
+	err = r.VerifySignature(payload, headers, secret, now)
+	if err != nil {
+		return nil, err
+	}
+
+	event := WebhookEvent(nil)
+	err = apijson.UnmarshalRoot(payload, &event)
+	if err != nil {
+		return nil, err
+	}
+	return event, nil
+}
+
+// Validates whether or not the webhook payload was sent by Finch.
+//
+// An error will be raised if the webhook payload was not sent by Finch.
+func (r *WebhookService) VerifySignature(payload []byte, headers http.Header, secret string, now time.Time) (err error) {
+	parsedSecret, err := base64.StdEncoding.DecodeString(secret)
+	if err != nil {
+		return fmt.Errorf("invalid webhook secret: %s", err)
+	}
+
+	id := headers.Get("finch-event-id")
+	if len(id) == 0 {
+		return errors.New("could not find finch-event-id header")
+	}
+	sign := headers.Values("finch-signature")
+	if len(sign) == 0 {
+		return errors.New("could not find finch-signature header")
+	}
+	unixtime := headers.Get("finch-timestamp")
+	if len(unixtime) == 0 {
+		return errors.New("could not find finch-timestamp header")
+	}
+
+	timestamp, err := strconv.ParseInt(unixtime, 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid timestamp header: %s, %s", unixtime, err)
+	}
+
+	if timestamp < now.Unix()-300 {
+		return errors.New("webhook timestamp too old")
+	}
+	if timestamp > now.Unix()+300 {
+		return errors.New("webhook timestamp too new")
+	}
+
+	mac := hmac.New(sha256.New, parsedSecret)
+	mac.Write([]byte(id))
+	mac.Write([]byte("."))
+	mac.Write([]byte(unixtime))
+	mac.Write([]byte("."))
+	mac.Write(payload)
+	expected := mac.Sum(nil)
+
+	for _, part := range sign {
+		parts := strings.Split(part, ",")
+		if len(parts) != 2 {
+			continue
+		}
+		if parts[0] != "v1" {
+			continue
+		}
+		signature, err := base64.StdEncoding.DecodeString(parts[1])
+		if err != nil {
+			continue
+		}
+		if hmac.Equal(signature, expected) {
+			return nil
+		}
+	}
+
+	return errors.New("None of the given webhook signatures match the expected signature")
 }
 
 type AccountUpdateEvent struct {
@@ -1629,4 +1715,10 @@ func init() {
 			DiscriminatorValue: "pay_statement.deleted",
 		},
 	)
+}
+
+type WebhookUnwrapParams struct {
+}
+
+type WebhookVerifySignatureParams struct {
 }
