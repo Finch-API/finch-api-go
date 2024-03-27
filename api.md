@@ -9,13 +9,6 @@
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#OperationSupportMatrix">OperationSupportMatrix</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared">shared</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/shared#Paging">Paging</a>
 
-# finchgo
-
-Methods:
-
-- <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.GetAuthURL">GetAuthURL</a>(products string, redirectUri string, sandbox bool, opts ...option.RequestOption) (string, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code>client.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#FinchgoService.WithAccessToken">WithAccessToken</a>(accessToken string) (Client, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
 # AccessTokens
 
 Response Types:
@@ -182,11 +175,6 @@ Response Types:
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayStatementEvent">PayStatementEvent</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PaymentEvent">PaymentEvent</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookEvent">WebhookEvent</a>
-
-Methods:
-
-- <code>client.Webhooks.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookService.Unwrap">Unwrap</a>(payload []byte, headers http.Header, secret string, now time.Time) (WebhookEvent, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code>client.Webhooks.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#WebhookService.VerifySignature">VerifySignature</a>(payload []byte, headers http.Header, secret string, now time.Time) <a href="https://pkg.go.dev/builtin#error">error</a></code>
 
 # RequestForwarding
 
