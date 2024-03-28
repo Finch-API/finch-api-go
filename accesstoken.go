@@ -3,6 +3,7 @@
 package finchgo
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"net/http"
@@ -36,29 +37,32 @@ func NewAccessTokenService(opts ...option.RequestOption) (r *AccessTokenService)
 func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams, opts ...option.RequestOption) (res *CreateAccessTokenResponse, err error) {
 	opts = append(r.Options[:], opts...)
 
-	opts = append(opts[:], func(rc *requestconfig.RequestConfig) error {
-		bodyClientID := gjson.Get(string(rc.Buffer), "client_id")
-		if !bodyClientID.Exists() {
-			if rc.ClientID == "" {
-				return errors.New("client_id must be provided as an argument or with the FINCH_CLIENT_ID environment variable")
-			}
-			updatedBody, err := sjson.Set(string(rc.Buffer), "client_id", rc.ClientID)
-			if err != nil {
-				return err
-			}
-			rc.Buffer = []byte(updatedBody)
-		}
+	opts = append(opts[:], func(rc *requestconfig.RequestConfig) (err error) {
+		if body, ok := rc.Body.(*bytes.Buffer); ok {
+			b := body.Bytes()[:]
 
-		bodyClientSecret := gjson.Get(string(rc.Buffer), "client_secret")
-		if !bodyClientSecret.Exists() {
-			if rc.ClientSecret == "" {
-				return errors.New("client_secret must be provided as an argument or with the FINCH_CLIENT_SECRET environment variable")
+			bodyClientID := gjson.GetBytes(b, "client_id")
+			if !bodyClientID.Exists() {
+				if rc.ClientID == "" {
+					return errors.New("client_id must be provided as an argument or with the FINCH_CLIENT_ID environment variable")
+				}
+				b, err = sjson.SetBytes(b, "client_id", rc.ClientID)
+				if err != nil {
+					return err
+				}
+				rc.Body = bytes.NewBuffer(b)
 			}
-			updatedBody, err := sjson.Set(string(rc.Buffer), "client_secret", rc.ClientSecret)
-			if err != nil {
-				return err
+			bodyClientSecret := gjson.GetBytes(b, "client_secret")
+			if !bodyClientSecret.Exists() {
+				if rc.ClientSecret == "" {
+					return errors.New("client_secret must be provided as an argument or with the FINCH_CLIENT_SECRET environment variable")
+				}
+				b, err = sjson.SetBytes(b, "client_secret", rc.ClientSecret)
+				if err != nil {
+					return err
+				}
+				rc.Body = bytes.NewBuffer(b)
 			}
-			rc.Buffer = []byte(updatedBody)
 		}
 
 		return nil
