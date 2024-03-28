@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -31,7 +31,7 @@ func NewHRISEmploymentService(opts ...option.RequestOption) (r *HRISEmploymentSe
 }
 
 // Read individual employment and income data
-func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *shared.ResponsesPage[EmploymentDataResponse], err error) {
+func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[EmploymentDataResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -49,8 +49,8 @@ func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmployment
 }
 
 // Read individual employment and income data
-func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) *shared.ResponsesPageAutoPager[EmploymentDataResponse] {
-	return shared.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[EmploymentDataResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
 }
 
 type EmploymentData struct {
