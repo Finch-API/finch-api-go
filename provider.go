@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -30,7 +30,7 @@ func NewProviderService(opts ...option.RequestOption) (r *ProviderService) {
 }
 
 // Return details on all available payroll and HR systems.
-func (r *ProviderService) List(ctx context.Context, opts ...option.RequestOption) (res *shared.SinglePage[Provider], err error) {
+func (r *ProviderService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[Provider], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -48,8 +48,8 @@ func (r *ProviderService) List(ctx context.Context, opts ...option.RequestOption
 }
 
 // Return details on all available payroll and HR systems.
-func (r *ProviderService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *shared.SinglePageAutoPager[Provider] {
-	return shared.NewSinglePageAutoPager(r.List(ctx, opts...))
+func (r *ProviderService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[Provider] {
+	return pagination.NewSinglePageAutoPager(r.List(ctx, opts...))
 }
 
 type Provider struct {

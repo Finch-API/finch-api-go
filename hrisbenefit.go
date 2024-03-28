@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/internal/shared"
@@ -59,7 +60,7 @@ func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body 
 }
 
 // List all company-wide deductions and contributions.
-func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOption) (res *shared.SinglePage[CompanyBenefit], err error) {
+func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[CompanyBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -77,12 +78,12 @@ func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOpt
 }
 
 // List all company-wide deductions and contributions.
-func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *shared.SinglePageAutoPager[CompanyBenefit] {
-	return shared.NewSinglePageAutoPager(r.List(ctx, opts...))
+func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[CompanyBenefit] {
+	return pagination.NewSinglePageAutoPager(r.List(ctx, opts...))
 }
 
 // Get deductions metadata
-func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *shared.SinglePage[SupportedBenefit], err error) {
+func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -100,8 +101,8 @@ func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...
 }
 
 // Get deductions metadata
-func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *shared.SinglePageAutoPager[SupportedBenefit] {
-	return shared.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
+func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[SupportedBenefit] {
+	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
 }
 
 type BenefitContribution struct {

@@ -10,9 +10,9 @@ import (
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
+	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -34,7 +34,7 @@ func NewHRISPaymentService(opts ...option.RequestOption) (r *HRISPaymentService)
 }
 
 // Read payroll and contractor related payments by the company.
-func (r *HRISPaymentService) List(ctx context.Context, query HRISPaymentListParams, opts ...option.RequestOption) (res *shared.SinglePage[Payment], err error) {
+func (r *HRISPaymentService) List(ctx context.Context, query HRISPaymentListParams, opts ...option.RequestOption) (res *pagination.SinglePage[Payment], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -52,8 +52,8 @@ func (r *HRISPaymentService) List(ctx context.Context, query HRISPaymentListPara
 }
 
 // Read payroll and contractor related payments by the company.
-func (r *HRISPaymentService) ListAutoPaging(ctx context.Context, query HRISPaymentListParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[Payment] {
-	return shared.NewSinglePageAutoPager(r.List(ctx, query, opts...))
+func (r *HRISPaymentService) ListAutoPaging(ctx context.Context, query HRISPaymentListParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[Payment] {
+	return pagination.NewSinglePageAutoPager(r.List(ctx, query, opts...))
 }
 
 type Payment struct {
