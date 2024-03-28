@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/internal/shared"
@@ -35,7 +36,7 @@ func NewHRISPayStatementService(opts ...option.RequestOption) (r *HRISPayStateme
 //
 // Deduction and contribution types are supported by the payroll systems that
 // supports Benefits.
-func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *shared.ResponsesPage[PayStatementResponse], err error) {
+func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[PayStatementResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -56,8 +57,8 @@ func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayState
 //
 // Deduction and contribution types are supported by the payroll systems that
 // supports Benefits.
-func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) *shared.ResponsesPageAutoPager[PayStatementResponse] {
-	return shared.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[PayStatementResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
 }
 
 type PayStatement struct {

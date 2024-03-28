@@ -1,12 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package shared
+package pagination
 
 import (
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/internal/shared"
 )
 
 type SinglePage[T any] struct {
@@ -194,9 +195,9 @@ func (r *ResponsesPageAutoPager[T]) Index() int {
 }
 
 type Page[T any] struct {
-	Data   []T      `json:"data"`
-	Paging Paging   `json:"paging,required"`
-	JSON   pageJSON `json:"-"`
+	Data   []T           `json:"data"`
+	Paging shared.Paging `json:"paging,required"`
+	JSON   pageJSON      `json:"-"`
 	cfg    *requestconfig.RequestConfig
 	res    *http.Response
 }

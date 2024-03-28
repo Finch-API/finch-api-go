@@ -10,9 +10,9 @@ import (
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
+	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
@@ -43,7 +43,7 @@ func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitI
 }
 
 // Get enrollment information for the given individuals.
-func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *shared.SinglePage[IndividualBenefit], err error) {
+func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *pagination.SinglePage[IndividualBenefit], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -61,12 +61,12 @@ func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, bene
 }
 
 // Get enrollment information for the given individuals.
-func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[IndividualBenefit] {
-	return shared.NewSinglePageAutoPager(r.GetManyBenefits(ctx, benefitID, query, opts...))
+func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[IndividualBenefit] {
+	return pagination.NewSinglePageAutoPager(r.GetManyBenefits(ctx, benefitID, query, opts...))
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *shared.SinglePage[UnenrolledIndividual], err error) {
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *pagination.SinglePage[UnenrolledIndividual], err error) {
 	var raw *http.Response
 	opts = append(r.Options, opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -84,8 +84,8 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *shared.SinglePageAutoPager[UnenrolledIndividual] {
-	return shared.NewSinglePageAutoPager(r.UnenrollMany(ctx, benefitID, body, opts...))
+func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[UnenrolledIndividual] {
+	return pagination.NewSinglePageAutoPager(r.UnenrollMany(ctx, benefitID, body, opts...))
 }
 
 type IndividualBenefit struct {
