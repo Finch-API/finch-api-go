@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.16.0 (2024-03-29)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/Finch-API/finch-api-go/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* add IsKnown method to enums ([#135](https://github.com/Finch-API/finch-api-go/issues/135)) ([a12efdc](https://github.com/Finch-API/finch-api-go/commit/a12efdce5d7ac1c4486cccfee5c2b83ed99fa279))
+* **client:** implement raw requests methods on client ([#139](https://github.com/Finch-API/finch-api-go/issues/139)) ([0469fdc](https://github.com/Finch-API/finch-api-go/commit/0469fdcad5e8323a6d61419f5190624160f29318))
+
+
+### Chores
+
+* **internal:** move pagination types to pagination package ([#140](https://github.com/Finch-API/finch-api-go/issues/140)) ([b4172a5](https://github.com/Finch-API/finch-api-go/commit/b4172a582939c4b111bbc947b8fd228fa6763ef6))
+* **internal:** update generated pragma comment ([#134](https://github.com/Finch-API/finch-api-go/issues/134)) ([5acbf83](https://github.com/Finch-API/finch-api-go/commit/5acbf8307554cc006f6a6cd6c6bdf9c2de039eae))
+* revert temporary commit ([4acd051](https://github.com/Finch-API/finch-api-go/commit/4acd051a9bbc90843d33bc7f99c5035670f6573a))
+* temporary commit ([46f8947](https://github.com/Finch-API/finch-api-go/commit/46f8947f7277ba5c50e91a87c485078ed32235e3))
+
+
+### Documentation
+
+* fix typo in CONTRIBUTING.md ([#132](https://github.com/Finch-API/finch-api-go/issues/132)) ([dd445c7](https://github.com/Finch-API/finch-api-go/commit/dd445c72799beab386d9e5e5055381ea0bcfa184))
+* fix typo in docstring for Null() ([#138](https://github.com/Finch-API/finch-api-go/issues/138)) ([da24dc4](https://github.com/Finch-API/finch-api-go/commit/da24dc425772a4ba905931de5bc231d8e90665fa))
+* **readme:** consistent use of sentence case in headings ([#136](https://github.com/Finch-API/finch-api-go/issues/136)) ([2c2438f](https://github.com/Finch-API/finch-api-go/commit/2c2438ffd87570117e560da4dd4410c5c1cccc5b))
+* **readme:** document file uploads ([#137](https://github.com/Finch-API/finch-api-go/issues/137)) ([4fea46d](https://github.com/Finch-API/finch-api-go/commit/4fea46dd3dd728c5ef594a3af2faeea248d3cbbf))
+
 ## 0.15.0 (2024-03-13)
 
 Full Changelog: [v0.14.3...v0.15.0](https://github.com/Finch-API/finch-api-go/compare/v0.14.3...v0.15.0)
