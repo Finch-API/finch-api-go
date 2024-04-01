@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.1 (2024-04-01)
+
+Full Changelog: [v0.16.0...v0.16.1](https://github.com/Finch-API/finch-api-go/compare/v0.16.0...v0.16.1)
+
+### Chores
+
+* **internal:** use a time zone less likely to conflict with the local one ([#142](https://github.com/Finch-API/finch-api-go/issues/142)) ([db30d1c](https://github.com/Finch-API/finch-api-go/commit/db30d1ccbafb8d2d7c8176d9d675f90aea3743e8))
+
 ## 0.16.0 (2024-03-29)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/Finch-API/finch-api-go/compare/v0.15.0...v0.16.0)
