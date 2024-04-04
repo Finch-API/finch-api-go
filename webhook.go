@@ -138,7 +138,7 @@ func (r accountUpdateEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r AccountUpdateEvent) implementsWebhookEvent() {}
+func (r AccountUpdateEvent) implementsWebhookEventUnion() {}
 
 type AccountUpdateEventData struct {
 	AuthenticationMethod AccountUpdateEventDataAuthenticationMethod `json:"authentication_method,required"`
@@ -1180,7 +1180,7 @@ func (r companyEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r CompanyEvent) implementsWebhookEvent() {}
+func (r CompanyEvent) implementsWebhookEventUnion() {}
 
 type CompanyEventEventType string
 
@@ -1219,7 +1219,7 @@ func (r directoryEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r DirectoryEvent) implementsWebhookEvent() {}
+func (r DirectoryEvent) implementsWebhookEventUnion() {}
 
 type DirectoryEventData struct {
 	// The ID of the individual related to the event.
@@ -1282,7 +1282,7 @@ func (r employmentEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r EmploymentEvent) implementsWebhookEvent() {}
+func (r EmploymentEvent) implementsWebhookEventUnion() {}
 
 type EmploymentEventData struct {
 	// The ID of the individual related to the event.
@@ -1345,7 +1345,7 @@ func (r individualEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r IndividualEvent) implementsWebhookEvent() {}
+func (r IndividualEvent) implementsWebhookEventUnion() {}
 
 type IndividualEventData struct {
 	// The ID of the individual related to the event.
@@ -1409,7 +1409,7 @@ func (r jobCompletionEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r JobCompletionEvent) implementsWebhookEvent() {}
+func (r JobCompletionEvent) implementsWebhookEventUnion() {}
 
 type JobCompletionEventData struct {
 	// The id of the job which has completed.
@@ -1479,7 +1479,7 @@ func (r payStatementEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r PayStatementEvent) implementsWebhookEvent() {}
+func (r PayStatementEvent) implementsWebhookEventUnion() {}
 
 type PayStatementEventData struct {
 	// The ID of the individual associated with the pay statement.
@@ -1545,7 +1545,7 @@ func (r paymentEventJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r PaymentEvent) implementsWebhookEvent() {}
+func (r PaymentEvent) implementsWebhookEventUnion() {}
 
 type PaymentEventData struct {
 	// The date of the payment.
@@ -1591,13 +1591,13 @@ func (r PaymentEventEventType) IsKnown() bool {
 // Union satisfied by [AccountUpdateEvent], [JobCompletionEvent], [CompanyEvent],
 // [DirectoryEvent], [EmploymentEvent], [IndividualEvent], [PaymentEvent] or
 // [PayStatementEvent].
-type WebhookEvent interface {
-	implementsWebhookEvent()
+type WebhookEventUnion interface {
+	implementsWebhookEventUnion()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*WebhookEvent)(nil)).Elem(),
+		reflect.TypeOf((*WebhookEventUnion)(nil)).Elem(),
 		"event_type",
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
