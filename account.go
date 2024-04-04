@@ -79,9 +79,8 @@ type Introspection struct {
 	CompanyID string `json:"company_id,required"`
 	// The type of the connection associated with the token.
 	//
-	// `provider` - connection to an external provider
-	//
-	// `finch` - finch-generated data.
+	// - `provider` - connection to an external provider
+	// - `finch` - finch-generated data.
 	ConnectionType IntrospectionConnectionType `json:"connection_type,required"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
@@ -185,9 +184,8 @@ func (r IntrospectionClientType) IsKnown() bool {
 
 // The type of the connection associated with the token.
 //
-// `provider` - connection to an external provider
-//
-// `finch` - finch-generated data.
+// - `provider` - connection to an external provider
+// - `finch` - finch-generated data.
 type IntrospectionConnectionType string
 
 const (
