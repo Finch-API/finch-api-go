@@ -99,7 +99,7 @@ func (r sandboxIndividualUpdateResponseJSON) RawJSON() string {
 
 type SandboxIndividualUpdateResponseEmail struct {
 	Data string                                    `json:"data"`
-	Type SandboxIndividualUpdateResponseEmailsType `json:"type"`
+	Type SandboxIndividualUpdateResponseEmailsType `json:"type,nullable"`
 	JSON sandboxIndividualUpdateResponseEmailJSON  `json:"-"`
 }
 
@@ -177,7 +177,7 @@ func (r SandboxIndividualUpdateResponseGender) IsKnown() bool {
 
 type SandboxIndividualUpdateResponsePhoneNumber struct {
 	Data string                                          `json:"data"`
-	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type"`
+	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type,nullable"`
 	JSON sandboxIndividualUpdateResponsePhoneNumberJSON  `json:"-"`
 }
 
