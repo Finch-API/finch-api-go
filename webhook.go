@@ -38,13 +38,13 @@ func NewWebhookService(opts ...option.RequestOption) (r *WebhookService) {
 }
 
 // Validates that the given payload was sent by Finch and parses the payload.
-func (r *WebhookService) Unwrap(payload []byte, headers http.Header, secret string, now time.Time) (res WebhookEvent, err error) {
+func (r *WebhookService) Unwrap(payload []byte, headers http.Header, secret string, now time.Time) (res WebhookEventUnion, err error) {
 	err = r.VerifySignature(payload, headers, secret, now)
 	if err != nil {
 		return nil, err
 	}
 
-	event := WebhookEvent(nil)
+	event := WebhookEventUnion(nil)
 	err = apijson.UnmarshalRoot(payload, &event)
 	if err != nil {
 		return nil, err
