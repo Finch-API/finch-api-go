@@ -112,7 +112,7 @@ func (r individualJSON) RawJSON() string {
 
 type IndividualEmail struct {
 	Data string               `json:"data"`
-	Type IndividualEmailsType `json:"type"`
+	Type IndividualEmailsType `json:"type,nullable"`
 	JSON individualEmailJSON  `json:"-"`
 }
 
