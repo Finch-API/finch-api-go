@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.17.0 (2024-04-10)
+
+Full Changelog: [v0.16.1...v0.17.0](https://github.com/Finch-API/finch-api-go/compare/v0.16.1...v0.17.0)
+
+### Features
+
+* **api:** updates ([#147](https://github.com/Finch-API/finch-api-go/issues/147)) ([6abcbc3](https://github.com/Finch-API/finch-api-go/commit/6abcbc3fd3fd5a8a1afe797cf4449d7187892fd0))
+
+
+### Bug Fixes
+
+* remove param.F wrapper from SandboxDirectoryNewParamsBody ([#148](https://github.com/Finch-API/finch-api-go/issues/148)) ([effba6e](https://github.com/Finch-API/finch-api-go/commit/effba6e2bb4201cbf37e6cb818d1a99207fac681))
+
+
+### Chores
+
+* **api:** improve descriptions ([#144](https://github.com/Finch-API/finch-api-go/issues/144)) ([3e9910d](https://github.com/Finch-API/finch-api-go/commit/3e9910d13c7ce4e329e45f5390d5f42f10539ba7))
+* **internal:** implement Port function in apijson ([#146](https://github.com/Finch-API/finch-api-go/issues/146)) ([004dc21](https://github.com/Finch-API/finch-api-go/commit/004dc21b4fde460ad8dd7f9a6353bf976e8c605d))
+* **webhooks:** fix type name ([0838adf](https://github.com/Finch-API/finch-api-go/commit/0838adf0754fc0db4654e5f9359568416b31fc5c))
+
 ## 0.16.1 (2024-04-01)
 
 Full Changelog: [v0.16.0...v0.16.1](https://github.com/Finch-API/finch-api-go/compare/v0.16.0...v0.16.1)
