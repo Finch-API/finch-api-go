@@ -28,7 +28,7 @@ func TestSandboxDirectoryNew(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Directory.New(context.TODO(), finchgo.SandboxDirectoryNewParams{
-		Body: finchgo.F([]finchgo.SandboxDirectoryNewParamsBody{{
+		Body: []finchgo.SandboxDirectoryNewParamsBody{{
 			FirstName:     finchgo.F("John"),
 			MiddleName:    finchgo.F("string"),
 			LastName:      finchgo.F("Smith"),
@@ -126,7 +126,7 @@ func TestSandboxDirectoryNew(t *testing.T) {
 				Value: finchgo.F[any](map[string]interface{}{}),
 			}}),
 			SourceID: finchgo.F("string"),
-		}}),
+		}},
 	})
 	if err != nil {
 		var apierr *finchgo.Error
