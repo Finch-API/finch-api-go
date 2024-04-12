@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.18.0 (2024-04-12)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/Finch-API/finch-api-go/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** updates ([#149](https://github.com/Finch-API/finch-api-go/issues/149)) ([9a16b33](https://github.com/Finch-API/finch-api-go/commit/9a16b3318028c537dc14e9588b6531de8f1508c5))
+* **option:** add option to provide a raw request body ([#152](https://github.com/Finch-API/finch-api-go/issues/152)) ([f89654f](https://github.com/Finch-API/finch-api-go/commit/f89654fda20ddf470972806413ec3d7e2c407428))
+
+
+### Chores
+
+* **internal:** formatting ([#151](https://github.com/Finch-API/finch-api-go/issues/151)) ([9270f80](https://github.com/Finch-API/finch-api-go/commit/9270f80668099e2c4f663d13fc72e76c3a663610))
+
 ## 0.17.0 (2024-04-10)
 
 Full Changelog: [v0.16.1...v0.17.0](https://github.com/Finch-API/finch-api-go/compare/v0.16.1...v0.17.0)
