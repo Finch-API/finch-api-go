@@ -92,7 +92,8 @@ type SandboxConnectionNewParams struct {
 	ProviderID         param.Field[string]                                       `json:"provider_id,required"`
 	AuthenticationType param.Field[SandboxConnectionNewParamsAuthenticationType] `json:"authentication_type"`
 	// Optional: the size of the employer to be created with this connection. Defaults
-	// to 20
+	// to 20. Note that if this is higher than 100, historical payroll data will not be
+	// generated, and instead only one pay period will be created.
 	EmployeeSize param.Field[int64]    `json:"employee_size"`
 	Products     param.Field[[]string] `json:"products"`
 }
