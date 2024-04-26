@@ -7,7 +7,7 @@ import (
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/internal/shared"
+	"github.com/Finch-API/finch-api-go/shared"
 )
 
 type SinglePage[T any] struct {
