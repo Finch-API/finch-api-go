@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.18.1 (2024-04-26)
+
+Full Changelog: [v0.18.0...v0.18.1](https://github.com/Finch-API/finch-api-go/compare/v0.18.0...v0.18.1)
+
+### Bug Fixes
+
+* make shared package public ([#158](https://github.com/Finch-API/finch-api-go/issues/158)) ([865ad75](https://github.com/Finch-API/finch-api-go/commit/865ad75e002cb6b0762284cfb9d39ffc6586b456))
+
+
+### Chores
+
+* **internal:** fix Port function for number and boolean enums ([#156](https://github.com/Finch-API/finch-api-go/issues/156)) ([fa91abc](https://github.com/Finch-API/finch-api-go/commit/fa91abcea7f5f86cbc7904408cf84d9f1f8e7128))
+* **internal:** use actions/checkout@v4 for codeflow ([#154](https://github.com/Finch-API/finch-api-go/issues/154)) ([f454a5f](https://github.com/Finch-API/finch-api-go/commit/f454a5f142b42a262586223d85b9548a48239737))
+
+
+### Documentation
+
+* clarify behavior around employee_size ([#157](https://github.com/Finch-API/finch-api-go/issues/157)) ([fada270](https://github.com/Finch-API/finch-api-go/commit/fada270a7bd1ccbff6e8d78031bbeb57191fb865))
+
 ## 0.18.0 (2024-04-12)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/Finch-API/finch-api-go/compare/v0.17.0...v0.18.0)
