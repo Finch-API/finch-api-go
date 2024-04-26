@@ -9,9 +9,9 @@ import (
 	"testing"
 
 	"github.com/Finch-API/finch-api-go"
-	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
 )
 
 func TestSandboxConnectionAccountNewWithOptionalParams(t *testing.T) {
