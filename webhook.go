@@ -6,8 +6,8 @@ import (
 	"reflect"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
-	"github.com/Finch-API/finch-api-go/internal/shared"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
 	"github.com/tidwall/gjson"
 )
 
