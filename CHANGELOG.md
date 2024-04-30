@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.2 (2024-04-30)
+
+Full Changelog: [v0.18.1...v0.18.2](https://github.com/Finch-API/finch-api-go/compare/v0.18.1...v0.18.2)
+
+### Chores
+
+* **internal:** add link to openapi spec ([#159](https://github.com/Finch-API/finch-api-go/issues/159)) ([974edac](https://github.com/Finch-API/finch-api-go/commit/974edacb68517fedf92813da1db02a463004474e))
+
 ## 0.18.1 (2024-04-26)
 
 Full Changelog: [v0.18.0...v0.18.1](https://github.com/Finch-API/finch-api-go/compare/v0.18.0...v0.18.1)
