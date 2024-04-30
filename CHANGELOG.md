@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.3 (2024-04-30)
+
+Full Changelog: [v0.18.2...v0.18.3](https://github.com/Finch-API/finch-api-go/compare/v0.18.2...v0.18.3)
+
+### Chores
+
+* **internal:** add scripts/test, scripts/mock and add ci job ([#161](https://github.com/Finch-API/finch-api-go/issues/161)) ([889fc86](https://github.com/Finch-API/finch-api-go/commit/889fc86a7d01eeb675be253d46bee2ab08b70fe2))
+
 ## 0.18.2 (2024-04-30)
 
 Full Changelog: [v0.18.1...v0.18.2](https://github.com/Finch-API/finch-api-go/compare/v0.18.1...v0.18.2)
