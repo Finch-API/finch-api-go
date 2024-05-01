@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.5 (2024-05-01)
+
+Full Changelog: [v0.18.4...v0.18.5](https://github.com/Finch-API/finch-api-go/compare/v0.18.4...v0.18.5)
+
+### Chores
+
+* **internal:** fix bootstrap script ([#165](https://github.com/Finch-API/finch-api-go/issues/165)) ([2132c0b](https://github.com/Finch-API/finch-api-go/commit/2132c0b38d792916f3c84b7fd84162c3a6845eb7))
+
 ## 0.18.4 (2024-05-01)
 
 Full Changelog: [v0.18.3...v0.18.4](https://github.com/Finch-API/finch-api-go/compare/v0.18.3...v0.18.4)
