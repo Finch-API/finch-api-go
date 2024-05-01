@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.4 (2024-05-01)
+
+Full Changelog: [v0.18.3...v0.18.4](https://github.com/Finch-API/finch-api-go/compare/v0.18.3...v0.18.4)
+
+### Bug Fixes
+
+* **test:** fix test github actions job ([#163](https://github.com/Finch-API/finch-api-go/issues/163)) ([29a071b](https://github.com/Finch-API/finch-api-go/commit/29a071b9f4e9dafbb7dcb8cec2cccd58fe9b8bcb))
+
 ## 0.18.3 (2024-04-30)
 
 Full Changelog: [v0.18.2...v0.18.3](https://github.com/Finch-API/finch-api-go/compare/v0.18.2...v0.18.3)
