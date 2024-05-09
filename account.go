@@ -13,9 +13,11 @@ import (
 )
 
 // AccountService contains methods and other services that help with interacting
-// with the Finch API. Note, unlike clients, this service does not read variables
-// from the environment automatically. You should not instantiate this service
-// directly, and instead use the [NewAccountService] method instead.
+// with the Finch API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewAccountService] method instead.
 type AccountService struct {
 	Options []option.RequestOption
 }

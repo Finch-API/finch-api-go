@@ -17,9 +17,11 @@ import (
 )
 
 // AccessTokenService contains methods and other services that help with
-// interacting with the Finch API. Note, unlike clients, this service does not read
-// variables from the environment automatically. You should not instantiate this
-// service directly, and instead use the [NewAccessTokenService] method instead.
+// interacting with the Finch API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewAccessTokenService] method instead.
 type AccessTokenService struct {
 	Options []option.RequestOption
 }

@@ -17,9 +17,11 @@ import (
 )
 
 // HRISPaymentService contains methods and other services that help with
-// interacting with the Finch API. Note, unlike clients, this service does not read
-// variables from the environment automatically. You should not instantiate this
-// service directly, and instead use the [NewHRISPaymentService] method instead.
+// interacting with the Finch API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewHRISPaymentService] method instead.
 type HRISPaymentService struct {
 	Options []option.RequestOption
 }

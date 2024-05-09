@@ -14,10 +14,11 @@ import (
 )
 
 // SandboxConnectionAccountService contains methods and other services that help
-// with interacting with the Finch API. Note, unlike clients, this service does not
-// read variables from the environment automatically. You should not instantiate
-// this service directly, and instead use the [NewSandboxConnectionAccountService]
-// method instead.
+// with interacting with the Finch API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewSandboxConnectionAccountService] method instead.
 type SandboxConnectionAccountService struct {
 	Options []option.RequestOption
 }
