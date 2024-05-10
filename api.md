@@ -297,6 +297,10 @@ Methods:
 
 ### Configuration
 
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationParam">SandboxJobConfigurationParam</a>
+
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfiguration">SandboxJobConfiguration</a>

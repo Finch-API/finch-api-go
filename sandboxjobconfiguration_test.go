@@ -52,8 +52,10 @@ func TestSandboxJobConfigurationUpdate(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Jobs.Configuration.Update(context.TODO(), finchgo.SandboxJobConfigurationUpdateParams{
-		CompletionStatus: finchgo.F(finchgo.SandboxJobConfigurationUpdateParamsCompletionStatusComplete),
-		Type:             finchgo.F(finchgo.SandboxJobConfigurationUpdateParamsTypeDataSyncAll),
+		SandboxJobConfiguration: finchgo.SandboxJobConfigurationParam{
+			Type:             finchgo.F(finchgo.SandboxJobConfigurationTypeDataSyncAll),
+			CompletionStatus: finchgo.F(finchgo.SandboxJobConfigurationCompletionStatusComplete),
+		},
 	})
 	if err != nil {
 		var apierr *finchgo.Error

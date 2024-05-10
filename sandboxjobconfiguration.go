@@ -101,42 +101,19 @@ func (r SandboxJobConfigurationType) IsKnown() bool {
 	return false
 }
 
-type SandboxJobConfigurationUpdateParams struct {
-	CompletionStatus param.Field[SandboxJobConfigurationUpdateParamsCompletionStatus] `json:"completion_status,required"`
-	Type             param.Field[SandboxJobConfigurationUpdateParamsType]             `json:"type,required"`
+type SandboxJobConfigurationParam struct {
+	CompletionStatus param.Field[SandboxJobConfigurationCompletionStatus] `json:"completion_status,required"`
+	Type             param.Field[SandboxJobConfigurationType]             `json:"type,required"`
 }
 
-func (r SandboxJobConfigurationUpdateParams) MarshalJSON() (data []byte, err error) {
+func (r SandboxJobConfigurationParam) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type SandboxJobConfigurationUpdateParamsCompletionStatus string
-
-const (
-	SandboxJobConfigurationUpdateParamsCompletionStatusComplete         SandboxJobConfigurationUpdateParamsCompletionStatus = "complete"
-	SandboxJobConfigurationUpdateParamsCompletionStatusReauthError      SandboxJobConfigurationUpdateParamsCompletionStatus = "reauth_error"
-	SandboxJobConfigurationUpdateParamsCompletionStatusPermissionsError SandboxJobConfigurationUpdateParamsCompletionStatus = "permissions_error"
-	SandboxJobConfigurationUpdateParamsCompletionStatusError            SandboxJobConfigurationUpdateParamsCompletionStatus = "error"
-)
-
-func (r SandboxJobConfigurationUpdateParamsCompletionStatus) IsKnown() bool {
-	switch r {
-	case SandboxJobConfigurationUpdateParamsCompletionStatusComplete, SandboxJobConfigurationUpdateParamsCompletionStatusReauthError, SandboxJobConfigurationUpdateParamsCompletionStatusPermissionsError, SandboxJobConfigurationUpdateParamsCompletionStatusError:
-		return true
-	}
-	return false
+type SandboxJobConfigurationUpdateParams struct {
+	SandboxJobConfiguration SandboxJobConfigurationParam `json:"sandboxJobConfiguration,required"`
 }
 
-type SandboxJobConfigurationUpdateParamsType string
-
-const (
-	SandboxJobConfigurationUpdateParamsTypeDataSyncAll SandboxJobConfigurationUpdateParamsType = "data_sync_all"
-)
-
-func (r SandboxJobConfigurationUpdateParamsType) IsKnown() bool {
-	switch r {
-	case SandboxJobConfigurationUpdateParamsTypeDataSyncAll:
-		return true
-	}
-	return false
+func (r SandboxJobConfigurationUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r.SandboxJobConfiguration)
 }
