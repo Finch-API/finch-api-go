@@ -156,7 +156,7 @@ func (r CreateAccessTokenResponseConnectionType) IsKnown() bool {
 
 type AccessTokenNewParams struct {
 	Code         param.Field[string] `json:"code,required"`
-	ClientID     param.Field[string] `json:"client_id"`
+	ClientID     param.Field[string] `json:"client_id" format:"uuid"`
 	ClientSecret param.Field[string] `json:"client_secret"`
 	RedirectUri  param.Field[string] `json:"redirect_uri"`
 }
