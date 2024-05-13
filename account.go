@@ -71,8 +71,8 @@ func (r disconnectResponseJSON) RawJSON() string {
 
 type Introspection struct {
 	// The Finch uuid of the account used to connect this company.
-	AccountID             string                             `json:"account_id,required"`
-	AuthenticationMethods IntrospectionAuthenticationMethods `json:"authentication_methods,required"`
+	AccountID             string                              `json:"account_id,required"`
+	AuthenticationMethods []IntrospectionAuthenticationMethod `json:"authentication_methods,required"`
 	// The client id of the application associated with the `access_token`.
 	ClientID string `json:"client_id,required"`
 	// The type of application associated with a token.
@@ -121,26 +121,26 @@ func (r introspectionJSON) RawJSON() string {
 	return r.raw
 }
 
-type IntrospectionAuthenticationMethods struct {
+type IntrospectionAuthenticationMethod struct {
 	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
 	Type             string                                             `json:"type"`
-	JSON             introspectionAuthenticationMethodsJSON             `json:"-"`
+	JSON             introspectionAuthenticationMethodJSON              `json:"-"`
 }
 
-// introspectionAuthenticationMethodsJSON contains the JSON metadata for the struct
-// [IntrospectionAuthenticationMethods]
-type introspectionAuthenticationMethodsJSON struct {
+// introspectionAuthenticationMethodJSON contains the JSON metadata for the struct
+// [IntrospectionAuthenticationMethod]
+type introspectionAuthenticationMethodJSON struct {
 	ConnectionStatus apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
 
-func (r *IntrospectionAuthenticationMethods) UnmarshalJSON(data []byte) (err error) {
+func (r *IntrospectionAuthenticationMethod) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r introspectionAuthenticationMethodsJSON) RawJSON() string {
+func (r introspectionAuthenticationMethodJSON) RawJSON() string {
 	return r.raw
 }
 
