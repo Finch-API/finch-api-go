@@ -59,6 +59,8 @@ type Provider struct {
 	ID string `json:"id"`
 	// The list of authentication methods supported by the provider.
 	AuthenticationMethods []ProviderAuthenticationMethod `json:"authentication_methods"`
+	// `true` if the integration is in a beta state, `false` otherwise
+	Beta bool `json:"beta"`
 	// The display name of the payroll provider.
 	DisplayName string `json:"display_name"`
 	// The url to the official icon of the payroll provider.
@@ -82,6 +84,7 @@ type Provider struct {
 type providerJSON struct {
 	ID                    apijson.Field
 	AuthenticationMethods apijson.Field
+	Beta                  apijson.Field
 	DisplayName           apijson.Field
 	Icon                  apijson.Field
 	Logo                  apijson.Field
