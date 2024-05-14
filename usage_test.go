@@ -23,7 +23,7 @@ func TestUsage(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
-		option.WithClientID("My Client ID"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
 	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
