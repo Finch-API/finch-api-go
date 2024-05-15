@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.19.1 (2024-05-15)
+
+Full Changelog: [v0.19.0...v0.19.1](https://github.com/Finch-API/finch-api-go/compare/v0.19.0...v0.19.1)
+
+### Chores
+
+* **internal:** support parsing other json content types ([#177](https://github.com/Finch-API/finch-api-go/issues/177)) ([a192156](https://github.com/Finch-API/finch-api-go/commit/a192156c1e2752b1512c2526db311d87f2a01659))
+
 ## 0.19.0 (2024-05-15)
 
 Full Changelog: [v0.18.5...v0.19.0](https://github.com/Finch-API/finch-api-go/compare/v0.18.5...v0.19.0)
