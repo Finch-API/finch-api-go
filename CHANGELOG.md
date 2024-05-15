@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.19.0 (2024-05-15)
+
+Full Changelog: [v0.18.5...v0.19.0](https://github.com/Finch-API/finch-api-go/compare/v0.18.5...v0.19.0)
+
+### Features
+
+* propagate resource description field from stainless config to SDK docs ([#168](https://github.com/Finch-API/finch-api-go/issues/168)) ([bd5200b](https://github.com/Finch-API/finch-api-go/commit/bd5200bb3d54853ca97a6cf587cf6be839e08b61))
+
+
+### Bug Fixes
+
+* **api:** correct authentication methods type ([#173](https://github.com/Finch-API/finch-api-go/issues/173)) ([a21cfba](https://github.com/Finch-API/finch-api-go/commit/a21cfba96a4a9b78c72fbbbe38a7dc09dd3e65e6))
+* fix reading the error body more than once ([#176](https://github.com/Finch-API/finch-api-go/issues/176)) ([e144ce8](https://github.com/Finch-API/finch-api-go/commit/e144ce809239cfdc4b219f2c56d3d0d0f12e7f20))
+
+
+### Chores
+
+* **docs:** add SECURITY.md ([#170](https://github.com/Finch-API/finch-api-go/issues/170)) ([8fe5bcb](https://github.com/Finch-API/finch-api-go/commit/8fe5bcbaa36df84be10e693a65aa7a79ed075c86))
+* **internal:** add slightly better logging to scripts ([#175](https://github.com/Finch-API/finch-api-go/issues/175)) ([62478b8](https://github.com/Finch-API/finch-api-go/commit/62478b849ccb1b7a506c1582876f8dc67d7e06ef))
+* **internal:** minor updates ([#172](https://github.com/Finch-API/finch-api-go/issues/172)) ([8e015d7](https://github.com/Finch-API/finch-api-go/commit/8e015d72b9416a3da962834427a2ed6e87ce7a82))
+* **tests:** update client ID example value ([#174](https://github.com/Finch-API/finch-api-go/issues/174)) ([5c7b044](https://github.com/Finch-API/finch-api-go/commit/5c7b04462b916362bfb8189afaf421e7ed1d6d9c))
+
 ## 0.18.5 (2024-05-01)
 
 Full Changelog: [v0.18.4...v0.18.5](https://github.com/Finch-API/finch-api-go/compare/v0.18.4...v0.18.5)
