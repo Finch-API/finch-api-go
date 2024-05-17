@@ -29,7 +29,7 @@ func TestAccessTokenNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.AccessTokens.New(context.TODO(), finchgo.AccessTokenNewParams{
 		Code:         finchgo.F("<your_authorization_code>"),
-		ClientID:     finchgo.F("12345678-1234-1234-1234-123456789ABC"),
+		ClientID:     finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
 		ClientSecret: finchgo.F("<your_client_secret>"),
 		RedirectUri:  finchgo.F("https://example.com"),
 	})
