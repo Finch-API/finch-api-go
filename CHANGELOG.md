@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.19.2 (2024-05-17)
+
+Full Changelog: [v0.19.1...v0.19.2](https://github.com/Finch-API/finch-api-go/compare/v0.19.1...v0.19.2)
+
+### Chores
+
+* **internal:** resolve spec formatting issue ([#181](https://github.com/Finch-API/finch-api-go/issues/181)) ([fe9770c](https://github.com/Finch-API/finch-api-go/commit/fe9770c1c1af1197d595100995f0d91bc416b4ac))
+* **tests:** update some example values ([#179](https://github.com/Finch-API/finch-api-go/issues/179)) ([f1c7c5e](https://github.com/Finch-API/finch-api-go/commit/f1c7c5ef0118266d9f76e56a03cbe44c7582029c))
+
 ## 0.19.1 (2024-05-15)
 
 Full Changelog: [v0.19.0...v0.19.1](https://github.com/Finch-API/finch-api-go/compare/v0.19.0...v0.19.1)
