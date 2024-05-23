@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.19.3 (2024-05-23)
+
+Full Changelog: [v0.19.2...v0.19.3](https://github.com/Finch-API/finch-api-go/compare/v0.19.2...v0.19.3)
+
+### Chores
+
+* **tests:** example client_id ([#182](https://github.com/Finch-API/finch-api-go/issues/182)) ([76e8855](https://github.com/Finch-API/finch-api-go/commit/76e8855242b49f57b964066e1752b48a7ed0eb7e))
+
 ## 0.19.2 (2024-05-17)
 
 Full Changelog: [v0.19.1...v0.19.2](https://github.com/Finch-API/finch-api-go/compare/v0.19.1...v0.19.2)
