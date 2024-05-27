@@ -4,6 +4,7 @@ package finchgo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -38,6 +39,10 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 // Lists individuals currently enrolled in a given deduction.
 func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
 	opts = append(r.Options[:], opts...)
+	if benefitID == "" {
+		err = errors.New("missing required benefit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
