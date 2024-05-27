@@ -4,6 +4,7 @@ package finchgo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -48,6 +49,10 @@ func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams,
 // Lists deductions and contributions information for a given item
 func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
 	opts = append(r.Options[:], opts...)
+	if benefitID == "" {
+		err = errors.New("missing required benefit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -56,6 +61,10 @@ func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...
 // Updates an existing company-wide deduction or contribution
 func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
 	opts = append(r.Options[:], opts...)
+	if benefitID == "" {
+		err = errors.New("missing required benefit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
