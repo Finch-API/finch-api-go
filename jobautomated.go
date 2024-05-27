@@ -4,6 +4,7 @@ package finchgo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -56,6 +57,10 @@ func (r *JobAutomatedService) New(ctx context.Context, body JobAutomatedNewParam
 // Get an automated job by `job_id`.
 func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *AutomatedAsyncJob, err error) {
 	opts = append(r.Options[:], opts...)
+	if jobID == "" {
+		err = errors.New("missing required job_id parameter")
+		return
+	}
 	path := fmt.Sprintf("jobs/automated/%s", jobID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return

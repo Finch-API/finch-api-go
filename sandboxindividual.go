@@ -4,6 +4,7 @@ package finchgo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewSandboxIndividualService(opts ...option.RequestOption) (r *SandboxIndivi
 // Update sandbox individual
 func (r *SandboxIndividualService) Update(ctx context.Context, individualID string, body SandboxIndividualUpdateParams, opts ...option.RequestOption) (res *SandboxIndividualUpdateResponse, err error) {
 	opts = append(r.Options[:], opts...)
+	if individualID == "" {
+		err = errors.New("missing required individual_id parameter")
+		return
+	}
 	path := fmt.Sprintf("sandbox/individual/%s", individualID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return
