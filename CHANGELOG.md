@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.0 (2024-05-27)
+
+Full Changelog: [v0.19.3...v0.20.0](https://github.com/Finch-API/finch-api-go/compare/v0.19.3...v0.20.0)
+
+### Features
+
+* better validation of path params ([#184](https://github.com/Finch-API/finch-api-go/issues/184)) ([3a0aa0e](https://github.com/Finch-API/finch-api-go/commit/3a0aa0e1349f79bc9272f35d557812d1d6a9fdcf))
+
 ## 0.19.3 (2024-05-23)
 
 Full Changelog: [v0.19.2...v0.19.3](https://github.com/Finch-API/finch-api-go/compare/v0.19.2...v0.19.3)
