@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.1 (2024-05-28)
+
+Full Changelog: [v0.20.0...v0.20.1](https://github.com/Finch-API/finch-api-go/compare/v0.20.0...v0.20.1)
+
+### Chores
+
+* **internal:** fix format script ([#186](https://github.com/Finch-API/finch-api-go/issues/186)) ([9dfbaf1](https://github.com/Finch-API/finch-api-go/commit/9dfbaf1b0a8ac60b6491f447b09b3edeb26e9899))
+
 ## 0.20.0 (2024-05-27)
 
 Full Changelog: [v0.19.3...v0.20.0](https://github.com/Finch-API/finch-api-go/compare/v0.19.3...v0.20.0)
