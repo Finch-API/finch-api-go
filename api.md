@@ -305,3 +305,17 @@ Methods:
 
 - <code title="get /sandbox/jobs/configuration">client.Sandbox.Jobs.Configuration.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) ([]<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfiguration">SandboxJobConfiguration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="put /sandbox/jobs/configuration">client.Sandbox.Jobs.Configuration.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfigurationUpdateParams">SandboxJobConfigurationUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#SandboxJobConfiguration">SandboxJobConfiguration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# Payroll
+
+## PayGroups
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupGetResponse">PayrollPayGroupGetResponse</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupListResponse">PayrollPayGroupListResponse</a>
+
+Methods:
+
+- <code title="get /employer/pay-group/{pay_group_id}">client.Payroll.PayGroups.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, payGroupID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupGetResponse">PayrollPayGroupGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /employer/pay-groups">client.Payroll.PayGroups.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupListParams">PayrollPayGroupListParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/internal/pagination#SinglePage">SinglePage</a>[<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayrollPayGroupListResponse">PayrollPayGroupListResponse</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
