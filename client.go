@@ -29,6 +29,7 @@ type Client struct {
 	RequestForwarding *RequestForwardingService
 	Jobs              *JobService
 	Sandbox           *SandboxService
+	Payroll           *PayrollService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -65,6 +66,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.RequestForwarding = NewRequestForwardingService(opts...)
 	r.Jobs = NewJobService(opts...)
 	r.Sandbox = NewSandboxService(opts...)
+	r.Payroll = NewPayrollService(opts...)
 
 	return
 }
