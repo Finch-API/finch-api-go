@@ -43,7 +43,7 @@ func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, opt
 		err = errors.New("missing required pay_group_id parameter")
 		return
 	}
-	path := fmt.Sprintf("employer/pay-group/%s", payGroupID)
+	path := fmt.Sprintf("employer/pay-groups/%s", payGroupID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
