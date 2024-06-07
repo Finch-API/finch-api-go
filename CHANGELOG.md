@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.21.0 (2024-06-07)
+
+Full Changelog: [v0.20.1...v0.21.0](https://github.com/Finch-API/finch-api-go/compare/v0.20.1...v0.21.0)
+
+### Features
+
+* **api:** updates ([#191](https://github.com/Finch-API/finch-api-go/issues/191)) ([c3c38df](https://github.com/Finch-API/finch-api-go/commit/c3c38df08c5e00eb0d5d31b0fd3b74c0bedbff31))
+
+
+### Bug Fixes
+
+* fix port function for interface{} types ([#190](https://github.com/Finch-API/finch-api-go/issues/190)) ([88bd8b3](https://github.com/Finch-API/finch-api-go/commit/88bd8b389081de92add470c7fa969a3c8a676bd1))
+* **internal:** fix the way that unions are deserialized in nested arrays ([#188](https://github.com/Finch-API/finch-api-go/issues/188)) ([66df98b](https://github.com/Finch-API/finch-api-go/commit/66df98b992c0716ccd458bf690e73bbcf009d7df))
+* rename pay groups endpoint ([#192](https://github.com/Finch-API/finch-api-go/issues/192)) ([b7f911b](https://github.com/Finch-API/finch-api-go/commit/b7f911b06a0b24c2e6e632a05db89dc4493595e0))
+
 ## 0.20.1 (2024-05-28)
 
 Full Changelog: [v0.20.0...v0.20.1](https://github.com/Finch-API/finch-api-go/compare/v0.20.0...v0.20.1)
