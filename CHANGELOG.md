@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.1 (2024-06-21)
+
+Full Changelog: [v0.21.0...v0.21.1](https://github.com/Finch-API/finch-api-go/compare/v0.21.0...v0.21.1)
+
+### Bug Fixes
+
+* fix ExtraFields serialization / deserialization ([#193](https://github.com/Finch-API/finch-api-go/issues/193)) ([f6c540f](https://github.com/Finch-API/finch-api-go/commit/f6c540fad0f0a44b5ce6281038c35157b5fbfa8f))
+
 ## 0.21.0 (2024-06-07)
 
 Full Changelog: [v0.20.1...v0.21.0](https://github.com/Finch-API/finch-api-go/compare/v0.20.1...v0.21.0)
