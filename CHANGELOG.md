@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.2 (2024-06-28)
+
+Full Changelog: [v0.21.1...v0.21.2](https://github.com/Finch-API/finch-api-go/compare/v0.21.1...v0.21.2)
+
+### Chores
+
+* gitignore test server logs ([#195](https://github.com/Finch-API/finch-api-go/issues/195)) ([845ee15](https://github.com/Finch-API/finch-api-go/commit/845ee15108e21fb48ca405404ad67f3fc9af86d3))
+
 ## 0.21.1 (2024-06-21)
 
 Full Changelog: [v0.21.0...v0.21.1](https://github.com/Finch-API/finch-api-go/compare/v0.21.0...v0.21.1)
