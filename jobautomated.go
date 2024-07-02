@@ -71,7 +71,7 @@ func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...opt
 // as data syncs, only the next scheduled job is shown.
 func (r *JobAutomatedService) List(ctx context.Context, query JobAutomatedListParams, opts ...option.RequestOption) (res *pagination.Page[AutomatedAsyncJob], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "jobs/automated"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

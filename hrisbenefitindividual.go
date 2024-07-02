@@ -51,8 +51,12 @@ func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitI
 // Get enrollment information for the given individuals.
 func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *pagination.SinglePage[IndividualBenefit], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	if benefitID == "" {
+		err = errors.New("missing required benefit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
@@ -74,8 +78,12 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 // Unenroll individuals from a deduction or contribution
 func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *pagination.SinglePage[UnenrolledIndividual], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	if benefitID == "" {
+		err = errors.New("missing required benefit_id parameter")
+		return
+	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodDelete, path, body, &res, opts...)
 	if err != nil {
