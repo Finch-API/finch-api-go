@@ -73,7 +73,7 @@ func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body 
 // List all company-wide deductions and contributions.
 func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[CompanyBenefit], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -96,7 +96,7 @@ func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.
 // Get deductions metadata
 func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits/meta"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
