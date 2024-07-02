@@ -51,7 +51,7 @@ func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, opt
 // Read company pay groups and frequencies
 func (r *PayrollPayGroupService) List(ctx context.Context, query PayrollPayGroupListParams, opts ...option.RequestOption) (res *pagination.SinglePage[PayrollPayGroupListResponse], err error) {
 	var raw *http.Response
-	opts = append(r.Options, opts...)
+	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-groups"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
