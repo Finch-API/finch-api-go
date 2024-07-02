@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.21.3 (2024-07-02)
+
+Full Changelog: [v0.21.2...v0.21.3](https://github.com/Finch-API/finch-api-go/compare/v0.21.2...v0.21.3)
+
+### Bug Fixes
+
+* use slice instead of appending to r.Options ([#199](https://github.com/Finch-API/finch-api-go/issues/199)) ([57474b7](https://github.com/Finch-API/finch-api-go/commit/57474b70cb33d0140ccc89e64daf0f11f17038df))
+
+
+### Chores
+
+* sync openapi spec ([#197](https://github.com/Finch-API/finch-api-go/issues/197)) ([f5e5b4d](https://github.com/Finch-API/finch-api-go/commit/f5e5b4dc73ba31ef422dda8c8333516230f459c1))
+
 ## 0.21.2 (2024-06-28)
 
 Full Changelog: [v0.21.1...v0.21.2](https://github.com/Finch-API/finch-api-go/compare/v0.21.1...v0.21.2)
