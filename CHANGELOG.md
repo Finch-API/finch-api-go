@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.4 (2024-07-04)
+
+Full Changelog: [v0.21.3...v0.21.4](https://github.com/Finch-API/finch-api-go/compare/v0.21.3...v0.21.4)
+
+### Chores
+
+* **internal:** improve deserialization of embedded structs ([#200](https://github.com/Finch-API/finch-api-go/issues/200)) ([86e5a63](https://github.com/Finch-API/finch-api-go/commit/86e5a638588a40c42c95ee11988f49d2d046855f))
+
 ## 0.21.3 (2024-07-02)
 
 Full Changelog: [v0.21.2...v0.21.3](https://github.com/Finch-API/finch-api-go/compare/v0.21.2...v0.21.3)
