@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.5 (2024-07-07)
+
+Full Changelog: [v0.21.4...v0.21.5](https://github.com/Finch-API/finch-api-go/compare/v0.21.4...v0.21.5)
+
+### Bug Fixes
+
+* **internal:** fix MarshalJSON logic for interface elemnets ([#202](https://github.com/Finch-API/finch-api-go/issues/202)) ([1ec9f9d](https://github.com/Finch-API/finch-api-go/commit/1ec9f9dd99c5c7185916d243fbd3da918198dfd4))
+
 ## 0.21.4 (2024-07-04)
 
 Full Changelog: [v0.21.3...v0.21.4](https://github.com/Finch-API/finch-api-go/compare/v0.21.3...v0.21.4)
