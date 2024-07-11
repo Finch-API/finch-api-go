@@ -29,47 +29,47 @@ func TestSandboxIndividualUpdateWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Sandbox.Individual.Update(
 		context.TODO(),
-		"string",
+		"individual_id",
 		finchgo.SandboxIndividualUpdateParams{
 			Dob: finchgo.F("12/20/1989"),
 			Emails: finchgo.F([]finchgo.SandboxIndividualUpdateParamsEmail{{
-				Data: finchgo.F("string"),
+				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
 			}, {
-				Data: finchgo.F("string"),
+				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
 			}, {
-				Data: finchgo.F("string"),
+				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
 			}}),
-			EncryptedSsn: finchgo.F("string"),
+			EncryptedSsn: finchgo.F("encrypted_ssn"),
 			Ethnicity:    finchgo.F(finchgo.SandboxIndividualUpdateParamsEthnicityAsian),
-			FirstName:    finchgo.F("string"),
+			FirstName:    finchgo.F("first_name"),
 			Gender:       finchgo.F(finchgo.SandboxIndividualUpdateParamsGenderFemale),
-			LastName:     finchgo.F("string"),
-			MiddleName:   finchgo.F("string"),
+			LastName:     finchgo.F("last_name"),
+			MiddleName:   finchgo.F("middle_name"),
 			PhoneNumbers: finchgo.F([]finchgo.SandboxIndividualUpdateParamsPhoneNumber{{
-				Data: finchgo.F("string"),
+				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsPhoneNumbersTypeWork),
 			}, {
-				Data: finchgo.F("string"),
+				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsPhoneNumbersTypeWork),
 			}, {
-				Data: finchgo.F("string"),
+				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsPhoneNumbersTypeWork),
 			}}),
-			PreferredName: finchgo.F("string"),
+			PreferredName: finchgo.F("preferred_name"),
 			Residence: finchgo.F(finchgo.LocationParam{
-				Line1:      finchgo.F("string"),
-				Line2:      finchgo.F("string"),
-				City:       finchgo.F("string"),
-				State:      finchgo.F("string"),
-				PostalCode: finchgo.F("string"),
-				Country:    finchgo.F("string"),
-				Name:       finchgo.F("string"),
-				SourceID:   finchgo.F("string"),
+				Line1:      finchgo.F("line1"),
+				Line2:      finchgo.F("line2"),
+				City:       finchgo.F("city"),
+				State:      finchgo.F("state"),
+				PostalCode: finchgo.F("postal_code"),
+				Country:    finchgo.F("country"),
+				Name:       finchgo.F("name"),
+				SourceID:   finchgo.F("source_id"),
 			}),
-			Ssn: finchgo.F("string"),
+			Ssn: finchgo.F("ssn"),
 		},
 	)
 	if err != nil {
