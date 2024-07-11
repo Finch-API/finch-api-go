@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.21.6 (2024-07-11)
+
+Full Changelog: [v0.21.5...v0.21.6](https://github.com/Finch-API/finch-api-go/compare/v0.21.5...v0.21.6)
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#204](https://github.com/Finch-API/finch-api-go/issues/204)) ([f805b5e](https://github.com/Finch-API/finch-api-go/commit/f805b5e8c977534cb43ac84e528bd2c426388b3d))
+
+
+### Documentation
+
+* **examples:** update example values ([#206](https://github.com/Finch-API/finch-api-go/issues/206)) ([c307461](https://github.com/Finch-API/finch-api-go/commit/c307461221ab0d418388dc063e33e039d65bd1e1))
+
 ## 0.21.5 (2024-07-07)
 
 Full Changelog: [v0.21.4...v0.21.5](https://github.com/Finch-API/finch-api-go/compare/v0.21.4...v0.21.5)
