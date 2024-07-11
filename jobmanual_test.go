@@ -27,7 +27,7 @@ func TestJobManualGet(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.Jobs.Manual.Get(context.TODO(), "string")
+	_, err := client.Jobs.Manual.Get(context.TODO(), "job_id")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

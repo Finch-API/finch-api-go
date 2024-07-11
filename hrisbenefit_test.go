@@ -28,7 +28,7 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
-		Description: finchgo.F("string"),
+		Description: finchgo.F("description"),
 		Frequency:   finchgo.F(finchgo.BenefitFrequencyOneTime),
 		Type:        finchgo.F(finchgo.BenefitType_401k),
 	})
@@ -55,7 +55,7 @@ func TestHRISBenefitGet(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.HRIS.Benefits.Get(context.TODO(), "string")
+	_, err := client.HRIS.Benefits.Get(context.TODO(), "benefit_id")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -81,9 +81,9 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.HRIS.Benefits.Update(
 		context.TODO(),
-		"string",
+		"benefit_id",
 		finchgo.HRISBenefitUpdateParams{
-			Description: finchgo.F("string"),
+			Description: finchgo.F("description"),
 		},
 	)
 	if err != nil {

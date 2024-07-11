@@ -32,11 +32,11 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 			Include: finchgo.F([]string{"string", "string", "string"}),
 		}),
 		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequest{{
-			IndividualID: finchgo.F("string"),
+			IndividualID: finchgo.F("individual_id"),
 		}, {
-			IndividualID: finchgo.F("string"),
+			IndividualID: finchgo.F("individual_id"),
 		}, {
-			IndividualID: finchgo.F("string"),
+			IndividualID: finchgo.F("individual_id"),
 		}}),
 	})
 	if err != nil {
