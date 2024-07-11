@@ -29,7 +29,7 @@ func TestSandboxConnectionNewWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Connections.New(context.TODO(), finchgo.SandboxConnectionNewParams{
-		ProviderID:         finchgo.F("string"),
+		ProviderID:         finchgo.F("provider_id"),
 		AuthenticationType: finchgo.F(finchgo.SandboxConnectionNewParamsAuthenticationTypeCredential),
 		EmployeeSize:       finchgo.F(int64(0)),
 		Products:           finchgo.F([]string{"string", "string", "string"}),

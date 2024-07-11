@@ -28,7 +28,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Payment.New(context.TODO(), finchgo.SandboxPaymentNewParams{
-		EndDate: finchgo.F("string"),
+		EndDate: finchgo.F("end_date"),
 		PayStatements: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatement{{
 			IndividualID:  finchgo.F("b2338cfb-472f-4f72-9faa-e028c083144a"),
 			Type:          finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTypeRegularPayroll),
@@ -36,49 +36,49 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 			TotalHours:    finchgo.F(0.000000),
 			GrossPay: finchgo.F(finchgo.MoneyParam{
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 			}),
 			NetPay: finchgo.F(finchgo.MoneyParam{
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 			}),
 			Earnings: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEarning{{
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 				Hours:    finchgo.F(0.000000),
 			}, {
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 				Hours:    finchgo.F(0.000000),
 			}, {
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 				Hours:    finchgo.F(0.000000),
 			}}),
 			Taxes: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsTax{{
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Employer: finchgo.F(true),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 			}, {
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Employer: finchgo.F(true),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 			}, {
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Employer: finchgo.F(true),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 			}}),
 			EmployeeDeductions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeduction{{
 				Name:     finchgo.F("401k test"),
@@ -88,23 +88,23 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
 			EmployerContributions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployerContribution{{
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}, {
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}, {
-				Name:     finchgo.F("string"),
+				Name:     finchgo.F("name"),
 				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("string"),
+				Currency: finchgo.F("currency"),
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
 		}}),
-		StartDate: finchgo.F("string"),
+		StartDate: finchgo.F("start_date"),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
