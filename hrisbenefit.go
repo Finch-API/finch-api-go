@@ -363,11 +363,9 @@ func (r benefitsSupportJSON) RawJSON() string {
 }
 
 type CompanyBenefit struct {
-	BenefitID           string              `json:"benefit_id,required"`
-	CompanyContribution BenefitContribution `json:"company_contribution,required,nullable"`
-	Description         string              `json:"description,required,nullable"`
-	EmployeeDeduction   BenefitContribution `json:"employee_deduction,required,nullable"`
-	Frequency           BenefitFrequency    `json:"frequency,required,nullable"`
+	BenefitID   string           `json:"benefit_id,required"`
+	Description string           `json:"description,required,nullable"`
+	Frequency   BenefitFrequency `json:"frequency,required,nullable"`
 	// Type of benefit.
 	Type BenefitType        `json:"type,required,nullable"`
 	JSON companyBenefitJSON `json:"-"`
@@ -375,14 +373,12 @@ type CompanyBenefit struct {
 
 // companyBenefitJSON contains the JSON metadata for the struct [CompanyBenefit]
 type companyBenefitJSON struct {
-	BenefitID           apijson.Field
-	CompanyContribution apijson.Field
-	Description         apijson.Field
-	EmployeeDeduction   apijson.Field
-	Frequency           apijson.Field
-	Type                apijson.Field
-	raw                 string
-	ExtraFields         map[string]apijson.Field
+	BenefitID   apijson.Field
+	Description apijson.Field
+	Frequency   apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
 func (r *CompanyBenefit) UnmarshalJSON(data []byte) (err error) {
@@ -550,6 +546,9 @@ func (r updateCompanyBenefitResponseJSON) RawJSON() string {
 }
 
 type HRISBenefitNewParams struct {
+	// Name of the benefit as it appears in the provider and pay statements. Recommend
+	// limiting this to <30 characters due to limitations in specific providers (e.g.
+	// Justworks).
 	Description param.Field[string]           `json:"description"`
 	Frequency   param.Field[BenefitFrequency] `json:"frequency"`
 	// Type of benefit.
