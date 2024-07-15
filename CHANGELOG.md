@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.7 (2024-07-15)
+
+Full Changelog: [v0.21.6...v0.21.7](https://github.com/Finch-API/finch-api-go/compare/v0.21.6...v0.21.7)
+
+### Bug Fixes
+
+* **api:** remove unused fields ([#207](https://github.com/Finch-API/finch-api-go/issues/207)) ([1506c81](https://github.com/Finch-API/finch-api-go/commit/1506c8100af9c4e1c025b998c0d5273b04f56bb3))
+
 ## 0.21.6 (2024-07-11)
 
 Full Changelog: [v0.21.5...v0.21.6](https://github.com/Finch-API/finch-api-go/compare/v0.21.5...v0.21.6)
