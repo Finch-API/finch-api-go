@@ -66,8 +66,8 @@ type SandboxIndividualUpdateResponse struct {
 	MiddleName   string                                       `json:"middle_name,nullable"`
 	PhoneNumbers []SandboxIndividualUpdateResponsePhoneNumber `json:"phone_numbers,nullable"`
 	// The preferred name of the individual.
-	PreferredName string `json:"preferred_name,nullable"`
-	Residence Location `json:"residence,nullable"`
+	PreferredName string   `json:"preferred_name,nullable"`
+	Residence     Location `json:"residence,nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
@@ -238,8 +238,8 @@ type SandboxIndividualUpdateParams struct {
 	MiddleName   param.Field[string]                                     `json:"middle_name"`
 	PhoneNumbers param.Field[[]SandboxIndividualUpdateParamsPhoneNumber] `json:"phone_numbers"`
 	// The preferred name of the individual.
-	PreferredName param.Field[string] `json:"preferred_name"`
-	Residence param.Field[LocationParam] `json:"residence"`
+	PreferredName param.Field[string]        `json:"preferred_name"`
+	Residence     param.Field[LocationParam] `json:"residence"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
