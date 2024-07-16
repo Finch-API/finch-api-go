@@ -84,7 +84,7 @@ type SandboxDirectoryNewParamsBody struct {
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive param.Field[bool] `json:"is_active"`
 	// The legal last name of the individual.
-	LastName param.Field[string]        `json:"last_name"`
+	LastName param.Field[string] `json:"last_name"`
 	Location param.Field[LocationParam] `json:"location"`
 	// The manager object representing the manager of the individual within the org.
 	Manager param.Field[SandboxDirectoryNewParamsBodyManager] `json:"manager"`
@@ -92,8 +92,8 @@ type SandboxDirectoryNewParamsBody struct {
 	MiddleName   param.Field[string]                                     `json:"middle_name"`
 	PhoneNumbers param.Field[[]SandboxDirectoryNewParamsBodyPhoneNumber] `json:"phone_numbers"`
 	// The preferred name of the individual.
-	PreferredName param.Field[string]        `json:"preferred_name"`
-	Residence     param.Field[LocationParam] `json:"residence"`
+	PreferredName param.Field[string] `json:"preferred_name"`
+	Residence param.Field[LocationParam] `json:"residence"`
 	// The source system's unique employment identifier for this individual
 	SourceID param.Field[string] `json:"source_id"`
 	// Social Security Number of the individual. This field is only available with the
