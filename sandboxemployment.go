@@ -70,7 +70,7 @@ type SandboxEmploymentUpdateResponse struct {
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active,nullable"`
 	// The legal last name of the individual.
-	LastName string   `json:"last_name,nullable"`
+	LastName string `json:"last_name,nullable"`
 	Location Location `json:"location,nullable"`
 	// The manager object representing the manager of the individual within the org.
 	Manager SandboxEmploymentUpdateResponseManager `json:"manager,nullable"`
@@ -270,7 +270,7 @@ type SandboxEmploymentUpdateParams struct {
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive param.Field[bool] `json:"is_active"`
 	// The legal last name of the individual.
-	LastName param.Field[string]        `json:"last_name"`
+	LastName param.Field[string] `json:"last_name"`
 	Location param.Field[LocationParam] `json:"location"`
 	// The manager object representing the manager of the individual within the org.
 	Manager param.Field[SandboxEmploymentUpdateParamsManager] `json:"manager"`
