@@ -79,9 +79,9 @@ type EmploymentData struct {
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active,nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,nullable"`
-	Location         Location `json:"location,nullable"`
+	LastName         string `json:"last_name,nullable"`
+	LatestRehireDate string `json:"latest_rehire_date,nullable"`
+	Location Location `json:"location,nullable"`
 	// The manager object representing the manager of the individual within the org.
 	Manager EmploymentDataManager `json:"manager,nullable"`
 	// The legal middle name of the individual.
