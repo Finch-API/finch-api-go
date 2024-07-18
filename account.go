@@ -123,8 +123,9 @@ func (r introspectionJSON) RawJSON() string {
 
 type IntrospectionAuthenticationMethod struct {
 	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
-	Type             string                                             `json:"type"`
-	JSON             introspectionAuthenticationMethodJSON              `json:"-"`
+	// The type of authentication method.
+	Type IntrospectionAuthenticationMethodsType `json:"type"`
+	JSON introspectionAuthenticationMethodJSON  `json:"-"`
 }
 
 // introspectionAuthenticationMethodJSON contains the JSON metadata for the struct
@@ -165,6 +166,25 @@ func (r *IntrospectionAuthenticationMethodsConnectionStatus) UnmarshalJSON(data 
 
 func (r introspectionAuthenticationMethodsConnectionStatusJSON) RawJSON() string {
 	return r.raw
+}
+
+// The type of authentication method.
+type IntrospectionAuthenticationMethodsType string
+
+const (
+	IntrospectionAuthenticationMethodsTypeAssisted      IntrospectionAuthenticationMethodsType = "assisted"
+	IntrospectionAuthenticationMethodsTypeCredential    IntrospectionAuthenticationMethodsType = "credential"
+	IntrospectionAuthenticationMethodsTypeAPIToken      IntrospectionAuthenticationMethodsType = "api_token"
+	IntrospectionAuthenticationMethodsTypeAPICredential IntrospectionAuthenticationMethodsType = "api_credential"
+	IntrospectionAuthenticationMethodsTypeOAuth         IntrospectionAuthenticationMethodsType = "oauth"
+)
+
+func (r IntrospectionAuthenticationMethodsType) IsKnown() bool {
+	switch r {
+	case IntrospectionAuthenticationMethodsTypeAssisted, IntrospectionAuthenticationMethodsTypeCredential, IntrospectionAuthenticationMethodsTypeAPIToken, IntrospectionAuthenticationMethodsTypeAPICredential, IntrospectionAuthenticationMethodsTypeOAuth:
+		return true
+	}
+	return false
 }
 
 // The type of application associated with a token.
