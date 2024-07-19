@@ -99,6 +99,7 @@ type SandboxDirectoryNewParamsBody struct {
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
+	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
 	Ssn       param.Field[string] `json:"ssn"`
 	StartDate param.Field[string] `json:"start_date"`
 	// The current title of the individual.
