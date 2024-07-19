@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.22.0 (2024-07-19)
+
+Full Changelog: [v0.21.8...v0.22.0](https://github.com/Finch-API/finch-api-go/compare/v0.21.8...v0.22.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** authentication method type is an enum, not a plain string ([#214](https://github.com/Finch-API/finch-api-go/issues/214))
+
+### Bug Fixes
+
+* **api:** authentication method type is an enum, not a plain string ([#214](https://github.com/Finch-API/finch-api-go/issues/214)) ([e66478c](https://github.com/Finch-API/finch-api-go/commit/e66478c7472acb01a163f899f052dec181de5b09))
+
+
+### Chores
+
+* **ci:** limit release doctor target branches ([#215](https://github.com/Finch-API/finch-api-go/issues/215)) ([bdff696](https://github.com/Finch-API/finch-api-go/commit/bdff696aba02da0a413ce4353cd98b87bbd5efe3))
+* **docs:** improve docstrings ([#216](https://github.com/Finch-API/finch-api-go/issues/216)) ([1ee0485](https://github.com/Finch-API/finch-api-go/commit/1ee0485b3e38901c87272426342309dc95067095))
+* **internal:** codegen related update ([#212](https://github.com/Finch-API/finch-api-go/issues/212)) ([6ff2431](https://github.com/Finch-API/finch-api-go/commit/6ff2431b17a5f2b7166058dee6d2b4a07a8f5ae9))
+
 ## 0.21.8 (2024-07-16)
 
 Full Changelog: [v0.21.7...v0.21.8](https://github.com/Finch-API/finch-api-go/compare/v0.21.7...v0.21.8)
