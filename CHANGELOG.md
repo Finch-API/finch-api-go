@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.22.1 (2024-07-23)
+
+Full Changelog: [v0.22.0...v0.22.1](https://github.com/Finch-API/finch-api-go/compare/v0.22.0...v0.22.1)
+
+### Chores
+
+* **ci:** remove unused release doctor ([#217](https://github.com/Finch-API/finch-api-go/issues/217)) ([0acc608](https://github.com/Finch-API/finch-api-go/commit/0acc6085bbf934810d599f0fa9d5b12fd0ca4fc2))
+* **tests:** update prism version ([#219](https://github.com/Finch-API/finch-api-go/issues/219)) ([0323035](https://github.com/Finch-API/finch-api-go/commit/0323035ff6eb324f9d0e74ebe0e4b64cf7b9e1e0))
+
 ## 0.22.0 (2024-07-19)
 
 Full Changelog: [v0.21.8...v0.22.0](https://github.com/Finch-API/finch-api-go/compare/v0.21.8...v0.22.0)
