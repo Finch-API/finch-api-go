@@ -125,7 +125,7 @@ func (r PayrollPayGroupGetResponsePayFrequency) IsKnown() bool {
 
 type PayrollPayGroupListResponse struct {
 	// Finch id (uuidv4) for the pay group
-	ID string `json:"id" format:"uuid"`
+	ID string `json:"id"`
 	// Name of the pay group
 	Name string `json:"name"`
 	// List of pay frequencies associated with this pay group

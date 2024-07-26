@@ -70,6 +70,10 @@ type Payment struct {
 	IndividualIDs []string `json:"individual_ids,nullable"`
 	NetPay        Money    `json:"net_pay,nullable"`
 	PayDate       string   `json:"pay_date,nullable"`
+	// List of pay frequencies associated with this payment.
+	PayFrequencies []PaymentPayFrequency `json:"pay_frequencies,nullable"`
+	// Array of the Finch id (uuidv4) of every pay group associated with this payment.
+	PayGroupIDs []string `json:"pay_group_ids,nullable"`
 	// The pay period object.
 	PayPeriod PaymentPayPeriod `json:"pay_period,nullable"`
 	JSON      paymentJSON      `json:"-"`
@@ -77,18 +81,20 @@ type Payment struct {
 
 // paymentJSON contains the JSON metadata for the struct [Payment]
 type paymentJSON struct {
-	ID            apijson.Field
-	CompanyDebit  apijson.Field
-	DebitDate     apijson.Field
-	EmployeeTaxes apijson.Field
-	EmployerTaxes apijson.Field
-	GrossPay      apijson.Field
-	IndividualIDs apijson.Field
-	NetPay        apijson.Field
-	PayDate       apijson.Field
-	PayPeriod     apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID             apijson.Field
+	CompanyDebit   apijson.Field
+	DebitDate      apijson.Field
+	EmployeeTaxes  apijson.Field
+	EmployerTaxes  apijson.Field
+	GrossPay       apijson.Field
+	IndividualIDs  apijson.Field
+	NetPay         apijson.Field
+	PayDate        apijson.Field
+	PayFrequencies apijson.Field
+	PayGroupIDs    apijson.Field
+	PayPeriod      apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *Payment) UnmarshalJSON(data []byte) (err error) {
@@ -97,6 +103,28 @@ func (r *Payment) UnmarshalJSON(data []byte) (err error) {
 
 func (r paymentJSON) RawJSON() string {
 	return r.raw
+}
+
+type PaymentPayFrequency string
+
+const (
+	PaymentPayFrequencyAnnually     PaymentPayFrequency = "annually"
+	PaymentPayFrequencySemiAnnually PaymentPayFrequency = "semi_annually"
+	PaymentPayFrequencyQuarterly    PaymentPayFrequency = "quarterly"
+	PaymentPayFrequencyMonthly      PaymentPayFrequency = "monthly"
+	PaymentPayFrequencySemiMonthly  PaymentPayFrequency = "semi_monthly"
+	PaymentPayFrequencyBiWeekly     PaymentPayFrequency = "bi_weekly"
+	PaymentPayFrequencyWeekly       PaymentPayFrequency = "weekly"
+	PaymentPayFrequencyDaily        PaymentPayFrequency = "daily"
+	PaymentPayFrequencyOther        PaymentPayFrequency = "other"
+)
+
+func (r PaymentPayFrequency) IsKnown() bool {
+	switch r {
+	case PaymentPayFrequencyAnnually, PaymentPayFrequencySemiAnnually, PaymentPayFrequencyQuarterly, PaymentPayFrequencyMonthly, PaymentPayFrequencySemiMonthly, PaymentPayFrequencyBiWeekly, PaymentPayFrequencyWeekly, PaymentPayFrequencyDaily, PaymentPayFrequencyOther:
+		return true
+	}
+	return false
 }
 
 // The pay period object.

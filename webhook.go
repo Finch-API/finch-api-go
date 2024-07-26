@@ -1038,35 +1038,39 @@ func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPay
 }
 
 type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayment struct {
-	ID            bool                                                                      `json:"id"`
-	CompanyDebit  bool                                                                      `json:"company_debit"`
-	DebitDate     bool                                                                      `json:"debit_date"`
-	EmployeeTaxes bool                                                                      `json:"employee_taxes"`
-	EmployerTaxes bool                                                                      `json:"employer_taxes"`
-	GrossPay      bool                                                                      `json:"gross_pay"`
-	IndividualIDs bool                                                                      `json:"individual_ids"`
-	NetPay        bool                                                                      `json:"net_pay"`
-	PayDate       bool                                                                      `json:"pay_date"`
-	PayPeriod     AccountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentPayPeriod `json:"pay_period"`
-	JSON          accountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentJSON      `json:"-"`
+	ID             bool                                                                      `json:"id"`
+	CompanyDebit   bool                                                                      `json:"company_debit"`
+	DebitDate      bool                                                                      `json:"debit_date"`
+	EmployeeTaxes  bool                                                                      `json:"employee_taxes"`
+	EmployerTaxes  bool                                                                      `json:"employer_taxes"`
+	GrossPay       bool                                                                      `json:"gross_pay"`
+	IndividualIDs  bool                                                                      `json:"individual_ids"`
+	NetPay         bool                                                                      `json:"net_pay"`
+	PayDate        bool                                                                      `json:"pay_date"`
+	PayFrequencies bool                                                                      `json:"pay_frequencies"`
+	PayGroupIDs    bool                                                                      `json:"pay_group_ids"`
+	PayPeriod      AccountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentPayPeriod `json:"pay_period"`
+	JSON           accountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentJSON      `json:"-"`
 }
 
 // accountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentJSON contains
 // the JSON metadata for the struct
 // [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayment]
 type accountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentJSON struct {
-	ID            apijson.Field
-	CompanyDebit  apijson.Field
-	DebitDate     apijson.Field
-	EmployeeTaxes apijson.Field
-	EmployerTaxes apijson.Field
-	GrossPay      apijson.Field
-	IndividualIDs apijson.Field
-	NetPay        apijson.Field
-	PayDate       apijson.Field
-	PayPeriod     apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID             apijson.Field
+	CompanyDebit   apijson.Field
+	DebitDate      apijson.Field
+	EmployeeTaxes  apijson.Field
+	EmployerTaxes  apijson.Field
+	GrossPay       apijson.Field
+	IndividualIDs  apijson.Field
+	NetPay         apijson.Field
+	PayDate        apijson.Field
+	PayFrequencies apijson.Field
+	PayGroupIDs    apijson.Field
+	PayPeriod      apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
 }
 
 func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayment) UnmarshalJSON(data []byte) (err error) {
