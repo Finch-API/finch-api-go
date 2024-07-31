@@ -54,6 +54,9 @@ func (r *SinglePage[T]) GetNextPage() (res *SinglePage[T], err error) {
 }
 
 func (r *SinglePage[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+	if r == nil {
+		r = &SinglePage[T]{}
+	}
 	r.cfg = cfg
 	r.res = res
 }
@@ -146,6 +149,9 @@ func (r *ResponsesPage[T]) GetNextPage() (res *ResponsesPage[T], err error) {
 }
 
 func (r *ResponsesPage[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+	if r == nil {
+		r = &ResponsesPage[T]{}
+	}
 	r.cfg = cfg
 	r.res = res
 }
@@ -240,6 +246,9 @@ func (r *Page[T]) GetNextPage() (res *Page[T], err error) {
 }
 
 func (r *Page[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+	if r == nil {
+		r = &Page[T]{}
+	}
 	r.cfg = cfg
 	r.res = res
 }
