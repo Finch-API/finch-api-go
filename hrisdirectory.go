@@ -131,6 +131,9 @@ func (r *IndividualsPage) GetNextPage() (res *IndividualsPage, err error) {
 }
 
 func (r *IndividualsPage) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+	if r == nil {
+		r = &IndividualsPage{}
+	}
 	r.cfg = cfg
 	r.res = res
 }
