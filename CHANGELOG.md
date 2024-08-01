@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0 (2024-08-01)
+
+Full Changelog: [v0.23.0...v1.0.0](https://github.com/Finch-API/finch-api-go/compare/v0.23.0...v1.0.0)
+
+### Bug Fixes
+
+* handle nil pagination responses when HTTP status is 200 ([#222](https://github.com/Finch-API/finch-api-go/issues/222)) ([cf14c8d](https://github.com/Finch-API/finch-api-go/commit/cf14c8d515f1f3c09161b969c35571c22d5fb105))
+
+
+### Chores
+
+* 1.0.0 stable release ([#224](https://github.com/Finch-API/finch-api-go/issues/224)) ([e3d9c65](https://github.com/Finch-API/finch-api-go/commit/e3d9c651614075c621976f4d6e22ddb303ff4a86))
+* stainless release ([#225](https://github.com/Finch-API/finch-api-go/issues/225)) ([4ac9aa4](https://github.com/Finch-API/finch-api-go/commit/4ac9aa4cd440f90408c723c01c5a8e2296db9608))
+
 ## 0.23.0 (2024-07-26)
 
 Full Changelog: [v0.22.1...v0.23.0](https://github.com/Finch-API/finch-api-go/compare/v0.22.1...v0.23.0)
