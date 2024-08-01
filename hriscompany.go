@@ -30,7 +30,7 @@ func NewHRISCompanyService(opts ...option.RequestOption) (r *HRISCompanyService)
 	return
 }
 
-// Read basic company data.
+// Read basic company data
 func (r *HRISCompanyService) Get(ctx context.Context, opts ...option.RequestOption) (res *Company, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "employer/company"
