@@ -5,6 +5,8 @@
 The Finch Go library provides convenient access to [the Finch REST
 API](https://developer.tryfinch.com/) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
+It is generated with [Stainless](https://www.stainlessapi.com/).
+
 ## Installation
 
 <!-- x-release-please-start-version -->
