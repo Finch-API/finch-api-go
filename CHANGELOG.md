@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.1 (2024-08-09)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/Finch-API/finch-api-go/compare/v1.0.0...v1.0.1)
+
+### Bug Fixes
+
+* deserialization of struct unions that implement json.Unmarshaler ([#228](https://github.com/Finch-API/finch-api-go/issues/228)) ([c61052c](https://github.com/Finch-API/finch-api-go/commit/c61052cc7e9364ac6deac06b0630d9b41ef29d74))
+
+
+### Chores
+
+* **ci:** bump prism mock server version ([#226](https://github.com/Finch-API/finch-api-go/issues/226)) ([eaa95c7](https://github.com/Finch-API/finch-api-go/commit/eaa95c77b3586767391c345ebc5f14d469b12ac5))
+
 ## 1.0.0 (2024-08-01)
 
 Full Changelog: [v0.23.0...v1.0.0](https://github.com/Finch-API/finch-api-go/compare/v0.23.0...v1.0.0)
