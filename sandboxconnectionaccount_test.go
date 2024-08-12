@@ -59,7 +59,7 @@ func TestSandboxConnectionAccountUpdateWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Connections.Accounts.Update(context.TODO(), finchgo.SandboxConnectionAccountUpdateParams{
-		ConnectionStatus: finchgo.F(shared.ConnectionStatusTypeReauth),
+		ConnectionStatus: finchgo.F(shared.ConnectionStatusTypePending),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
