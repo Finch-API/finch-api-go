@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3 (2024-08-12)
+
+Full Changelog: [v1.0.2...v1.0.3](https://github.com/Finch-API/finch-api-go/compare/v1.0.2...v1.0.3)
+
+### Chores
+
+* **examples:** minor formatting changes ([#231](https://github.com/Finch-API/finch-api-go/issues/231)) ([392ef1c](https://github.com/Finch-API/finch-api-go/commit/392ef1ca32a02aebd0fcc7faf0bdca23ad36525f))
+
 ## 1.0.2 (2024-08-12)
 
 Full Changelog: [v1.0.1...v1.0.2](https://github.com/Finch-API/finch-api-go/compare/v1.0.1...v1.0.2)
