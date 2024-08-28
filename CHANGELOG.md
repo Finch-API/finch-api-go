@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 (2024-08-28)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/Finch-API/finch-api-go/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* chore: update reviewers for new teams ([#236](https://github.com/Finch-API/finch-api-go/issues/236)) ([b04f6aa](https://github.com/Finch-API/finch-api-go/commit/b04f6aac1ba51255764b623863a43880dcd832c6))
+
 ## 1.1.0 (2024-08-13)
 
 Full Changelog: [v1.0.3...v1.1.0](https://github.com/Finch-API/finch-api-go/compare/v1.0.3...v1.1.0)
