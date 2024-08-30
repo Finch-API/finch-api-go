@@ -1053,20 +1053,26 @@ func (r AccountUpdateEventEventType) IsKnown() bool {
 }
 
 type BaseWebhookEvent struct {
-	// Unique Finch id of the employer account that was used to make this connection.
+	// [DEPRECATED] Unique Finch ID of the employer account used to make this
+	// connection. Use `connection_id` instead to identify the connection associated
+	// with this event.
 	AccountID string `json:"account_id,required"`
-	// Unique Finch id of the company for which data has been updated.
-	CompanyID string               `json:"company_id,required"`
-	JSON      baseWebhookEventJSON `json:"-"`
+	// [DEPRECATED] Unique Finch ID of the company for which data has been updated. Use
+	// `connection_id` instead to identify the connection associated with this event.
+	CompanyID string `json:"company_id,required"`
+	// Unique Finch ID of the connection associated with the webhook event.
+	ConnectionID string               `json:"connection_id"`
+	JSON         baseWebhookEventJSON `json:"-"`
 }
 
 // baseWebhookEventJSON contains the JSON metadata for the struct
 // [BaseWebhookEvent]
 type baseWebhookEventJSON struct {
-	AccountID   apijson.Field
-	CompanyID   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	AccountID    apijson.Field
+	CompanyID    apijson.Field
+	ConnectionID apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
 }
 
 func (r *BaseWebhookEvent) UnmarshalJSON(data []byte) (err error) {
