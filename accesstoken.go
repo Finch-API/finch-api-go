@@ -77,13 +77,18 @@ func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams,
 }
 
 type CreateAccessTokenResponse struct {
+	// The access token for the connection.
 	AccessToken string `json:"access_token,required"`
-	// The Finch uuid of the account used to connect this company.
+	// [DEPRECATED] Use `connection_id` to identify the connection instead of this
+	// account ID.
 	AccountID string `json:"account_id,required"`
 	// The type of application associated with a token.
 	ClientType CreateAccessTokenResponseClientType `json:"client_type,required"`
-	// The Finch uuid of the company associated with the `access_token`.
+	// [DEPRECATED] Use `connection_id` to identify the connection instead of this
+	// company ID.
 	CompanyID string `json:"company_id,required"`
+	// The Finch UUID of the connection associated with the `access_token`.
+	ConnectionID string `json:"connection_id,required"`
 	// The type of the connection associated with the token.
 	//
 	// - `provider` - connection to an external provider
@@ -91,7 +96,7 @@ type CreateAccessTokenResponse struct {
 	ConnectionType CreateAccessTokenResponseConnectionType `json:"connection_type,required"`
 	// An array of the authorized products associated with the `access_token`.
 	Products []string `json:"products,required"`
-	// The payroll provider associated with the `access_token`.
+	// The ID of the provider associated with the `access_token`.
 	ProviderID string                        `json:"provider_id,required"`
 	JSON       createAccessTokenResponseJSON `json:"-"`
 }
@@ -103,6 +108,7 @@ type createAccessTokenResponseJSON struct {
 	AccountID      apijson.Field
 	ClientType     apijson.Field
 	CompanyID      apijson.Field
+	ConnectionID   apijson.Field
 	ConnectionType apijson.Field
 	Products       apijson.Field
 	ProviderID     apijson.Field

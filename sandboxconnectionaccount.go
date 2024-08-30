@@ -50,13 +50,18 @@ func (r *SandboxConnectionAccountService) Update(ctx context.Context, body Sandb
 }
 
 type SandboxConnectionAccountNewResponse struct {
-	AccessToken        string                                                `json:"access_token,required" format:"uuid"`
+	AccessToken string `json:"access_token,required" format:"uuid"`
+	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
 	AccountID          string                                                `json:"account_id,required" format:"uuid"`
 	AuthenticationType SandboxConnectionAccountNewResponseAuthenticationType `json:"authentication_type,required"`
-	CompanyID          string                                                `json:"company_id,required" format:"uuid"`
-	Products           []string                                              `json:"products,required"`
-	ProviderID         string                                                `json:"provider_id,required"`
-	JSON               sandboxConnectionAccountNewResponseJSON               `json:"-"`
+	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	CompanyID string `json:"company_id,required" format:"uuid"`
+	// The ID of the new connection
+	ConnectionID string   `json:"connection_id,required" format:"uuid"`
+	Products     []string `json:"products,required"`
+	// The ID of the provider associated with the `access_token`
+	ProviderID string                                  `json:"provider_id,required"`
+	JSON       sandboxConnectionAccountNewResponseJSON `json:"-"`
 }
 
 // sandboxConnectionAccountNewResponseJSON contains the JSON metadata for the
@@ -66,6 +71,7 @@ type sandboxConnectionAccountNewResponseJSON struct {
 	AccountID          apijson.Field
 	AuthenticationType apijson.Field
 	CompanyID          apijson.Field
+	ConnectionID       apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
 	raw                string
@@ -98,12 +104,17 @@ func (r SandboxConnectionAccountNewResponseAuthenticationType) IsKnown() bool {
 }
 
 type SandboxConnectionAccountUpdateResponse struct {
-	AccountID          string                                                   `json:"account_id,required"`
+	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	AccountID          string                                                   `json:"account_id,required" format:"uuid"`
 	AuthenticationType SandboxConnectionAccountUpdateResponseAuthenticationType `json:"authentication_type,required"`
-	CompanyID          string                                                   `json:"company_id,required" format:"uuid"`
-	Products           []string                                                 `json:"products,required"`
-	ProviderID         string                                                   `json:"provider_id,required"`
-	JSON               sandboxConnectionAccountUpdateResponseJSON               `json:"-"`
+	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	CompanyID string   `json:"company_id,required" format:"uuid"`
+	Products  []string `json:"products,required"`
+	// The ID of the provider associated with the `access_token`
+	ProviderID string `json:"provider_id,required"`
+	// The ID of the new connection
+	ConnectionID string                                     `json:"connection_id" format:"uuid"`
+	JSON         sandboxConnectionAccountUpdateResponseJSON `json:"-"`
 }
 
 // sandboxConnectionAccountUpdateResponseJSON contains the JSON metadata for the
@@ -114,6 +125,7 @@ type sandboxConnectionAccountUpdateResponseJSON struct {
 	CompanyID          apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
+	ConnectionID       apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -144,7 +156,8 @@ func (r SandboxConnectionAccountUpdateResponseAuthenticationType) IsKnown() bool
 }
 
 type SandboxConnectionAccountNewParams struct {
-	CompanyID          param.Field[string]                                              `json:"company_id,required" format:"uuid"`
+	CompanyID param.Field[string] `json:"company_id,required" format:"uuid"`
+	// The provider associated with the `access_token`
 	ProviderID         param.Field[string]                                              `json:"provider_id,required"`
 	AuthenticationType param.Field[SandboxConnectionAccountNewParamsAuthenticationType] `json:"authentication_type"`
 	// Optional, defaults to Organization products (`company`, `directory`,
