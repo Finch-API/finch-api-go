@@ -42,13 +42,18 @@ func (r *SandboxConnectionService) New(ctx context.Context, body SandboxConnecti
 }
 
 type SandboxConnectionNewResponse struct {
-	AccessToken        string                                         `json:"access_token,required" format:"uuid"`
+	AccessToken string `json:"access_token,required" format:"uuid"`
+	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
 	AccountID          string                                         `json:"account_id,required" format:"uuid"`
 	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type,required"`
-	CompanyID          string                                         `json:"company_id,required" format:"uuid"`
-	Products           []string                                       `json:"products,required"`
-	ProviderID         string                                         `json:"provider_id,required" format:"uuid"`
-	JSON               sandboxConnectionNewResponseJSON               `json:"-"`
+	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	CompanyID string `json:"company_id,required" format:"uuid"`
+	// The ID of the new connection
+	ConnectionID string   `json:"connection_id,required" format:"uuid"`
+	Products     []string `json:"products,required"`
+	// The ID of the provider associated with the `access_token`.
+	ProviderID string                           `json:"provider_id,required" format:"uuid"`
+	JSON       sandboxConnectionNewResponseJSON `json:"-"`
 }
 
 // sandboxConnectionNewResponseJSON contains the JSON metadata for the struct
@@ -58,6 +63,7 @@ type sandboxConnectionNewResponseJSON struct {
 	AccountID          apijson.Field
 	AuthenticationType apijson.Field
 	CompanyID          apijson.Field
+	ConnectionID       apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
 	raw                string
@@ -90,6 +96,7 @@ func (r SandboxConnectionNewResponseAuthenticationType) IsKnown() bool {
 }
 
 type SandboxConnectionNewParams struct {
+	// The provider associated with the connection
 	ProviderID         param.Field[string]                                       `json:"provider_id,required"`
 	AuthenticationType param.Field[SandboxConnectionNewParamsAuthenticationType] `json:"authentication_type"`
 	// Optional: the size of the employer to be created with this connection. Defaults
