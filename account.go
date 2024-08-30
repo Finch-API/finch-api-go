@@ -70,15 +70,20 @@ func (r disconnectResponseJSON) RawJSON() string {
 }
 
 type Introspection struct {
-	// The Finch uuid of the account used to connect this company.
+	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
+	// instead of this account ID.
 	AccountID             string                              `json:"account_id,required"`
 	AuthenticationMethods []IntrospectionAuthenticationMethod `json:"authentication_methods,required"`
-	// The client id of the application associated with the `access_token`.
+	// The client ID of the application associated with the `access_token`.
 	ClientID string `json:"client_id,required"`
 	// The type of application associated with a token.
 	ClientType IntrospectionClientType `json:"client_type,required"`
-	// The Finch uuid of the company associated with the `access_token`.
+	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
+	// instead of this company ID.
 	CompanyID string `json:"company_id,required"`
+	// The Finch UUID of the connection associated with the `access_token`.
+	ConnectionID     string                        `json:"connection_id,required"`
+	ConnectionStatus IntrospectionConnectionStatus `json:"connection_status,required"`
 	// The type of the connection associated with the token.
 	//
 	// - `provider` - connection to an external provider
@@ -88,10 +93,13 @@ type Introspection struct {
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
 	Manual bool `json:"manual,required"`
-	// The payroll provider associated with the `access_token`.
+	// [DEPRECATED] Use `provider_id` to identify the provider instead of this payroll
+	// provider ID.
 	PayrollProviderID string `json:"payroll_provider_id,required"`
 	// An array of the authorized products associated with the `access_token`.
 	Products []string `json:"products,required"`
+	// The ID of the provider associated with the `access_token`.
+	ProviderID string `json:"provider_id,required"`
 	// The account username used for login associated with the `access_token`.
 	Username string            `json:"username,required"`
 	JSON     introspectionJSON `json:"-"`
@@ -104,10 +112,13 @@ type introspectionJSON struct {
 	ClientID              apijson.Field
 	ClientType            apijson.Field
 	CompanyID             apijson.Field
+	ConnectionID          apijson.Field
+	ConnectionStatus      apijson.Field
 	ConnectionType        apijson.Field
 	Manual                apijson.Field
 	PayrollProviderID     apijson.Field
 	Products              apijson.Field
+	ProviderID            apijson.Field
 	Username              apijson.Field
 	raw                   string
 	ExtraFields           map[string]apijson.Field
@@ -123,6 +134,8 @@ func (r introspectionJSON) RawJSON() string {
 
 type IntrospectionAuthenticationMethod struct {
 	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
+	// An array of the authorized products associated with the `access_token`.
+	Products []string `json:"products"`
 	// The type of authentication method.
 	Type IntrospectionAuthenticationMethodsType `json:"type"`
 	JSON introspectionAuthenticationMethodJSON  `json:"-"`
@@ -132,6 +145,7 @@ type IntrospectionAuthenticationMethod struct {
 // [IntrospectionAuthenticationMethod]
 type introspectionAuthenticationMethodJSON struct {
 	ConnectionStatus apijson.Field
+	Products         apijson.Field
 	Type             apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
@@ -202,6 +216,29 @@ func (r IntrospectionClientType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type IntrospectionConnectionStatus struct {
+	Message string                            `json:"message"`
+	Status  shared.ConnectionStatusType       `json:"status"`
+	JSON    introspectionConnectionStatusJSON `json:"-"`
+}
+
+// introspectionConnectionStatusJSON contains the JSON metadata for the struct
+// [IntrospectionConnectionStatus]
+type introspectionConnectionStatusJSON struct {
+	Message     apijson.Field
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IntrospectionConnectionStatus) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r introspectionConnectionStatusJSON) RawJSON() string {
+	return r.raw
 }
 
 // The type of the connection associated with the token.
