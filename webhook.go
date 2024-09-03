@@ -1365,17 +1365,17 @@ func (r jobCompletionEventDataJSON) RawJSON() string {
 type JobCompletionEventEventType string
 
 const (
-	JobCompletionEventEventTypeJobBenefitCreateUpdated   JobCompletionEventEventType = "job.benefit_create.updated"
-	JobCompletionEventEventTypeJobBenefitEnrollUpdated   JobCompletionEventEventType = "job.benefit_enroll.updated"
-	JobCompletionEventEventTypeJobBenefitRegisterUpdated JobCompletionEventEventType = "job.benefit_register.updated"
-	JobCompletionEventEventTypeJobBenefitUnenrollUpdated JobCompletionEventEventType = "job.benefit_unenroll.updated"
-	JobCompletionEventEventTypeJobBenefitUpdateUpdated   JobCompletionEventEventType = "job.benefit_update.updated"
-	JobCompletionEventEventTypeJobDataSyncAllUpdated     JobCompletionEventEventType = "job.data_sync_all.updated"
+	JobCompletionEventEventTypeJobBenefitCreateCompleted   JobCompletionEventEventType = "job.benefit_create.completed"
+	JobCompletionEventEventTypeJobBenefitEnrollCompleted   JobCompletionEventEventType = "job.benefit_enroll.completed"
+	JobCompletionEventEventTypeJobBenefitRegisterCompleted JobCompletionEventEventType = "job.benefit_register.completed"
+	JobCompletionEventEventTypeJobBenefitUnenrollCompleted JobCompletionEventEventType = "job.benefit_unenroll.completed"
+	JobCompletionEventEventTypeJobBenefitUpdateCompleted   JobCompletionEventEventType = "job.benefit_update.completed"
+	JobCompletionEventEventTypeJobDataSyncAllCompleted     JobCompletionEventEventType = "job.data_sync_all.completed"
 )
 
 func (r JobCompletionEventEventType) IsKnown() bool {
 	switch r {
-	case JobCompletionEventEventTypeJobBenefitCreateUpdated, JobCompletionEventEventTypeJobBenefitEnrollUpdated, JobCompletionEventEventTypeJobBenefitRegisterUpdated, JobCompletionEventEventTypeJobBenefitUnenrollUpdated, JobCompletionEventEventTypeJobBenefitUpdateUpdated, JobCompletionEventEventTypeJobDataSyncAllUpdated:
+	case JobCompletionEventEventTypeJobBenefitCreateCompleted, JobCompletionEventEventTypeJobBenefitEnrollCompleted, JobCompletionEventEventTypeJobBenefitRegisterCompleted, JobCompletionEventEventTypeJobBenefitUnenrollCompleted, JobCompletionEventEventTypeJobBenefitUpdateCompleted, JobCompletionEventEventTypeJobDataSyncAllCompleted:
 		return true
 	}
 	return false
@@ -1533,32 +1533,32 @@ func init() {
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
-			DiscriminatorValue: "job.benefit_create.updated",
+			DiscriminatorValue: "job.benefit_create.completed",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
-			DiscriminatorValue: "job.benefit_enroll.updated",
+			DiscriminatorValue: "job.benefit_enroll.completed",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
-			DiscriminatorValue: "job.benefit_register.updated",
+			DiscriminatorValue: "job.benefit_register.completed",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
-			DiscriminatorValue: "job.benefit_unenroll.updated",
+			DiscriminatorValue: "job.benefit_unenroll.completed",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
-			DiscriminatorValue: "job.benefit_update.updated",
+			DiscriminatorValue: "job.benefit_update.completed",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
-			DiscriminatorValue: "job.data_sync_all.updated",
+			DiscriminatorValue: "job.data_sync_all.completed",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
