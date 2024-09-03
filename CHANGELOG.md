@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 (2024-09-03)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/Finch-API/finch-api-go/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#242](https://github.com/Finch-API/finch-api-go/issues/242)) ([6d75af7](https://github.com/Finch-API/finch-api-go/commit/6d75af738fd29c73017e7d12e2906d4fd20b5232))
+
 ## 1.3.0 (2024-08-30)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/Finch-API/finch-api-go/compare/v1.2.0...v1.3.0)
