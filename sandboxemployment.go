@@ -70,7 +70,8 @@ type SandboxEmploymentUpdateResponse struct {
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active,nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,nullable"`
+	LastName         string `json:"last_name,nullable"`
+	LatestRehireDate string `json:"latest_rehire_date,nullable"`
 	Location Location `json:"location,nullable"`
 	// The manager object representing the manager of the individual within the org.
 	Manager SandboxEmploymentUpdateResponseManager `json:"manager,nullable"`
@@ -87,25 +88,26 @@ type SandboxEmploymentUpdateResponse struct {
 // sandboxEmploymentUpdateResponseJSON contains the JSON metadata for the struct
 // [SandboxEmploymentUpdateResponse]
 type sandboxEmploymentUpdateResponseJSON struct {
-	ID            apijson.Field
-	ClassCode     apijson.Field
-	CustomFields  apijson.Field
-	Department    apijson.Field
-	Employment    apijson.Field
-	EndDate       apijson.Field
-	FirstName     apijson.Field
-	Income        apijson.Field
-	IncomeHistory apijson.Field
-	IsActive      apijson.Field
-	LastName      apijson.Field
-	Location      apijson.Field
-	Manager       apijson.Field
-	MiddleName    apijson.Field
-	SourceID      apijson.Field
-	StartDate     apijson.Field
-	Title         apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID               apijson.Field
+	ClassCode        apijson.Field
+	CustomFields     apijson.Field
+	Department       apijson.Field
+	Employment       apijson.Field
+	EndDate          apijson.Field
+	FirstName        apijson.Field
+	Income           apijson.Field
+	IncomeHistory    apijson.Field
+	IsActive         apijson.Field
+	LastName         apijson.Field
+	LatestRehireDate apijson.Field
+	Location         apijson.Field
+	Manager          apijson.Field
+	MiddleName       apijson.Field
+	SourceID         apijson.Field
+	StartDate        apijson.Field
+	Title            apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *SandboxEmploymentUpdateResponse) UnmarshalJSON(data []byte) (err error) {
@@ -270,7 +272,8 @@ type SandboxEmploymentUpdateParams struct {
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive param.Field[bool] `json:"is_active"`
 	// The legal last name of the individual.
-	LastName param.Field[string] `json:"last_name"`
+	LastName         param.Field[string] `json:"last_name"`
+	LatestRehireDate param.Field[string] `json:"latest_rehire_date"`
 	Location param.Field[LocationParam] `json:"location"`
 	// The manager object representing the manager of the individual within the org.
 	Manager param.Field[SandboxEmploymentUpdateParamsManager] `json:"manager"`
