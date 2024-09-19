@@ -85,8 +85,9 @@ func TestSandboxDirectoryNew(t *testing.T) {
 				EffectiveDate: finchgo.F("effective_date"),
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}}),
-			IsActive: finchgo.F(true),
-			LastName: finchgo.F("Smith"),
+			IsActive:         finchgo.F(true),
+			LastName:         finchgo.F("Smith"),
+			LatestRehireDate: finchgo.F("latest_rehire_date"),
 			Location: finchgo.F(finchgo.LocationParam{
 				City:       finchgo.F("city"),
 				Country:    finchgo.F("country"),
