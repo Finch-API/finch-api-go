@@ -25,6 +25,7 @@ type Client struct {
 	Jobs              *JobService
 	Sandbox           *SandboxService
 	Payroll           *PayrollService
+	Connect           *ConnectService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -62,6 +63,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Jobs = NewJobService(opts...)
 	r.Sandbox = NewSandboxService(opts...)
 	r.Payroll = NewPayrollService(opts...)
+	r.Connect = NewConnectService(opts...)
 
 	return
 }
