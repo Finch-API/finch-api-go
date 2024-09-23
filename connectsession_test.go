@@ -24,8 +24,6 @@ func TestConnectSessionNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
-		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
-		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Connect.Sessions.New(context.TODO(), finchgo.ConnectSessionNewParams{
 		CustomerID:    finchgo.F("x"),
@@ -61,8 +59,6 @@ func TestConnectSessionReauthenticateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
-		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
-		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Connect.Sessions.Reauthenticate(context.TODO(), finchgo.ConnectSessionReauthenticateParams{
 		ConnectionID:    finchgo.F("connection_id"),
