@@ -14,6 +14,7 @@ import (
 )
 
 func TestConnectSessionNewWithOptionalParams(t *testing.T) {
+	t.Skip("authentication setup doesn't currently work with the mock server")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -51,6 +52,7 @@ func TestConnectSessionNewWithOptionalParams(t *testing.T) {
 }
 
 func TestConnectSessionReauthenticateWithOptionalParams(t *testing.T) {
+	t.Skip("authentication setup doesn't currently work with the mock server")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
