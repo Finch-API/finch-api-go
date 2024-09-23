@@ -34,10 +34,9 @@ type Client struct {
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_SANDBOX_CLIENT_ID,
-// FINCH_SANDBOX_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). The option passed in as
-// arguments are applied after these default arguments, and all option will be
-// passed down to the services and requests that this client makes.
+// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). The
+// option passed in as arguments are applied after these default arguments, and all
+// option will be passed down to the services and requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("FINCH_CLIENT_ID"); ok {
@@ -45,12 +44,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	}
 	if o, ok := os.LookupEnv("FINCH_CLIENT_SECRET"); ok {
 		defaults = append(defaults, option.WithClientSecret(o))
-	}
-	if o, ok := os.LookupEnv("FINCH_SANDBOX_CLIENT_ID"); ok {
-		defaults = append(defaults, option.WithSandboxClientID(o))
-	}
-	if o, ok := os.LookupEnv("FINCH_SANDBOX_CLIENT_SECRET"); ok {
-		defaults = append(defaults, option.WithSandboxClientSecret(o))
 	}
 	if o, ok := os.LookupEnv("FINCH_WEBHOOK_SECRET"); ok {
 		defaults = append(defaults, option.WithWebhookSecret(o))
