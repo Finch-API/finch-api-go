@@ -164,19 +164,17 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 // Editing the variables inside RequestConfig directly is unstable api. Prefer
 // composing func(\*RequestConfig) error instead if possible.
 type RequestConfig struct {
-	MaxRetries          int
-	RequestTimeout      time.Duration
-	Context             context.Context
-	Request             *http.Request
-	BaseURL             *url.URL
-	HTTPClient          *http.Client
-	Middlewares         []middleware
-	AccessToken         string
-	ClientID            string
-	ClientSecret        string
-	SandboxClientID     string
-	SandboxClientSecret string
-	WebhookSecret       string
+	MaxRetries     int
+	RequestTimeout time.Duration
+	Context        context.Context
+	Request        *http.Request
+	BaseURL        *url.URL
+	HTTPClient     *http.Client
+	Middlewares    []middleware
+	AccessToken    string
+	ClientID       string
+	ClientSecret   string
+	WebhookSecret  string
 	// If ResponseBodyInto not nil, then we will attempt to deserialize into
 	// ResponseBodyInto. If Destination is a []byte, then it will return the body as
 	// is.
@@ -470,19 +468,17 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 		return nil
 	}
 	new := &RequestConfig{
-		MaxRetries:          cfg.MaxRetries,
-		RequestTimeout:      cfg.RequestTimeout,
-		Context:             ctx,
-		Request:             req,
-		BaseURL:             cfg.BaseURL,
-		HTTPClient:          cfg.HTTPClient,
-		Middlewares:         cfg.Middlewares,
-		AccessToken:         cfg.AccessToken,
-		ClientID:            cfg.ClientID,
-		ClientSecret:        cfg.ClientSecret,
-		SandboxClientID:     cfg.SandboxClientID,
-		SandboxClientSecret: cfg.SandboxClientSecret,
-		WebhookSecret:       cfg.WebhookSecret,
+		MaxRetries:     cfg.MaxRetries,
+		RequestTimeout: cfg.RequestTimeout,
+		Context:        ctx,
+		Request:        req,
+		BaseURL:        cfg.BaseURL,
+		HTTPClient:     cfg.HTTPClient,
+		Middlewares:    cfg.Middlewares,
+		AccessToken:    cfg.AccessToken,
+		ClientID:       cfg.ClientID,
+		ClientSecret:   cfg.ClientSecret,
+		WebhookSecret:  cfg.WebhookSecret,
 	}
 
 	return new

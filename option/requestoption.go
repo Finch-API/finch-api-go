@@ -241,7 +241,7 @@ func WithAccessToken(value string) RequestOption {
 func WithClientID(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
 		r.ClientID = value
-		return nil
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.ClientID+":"+r.ClientSecret)))))
 	}
 }
 
@@ -249,23 +249,7 @@ func WithClientID(value string) RequestOption {
 func WithClientSecret(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
 		r.ClientSecret = value
-		return nil
-	}
-}
-
-// WithSandboxClientID returns a RequestOption that sets the client setting "sandbox_client_id".
-func WithSandboxClientID(value string) RequestOption {
-	return func(r *requestconfig.RequestConfig) error {
-		r.SandboxClientID = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.SandboxClientID+":"+r.SandboxClientSecret)))))
-	}
-}
-
-// WithSandboxClientSecret returns a RequestOption that sets the client setting "sandbox_client_secret".
-func WithSandboxClientSecret(value string) RequestOption {
-	return func(r *requestconfig.RequestConfig) error {
-		r.SandboxClientSecret = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.SandboxClientID+":"+r.SandboxClientSecret)))))
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.ClientID+":"+r.ClientSecret)))))
 	}
 }
 

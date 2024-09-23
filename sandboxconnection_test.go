@@ -14,7 +14,6 @@ import (
 )
 
 func TestSandboxConnectionNewWithOptionalParams(t *testing.T) {
-	t.Skip("Auth isn't setup correctly in this test")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
