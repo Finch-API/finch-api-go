@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.5.0 (2024-09-25)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/Finch-API/finch-api-go/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** Add connect sessions endpoints ([#249](https://github.com/Finch-API/finch-api-go/issues/249)) ([64fa31b](https://github.com/Finch-API/finch-api-go/commit/64fa31b22c52efdf559bb05cc381419af7738cb6))
+* **api:** manual updates ([#251](https://github.com/Finch-API/finch-api-go/issues/251)) ([cf36c0d](https://github.com/Finch-API/finch-api-go/commit/cf36c0def02085cfe9be1e897910a4753ae93bbb))
+* **api:** manual updates ([#252](https://github.com/Finch-API/finch-api-go/issues/252)) ([4967414](https://github.com/Finch-API/finch-api-go/commit/496741432071b93e500c70a165c7994370c62c81))
+* **api:** OpenAPI spec update via Stainless API ([#248](https://github.com/Finch-API/finch-api-go/issues/248)) ([60bb890](https://github.com/Finch-API/finch-api-go/commit/60bb89034e97f272889d12c595f2cdddbb2568fb))
+
+
+### Chores
+
+* **internal:** codegen related update ([#245](https://github.com/Finch-API/finch-api-go/issues/245)) ([4a6fe60](https://github.com/Finch-API/finch-api-go/commit/4a6fe608811d7c2313064ebdcae359098a86c2fc))
+* **internal:** codegen related update ([#253](https://github.com/Finch-API/finch-api-go/issues/253)) ([067c2f1](https://github.com/Finch-API/finch-api-go/commit/067c2f19ac5762b465bcf6250da3ca42c0628a0b))
+* **internal:** skip failing tests ([#250](https://github.com/Finch-API/finch-api-go/issues/250)) ([b0a5b1c](https://github.com/Finch-API/finch-api-go/commit/b0a5b1c89e7b67e9ea5616fb224155d59d3e71f5))
+
+
+### Documentation
+
+* update CONTRIBUTING.md ([#247](https://github.com/Finch-API/finch-api-go/issues/247)) ([8410f3e](https://github.com/Finch-API/finch-api-go/commit/8410f3e1761a0db43da523112b6f2215ec1911db))
+
 ## 1.4.0 (2024-09-03)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/Finch-API/finch-api-go/compare/v1.3.0...v1.4.0)
