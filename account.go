@@ -89,6 +89,15 @@ type Introspection struct {
 	// - `provider` - connection to an external provider
 	// - `finch` - finch-generated data.
 	ConnectionType IntrospectionConnectionType `json:"connection_type,required"`
+	// The email of your customer you provided to Finch when a connect session was
+	// created for this connection.
+	CustomerEmail string `json:"customer_email,required,nullable"`
+	// The ID of your customer you provided to Finch when a connect session was created
+	// for this connection.
+	CustomerID string `json:"customer_id,required,nullable"`
+	// The name of your customer you provided to Finch when a connect session was
+	// created for this connection.
+	CustomerName string `json:"customer_name,required,nullable"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
@@ -115,6 +124,9 @@ type introspectionJSON struct {
 	ConnectionID          apijson.Field
 	ConnectionStatus      apijson.Field
 	ConnectionType        apijson.Field
+	CustomerEmail         apijson.Field
+	CustomerID            apijson.Field
+	CustomerName          apijson.Field
 	Manual                apijson.Field
 	PayrollProviderID     apijson.Field
 	Products              apijson.Field

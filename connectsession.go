@@ -104,7 +104,7 @@ type ConnectSessionNewParams struct {
 	CustomerEmail param.Field[string]                             `json:"customer_email" format:"email"`
 	Integration   param.Field[ConnectSessionNewParamsIntegration] `json:"integration"`
 	Manual        param.Field[bool]                               `json:"manual"`
-	// The number of minutes until the session expires (defaults to 10,080, which is 7
+	// The number of minutes until the session expires (defaults to 20,160, which is 14
 	// days)
 	MinutesToExpire param.Field[float64]                        `json:"minutes_to_expire"`
 	RedirectUri     param.Field[string]                         `json:"redirect_uri"`
@@ -181,7 +181,7 @@ func (r ConnectSessionNewParamsSandbox) IsKnown() bool {
 type ConnectSessionReauthenticateParams struct {
 	// The ID of the existing connection to reauthenticate
 	ConnectionID param.Field[string] `json:"connection_id,required"`
-	// The number of minutes until the session expires (defaults to 10,080, which is 7
+	// The number of minutes until the session expires (defaults to 20,160, which is 14
 	// days)
 	MinutesToExpire param.Field[int64] `json:"minutes_to_expire"`
 	// The products to request access to (optional for reauthentication)
