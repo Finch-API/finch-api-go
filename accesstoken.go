@@ -97,7 +97,10 @@ type CreateAccessTokenResponse struct {
 	// An array of the authorized products associated with the `access_token`.
 	Products []string `json:"products,required"`
 	// The ID of the provider associated with the `access_token`.
-	ProviderID string                        `json:"provider_id,required"`
+	ProviderID string `json:"provider_id,required"`
+	// The ID of your customer you provided to Finch when a connect session was created
+	// for this connection.
+	CustomerID string                        `json:"customer_id,nullable"`
 	JSON       createAccessTokenResponseJSON `json:"-"`
 }
 
@@ -112,6 +115,7 @@ type createAccessTokenResponseJSON struct {
 	ConnectionType apijson.Field
 	Products       apijson.Field
 	ProviderID     apijson.Field
+	CustomerID     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
