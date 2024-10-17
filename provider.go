@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
-	"github.com/Finch-API/finch-api-go/internal/pagination"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/packages/pagination"
 )
 
 // ProviderService contains methods and other services that help with interacting
@@ -791,16 +791,14 @@ type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatements struc
 	Earnings              ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEarnings              `json:"earnings"`
 	EmployeeDeductions    ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployeeDeductions    `json:"employee_deductions"`
 	EmployerContributions ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerContributions `json:"employer_contributions"`
-	// [DEPRECATED] Use `employer_contributions` instead
-	EmployerDeductions ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductions `json:"employer_deductions"`
-	GrossPay           bool                                                                                    `json:"gross_pay"`
-	IndividualID       bool                                                                                    `json:"individual_id"`
-	NetPay             bool                                                                                    `json:"net_pay"`
-	PaymentMethod      bool                                                                                    `json:"payment_method"`
-	Taxes              ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxes              `json:"taxes"`
-	TotalHours         bool                                                                                    `json:"total_hours"`
-	Type               bool                                                                                    `json:"type"`
-	JSON               providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON               `json:"-"`
+	GrossPay              bool                                                                                       `json:"gross_pay"`
+	IndividualID          bool                                                                                       `json:"individual_id"`
+	NetPay                bool                                                                                       `json:"net_pay"`
+	PaymentMethod         bool                                                                                       `json:"payment_method"`
+	Taxes                 ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsTaxes                 `json:"taxes"`
+	TotalHours            bool                                                                                       `json:"total_hours"`
+	Type                  bool                                                                                       `json:"type"`
+	JSON                  providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON                  `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON
@@ -810,7 +808,6 @@ type providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsJSON s
 	Earnings              apijson.Field
 	EmployeeDeductions    apijson.Field
 	EmployerContributions apijson.Field
-	EmployerDeductions    apijson.Field
 	GrossPay              apijson.Field
 	IndividualID          apijson.Field
 	NetPay                apijson.Field
@@ -911,33 +908,6 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEm
 }
 
 func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerContributionsJSON) RawJSON() string {
-	return r.raw
-}
-
-// [DEPRECATED] Use `employer_contributions` instead
-type ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductions struct {
-	Amount   bool                                                                                        `json:"amount"`
-	Currency bool                                                                                        `json:"currency"`
-	Name     bool                                                                                        `json:"name"`
-	JSON     providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON `json:"-"`
-}
-
-// providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON
-// contains the JSON metadata for the struct
-// [ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductions]
-type providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	Name        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ProviderAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductions) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r providerAuthenticationMethodsSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON) RawJSON() string {
 	return r.raw
 }
 

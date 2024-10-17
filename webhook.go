@@ -857,16 +857,14 @@ type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPaySta
 	Earnings              AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEarnings              `json:"earnings"`
 	EmployeeDeductions    AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployeeDeductions    `json:"employee_deductions"`
 	EmployerContributions AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributions `json:"employer_contributions"`
-	// [DEPRECATED] Use `employer_contributions` instead
-	EmployerDeductions AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductions `json:"employer_deductions"`
-	GrossPay           bool                                                                                                 `json:"gross_pay"`
-	IndividualID       bool                                                                                                 `json:"individual_id"`
-	NetPay             bool                                                                                                 `json:"net_pay"`
-	PaymentMethod      bool                                                                                                 `json:"payment_method"`
-	Taxes              AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsTaxes              `json:"taxes"`
-	TotalHours         bool                                                                                                 `json:"total_hours"`
-	Type               bool                                                                                                 `json:"type"`
-	JSON               accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsJSON               `json:"-"`
+	GrossPay              bool                                                                                                    `json:"gross_pay"`
+	IndividualID          bool                                                                                                    `json:"individual_id"`
+	NetPay                bool                                                                                                    `json:"net_pay"`
+	PaymentMethod         bool                                                                                                    `json:"payment_method"`
+	Taxes                 AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsTaxes                 `json:"taxes"`
+	TotalHours            bool                                                                                                    `json:"total_hours"`
+	Type                  bool                                                                                                    `json:"type"`
+	JSON                  accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsJSON                  `json:"-"`
 }
 
 // accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsJSON
@@ -876,7 +874,6 @@ type accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPaySta
 	Earnings              apijson.Field
 	EmployeeDeductions    apijson.Field
 	EmployerContributions apijson.Field
-	EmployerDeductions    apijson.Field
 	GrossPay              apijson.Field
 	IndividualID          apijson.Field
 	NetPay                apijson.Field
@@ -977,33 +974,6 @@ func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPa
 }
 
 func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerContributionsJSON) RawJSON() string {
-	return r.raw
-}
-
-// [DEPRECATED] Use `employer_contributions` instead
-type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductions struct {
-	Amount   bool                                                                                                     `json:"amount"`
-	Currency bool                                                                                                     `json:"currency"`
-	Name     bool                                                                                                     `json:"name"`
-	JSON     accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON `json:"-"`
-}
-
-// accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON
-// contains the JSON metadata for the struct
-// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductions]
-type accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	Name        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductions) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPayStatementsEmployerDeductionsJSON) RawJSON() string {
 	return r.raw
 }
 
