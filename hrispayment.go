@@ -163,7 +163,7 @@ type HRISPaymentListParams struct {
 // URLQuery serializes [HRISPaymentListParams]'s query parameters as `url.Values`.
 func (r HRISPaymentListParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
