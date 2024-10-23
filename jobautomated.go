@@ -238,7 +238,7 @@ type JobAutomatedListParams struct {
 // URLQuery serializes [JobAutomatedListParams]'s query parameters as `url.Values`.
 func (r JobAutomatedListParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
