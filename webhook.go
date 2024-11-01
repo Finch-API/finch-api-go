@@ -200,6 +200,7 @@ type AccountUpdateEventDataAuthenticationMethodSupportedFields struct {
 	Directory    AccountUpdateEventDataAuthenticationMethodSupportedFieldsDirectory    `json:"directory"`
 	Employment   AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmployment   `json:"employment"`
 	Individual   AccountUpdateEventDataAuthenticationMethodSupportedFieldsIndividual   `json:"individual"`
+	PayGroup     AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroup     `json:"pay_group"`
 	PayStatement AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatement `json:"pay_statement"`
 	Payment      AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayment      `json:"payment"`
 	JSON         accountUpdateEventDataAuthenticationMethodSupportedFieldsJSON         `json:"-"`
@@ -213,6 +214,7 @@ type accountUpdateEventDataAuthenticationMethodSupportedFieldsJSON struct {
 	Directory    apijson.Field
 	Employment   apijson.Field
 	Individual   apijson.Field
+	PayGroup     apijson.Field
 	PayStatement apijson.Field
 	Payment      apijson.Field
 	raw          string
@@ -802,6 +804,34 @@ func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsIndividualResi
 }
 
 func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsIndividualResidenceJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroup struct {
+	ID             bool                                                                  `json:"id"`
+	IndividualIDs  bool                                                                  `json:"individual_ids"`
+	Name           bool                                                                  `json:"name"`
+	PayFrequencies bool                                                                  `json:"pay_frequencies"`
+	JSON           accountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroupJSON `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroupJSON contains
+// the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroup]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroupJSON struct {
+	ID             apijson.Field
+	IndividualIDs  apijson.Field
+	Name           apijson.Field
+	PayFrequencies apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroup) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroupJSON) RawJSON() string {
 	return r.raw
 }
 
