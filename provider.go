@@ -139,6 +139,7 @@ type ProviderAuthenticationMethodsSupportedFields struct {
 	Directory    ProviderAuthenticationMethodsSupportedFieldsDirectory    `json:"directory"`
 	Employment   ProviderAuthenticationMethodsSupportedFieldsEmployment   `json:"employment"`
 	Individual   ProviderAuthenticationMethodsSupportedFieldsIndividual   `json:"individual"`
+	PayGroup     ProviderAuthenticationMethodsSupportedFieldsPayGroup     `json:"pay_group"`
 	PayStatement ProviderAuthenticationMethodsSupportedFieldsPayStatement `json:"pay_statement"`
 	Payment      ProviderAuthenticationMethodsSupportedFieldsPayment      `json:"payment"`
 	JSON         providerAuthenticationMethodsSupportedFieldsJSON         `json:"-"`
@@ -151,6 +152,7 @@ type providerAuthenticationMethodsSupportedFieldsJSON struct {
 	Directory    apijson.Field
 	Employment   apijson.Field
 	Individual   apijson.Field
+	PayGroup     apijson.Field
 	PayStatement apijson.Field
 	Payment      apijson.Field
 	raw          string
@@ -736,6 +738,33 @@ func (r *ProviderAuthenticationMethodsSupportedFieldsIndividualResidence) Unmars
 }
 
 func (r providerAuthenticationMethodsSupportedFieldsIndividualResidenceJSON) RawJSON() string {
+	return r.raw
+}
+
+type ProviderAuthenticationMethodsSupportedFieldsPayGroup struct {
+	ID             bool                                                     `json:"id"`
+	IndividualIDs  bool                                                     `json:"individual_ids"`
+	Name           bool                                                     `json:"name"`
+	PayFrequencies bool                                                     `json:"pay_frequencies"`
+	JSON           providerAuthenticationMethodsSupportedFieldsPayGroupJSON `json:"-"`
+}
+
+// providerAuthenticationMethodsSupportedFieldsPayGroupJSON contains the JSON
+// metadata for the struct [ProviderAuthenticationMethodsSupportedFieldsPayGroup]
+type providerAuthenticationMethodsSupportedFieldsPayGroupJSON struct {
+	ID             apijson.Field
+	IndividualIDs  apijson.Field
+	Name           apijson.Field
+	PayFrequencies apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *ProviderAuthenticationMethodsSupportedFieldsPayGroup) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r providerAuthenticationMethodsSupportedFieldsPayGroupJSON) RawJSON() string {
 	return r.raw
 }
 
