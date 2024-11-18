@@ -37,13 +37,17 @@ func NewJobAutomatedService(opts ...option.RequestOption) (r *JobAutomatedServic
 	return
 }
 
-// Enqueue an automated job. Currently, only the `data_sync_all` job type is
-// supported, which will enqueue a job to re-sync all data for a connection.
+// Enqueue an automated job.
+//
+// `data_sync_all`: Enqueue a job to re-sync all data for a connection.
 // `data_sync_all` has a concurrency limit of 1 job at a time per connection. This
 // means that if this endpoint is called while a job is already in progress for
 // this connection, Finch will return the `job_id` of the job that is currently in
 // progress. Finch allows a fixed window rate limit of 1 forced refresh per hour
 // per connection.
+//
+// `w4_data_sync`: Enqueues a job for sync W-4 data for a particular individual,
+// identified by `individual_id`. This feature is currently in beta.
 //
 // This endpoint is available for _Scale_ tier customers as an add-on. To request
 // access to this endpoint, please contact your Finch account manager.
@@ -204,25 +208,65 @@ func (r jobAutomatedNewResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type JobAutomatedNewParams struct {
-	// The type of job to start. Currently the only supported type is `data_sync_all`
-	Type param.Field[JobAutomatedNewParamsType] `json:"type,required"`
+// This interface is a union satisfied by one of the following:
+// [JobAutomatedNewParamsDataSyncAll], [JobAutomatedNewParamsW4DataSync].
+type JobAutomatedNewParams interface {
+	ImplementsJobAutomatedNewParams()
 }
 
-func (r JobAutomatedNewParams) MarshalJSON() (data []byte, err error) {
+type JobAutomatedNewParamsDataSyncAll struct {
+	// The type of job to start.
+	Type param.Field[JobAutomatedNewParamsDataSyncAllType] `json:"type,required"`
+}
+
+func (r JobAutomatedNewParamsDataSyncAll) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The type of job to start. Currently the only supported type is `data_sync_all`
-type JobAutomatedNewParamsType string
+func (JobAutomatedNewParamsDataSyncAll) ImplementsJobAutomatedNewParams() {
+
+}
+
+// The type of job to start.
+type JobAutomatedNewParamsDataSyncAllType string
 
 const (
-	JobAutomatedNewParamsTypeDataSyncAll JobAutomatedNewParamsType = "data_sync_all"
+	JobAutomatedNewParamsDataSyncAllTypeDataSyncAll JobAutomatedNewParamsDataSyncAllType = "data_sync_all"
 )
 
-func (r JobAutomatedNewParamsType) IsKnown() bool {
+func (r JobAutomatedNewParamsDataSyncAllType) IsKnown() bool {
 	switch r {
-	case JobAutomatedNewParamsTypeDataSyncAll:
+	case JobAutomatedNewParamsDataSyncAllTypeDataSyncAll:
+		return true
+	}
+	return false
+}
+
+type JobAutomatedNewParamsW4DataSync struct {
+	// The unique ID of the individual for W-4 data sync.
+	IndividualID param.Field[string] `json:"individual_id,required"`
+	// The type of job to start.
+	Type param.Field[JobAutomatedNewParamsW4DataSyncType] `json:"type,required"`
+}
+
+func (r JobAutomatedNewParamsW4DataSync) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+func (JobAutomatedNewParamsW4DataSync) ImplementsJobAutomatedNewParams() {
+
+}
+
+// The type of job to start.
+type JobAutomatedNewParamsW4DataSyncType string
+
+const (
+	JobAutomatedNewParamsW4DataSyncTypeW4DataSync JobAutomatedNewParamsW4DataSyncType = "w4_data_sync"
+)
+
+func (r JobAutomatedNewParamsW4DataSyncType) IsKnown() bool {
+	switch r {
+	case JobAutomatedNewParamsW4DataSyncTypeW4DataSync:
 		return true
 	}
 	return false
