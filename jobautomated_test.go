@@ -25,8 +25,8 @@ func TestJobAutomatedNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.Jobs.Automated.New(context.TODO(), finchgo.JobAutomatedNewParams{
-		Type: finchgo.F(finchgo.JobAutomatedNewParamsTypeDataSyncAll),
+	_, err := client.Jobs.Automated.New(context.TODO(), finchgo.JobAutomatedNewParamsDataSyncAll{
+		Type: finchgo.F(finchgo.JobAutomatedNewParamsDataSyncAllTypeDataSyncAll),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
