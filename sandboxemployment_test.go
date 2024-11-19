@@ -33,12 +33,6 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			CustomFields: finchgo.F([]finchgo.SandboxEmploymentUpdateParamsCustomField{{
 				Name:  finchgo.F("name"),
 				Value: finchgo.F[any](map[string]interface{}{}),
-			}, {
-				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
-			}, {
-				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
 			}}),
 			Department: finchgo.F(finchgo.SandboxEmploymentUpdateParamsDepartment{
 				Name: finchgo.F("name"),
@@ -56,16 +50,6 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}),
 			IncomeHistory: finchgo.F([]finchgo.IncomeParam{{
-				Amount:        finchgo.F(int64(0)),
-				Currency:      finchgo.F("currency"),
-				EffectiveDate: finchgo.F("effective_date"),
-				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
-			}, {
-				Amount:        finchgo.F(int64(0)),
-				Currency:      finchgo.F("currency"),
-				EffectiveDate: finchgo.F("effective_date"),
-				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
-			}, {
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),
 				EffectiveDate: finchgo.F("effective_date"),
