@@ -33,12 +33,6 @@ func TestSandboxIndividualUpdateWithOptionalParams(t *testing.T) {
 			Emails: finchgo.F([]finchgo.SandboxIndividualUpdateParamsEmail{{
 				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
-			}, {
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
-			}, {
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
 			}}),
 			EncryptedSsn: finchgo.F("encrypted_ssn"),
 			Ethnicity:    finchgo.F(finchgo.SandboxIndividualUpdateParamsEthnicityAsian),
@@ -47,12 +41,6 @@ func TestSandboxIndividualUpdateWithOptionalParams(t *testing.T) {
 			LastName:     finchgo.F("last_name"),
 			MiddleName:   finchgo.F("middle_name"),
 			PhoneNumbers: finchgo.F([]finchgo.SandboxIndividualUpdateParamsPhoneNumber{{
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsPhoneNumbersTypeWork),
-			}, {
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsPhoneNumbersTypeWork),
-			}, {
 				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsPhoneNumbersTypeWork),
 			}}),

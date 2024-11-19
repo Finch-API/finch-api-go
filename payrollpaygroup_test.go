@@ -49,7 +49,7 @@ func TestPayrollPayGroupListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Payroll.PayGroups.List(context.TODO(), finchgo.PayrollPayGroupListParams{
 		IndividualID:   finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
-		PayFrequencies: finchgo.F([]string{"string", "string", "string"}),
+		PayFrequencies: finchgo.F([]string{"string"}),
 	})
 	if err != nil {
 		var apierr *finchgo.Error

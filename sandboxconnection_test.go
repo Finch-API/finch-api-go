@@ -29,7 +29,7 @@ func TestSandboxConnectionNewWithOptionalParams(t *testing.T) {
 		ProviderID:         finchgo.F("provider_id"),
 		AuthenticationType: finchgo.F(finchgo.SandboxConnectionNewParamsAuthenticationTypeCredential),
 		EmployeeSize:       finchgo.F(int64(0)),
-		Products:           finchgo.F([]string{"string", "string", "string"}),
+		Products:           finchgo.F([]string{"string"}),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
