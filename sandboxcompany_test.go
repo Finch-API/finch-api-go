@@ -32,30 +32,8 @@ func TestSandboxCompanyUpdateWithOptionalParams(t *testing.T) {
 			AccountType:     finchgo.F(finchgo.SandboxCompanyUpdateParamsAccountsAccountTypeChecking),
 			InstitutionName: finchgo.F("institution_name"),
 			RoutingNumber:   finchgo.F("routing_number"),
-		}, {
-			AccountName:     finchgo.F("account_name"),
-			AccountNumber:   finchgo.F("account_number"),
-			AccountType:     finchgo.F(finchgo.SandboxCompanyUpdateParamsAccountsAccountTypeChecking),
-			InstitutionName: finchgo.F("institution_name"),
-			RoutingNumber:   finchgo.F("routing_number"),
-		}, {
-			AccountName:     finchgo.F("account_name"),
-			AccountNumber:   finchgo.F("account_number"),
-			AccountType:     finchgo.F(finchgo.SandboxCompanyUpdateParamsAccountsAccountTypeChecking),
-			InstitutionName: finchgo.F("institution_name"),
-			RoutingNumber:   finchgo.F("routing_number"),
 		}}),
 		Departments: finchgo.F([]finchgo.SandboxCompanyUpdateParamsDepartment{{
-			Name: finchgo.F("name"),
-			Parent: finchgo.F(finchgo.SandboxCompanyUpdateParamsDepartmentsParent{
-				Name: finchgo.F("name"),
-			}),
-		}, {
-			Name: finchgo.F("name"),
-			Parent: finchgo.F(finchgo.SandboxCompanyUpdateParamsDepartmentsParent{
-				Name: finchgo.F("name"),
-			}),
-		}, {
 			Name: finchgo.F("name"),
 			Parent: finchgo.F(finchgo.SandboxCompanyUpdateParamsDepartmentsParent{
 				Name: finchgo.F("name"),
@@ -68,24 +46,6 @@ func TestSandboxCompanyUpdateWithOptionalParams(t *testing.T) {
 		}),
 		LegalName: finchgo.F("legal_name"),
 		Locations: finchgo.F([]finchgo.LocationParam{{
-			City:       finchgo.F("city"),
-			Country:    finchgo.F("country"),
-			Line1:      finchgo.F("line1"),
-			Line2:      finchgo.F("line2"),
-			Name:       finchgo.F("name"),
-			PostalCode: finchgo.F("postal_code"),
-			SourceID:   finchgo.F("source_id"),
-			State:      finchgo.F("state"),
-		}, {
-			City:       finchgo.F("city"),
-			Country:    finchgo.F("country"),
-			Line1:      finchgo.F("line1"),
-			Line2:      finchgo.F("line2"),
-			Name:       finchgo.F("name"),
-			PostalCode: finchgo.F("postal_code"),
-			SourceID:   finchgo.F("source_id"),
-			State:      finchgo.F("state"),
-		}, {
 			City:       finchgo.F("city"),
 			Country:    finchgo.F("country"),
 			Line1:      finchgo.F("line1"),

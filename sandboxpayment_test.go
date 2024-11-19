@@ -34,18 +34,6 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Hours:    finchgo.F(0.000000),
 				Name:     finchgo.F("name"),
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
-			}, {
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-				Hours:    finchgo.F(0.000000),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
-			}, {
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-				Hours:    finchgo.F(0.000000),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
 			}}),
 			EmployeeDeductions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeduction{{
 				Amount:   finchgo.F(int64(2000)),
@@ -55,16 +43,6 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
 			EmployerContributions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployerContribution{{
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.BenefitType_401k),
-			}, {
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.BenefitType_401k),
-			}, {
 				Amount:   finchgo.F(int64(0)),
 				Currency: finchgo.F("currency"),
 				Name:     finchgo.F("name"),
@@ -81,18 +59,6 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 			}),
 			PaymentMethod: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsPaymentMethodCheck),
 			Taxes: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsTax{{
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-				Employer: finchgo.F(true),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
-			}, {
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-				Employer: finchgo.F(true),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
-			}, {
 				Amount:   finchgo.F(int64(0)),
 				Currency: finchgo.F("currency"),
 				Employer: finchgo.F(true),

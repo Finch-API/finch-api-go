@@ -28,10 +28,6 @@ func TestHRISEmploymentGetMany(t *testing.T) {
 	_, err := client.HRIS.Employments.GetMany(context.TODO(), finchgo.HRISEmploymentGetManyParams{
 		Requests: finchgo.F([]finchgo.HRISEmploymentGetManyParamsRequest{{
 			IndividualID: finchgo.F("individual_id"),
-		}, {
-			IndividualID: finchgo.F("individual_id"),
-		}, {
-			IndividualID: finchgo.F("individual_id"),
 		}}),
 	})
 	if err != nil {

@@ -31,24 +31,12 @@ func TestSandboxDirectoryNew(t *testing.T) {
 			CustomFields: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyCustomField{{
 				Name:  finchgo.F("name"),
 				Value: finchgo.F[any](map[string]interface{}{}),
-			}, {
-				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
-			}, {
-				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
 			}}),
 			Department: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyDepartment{
 				Name: finchgo.F("name"),
 			}),
 			Dob: finchgo.F("01/01/2000"),
 			Emails: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyEmail{{
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEmailsTypeWork),
-			}, {
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEmailsTypeWork),
-			}, {
 				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEmailsTypeWork),
 			}}),
@@ -72,16 +60,6 @@ func TestSandboxDirectoryNew(t *testing.T) {
 				Currency:      finchgo.F("currency"),
 				EffectiveDate: finchgo.F("effective_date"),
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
-			}, {
-				Amount:        finchgo.F(int64(0)),
-				Currency:      finchgo.F("currency"),
-				EffectiveDate: finchgo.F("effective_date"),
-				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
-			}, {
-				Amount:        finchgo.F(int64(0)),
-				Currency:      finchgo.F("currency"),
-				EffectiveDate: finchgo.F("effective_date"),
-				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}}),
 			IsActive:         finchgo.F(true),
 			LastName:         finchgo.F("Smith"),
@@ -101,12 +79,6 @@ func TestSandboxDirectoryNew(t *testing.T) {
 			}),
 			MiddleName: finchgo.F("middle_name"),
 			PhoneNumbers: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyPhoneNumber{{
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyPhoneNumbersTypeWork),
-			}, {
-				Data: finchgo.F("data"),
-				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyPhoneNumbersTypeWork),
-			}, {
 				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyPhoneNumbersTypeWork),
 			}}),

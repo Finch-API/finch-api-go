@@ -27,13 +27,9 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
 		Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{
-			Include: finchgo.F([]string{"string", "string", "string"}),
+			Include: finchgo.F([]string{"string"}),
 		}),
 		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequest{{
-			IndividualID: finchgo.F("individual_id"),
-		}, {
-			IndividualID: finchgo.F("individual_id"),
-		}, {
 			IndividualID: finchgo.F("individual_id"),
 		}}),
 	})
