@@ -28,7 +28,7 @@ func TestConnectSessionNewWithOptionalParams(t *testing.T) {
 	_, err := client.Connect.Sessions.New(context.TODO(), finchgo.ConnectSessionNewParams{
 		CustomerID:    finchgo.F("x"),
 		CustomerName:  finchgo.F("x"),
-		Products:      finchgo.F([]finchgo.ConnectSessionNewParamsProduct{finchgo.ConnectSessionNewParamsProductCompany, finchgo.ConnectSessionNewParamsProductDirectory, finchgo.ConnectSessionNewParamsProductIndividual}),
+		Products:      finchgo.F([]finchgo.ConnectSessionNewParamsProduct{finchgo.ConnectSessionNewParamsProductCompany}),
 		CustomerEmail: finchgo.F("dev@stainlessapi.com"),
 		Integration: finchgo.F(finchgo.ConnectSessionNewParamsIntegration{
 			AuthMethod: finchgo.F(finchgo.ConnectSessionNewParamsIntegrationAuthMethodAssisted),
@@ -63,7 +63,7 @@ func TestConnectSessionReauthenticateWithOptionalParams(t *testing.T) {
 	_, err := client.Connect.Sessions.Reauthenticate(context.TODO(), finchgo.ConnectSessionReauthenticateParams{
 		ConnectionID:    finchgo.F("connection_id"),
 		MinutesToExpire: finchgo.F(int64(0)),
-		Products:        finchgo.F([]finchgo.ConnectSessionReauthenticateParamsProduct{finchgo.ConnectSessionReauthenticateParamsProductCompany, finchgo.ConnectSessionReauthenticateParamsProductDirectory, finchgo.ConnectSessionReauthenticateParamsProductIndividual}),
+		Products:        finchgo.F([]finchgo.ConnectSessionReauthenticateParamsProduct{finchgo.ConnectSessionReauthenticateParamsProductCompany}),
 		RedirectUri:     finchgo.F("https://example.com"),
 	})
 	if err != nil {

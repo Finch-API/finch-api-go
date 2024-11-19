@@ -79,7 +79,7 @@ func TestHRISBenefitIndividualUnenrollManyWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"benefit_id",
 		finchgo.HRISBenefitIndividualUnenrollManyParams{
-			IndividualIDs: finchgo.F([]string{"string", "string", "string"}),
+			IndividualIDs: finchgo.F([]string{"string"}),
 		},
 	)
 	if err != nil {
