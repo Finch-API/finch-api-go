@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.9.0 (2024-11-19)
+
+Full Changelog: [v1.8.0...v1.9.0](https://github.com/Finch-API/finch-api-go/compare/v1.8.0...v1.9.0)
+
+### Features
+
+* **api:** api update ([#269](https://github.com/Finch-API/finch-api-go/issues/269)) ([5d6542d](https://github.com/Finch-API/finch-api-go/commit/5d6542d225fddf2c6dd0c9599e949f9812847de8))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#266](https://github.com/Finch-API/finch-api-go/issues/266)) ([ab1f72e](https://github.com/Finch-API/finch-api-go/commit/ab1f72e5996ba2730ead6ee9ed52166863f0851c))
+* rebuild project due to codegen change ([#268](https://github.com/Finch-API/finch-api-go/issues/268)) ([d2204c2](https://github.com/Finch-API/finch-api-go/commit/d2204c295792c78721d147609ae73c9e852472a6))
+* rebuild project due to codegen change ([#270](https://github.com/Finch-API/finch-api-go/issues/270)) ([62d08d3](https://github.com/Finch-API/finch-api-go/commit/62d08d35200688d5289b1bd4b9fbf772b74408ba))
+
 ## 1.8.0 (2024-11-01)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/Finch-API/finch-api-go/compare/v1.7.0...v1.8.0)
