@@ -46,8 +46,8 @@ func NewJobAutomatedService(opts ...option.RequestOption) (r *JobAutomatedServic
 // progress. Finch allows a fixed window rate limit of 1 forced refresh per hour
 // per connection.
 //
-// `w4_data_sync`: Enqueues a job for sync W-4 data for a particular individual,
-// identified by `individual_id`. This feature is currently in beta.
+// `w4_form_employee_sync`: Enqueues a job for sync W-4 data for a particular
+// individual, identified by `individual_id`. This feature is currently in beta.
 //
 // This endpoint is available for _Scale_ tier customers as an add-on. To request
 // access to this endpoint, please contact your Finch account manager.
@@ -209,7 +209,7 @@ func (r jobAutomatedNewResponseJSON) RawJSON() string {
 }
 
 // This interface is a union satisfied by one of the following:
-// [JobAutomatedNewParamsDataSyncAll], [JobAutomatedNewParamsW4DataSync].
+// [JobAutomatedNewParamsDataSyncAll], [JobAutomatedNewParamsW4FormEmployeeSync].
 type JobAutomatedNewParams interface {
 	ImplementsJobAutomatedNewParams()
 }
@@ -242,31 +242,31 @@ func (r JobAutomatedNewParamsDataSyncAllType) IsKnown() bool {
 	return false
 }
 
-type JobAutomatedNewParamsW4DataSync struct {
+type JobAutomatedNewParamsW4FormEmployeeSync struct {
 	// The unique ID of the individual for W-4 data sync.
 	IndividualID param.Field[string] `json:"individual_id,required"`
 	// The type of job to start.
-	Type param.Field[JobAutomatedNewParamsW4DataSyncType] `json:"type,required"`
+	Type param.Field[JobAutomatedNewParamsW4FormEmployeeSyncType] `json:"type,required"`
 }
 
-func (r JobAutomatedNewParamsW4DataSync) MarshalJSON() (data []byte, err error) {
+func (r JobAutomatedNewParamsW4FormEmployeeSync) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-func (JobAutomatedNewParamsW4DataSync) ImplementsJobAutomatedNewParams() {
+func (JobAutomatedNewParamsW4FormEmployeeSync) ImplementsJobAutomatedNewParams() {
 
 }
 
 // The type of job to start.
-type JobAutomatedNewParamsW4DataSyncType string
+type JobAutomatedNewParamsW4FormEmployeeSyncType string
 
 const (
-	JobAutomatedNewParamsW4DataSyncTypeW4DataSync JobAutomatedNewParamsW4DataSyncType = "w4_data_sync"
+	JobAutomatedNewParamsW4FormEmployeeSyncTypeW4FormEmployeeSync JobAutomatedNewParamsW4FormEmployeeSyncType = "w4_form_employee_sync"
 )
 
-func (r JobAutomatedNewParamsW4DataSyncType) IsKnown() bool {
+func (r JobAutomatedNewParamsW4FormEmployeeSyncType) IsKnown() bool {
 	switch r {
-	case JobAutomatedNewParamsW4DataSyncTypeW4DataSync:
+	case JobAutomatedNewParamsW4FormEmployeeSyncTypeW4FormEmployeeSync:
 		return true
 	}
 	return false
