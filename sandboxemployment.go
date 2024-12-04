@@ -58,7 +58,9 @@ type SandboxEmploymentUpdateResponse struct {
 	Department SandboxEmploymentUpdateResponseDepartment `json:"department,nullable"`
 	// The employment object.
 	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment,nullable"`
-	EndDate    string                                    `json:"end_date,nullable"`
+	// The detailed employment status of the individual.
+	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status,nullable"`
+	EndDate          string                                          `json:"end_date,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name,nullable"`
 	// The employee's income as reported by the provider. This may not always be
@@ -93,6 +95,7 @@ type sandboxEmploymentUpdateResponseJSON struct {
 	CustomFields     apijson.Field
 	Department       apijson.Field
 	Employment       apijson.Field
+	EmploymentStatus apijson.Field
 	EndDate          apijson.Field
 	FirstName        apijson.Field
 	Income           apijson.Field
@@ -226,6 +229,27 @@ func (r SandboxEmploymentUpdateResponseEmploymentType) IsKnown() bool {
 	return false
 }
 
+// The detailed employment status of the individual.
+type SandboxEmploymentUpdateResponseEmploymentStatus string
+
+const (
+	SandboxEmploymentUpdateResponseEmploymentStatusActive     SandboxEmploymentUpdateResponseEmploymentStatus = "active"
+	SandboxEmploymentUpdateResponseEmploymentStatusDeceased   SandboxEmploymentUpdateResponseEmploymentStatus = "deceased"
+	SandboxEmploymentUpdateResponseEmploymentStatusLeave      SandboxEmploymentUpdateResponseEmploymentStatus = "leave"
+	SandboxEmploymentUpdateResponseEmploymentStatusOnboarding SandboxEmploymentUpdateResponseEmploymentStatus = "onboarding"
+	SandboxEmploymentUpdateResponseEmploymentStatusPrehire    SandboxEmploymentUpdateResponseEmploymentStatus = "prehire"
+	SandboxEmploymentUpdateResponseEmploymentStatusRetired    SandboxEmploymentUpdateResponseEmploymentStatus = "retired"
+	SandboxEmploymentUpdateResponseEmploymentStatusTerminated SandboxEmploymentUpdateResponseEmploymentStatus = "terminated"
+)
+
+func (r SandboxEmploymentUpdateResponseEmploymentStatus) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateResponseEmploymentStatusActive, SandboxEmploymentUpdateResponseEmploymentStatusDeceased, SandboxEmploymentUpdateResponseEmploymentStatusLeave, SandboxEmploymentUpdateResponseEmploymentStatusOnboarding, SandboxEmploymentUpdateResponseEmploymentStatusPrehire, SandboxEmploymentUpdateResponseEmploymentStatusRetired, SandboxEmploymentUpdateResponseEmploymentStatusTerminated:
+		return true
+	}
+	return false
+}
+
 // The manager object representing the manager of the individual within the org.
 type SandboxEmploymentUpdateResponseManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
@@ -260,7 +284,9 @@ type SandboxEmploymentUpdateParams struct {
 	Department param.Field[SandboxEmploymentUpdateParamsDepartment] `json:"department"`
 	// The employment object.
 	Employment param.Field[SandboxEmploymentUpdateParamsEmployment] `json:"employment"`
-	EndDate    param.Field[string]                                  `json:"end_date"`
+	// The detailed employment status of the individual.
+	EmploymentStatus param.Field[SandboxEmploymentUpdateParamsEmploymentStatus] `json:"employment_status"`
+	EndDate          param.Field[string]                                        `json:"end_date"`
 	// The legal first name of the individual.
 	FirstName param.Field[string] `json:"first_name"`
 	// The employee's income as reported by the provider. This may not always be
@@ -352,6 +378,27 @@ const (
 func (r SandboxEmploymentUpdateParamsEmploymentType) IsKnown() bool {
 	switch r {
 	case SandboxEmploymentUpdateParamsEmploymentTypeEmployee, SandboxEmploymentUpdateParamsEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
+
+// The detailed employment status of the individual.
+type SandboxEmploymentUpdateParamsEmploymentStatus string
+
+const (
+	SandboxEmploymentUpdateParamsEmploymentStatusActive     SandboxEmploymentUpdateParamsEmploymentStatus = "active"
+	SandboxEmploymentUpdateParamsEmploymentStatusDeceased   SandboxEmploymentUpdateParamsEmploymentStatus = "deceased"
+	SandboxEmploymentUpdateParamsEmploymentStatusLeave      SandboxEmploymentUpdateParamsEmploymentStatus = "leave"
+	SandboxEmploymentUpdateParamsEmploymentStatusOnboarding SandboxEmploymentUpdateParamsEmploymentStatus = "onboarding"
+	SandboxEmploymentUpdateParamsEmploymentStatusPrehire    SandboxEmploymentUpdateParamsEmploymentStatus = "prehire"
+	SandboxEmploymentUpdateParamsEmploymentStatusRetired    SandboxEmploymentUpdateParamsEmploymentStatus = "retired"
+	SandboxEmploymentUpdateParamsEmploymentStatusTerminated SandboxEmploymentUpdateParamsEmploymentStatus = "terminated"
+)
+
+func (r SandboxEmploymentUpdateParamsEmploymentStatus) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateParamsEmploymentStatusActive, SandboxEmploymentUpdateParamsEmploymentStatusDeceased, SandboxEmploymentUpdateParamsEmploymentStatusLeave, SandboxEmploymentUpdateParamsEmploymentStatusOnboarding, SandboxEmploymentUpdateParamsEmploymentStatusPrehire, SandboxEmploymentUpdateParamsEmploymentStatusRetired, SandboxEmploymentUpdateParamsEmploymentStatusTerminated:
 		return true
 	}
 	return false
