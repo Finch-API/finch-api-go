@@ -41,8 +41,9 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 				Subtype: finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentSubtypeFullTime),
 				Type:    finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentTypeEmployee),
 			}),
-			EndDate:   finchgo.F("end_date"),
-			FirstName: finchgo.F("first_name"),
+			EmploymentStatus: finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentStatusActive),
+			EndDate:          finchgo.F("end_date"),
+			FirstName:        finchgo.F("first_name"),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),

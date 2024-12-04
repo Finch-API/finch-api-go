@@ -440,46 +440,48 @@ func (r providerAuthenticationMethodsSupportedFieldsDirectoryPagingJSON) RawJSON
 }
 
 type ProviderAuthenticationMethodsSupportedFieldsEmployment struct {
-	ID            bool                                                             `json:"id"`
-	ClassCode     bool                                                             `json:"class_code"`
-	CustomFields  bool                                                             `json:"custom_fields"`
-	Department    ProviderAuthenticationMethodsSupportedFieldsEmploymentDepartment `json:"department"`
-	Employment    ProviderAuthenticationMethodsSupportedFieldsEmploymentEmployment `json:"employment"`
-	EndDate       bool                                                             `json:"end_date"`
-	FirstName     bool                                                             `json:"first_name"`
-	Income        ProviderAuthenticationMethodsSupportedFieldsEmploymentIncome     `json:"income"`
-	IncomeHistory bool                                                             `json:"income_history"`
-	IsActive      bool                                                             `json:"is_active"`
-	LastName      bool                                                             `json:"last_name"`
-	Location      ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation   `json:"location"`
-	Manager       ProviderAuthenticationMethodsSupportedFieldsEmploymentManager    `json:"manager"`
-	MiddleName    bool                                                             `json:"middle_name"`
-	StartDate     bool                                                             `json:"start_date"`
-	Title         bool                                                             `json:"title"`
-	JSON          providerAuthenticationMethodsSupportedFieldsEmploymentJSON       `json:"-"`
+	ID               bool                                                             `json:"id"`
+	ClassCode        bool                                                             `json:"class_code"`
+	CustomFields     bool                                                             `json:"custom_fields"`
+	Department       ProviderAuthenticationMethodsSupportedFieldsEmploymentDepartment `json:"department"`
+	Employment       ProviderAuthenticationMethodsSupportedFieldsEmploymentEmployment `json:"employment"`
+	EmploymentStatus bool                                                             `json:"employment_status"`
+	EndDate          bool                                                             `json:"end_date"`
+	FirstName        bool                                                             `json:"first_name"`
+	Income           ProviderAuthenticationMethodsSupportedFieldsEmploymentIncome     `json:"income"`
+	IncomeHistory    bool                                                             `json:"income_history"`
+	IsActive         bool                                                             `json:"is_active"`
+	LastName         bool                                                             `json:"last_name"`
+	Location         ProviderAuthenticationMethodsSupportedFieldsEmploymentLocation   `json:"location"`
+	Manager          ProviderAuthenticationMethodsSupportedFieldsEmploymentManager    `json:"manager"`
+	MiddleName       bool                                                             `json:"middle_name"`
+	StartDate        bool                                                             `json:"start_date"`
+	Title            bool                                                             `json:"title"`
+	JSON             providerAuthenticationMethodsSupportedFieldsEmploymentJSON       `json:"-"`
 }
 
 // providerAuthenticationMethodsSupportedFieldsEmploymentJSON contains the JSON
 // metadata for the struct [ProviderAuthenticationMethodsSupportedFieldsEmployment]
 type providerAuthenticationMethodsSupportedFieldsEmploymentJSON struct {
-	ID            apijson.Field
-	ClassCode     apijson.Field
-	CustomFields  apijson.Field
-	Department    apijson.Field
-	Employment    apijson.Field
-	EndDate       apijson.Field
-	FirstName     apijson.Field
-	Income        apijson.Field
-	IncomeHistory apijson.Field
-	IsActive      apijson.Field
-	LastName      apijson.Field
-	Location      apijson.Field
-	Manager       apijson.Field
-	MiddleName    apijson.Field
-	StartDate     apijson.Field
-	Title         apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
+	ID               apijson.Field
+	ClassCode        apijson.Field
+	CustomFields     apijson.Field
+	Department       apijson.Field
+	Employment       apijson.Field
+	EmploymentStatus apijson.Field
+	EndDate          apijson.Field
+	FirstName        apijson.Field
+	Income           apijson.Field
+	IncomeHistory    apijson.Field
+	IsActive         apijson.Field
+	LastName         apijson.Field
+	Location         apijson.Field
+	Manager          apijson.Field
+	MiddleName       apijson.Field
+	StartDate        apijson.Field
+	Title            apijson.Field
+	raw              string
+	ExtraFields      map[string]apijson.Field
 }
 
 func (r *ProviderAuthenticationMethodsSupportedFieldsEmployment) UnmarshalJSON(data []byte) (err error) {
