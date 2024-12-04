@@ -67,7 +67,9 @@ type EmploymentData struct {
 	Department EmploymentDataDepartment `json:"department,nullable"`
 	// The employment object.
 	Employment EmploymentDataEmployment `json:"employment,nullable"`
-	EndDate    string                   `json:"end_date,nullable"`
+	// The detailed employment status of the individual. Available options: `active`, `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status,nullable"`
+	EndDate          string                         `json:"end_date,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name,nullable"`
 	// The employee's income as reported by the provider. This may not always be
@@ -103,6 +105,7 @@ type employmentDataJSON struct {
 	CustomFields     apijson.Field
 	Department       apijson.Field
 	Employment       apijson.Field
+	EmploymentStatus apijson.Field
 	EndDate          apijson.Field
 	FirstName        apijson.Field
 	Income           apijson.Field
@@ -232,6 +235,27 @@ const (
 func (r EmploymentDataEmploymentType) IsKnown() bool {
 	switch r {
 	case EmploymentDataEmploymentTypeEmployee, EmploymentDataEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
+
+// The detailed employment status of the individual. Available options: `active`, `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+type EmploymentDataEmploymentStatus string
+
+const (
+	EmploymentDataEmploymentStatusActive     EmploymentDataEmploymentStatus = "active"
+	EmploymentDataEmploymentStatusDeceased   EmploymentDataEmploymentStatus = "deceased"
+	EmploymentDataEmploymentStatusLeave      EmploymentDataEmploymentStatus = "leave"
+	EmploymentDataEmploymentStatusOnboarding EmploymentDataEmploymentStatus = "onboarding"
+	EmploymentDataEmploymentStatusPrehire    EmploymentDataEmploymentStatus = "prehire"
+	EmploymentDataEmploymentStatusRetired    EmploymentDataEmploymentStatus = "retired"
+	EmploymentDataEmploymentStatusTerminated EmploymentDataEmploymentStatus = "terminated"
+)
+
+func (r EmploymentDataEmploymentStatus) IsKnown() bool {
+	switch r {
+	case EmploymentDataEmploymentStatusActive, EmploymentDataEmploymentStatusDeceased, EmploymentDataEmploymentStatusLeave, EmploymentDataEmploymentStatusOnboarding, EmploymentDataEmploymentStatusPrehire, EmploymentDataEmploymentStatusRetired, EmploymentDataEmploymentStatusTerminated:
 		return true
 	}
 	return false
