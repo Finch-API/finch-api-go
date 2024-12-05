@@ -64,6 +64,8 @@ type SandboxDirectoryNewParamsBody struct {
 	Emails     param.Field[[]SandboxDirectoryNewParamsBodyEmail]    `json:"emails"`
 	// The employment object.
 	Employment param.Field[SandboxDirectoryNewParamsBodyEmployment] `json:"employment"`
+	// The detailed employment status of the individual.
+	EmploymentStatus param.Field[SandboxDirectoryNewParamsBodyEmploymentStatus] `json:"employment_status"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
@@ -197,6 +199,27 @@ const (
 func (r SandboxDirectoryNewParamsBodyEmploymentType) IsKnown() bool {
 	switch r {
 	case SandboxDirectoryNewParamsBodyEmploymentTypeEmployee, SandboxDirectoryNewParamsBodyEmploymentTypeContractor:
+		return true
+	}
+	return false
+}
+
+// The detailed employment status of the individual.
+type SandboxDirectoryNewParamsBodyEmploymentStatus string
+
+const (
+	SandboxDirectoryNewParamsBodyEmploymentStatusActive     SandboxDirectoryNewParamsBodyEmploymentStatus = "active"
+	SandboxDirectoryNewParamsBodyEmploymentStatusDeceased   SandboxDirectoryNewParamsBodyEmploymentStatus = "deceased"
+	SandboxDirectoryNewParamsBodyEmploymentStatusLeave      SandboxDirectoryNewParamsBodyEmploymentStatus = "leave"
+	SandboxDirectoryNewParamsBodyEmploymentStatusOnboarding SandboxDirectoryNewParamsBodyEmploymentStatus = "onboarding"
+	SandboxDirectoryNewParamsBodyEmploymentStatusPrehire    SandboxDirectoryNewParamsBodyEmploymentStatus = "prehire"
+	SandboxDirectoryNewParamsBodyEmploymentStatusRetired    SandboxDirectoryNewParamsBodyEmploymentStatus = "retired"
+	SandboxDirectoryNewParamsBodyEmploymentStatusTerminated SandboxDirectoryNewParamsBodyEmploymentStatus = "terminated"
+)
+
+func (r SandboxDirectoryNewParamsBodyEmploymentStatus) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyEmploymentStatusActive, SandboxDirectoryNewParamsBodyEmploymentStatusDeceased, SandboxDirectoryNewParamsBodyEmploymentStatusLeave, SandboxDirectoryNewParamsBodyEmploymentStatusOnboarding, SandboxDirectoryNewParamsBodyEmploymentStatusPrehire, SandboxDirectoryNewParamsBodyEmploymentStatusRetired, SandboxDirectoryNewParamsBodyEmploymentStatusTerminated:
 		return true
 	}
 	return false
