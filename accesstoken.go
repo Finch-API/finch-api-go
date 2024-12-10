@@ -63,8 +63,10 @@ type CreateAccessTokenResponse struct {
 	ProviderID string `json:"provider_id,required"`
 	// The ID of your customer you provided to Finch when a connect session was created
 	// for this connection.
-	CustomerID string                        `json:"customer_id,nullable"`
-	JSON       createAccessTokenResponseJSON `json:"-"`
+	CustomerID string `json:"customer_id,nullable"`
+	// The RFC 8693 token type (Finch uses `bearer` tokens)
+	TokenType string                        `json:"token_type"`
+	JSON      createAccessTokenResponseJSON `json:"-"`
 }
 
 // createAccessTokenResponseJSON contains the JSON metadata for the struct
@@ -79,6 +81,7 @@ type createAccessTokenResponseJSON struct {
 	Products       apijson.Field
 	ProviderID     apijson.Field
 	CustomerID     apijson.Field
+	TokenType      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
