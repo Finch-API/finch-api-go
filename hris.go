@@ -201,13 +201,3 @@ func (r *Money) UnmarshalJSON(data []byte) (err error) {
 func (r moneyJSON) RawJSON() string {
 	return r.raw
 }
-
-type MoneyParam struct {
-	// Amount for money object (in cents)
-	Amount   param.Field[int64]  `json:"amount"`
-	Currency param.Field[string] `json:"currency"`
-}
-
-func (r MoneyParam) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
