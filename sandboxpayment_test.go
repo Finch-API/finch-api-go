@@ -48,15 +48,9 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Name:     finchgo.F("name"),
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
-			GrossPay: finchgo.F(finchgo.MoneyParam{
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-			}),
-			IndividualID: finchgo.F("b2338cfb-472f-4f72-9faa-e028c083144a"),
-			NetPay: finchgo.F(finchgo.MoneyParam{
-				Amount:   finchgo.F(int64(0)),
-				Currency: finchgo.F("currency"),
-			}),
+			GrossPay:      finchgo.F(0.000000),
+			IndividualID:  finchgo.F("b2338cfb-472f-4f72-9faa-e028c083144a"),
+			NetPay:        finchgo.F(0.000000),
 			PaymentMethod: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsPaymentMethodCheck),
 			Taxes: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsTax{{
 				Amount:   finchgo.F(int64(0)),

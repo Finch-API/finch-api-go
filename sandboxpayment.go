@@ -80,10 +80,12 @@ type SandboxPaymentNewParamsPayStatement struct {
 	// The array of deductions objects associated with this pay statement.
 	EmployeeDeductions    param.Field[[]SandboxPaymentNewParamsPayStatementsEmployeeDeduction]    `json:"employee_deductions"`
 	EmployerContributions param.Field[[]SandboxPaymentNewParamsPayStatementsEmployerContribution] `json:"employer_contributions"`
-	GrossPay              param.Field[MoneyParam]                                                 `json:"gross_pay"`
+	// The gross pay for the pay period
+	GrossPay param.Field[float64] `json:"gross_pay"`
 	// A stable Finch `id` (UUID v4) for an individual in the company
-	IndividualID param.Field[string]     `json:"individual_id"`
-	NetPay       param.Field[MoneyParam] `json:"net_pay"`
+	IndividualID param.Field[string] `json:"individual_id"`
+	// The net pay for the pay period
+	NetPay param.Field[float64] `json:"net_pay"`
 	// The payment method.
 	PaymentMethod param.Field[SandboxPaymentNewParamsPayStatementsPaymentMethod] `json:"payment_method"`
 	// The array of taxes objects associated with this pay statement.
