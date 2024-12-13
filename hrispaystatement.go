@@ -68,12 +68,10 @@ type PayStatement struct {
 	// The array of deductions objects associated with this pay statement.
 	EmployeeDeductions    []PayStatementEmployeeDeduction    `json:"employee_deductions,nullable"`
 	EmployerContributions []PayStatementEmployerContribution `json:"employer_contributions,nullable"`
-	// The gross pay for the pay period
-	GrossPay float64 `json:"gross_pay,nullable"`
+	GrossPay              Money                              `json:"gross_pay,nullable"`
 	// A stable Finch `id` (UUID v4) for an individual in the company
 	IndividualID string `json:"individual_id"`
-	// The net pay for the pay period
-	NetPay float64 `json:"net_pay,nullable"`
+	NetPay       Money  `json:"net_pay,nullable"`
 	// The payment method.
 	PaymentMethod PayStatementPaymentMethod `json:"payment_method,nullable"`
 	// The array of taxes objects associated with this pay statement.
