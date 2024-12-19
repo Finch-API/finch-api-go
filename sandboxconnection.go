@@ -53,6 +53,7 @@ type SandboxConnectionNewResponse struct {
 	Products     []string `json:"products,required"`
 	// The ID of the provider associated with the `access_token`.
 	ProviderID string                           `json:"provider_id,required" format:"uuid"`
+	TokenType  string                           `json:"token_type"`
 	JSON       sandboxConnectionNewResponseJSON `json:"-"`
 }
 
@@ -66,6 +67,7 @@ type sandboxConnectionNewResponseJSON struct {
 	ConnectionID       apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
+	TokenType          apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
