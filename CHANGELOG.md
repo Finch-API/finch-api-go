@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.12.0 (2024-12-19)
+
+Full Changelog: [v1.11.0...v1.12.0](https://github.com/Finch-API/finch-api-go/compare/v1.11.0...v1.12.0)
+
+### Features
+
+* **api:** api update ([#278](https://github.com/Finch-API/finch-api-go/issues/278)) ([cb8ab13](https://github.com/Finch-API/finch-api-go/commit/cb8ab135e2f4d10272bb70bce64cefa580b106aa))
+* **api:** api update ([#280](https://github.com/Finch-API/finch-api-go/issues/280)) ([9c8963e](https://github.com/Finch-API/finch-api-go/commit/9c8963e8bf04a49c3087103d996fbb6ea1562830))
+* **api:** api update ([#281](https://github.com/Finch-API/finch-api-go/issues/281)) ([0d41448](https://github.com/Finch-API/finch-api-go/commit/0d4144881d3b1396641a592a3d25a3cef44bd1d4))
+
+
+### Chores
+
+* **internal:** codegen related update ([#282](https://github.com/Finch-API/finch-api-go/issues/282)) ([39f6299](https://github.com/Finch-API/finch-api-go/commit/39f6299bd6723b156e53653a393849f26c91e77a))
+
 ## 1.11.0 (2024-12-05)
 
 Full Changelog: [v1.10.0...v1.11.0](https://github.com/Finch-API/finch-api-go/compare/v1.10.0...v1.11.0)
