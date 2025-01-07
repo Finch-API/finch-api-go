@@ -22,6 +22,7 @@ type HRISService struct {
 	Employments   *HRISEmploymentService
 	Payments      *HRISPaymentService
 	PayStatements *HRISPayStatementService
+	Documents     *HRISDocumentService
 	Benefits      *HRISBenefitService
 }
 
@@ -37,6 +38,7 @@ func NewHRISService(opts ...option.RequestOption) (r *HRISService) {
 	r.Employments = NewHRISEmploymentService(opts...)
 	r.Payments = NewHRISPaymentService(opts...)
 	r.PayStatements = NewHRISPayStatementService(opts...)
+	r.Documents = NewHRISDocumentService(opts...)
 	r.Benefits = NewHRISBenefitService(opts...)
 	return
 }
