@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.13.1 (2025-01-08)
+
+Full Changelog: [v1.13.0...v1.13.1](https://github.com/Finch-API/finch-api-go/compare/v1.13.0...v1.13.1)
+
+### Chores
+
+* **internal:** codegen related update ([#291](https://github.com/Finch-API/finch-api-go/issues/291)) ([cbd041b](https://github.com/Finch-API/finch-api-go/commit/cbd041b478238c681ee4f2fedb3a545f0c77d4f1))
+
 ## 1.13.0 (2025-01-07)
 
 Full Changelog: [v1.12.1...v1.13.0](https://github.com/Finch-API/finch-api-go/compare/v1.12.1...v1.13.0)
