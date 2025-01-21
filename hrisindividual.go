@@ -76,8 +76,8 @@ type Individual struct {
 	MiddleName   string                  `json:"middle_name,nullable"`
 	PhoneNumbers []IndividualPhoneNumber `json:"phone_numbers,nullable"`
 	// The preferred name of the individual.
-	PreferredName string `json:"preferred_name,nullable"`
-	Residence Location `json:"residence,nullable"`
+	PreferredName string   `json:"preferred_name,nullable"`
+	Residence     Location `json:"residence,nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
