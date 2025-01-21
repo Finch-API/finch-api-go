@@ -44,9 +44,13 @@ func (r *SandboxConnectionService) New(ctx context.Context, body SandboxConnecti
 type SandboxConnectionNewResponse struct {
 	AccessToken string `json:"access_token,required" format:"uuid"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	//
+	// Deprecated: deprecated
 	AccountID          string                                         `json:"account_id,required" format:"uuid"`
 	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type,required"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	//
+	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required" format:"uuid"`
 	// The ID of the new connection
 	ConnectionID string   `json:"connection_id,required" format:"uuid"`

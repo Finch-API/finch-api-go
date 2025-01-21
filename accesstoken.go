@@ -44,11 +44,15 @@ type CreateAccessTokenResponse struct {
 	AccessToken string `json:"access_token,required"`
 	// [DEPRECATED] Use `connection_id` to identify the connection instead of this
 	// account ID.
+	//
+	// Deprecated: deprecated
 	AccountID string `json:"account_id,required"`
 	// The type of application associated with a token.
 	ClientType CreateAccessTokenResponseClientType `json:"client_type,required"`
 	// [DEPRECATED] Use `connection_id` to identify the connection instead of this
 	// company ID.
+	//
+	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required"`
 	// The Finch UUID of the connection associated with the `access_token`.
 	ConnectionID string `json:"connection_id,required"`
