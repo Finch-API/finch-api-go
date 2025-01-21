@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.15.0 (2025-01-21)
+
+Full Changelog: [v1.14.0...v1.15.0](https://github.com/Finch-API/finch-api-go/compare/v1.14.0...v1.15.0)
+
+### Features
+
+* support deprecated markers ([#300](https://github.com/Finch-API/finch-api-go/issues/300)) ([806ce25](https://github.com/Finch-API/finch-api-go/commit/806ce258f64e70e98f24ae465cf7d6356953167e))
+
+
+### Bug Fixes
+
+* fix apijson.Port for embedded structs ([#297](https://github.com/Finch-API/finch-api-go/issues/297)) ([1bfa198](https://github.com/Finch-API/finch-api-go/commit/1bfa198f18ad9e712ff25f358d118db48983efab))
+* fix apijson.Port for embedded structs ([#299](https://github.com/Finch-API/finch-api-go/issues/299)) ([3b7efb3](https://github.com/Finch-API/finch-api-go/commit/3b7efb331c46db452a7fc880b471860a07f21355))
+
 ## 1.14.0 (2025-01-09)
 
 Full Changelog: [v1.13.1...v1.14.0](https://github.com/Finch-API/finch-api-go/compare/v1.13.1...v1.14.0)
