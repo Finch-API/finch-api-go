@@ -72,6 +72,8 @@ func (r disconnectResponseJSON) RawJSON() string {
 type Introspection struct {
 	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
 	// instead of this account ID.
+	//
+	// Deprecated: deprecated
 	AccountID             string                              `json:"account_id,required"`
 	AuthenticationMethods []IntrospectionAuthenticationMethod `json:"authentication_methods,required"`
 	// The client ID of the application associated with the `access_token`.
@@ -80,6 +82,8 @@ type Introspection struct {
 	ClientType IntrospectionClientType `json:"client_type,required"`
 	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
 	// instead of this company ID.
+	//
+	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required"`
 	// The Finch UUID of the connection associated with the `access_token`.
 	ConnectionID     string                        `json:"connection_id,required"`
@@ -104,6 +108,8 @@ type Introspection struct {
 	Manual bool `json:"manual,required"`
 	// [DEPRECATED] Use `provider_id` to identify the provider instead of this payroll
 	// provider ID.
+	//
+	// Deprecated: deprecated
 	PayrollProviderID string `json:"payroll_provider_id,required"`
 	// An array of the authorized products associated with the `access_token`.
 	Products []string `json:"products,required"`
