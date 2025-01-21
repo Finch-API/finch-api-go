@@ -1144,9 +1144,13 @@ type BaseWebhookEvent struct {
 	// [DEPRECATED] Unique Finch ID of the employer account used to make this
 	// connection. Use `connection_id` instead to identify the connection associated
 	// with this event.
+	//
+	// Deprecated: deprecated
 	AccountID string `json:"account_id,required"`
 	// [DEPRECATED] Unique Finch ID of the company for which data has been updated. Use
 	// `connection_id` instead to identify the connection associated with this event.
+	//
+	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required"`
 	// Unique Finch ID of the connection associated with the webhook event.
 	ConnectionID string               `json:"connection_id"`

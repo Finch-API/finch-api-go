@@ -52,9 +52,13 @@ func (r *SandboxConnectionAccountService) Update(ctx context.Context, body Sandb
 type SandboxConnectionAccountNewResponse struct {
 	AccessToken string `json:"access_token,required" format:"uuid"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	//
+	// Deprecated: deprecated
 	AccountID          string                                                `json:"account_id,required" format:"uuid"`
 	AuthenticationType SandboxConnectionAccountNewResponseAuthenticationType `json:"authentication_type,required"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	//
+	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required" format:"uuid"`
 	// The ID of the new connection
 	ConnectionID string   `json:"connection_id,required" format:"uuid"`
@@ -105,9 +109,13 @@ func (r SandboxConnectionAccountNewResponseAuthenticationType) IsKnown() bool {
 
 type SandboxConnectionAccountUpdateResponse struct {
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	//
+	// Deprecated: deprecated
 	AccountID          string                                                   `json:"account_id,required" format:"uuid"`
 	AuthenticationType SandboxConnectionAccountUpdateResponseAuthenticationType `json:"authentication_type,required"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
+	//
+	// Deprecated: deprecated
 	CompanyID string   `json:"company_id,required" format:"uuid"`
 	Products  []string `json:"products,required"`
 	// The ID of the provider associated with the `access_token`
