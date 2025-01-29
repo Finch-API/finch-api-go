@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.16.0 (2025-01-29)
+
+Full Changelog: [v1.15.0...v1.16.0](https://github.com/Finch-API/finch-api-go/compare/v1.15.0...v1.16.0)
+
+### Features
+
+* **api:** api update ([#302](https://github.com/Finch-API/finch-api-go/issues/302)) ([55ad3bf](https://github.com/Finch-API/finch-api-go/commit/55ad3bfe6ee03ab1ea6f0824ca5b6b7ab477b8b1))
+
+
+### Chores
+
+* refactor client tests ([#304](https://github.com/Finch-API/finch-api-go/issues/304)) ([46e3156](https://github.com/Finch-API/finch-api-go/commit/46e31561a435ee058cc2e61d3ad8355de3a6be46))
+
 ## 1.15.0 (2025-01-21)
 
 Full Changelog: [v1.14.0...v1.15.0](https://github.com/Finch-API/finch-api-go/compare/v1.14.0...v1.15.0)
