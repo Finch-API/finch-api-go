@@ -108,6 +108,8 @@ type AutomatedAsyncJob struct {
 	JobID string `json:"job_id,required" format:"uuid"`
 	// The url that can be used to retrieve the job status
 	JobURL string `json:"job_url,required"`
+	// The input parameters for the job.
+	Params AutomatedAsyncJobParams `json:"params,required,nullable"`
 	// The datetime a job is scheduled to be run. For scheduled jobs, this datetime can
 	// be in the future if the job has not yet been enqueued. For ad-hoc jobs, this
 	// field will be null.
@@ -115,7 +117,7 @@ type AutomatedAsyncJob struct {
 	// The datetime a job entered into the job queue.
 	StartedAt time.Time               `json:"started_at,required,nullable" format:"date-time"`
 	Status    AutomatedAsyncJobStatus `json:"status,required"`
-	// Only `data_sync_all` currently supported
+	// The type of automated job
 	Type AutomatedAsyncJobType `json:"type,required"`
 	JSON automatedAsyncJobJSON `json:"-"`
 }
@@ -127,6 +129,7 @@ type automatedAsyncJobJSON struct {
 	CreatedAt   apijson.Field
 	JobID       apijson.Field
 	JobURL      apijson.Field
+	Params      apijson.Field
 	ScheduledAt apijson.Field
 	StartedAt   apijson.Field
 	Status      apijson.Field
@@ -140,6 +143,29 @@ func (r *AutomatedAsyncJob) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r automatedAsyncJobJSON) RawJSON() string {
+	return r.raw
+}
+
+// The input parameters for the job.
+type AutomatedAsyncJobParams struct {
+	// The ID of the individual that the job was completed for.
+	IndividualID string                      `json:"individual_id"`
+	JSON         automatedAsyncJobParamsJSON `json:"-"`
+}
+
+// automatedAsyncJobParamsJSON contains the JSON metadata for the struct
+// [AutomatedAsyncJobParams]
+type automatedAsyncJobParamsJSON struct {
+	IndividualID apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
+}
+
+func (r *AutomatedAsyncJobParams) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r automatedAsyncJobParamsJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -162,16 +188,17 @@ func (r AutomatedAsyncJobStatus) IsKnown() bool {
 	return false
 }
 
-// Only `data_sync_all` currently supported
+// The type of automated job
 type AutomatedAsyncJobType string
 
 const (
-	AutomatedAsyncJobTypeDataSyncAll AutomatedAsyncJobType = "data_sync_all"
+	AutomatedAsyncJobTypeDataSyncAll        AutomatedAsyncJobType = "data_sync_all"
+	AutomatedAsyncJobTypeW4FormEmployeeSync AutomatedAsyncJobType = "w4_form_employee_sync"
 )
 
 func (r AutomatedAsyncJobType) IsKnown() bool {
 	switch r {
-	case AutomatedAsyncJobTypeDataSyncAll:
+	case AutomatedAsyncJobTypeDataSyncAll, AutomatedAsyncJobTypeW4FormEmployeeSync:
 		return true
 	}
 	return false
