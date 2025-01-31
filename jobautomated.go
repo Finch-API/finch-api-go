@@ -243,8 +243,7 @@ func (r JobAutomatedNewParamsDataSyncAllType) IsKnown() bool {
 }
 
 type JobAutomatedNewParamsW4FormEmployeeSync struct {
-	// The unique ID of the individual for W-4 data sync.
-	IndividualID param.Field[string] `json:"individual_id,required"`
+	Params param.Field[JobAutomatedNewParamsW4FormEmployeeSyncParams] `json:"params,required"`
 	// The type of job to start.
 	Type param.Field[JobAutomatedNewParamsW4FormEmployeeSyncType] `json:"type,required"`
 }
@@ -255,6 +254,15 @@ func (r JobAutomatedNewParamsW4FormEmployeeSync) MarshalJSON() (data []byte, err
 
 func (JobAutomatedNewParamsW4FormEmployeeSync) ImplementsJobAutomatedNewParams() {
 
+}
+
+type JobAutomatedNewParamsW4FormEmployeeSyncParams struct {
+	// The unique ID of the individual for W-4 data sync.
+	IndividualID param.Field[string] `json:"individual_id,required"`
+}
+
+func (r JobAutomatedNewParamsW4FormEmployeeSyncParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
 
 // The type of job to start.
