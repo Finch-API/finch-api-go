@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.17.0 (2025-02-07)
+
+Full Changelog: [v1.16.0...v1.17.0](https://github.com/Finch-API/finch-api-go/compare/v1.16.0...v1.17.0)
+
+### Features
+
+* **api:** api update ([#308](https://github.com/Finch-API/finch-api-go/issues/308)) ([57b0e79](https://github.com/Finch-API/finch-api-go/commit/57b0e79b82ea588dfa112d8ad301fdcf20b32c6e))
+* **api:** api update ([#309](https://github.com/Finch-API/finch-api-go/issues/309)) ([9e5d217](https://github.com/Finch-API/finch-api-go/commit/9e5d21750cb1445d6e51c4982060d85b345c6a77))
+* **client:** send `X-Stainless-Timeout` header ([#312](https://github.com/Finch-API/finch-api-go/issues/312)) ([cefec90](https://github.com/Finch-API/finch-api-go/commit/cefec90b7e09b2754fa335b2361af47aadfef315))
+
+
+### Bug Fixes
+
+* fix early cancel when RequestTimeout is provided for streaming requests ([#314](https://github.com/Finch-API/finch-api-go/issues/314)) ([27721b0](https://github.com/Finch-API/finch-api-go/commit/27721b04a9f4ebeff2685913c44ab706c2ae21a6))
+* fix unicode encoding for json ([#306](https://github.com/Finch-API/finch-api-go/issues/306)) ([cbe2d18](https://github.com/Finch-API/finch-api-go/commit/cbe2d18d455249502b48a2041a7dcc243c0a1639))
+
+
+### Chores
+
+* add UnionUnmarshaler for responses that are interfaces ([#313](https://github.com/Finch-API/finch-api-go/issues/313)) ([a564abe](https://github.com/Finch-API/finch-api-go/commit/a564abedfe6fd7a643e4c222d9e72ff55bd97141))
+
+
+### Documentation
+
+* document raw responses ([#310](https://github.com/Finch-API/finch-api-go/issues/310)) ([cafcc0f](https://github.com/Finch-API/finch-api-go/commit/cafcc0f154e29d63315805c76f5a712ce36e479e))
+
 ## 1.16.0 (2025-01-29)
 
 Full Changelog: [v1.15.0...v1.16.0](https://github.com/Finch-API/finch-api-go/compare/v1.15.0...v1.16.0)
