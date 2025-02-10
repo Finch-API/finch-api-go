@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.17.2 (2025-02-10)
+
+Full Changelog: [v1.17.1...v1.17.2](https://github.com/Finch-API/finch-api-go/compare/v1.17.1...v1.17.2)
+
+### Bug Fixes
+
+* do not call path.Base on ContentType ([#319](https://github.com/Finch-API/finch-api-go/issues/319)) ([b028ca5](https://github.com/Finch-API/finch-api-go/commit/b028ca56b9b1338646c23784a43d690e23a49782))
+
+
+### Documentation
+
+* document raw responses ([#310](https://github.com/Finch-API/finch-api-go/issues/310)) ([d420250](https://github.com/Finch-API/finch-api-go/commit/d4202503259f773dcebdf872471de2f44efbd7d1))
+
 ## 1.17.1 (2025-02-08)
 
 Full Changelog: [v1.17.0...v1.17.1](https://github.com/Finch-API/finch-api-go/compare/v1.17.0...v1.17.1)
