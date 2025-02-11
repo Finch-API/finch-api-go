@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.17.4 (2025-02-11)
+
+Full Changelog: [v1.17.3...v1.17.4](https://github.com/Finch-API/finch-api-go/compare/v1.17.3...v1.17.4)
+
+### Documentation
+
+* document raw responses ([#310](https://github.com/Finch-API/finch-api-go/issues/310)) ([aae260a](https://github.com/Finch-API/finch-api-go/commit/aae260a36dd51e1cc93c27bdff50336cc4529a28))
+
 ## 1.17.3 (2025-02-11)
 
 Full Changelog: [v1.17.2...v1.17.3](https://github.com/Finch-API/finch-api-go/compare/v1.17.2...v1.17.3)
