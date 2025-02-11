@@ -87,7 +87,7 @@ func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, qu
 type IndividualsPage struct {
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals"`
-	Paging      shared.Paging           `json:"paging,required"`
+	Paging      shared.Paging           `json:"paging"`
 	JSON        individualsPageJSON     `json:"-"`
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
