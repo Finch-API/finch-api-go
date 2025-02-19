@@ -29,7 +29,7 @@ func TestSandboxIndividualUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"individual_id",
 		finchgo.SandboxIndividualUpdateParams{
-			Dob: finchgo.F("12/20/1989"),
+			Dob: finchgo.F("dob"),
 			Emails: finchgo.F([]finchgo.SandboxIndividualUpdateParamsEmail{{
 				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxIndividualUpdateParamsEmailsTypeWork),
