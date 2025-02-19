@@ -74,7 +74,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			}),
 			MiddleName: finchgo.F("middle_name"),
 			SourceID:   finchgo.F("source_id"),
-			StartDate:  finchgo.F("3/4/2020"),
+			StartDate:  finchgo.F("start_date"),
 			Title:      finchgo.F("title"),
 		},
 	)
