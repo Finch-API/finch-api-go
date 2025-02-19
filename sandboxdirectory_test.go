@@ -35,7 +35,7 @@ func TestSandboxDirectoryNew(t *testing.T) {
 			Department: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyDepartment{
 				Name: finchgo.F("name"),
 			}),
-			Dob: finchgo.F("01/01/2000"),
+			Dob: finchgo.F("dob"),
 			Emails: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyEmail{{
 				Data: finchgo.F("data"),
 				Type: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEmailsTypeWork),
@@ -48,7 +48,7 @@ func TestSandboxDirectoryNew(t *testing.T) {
 			EncryptedSsn:     finchgo.F("encrypted_ssn"),
 			EndDate:          finchgo.F("end_date"),
 			Ethnicity:        finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEthnicityAsian),
-			FirstName:        finchgo.F("John"),
+			FirstName:        finchgo.F("first_name"),
 			Gender:           finchgo.F(finchgo.SandboxDirectoryNewParamsBodyGenderFemale),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),
@@ -63,7 +63,7 @@ func TestSandboxDirectoryNew(t *testing.T) {
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}}),
 			IsActive:         finchgo.F(true),
-			LastName:         finchgo.F("Smith"),
+			LastName:         finchgo.F("last_name"),
 			LatestRehireDate: finchgo.F("latest_rehire_date"),
 			Location: finchgo.F(finchgo.LocationParam{
 				City:       finchgo.F("city"),
