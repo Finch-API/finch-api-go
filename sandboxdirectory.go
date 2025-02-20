@@ -44,7 +44,7 @@ type SandboxDirectoryNewResponse = interface{}
 type SandboxDirectoryNewParams struct {
 	// Array of individuals to create. Takes all combined fields from `/individual` and
 	// `/employment` endpoints. All fields are optional.
-	Body []SandboxDirectoryNewParamsBody `json:"body,required"`
+	Body []SandboxDirectoryNewParamsBody `json:"body"`
 }
 
 func (r SandboxDirectoryNewParams) MarshalJSON() (data []byte, err error) {
