@@ -100,7 +100,8 @@ func (r SandboxPaymentNewParamsPayStatement) MarshalJSON() (data []byte, err err
 
 type SandboxPaymentNewParamsPayStatementsEarning struct {
 	// The earnings amount in cents.
-	Amount param.Field[int64] `json:"amount"`
+	Amount     param.Field[int64]                                                  `json:"amount"`
+	Attributes param.Field[SandboxPaymentNewParamsPayStatementsEarningsAttributes] `json:"attributes"`
 	// The earnings currency code.
 	Currency param.Field[string] `json:"currency"`
 	// The number of hours associated with this earning. (For salaried employees, this
@@ -113,6 +114,17 @@ type SandboxPaymentNewParamsPayStatementsEarning struct {
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEarning) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsEarningsAttributes struct {
+	// The metadata to be attached to the entity by existing rules. It is a key-value
+	// pairs where the values can be of any type (string, number, boolean, object,
+	// array, etc.).
+	Metadata param.Field[map[string]interface{}] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsEarningsAttributes) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -145,7 +157,8 @@ func (r SandboxPaymentNewParamsPayStatementsEarningsType) IsKnown() bool {
 
 type SandboxPaymentNewParamsPayStatementsEmployeeDeduction struct {
 	// The deduction amount in cents.
-	Amount param.Field[int64] `json:"amount"`
+	Amount     param.Field[int64]                                                            `json:"amount"`
+	Attributes param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes] `json:"attributes"`
 	// The deduction currency.
 	Currency param.Field[string] `json:"currency"`
 	// The deduction name from the pay statement.
@@ -160,9 +173,21 @@ func (r SandboxPaymentNewParamsPayStatementsEmployeeDeduction) MarshalJSON() (da
 	return apijson.MarshalRoot(r)
 }
 
+type SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes struct {
+	// The metadata to be attached to the entity by existing rules. It is a key-value
+	// pairs where the values can be of any type (string, number, boolean, object,
+	// array, etc.).
+	Metadata param.Field[map[string]interface{}] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type SandboxPaymentNewParamsPayStatementsEmployerContribution struct {
 	// The contribution amount in cents.
-	Amount param.Field[int64] `json:"amount"`
+	Amount     param.Field[int64]                                                               `json:"amount"`
+	Attributes param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes] `json:"attributes"`
 	// The contribution currency.
 	Currency param.Field[string] `json:"currency"`
 	// The contribution name from the pay statement.
@@ -172,6 +197,17 @@ type SandboxPaymentNewParamsPayStatementsEmployerContribution struct {
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEmployerContribution) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes struct {
+	// The metadata to be attached to the entity by existing rules. It is a key-value
+	// pairs where the values can be of any type (string, number, boolean, object,
+	// array, etc.).
+	Metadata param.Field[map[string]interface{}] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -193,7 +229,8 @@ func (r SandboxPaymentNewParamsPayStatementsPaymentMethod) IsKnown() bool {
 
 type SandboxPaymentNewParamsPayStatementsTax struct {
 	// The tax amount in cents.
-	Amount param.Field[int64] `json:"amount"`
+	Amount     param.Field[int64]                                               `json:"amount"`
+	Attributes param.Field[SandboxPaymentNewParamsPayStatementsTaxesAttributes] `json:"attributes"`
 	// The currency code.
 	Currency param.Field[string] `json:"currency"`
 	// `true` if the amount is paid by the employers.
@@ -205,6 +242,17 @@ type SandboxPaymentNewParamsPayStatementsTax struct {
 }
 
 func (r SandboxPaymentNewParamsPayStatementsTax) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsTaxesAttributes struct {
+	// The metadata to be attached to the entity by existing rules. It is a key-value
+	// pairs where the values can be of any type (string, number, boolean, object,
+	// array, etc.).
+	Metadata param.Field[map[string]interface{}] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsTaxesAttributes) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
