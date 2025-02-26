@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.18.0 (2025-02-26)
+
+Full Changelog: [v1.17.5...v1.18.0](https://github.com/Finch-API/finch-api-go/compare/v1.17.5...v1.18.0)
+
+### Features
+
+* **api:** api update ([#333](https://github.com/Finch-API/finch-api-go/issues/333)) ([b5ed404](https://github.com/Finch-API/finch-api-go/commit/b5ed404693fe09552c317fb06ccce7483d5ec400))
+
+
+### Bug Fixes
+
+* **client:** mark some request bodies as optional ([#330](https://github.com/Finch-API/finch-api-go/issues/330)) ([3d0d76c](https://github.com/Finch-API/finch-api-go/commit/3d0d76ccb5444cf96cc9476382c8e0b17d7606a9))
+
+
+### Chores
+
+* **internal:** codegen related update ([#329](https://github.com/Finch-API/finch-api-go/issues/329)) ([63ba153](https://github.com/Finch-API/finch-api-go/commit/63ba1539520512dcdc9e3af61926c13dc2bf45c2))
+* **internal:** fix devcontainers setup ([#331](https://github.com/Finch-API/finch-api-go/issues/331)) ([ebb0732](https://github.com/Finch-API/finch-api-go/commit/ebb0732fcaaefaba4325714ea73c01853c66616c))
+
+
+### Documentation
+
+* document raw responses ([#310](https://github.com/Finch-API/finch-api-go/issues/310)) ([955bb17](https://github.com/Finch-API/finch-api-go/commit/955bb178507ac4fbf0be9153d40dbf530252b532))
+
 ## 1.17.5 (2025-02-11)
 
 Full Changelog: [v1.17.4...v1.17.5](https://github.com/Finch-API/finch-api-go/compare/v1.17.4...v1.17.5)
