@@ -118,13 +118,21 @@ func (r SandboxPaymentNewParamsPayStatementsEarning) MarshalJSON() (data []byte,
 }
 
 type SandboxPaymentNewParamsPayStatementsEarningsAttributes struct {
+	Metadata param.Field[SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsEarningsAttributes) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
 	Metadata param.Field[map[string]interface{}] `json:"metadata"`
 }
 
-func (r SandboxPaymentNewParamsPayStatementsEarningsAttributes) MarshalJSON() (data []byte, err error) {
+func (r SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -174,13 +182,21 @@ func (r SandboxPaymentNewParamsPayStatementsEmployeeDeduction) MarshalJSON() (da
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes struct {
+	Metadata param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
 	Metadata param.Field[map[string]interface{}] `json:"metadata"`
 }
 
-func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes) MarshalJSON() (data []byte, err error) {
+func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -201,13 +217,21 @@ func (r SandboxPaymentNewParamsPayStatementsEmployerContribution) MarshalJSON() 
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes struct {
+	Metadata param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
 	Metadata param.Field[map[string]interface{}] `json:"metadata"`
 }
 
-func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes) MarshalJSON() (data []byte, err error) {
+func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -246,13 +270,21 @@ func (r SandboxPaymentNewParamsPayStatementsTax) MarshalJSON() (data []byte, err
 }
 
 type SandboxPaymentNewParamsPayStatementsTaxesAttributes struct {
+	Metadata param.Field[SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata] `json:"metadata"`
+}
+
+func (r SandboxPaymentNewParamsPayStatementsTaxesAttributes) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
 	Metadata param.Field[map[string]interface{}] `json:"metadata"`
 }
 
-func (r SandboxPaymentNewParamsPayStatementsTaxesAttributes) MarshalJSON() (data []byte, err error) {
+func (r SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
