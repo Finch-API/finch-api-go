@@ -29,7 +29,7 @@ func TestConnectSessionNewWithOptionalParams(t *testing.T) {
 		CustomerID:    finchgo.F("x"),
 		CustomerName:  finchgo.F("x"),
 		Products:      finchgo.F([]finchgo.ConnectSessionNewParamsProduct{finchgo.ConnectSessionNewParamsProductCompany}),
-		CustomerEmail: finchgo.F("dev@stainlessapi.com"),
+		CustomerEmail: finchgo.F("dev@stainless.com"),
 		Integration: finchgo.F(finchgo.ConnectSessionNewParamsIntegration{
 			AuthMethod: finchgo.F(finchgo.ConnectSessionNewParamsIntegrationAuthMethodAssisted),
 			Provider:   finchgo.F("provider"),
