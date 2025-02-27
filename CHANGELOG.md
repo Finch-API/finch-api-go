@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.19.1 (2025-02-27)
+
+Full Changelog: [v1.19.0...v1.19.1](https://github.com/Finch-API/finch-api-go/compare/v1.19.0...v1.19.1)
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#338](https://github.com/Finch-API/finch-api-go/issues/338)) ([b9a4f11](https://github.com/Finch-API/finch-api-go/commit/b9a4f1128165291a28a5b952e53d86053dfdd3ad))
+
 ## 1.19.0 (2025-02-27)
 
 Full Changelog: [v1.18.0...v1.19.0](https://github.com/Finch-API/finch-api-go/compare/v1.18.0...v1.19.0)
