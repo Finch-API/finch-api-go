@@ -15,7 +15,6 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
-	"github.com/Finch-API/finch-api-go/packages/pagination"
 )
 
 // JobAutomatedService contains methods and other services that help with
@@ -73,28 +72,11 @@ func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...opt
 // Get all automated jobs. Automated jobs are completed by a machine. By default,
 // jobs are sorted in descending order by submission time. For scheduled jobs such
 // as data syncs, only the next scheduled job is shown.
-func (r *JobAutomatedService) List(ctx context.Context, query JobAutomatedListParams, opts ...option.RequestOption) (res *pagination.Page[AutomatedAsyncJob], err error) {
-	var raw *http.Response
+func (r *JobAutomatedService) List(ctx context.Context, query JobAutomatedListParams, opts ...option.RequestOption) (res *JobAutomatedListResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "jobs/automated"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// Get all automated jobs. Automated jobs are completed by a machine. By default,
-// jobs are sorted in descending order by submission time. For scheduled jobs such
-// as data syncs, only the next scheduled job is shown.
-func (r *JobAutomatedService) ListAutoPaging(ctx context.Context, query JobAutomatedListParams, opts ...option.RequestOption) *pagination.PageAutoPager[AutomatedAsyncJob] {
-	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
 }
 
 type AutomatedAsyncJob struct {
@@ -232,6 +214,102 @@ func (r *JobAutomatedNewResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r jobAutomatedNewResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type JobAutomatedListResponse struct {
+	Data []AutomatedAsyncJob          `json:"data,required"`
+	Meta JobAutomatedListResponseMeta `json:"meta,required"`
+	JSON jobAutomatedListResponseJSON `json:"-"`
+}
+
+// jobAutomatedListResponseJSON contains the JSON metadata for the struct
+// [JobAutomatedListResponse]
+type jobAutomatedListResponseJSON struct {
+	Data        apijson.Field
+	Meta        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *JobAutomatedListResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r jobAutomatedListResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type JobAutomatedListResponseMeta struct {
+	// Information about remaining quotas for this connection. Only applicable for
+	// customers opted in to use Finch's Data Sync Refresh endpoint
+	// (`POST /jobs/automated`). Please contact a Finch representative for more
+	// details.
+	Quotas JobAutomatedListResponseMetaQuotas `json:"quotas"`
+	JSON   jobAutomatedListResponseMetaJSON   `json:"-"`
+}
+
+// jobAutomatedListResponseMetaJSON contains the JSON metadata for the struct
+// [JobAutomatedListResponseMeta]
+type jobAutomatedListResponseMetaJSON struct {
+	Quotas      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *JobAutomatedListResponseMeta) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r jobAutomatedListResponseMetaJSON) RawJSON() string {
+	return r.raw
+}
+
+// Information about remaining quotas for this connection. Only applicable for
+// customers opted in to use Finch's Data Sync Refresh endpoint
+// (`POST /jobs/automated`). Please contact a Finch representative for more
+// details.
+type JobAutomatedListResponseMetaQuotas struct {
+	DataSyncAll JobAutomatedListResponseMetaQuotasDataSyncAll `json:"data_sync_all"`
+	JSON        jobAutomatedListResponseMetaQuotasJSON        `json:"-"`
+}
+
+// jobAutomatedListResponseMetaQuotasJSON contains the JSON metadata for the struct
+// [JobAutomatedListResponseMetaQuotas]
+type jobAutomatedListResponseMetaQuotasJSON struct {
+	DataSyncAll apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *JobAutomatedListResponseMetaQuotas) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r jobAutomatedListResponseMetaQuotasJSON) RawJSON() string {
+	return r.raw
+}
+
+type JobAutomatedListResponseMetaQuotasDataSyncAll struct {
+	AllowedRefreshes   int64                                             `json:"allowed_refreshes"`
+	RemainingRefreshes int64                                             `json:"remaining_refreshes"`
+	JSON               jobAutomatedListResponseMetaQuotasDataSyncAllJSON `json:"-"`
+}
+
+// jobAutomatedListResponseMetaQuotasDataSyncAllJSON contains the JSON metadata for
+// the struct [JobAutomatedListResponseMetaQuotasDataSyncAll]
+type jobAutomatedListResponseMetaQuotasDataSyncAllJSON struct {
+	AllowedRefreshes   apijson.Field
+	RemainingRefreshes apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
+}
+
+func (r *JobAutomatedListResponseMetaQuotasDataSyncAll) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r jobAutomatedListResponseMetaQuotasDataSyncAllJSON) RawJSON() string {
 	return r.raw
 }
 
