@@ -28,11 +28,10 @@ type Client struct {
 	Connect           *ConnectService
 }
 
-// NewClient generates a new client with the default option read from the
-// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). The
-// option passed in as arguments are applied after these default arguments, and all
-// option will be passed down to the services and requests that this client makes.
-func NewClient(opts ...option.RequestOption) (r *Client) {
+// DefaultClientOptions read from the environment (FINCH_CLIENT_ID,
+// FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). This should be used to initialize
+// new clients.
+func DefaultClientOptions() []option.RequestOption {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("FINCH_CLIENT_ID"); ok {
 		defaults = append(defaults, option.WithClientID(o))
@@ -43,7 +42,15 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	if o, ok := os.LookupEnv("FINCH_WEBHOOK_SECRET"); ok {
 		defaults = append(defaults, option.WithWebhookSecret(o))
 	}
-	opts = append(defaults, opts...)
+	return defaults
+}
+
+// NewClient generates a new client with the default option read from the
+// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). The
+// option passed in as arguments are applied after these default arguments, and all
+// option will be passed down to the services and requests that this client makes.
+func NewClient(opts ...option.RequestOption) (r *Client) {
+	opts = append(DefaultClientOptions(), opts...)
 
 	r = &Client{Options: opts}
 
