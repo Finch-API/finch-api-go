@@ -55,7 +55,7 @@ func TestSandboxCompanyUpdateWithOptionalParams(t *testing.T) {
 			SourceID:   finchgo.F("source_id"),
 			State:      finchgo.F("state"),
 		}}),
-		PrimaryEmail:       finchgo.F("primary_email"),
+		PrimaryEmail:       finchgo.F("dev@stainless.com"),
 		PrimaryPhoneNumber: finchgo.F("primary_phone_number"),
 	})
 	if err != nil {

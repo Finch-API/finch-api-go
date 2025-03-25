@@ -38,8 +38,8 @@ func NewHRISDocumentService(opts ...option.RequestOption) (r *HRISDocumentServic
 	return
 }
 
-// **Beta:** This endpoint is in beta and may change.
-// Retrieve a list of company-wide documents.
+// **Beta:** This endpoint is in beta and may change. Retrieve a list of
+// company-wide documents.
 func (r *HRISDocumentService) List(ctx context.Context, query HRISDocumentListParams, opts ...option.RequestOption) (res *HRISDocumentListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "employer/documents"
@@ -47,8 +47,8 @@ func (r *HRISDocumentService) List(ctx context.Context, query HRISDocumentListPa
 	return
 }
 
-// **Beta:** This endpoint is in beta and may change.
-// Retrieve details of a specific document by its ID.
+// **Beta:** This endpoint is in beta and may change. Retrieve details of a
+// specific document by its ID.
 func (r *HRISDocumentService) Retreive(ctx context.Context, documentID string, opts ...option.RequestOption) (res *HRISDocumentRetreiveResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if documentID == "" {
@@ -150,7 +150,7 @@ type W42005Data struct {
 	// Indicates exemption status from federal tax withholding.
 	Exemption W42005DataExemption `json:"exemption"`
 	// The individual's filing status for tax purposes.
-	FilingStatus W42005DataFilingStatus `json:"filing_status"`
+	FilingStatus W42005DataFilingStatus `json:"filing_status,nullable"`
 	// The unique identifier for the individual associated with this 2005 W4 form.
 	IndividualID string `json:"individual_id" format:"uuid"`
 	// Total number of allowances claimed (in cents).
