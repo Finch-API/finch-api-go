@@ -52,7 +52,7 @@ type SandboxCompanyUpdateResponse struct {
 	LegalName string     `json:"legal_name,required,nullable"`
 	Locations []Location `json:"locations,required,nullable"`
 	// The email of the main administrator on the account.
-	PrimaryEmail string `json:"primary_email,required,nullable"`
+	PrimaryEmail string `json:"primary_email,required,nullable" format:"email"`
 	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
 	PrimaryPhoneNumber string                           `json:"primary_phone_number,required,nullable"`
 	JSON               sandboxCompanyUpdateResponseJSON `json:"-"`
@@ -257,7 +257,7 @@ type SandboxCompanyUpdateParams struct {
 	LegalName param.Field[string]          `json:"legal_name,required"`
 	Locations param.Field[[]LocationParam] `json:"locations,required"`
 	// The email of the main administrator on the account.
-	PrimaryEmail param.Field[string] `json:"primary_email,required"`
+	PrimaryEmail param.Field[string] `json:"primary_email,required" format:"email"`
 	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
 	PrimaryPhoneNumber param.Field[string] `json:"primary_phone_number,required"`
 }
