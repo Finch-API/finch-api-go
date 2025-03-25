@@ -27,6 +27,7 @@ func TestUsage(t *testing.T) {
 	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	t.Logf("%+v\n", page)
 }
