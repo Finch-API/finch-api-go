@@ -183,7 +183,7 @@ func (r SandboxIndividualUpdateResponseGender) IsKnown() bool {
 }
 
 type SandboxIndividualUpdateResponsePhoneNumber struct {
-	Data string                                          `json:"data"`
+	Data string                                          `json:"data,nullable"`
 	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type,nullable"`
 	JSON sandboxIndividualUpdateResponsePhoneNumberJSON  `json:"-"`
 }
