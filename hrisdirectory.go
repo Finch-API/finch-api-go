@@ -6,6 +6,7 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+	"strconv"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
@@ -113,10 +114,13 @@ func (r individualsPageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *IndividualsPage) GetNextPage() (res *IndividualsPage, err error) {
-	// This page represents a response that isn't actually paginated at the API level
-	// so there will never be a next page.
-	cfg := (*requestconfig.RequestConfig)(nil)
-	if cfg == nil {
+	cfg := r.cfg.Clone(r.cfg.Context)
+
+	next := r.Paging.Offset
+
+	if next < r.Paging.Count && next != 0 {
+		cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
+	} else {
 		return nil, nil
 	}
 	var raw *http.Response

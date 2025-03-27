@@ -4,9 +4,11 @@ package pagination
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/option"
 	"github.com/Finch-API/finch-api-go/shared"
 )
 
@@ -228,10 +230,13 @@ func (r pageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *Page[T]) GetNextPage() (res *Page[T], err error) {
-	// This page represents a response that isn't actually paginated at the API level
-	// so there will never be a next page.
-	cfg := (*requestconfig.RequestConfig)(nil)
-	if cfg == nil {
+	cfg := r.cfg.Clone(r.cfg.Context)
+
+	next := r.Paging.Offset
+
+	if next < r.Paging.Count && next != 0 {
+		cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
+	} else {
 		return nil, nil
 	}
 	var raw *http.Response

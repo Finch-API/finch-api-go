@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.20.0 (2025-03-27)
+
+Full Changelog: [v1.19.0...v1.20.0](https://github.com/Finch-API/finch-api-go/compare/v1.19.0...v1.20.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#343](https://github.com/Finch-API/finch-api-go/issues/343)) ([04cd640](https://github.com/Finch-API/finch-api-go/commit/04cd6404cc482cc0003b78aaf2ec8faa43595cc8))
+* **api:** api update ([#352](https://github.com/Finch-API/finch-api-go/issues/352)) ([db84c4b](https://github.com/Finch-API/finch-api-go/commit/db84c4b95318ed7ab754dd230dacd9e68d341ee1))
+* **api:** manual updates ([#340](https://github.com/Finch-API/finch-api-go/issues/340)) ([7267e32](https://github.com/Finch-API/finch-api-go/commit/7267e327442f32ee0c99ff57613b114a2bff792c))
+* **api:** support offset-style pagination ([#347](https://github.com/Finch-API/finch-api-go/issues/347)) ([78faf00](https://github.com/Finch-API/finch-api-go/commit/78faf00b8746fd487bb3e8c6607f551f54e6f717))
+* **client:** accept RFC6838 JSON content types ([#344](https://github.com/Finch-API/finch-api-go/issues/344)) ([1fa201f](https://github.com/Finch-API/finch-api-go/commit/1fa201fdad687013c65c31cc8e1a7f23090d81b0))
+* **client:** allow custom baseurls without trailing slash ([#342](https://github.com/Finch-API/finch-api-go/issues/342)) ([67be2da](https://github.com/Finch-API/finch-api-go/commit/67be2dae98b82854afae5d0e264a1f9e31c55e36))
+* **client:** improve default client options support ([#349](https://github.com/Finch-API/finch-api-go/issues/349)) ([fcbe0f2](https://github.com/Finch-API/finch-api-go/commit/fcbe0f285fe45079405fb9f7018a414359c00cb2))
+
+
+### Bug Fixes
+
+* **test:** return early after test failure ([#354](https://github.com/Finch-API/finch-api-go/issues/354)) ([b47e701](https://github.com/Finch-API/finch-api-go/commit/b47e701e5a0a4b63197ec4026d00c65befe15714))
+
+
+### Chores
+
+* add request options to client tests ([#353](https://github.com/Finch-API/finch-api-go/issues/353)) ([b68ac0c](https://github.com/Finch-API/finch-api-go/commit/b68ac0ca7a104eb4e2f24b92375ae618ae0eaff1))
+* **docs:** improve security documentation ([#351](https://github.com/Finch-API/finch-api-go/issues/351)) ([70a5f84](https://github.com/Finch-API/finch-api-go/commit/70a5f84ad8b4c7d7d6229ee85a59f9bb4b7bc104))
+* fix typos ([#355](https://github.com/Finch-API/finch-api-go/issues/355)) ([95b8cd9](https://github.com/Finch-API/finch-api-go/commit/95b8cd900a3367fe9d3b781f1a2f6741668b9b58))
+* **internal:** codegen related update ([#346](https://github.com/Finch-API/finch-api-go/issues/346)) ([28146b0](https://github.com/Finch-API/finch-api-go/commit/28146b0223983f27889a6b97c6d309c0f2b61742))
+* **internal:** codegen related update ([#348](https://github.com/Finch-API/finch-api-go/issues/348)) ([dc28e34](https://github.com/Finch-API/finch-api-go/commit/dc28e343a51555a6aa84e7b9cd5a395a061d8ddf))
+* **internal:** remove extra empty newlines ([#350](https://github.com/Finch-API/finch-api-go/issues/350)) ([cf6a090](https://github.com/Finch-API/finch-api-go/commit/cf6a0904c9b793db6609291921ed8b2f0754d0af))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#338](https://github.com/Finch-API/finch-api-go/issues/338)) ([b9a4f11](https://github.com/Finch-API/finch-api-go/commit/b9a4f1128165291a28a5b952e53d86053dfdd3ad))
+
+
+### Refactors
+
+* tidy up dependencies ([#345](https://github.com/Finch-API/finch-api-go/issues/345)) ([fe8821c](https://github.com/Finch-API/finch-api-go/commit/fe8821ce8f471774755feec593443ed5deaf920e))
+
 ## 1.19.0 (2025-02-27)
 
 Full Changelog: [v1.18.0...v1.19.0](https://github.com/Finch-API/finch-api-go/compare/v1.18.0...v1.19.0)

@@ -40,7 +40,7 @@ func (r *HRISCompanyService) Get(ctx context.Context, opts ...option.RequestOpti
 
 type Company struct {
 	// A stable Finch `id` (UUID v4) for the company.
-	ID string `json:"id,required"`
+	ID string `json:"id,required" format:"uuid"`
 	// An array of bank account objects associated with the payroll/HRIS system.
 	Accounts []CompanyAccount `json:"accounts,required,nullable"`
 	// The array of company departments.
@@ -53,7 +53,7 @@ type Company struct {
 	LegalName string     `json:"legal_name,required,nullable"`
 	Locations []Location `json:"locations,required,nullable"`
 	// The email of the main administrator on the account.
-	PrimaryEmail string `json:"primary_email,required,nullable"`
+	PrimaryEmail string `json:"primary_email,required,nullable" format:"email"`
 	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
 	PrimaryPhoneNumber string      `json:"primary_phone_number,required,nullable"`
 	JSON               companyJSON `json:"-"`
