@@ -47,7 +47,7 @@ func (r *SandboxEmploymentService) Update(ctx context.Context, individualID stri
 
 type SandboxEmploymentUpdateResponse struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id"`
+	ID string `json:"id" format:"uuid"`
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code,nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
@@ -253,7 +253,7 @@ func (r SandboxEmploymentUpdateResponseEmploymentStatus) IsKnown() bool {
 // The manager object representing the manager of the individual within the org.
 type SandboxEmploymentUpdateResponseManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                                     `json:"id"`
+	ID   string                                     `json:"id" format:"uuid"`
 	JSON sandboxEmploymentUpdateResponseManagerJSON `json:"-"`
 }
 
@@ -407,7 +407,7 @@ func (r SandboxEmploymentUpdateParamsEmploymentStatus) IsKnown() bool {
 // The manager object representing the manager of the individual within the org.
 type SandboxEmploymentUpdateParamsManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID param.Field[string] `json:"id"`
+	ID param.Field[string] `json:"id" format:"uuid"`
 }
 
 func (r SandboxEmploymentUpdateParamsManager) MarshalJSON() (data []byte, err error) {

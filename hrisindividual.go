@@ -57,7 +57,7 @@ func (r *HRISIndividualService) GetManyAutoPaging(ctx context.Context, body HRIS
 
 type Individual struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID     string            `json:"id"`
+	ID     string            `json:"id" format:"uuid"`
 	Dob    string            `json:"dob,nullable"`
 	Emails []IndividualEmail `json:"emails,nullable"`
 	// Social Security Number of the individual in **encrypted** format. This field is

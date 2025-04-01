@@ -27,7 +27,7 @@ func TestHRISPayStatementGetMany(t *testing.T) {
 	)
 	_, err := client.HRIS.PayStatements.GetMany(context.TODO(), finchgo.HRISPayStatementGetManyParams{
 		Requests: finchgo.F([]finchgo.HRISPayStatementGetManyParamsRequest{{
-			PaymentID: finchgo.F("string"),
+			PaymentID: finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
 			Limit:     finchgo.F(int64(50)),
 			Offset:    finchgo.F(int64(0)),
 		}}),
