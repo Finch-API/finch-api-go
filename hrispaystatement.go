@@ -566,7 +566,7 @@ func (r HRISPayStatementGetManyParams) MarshalJSON() (data []byte, err error) {
 
 type HRISPayStatementGetManyParamsRequest struct {
 	// A stable Finch `id` (UUID v4) for a payment.
-	PaymentID param.Field[string] `json:"payment_id,required"`
+	PaymentID param.Field[string] `json:"payment_id,required" format:"uuid"`
 	// Number of pay statements to return (defaults to all).
 	Limit param.Field[int64] `json:"limit"`
 	// Index to start from.
