@@ -76,7 +76,7 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *pagination.SinglePage[UnenrolledIndividual], err error) {
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *pagination.SinglePage[HRISBenefitIndividualUnenrollManyResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -98,7 +98,7 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[UnenrolledIndividual] {
+func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[HRISBenefitIndividualUnenrollManyResponse] {
 	return pagination.NewSinglePageAutoPager(r.UnenrollMany(ctx, benefitID, body, opts...))
 }
 
@@ -176,63 +176,10 @@ func (r IndividualBenefitBodyHsaContributionLimit) IsKnown() bool {
 	return false
 }
 
-type UnenrolledIndividual struct {
-	Body UnenrolledIndividualBody `json:"body"`
-	// HTTP status code
-	Code         int64                    `json:"code"`
-	IndividualID string                   `json:"individual_id"`
-	JSON         unenrolledIndividualJSON `json:"-"`
-}
-
-// unenrolledIndividualJSON contains the JSON metadata for the struct
-// [UnenrolledIndividual]
-type unenrolledIndividualJSON struct {
-	Body         apijson.Field
-	Code         apijson.Field
-	IndividualID apijson.Field
-	raw          string
-	ExtraFields  map[string]apijson.Field
-}
-
-func (r *UnenrolledIndividual) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r unenrolledIndividualJSON) RawJSON() string {
-	return r.raw
-}
-
-type UnenrolledIndividualBody struct {
-	// A descriptive identifier for the response.
-	FinchCode string `json:"finch_code,nullable"`
-	// Short description in English that provides more information about the response.
-	Message string `json:"message,nullable"`
-	// Identifier indicating whether the benefit was newly enrolled or updated.
-	Name string                       `json:"name,nullable"`
-	JSON unenrolledIndividualBodyJSON `json:"-"`
-}
-
-// unenrolledIndividualBodyJSON contains the JSON metadata for the struct
-// [UnenrolledIndividualBody]
-type unenrolledIndividualBodyJSON struct {
-	FinchCode   apijson.Field
-	Message     apijson.Field
-	Name        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UnenrolledIndividualBody) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r unenrolledIndividualBodyJSON) RawJSON() string {
-	return r.raw
-}
-
 type HRISBenefitIndividualEnrolledIDsResponse struct {
-	BenefitID     string                                       `json:"benefit_id,required"`
-	IndividualIDs []string                                     `json:"individual_ids,required"`
+	// The id of the benefit.
+	BenefitID     string                                       `json:"benefit_id,required" format:"uuid"`
+	IndividualIDs []string                                     `json:"individual_ids,required" format:"uuid"`
 	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON `json:"-"`
 }
 
@@ -252,6 +199,8 @@ func (r *HRISBenefitIndividualEnrolledIDsResponse) UnmarshalJSON(data []byte) (e
 func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
 	return r.raw
 }
+
+type HRISBenefitIndividualUnenrollManyResponse = interface{}
 
 type HRISBenefitIndividualGetManyBenefitsParams struct {
 	// comma-delimited list of stable Finch uuids for each individual. If empty,
