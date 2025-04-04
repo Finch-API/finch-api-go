@@ -60,20 +60,20 @@ func (r *HRISPaymentService) ListAutoPaging(ctx context.Context, query HRISPayme
 
 type Payment struct {
 	// The unique id for the payment.
-	ID            string `json:"id"`
+	ID            string `json:"id" format:"uuid"`
 	CompanyDebit  Money  `json:"company_debit,nullable"`
 	DebitDate     string `json:"debit_date,nullable"`
 	EmployeeTaxes Money  `json:"employee_taxes,nullable"`
 	EmployerTaxes Money  `json:"employer_taxes,nullable"`
 	GrossPay      Money  `json:"gross_pay,nullable"`
 	// Array of every individual on this payment.
-	IndividualIDs []string `json:"individual_ids,nullable"`
+	IndividualIDs []string `json:"individual_ids,nullable" format:"uuid"`
 	NetPay        Money    `json:"net_pay,nullable"`
 	PayDate       string   `json:"pay_date,nullable"`
 	// List of pay frequencies associated with this payment.
 	PayFrequencies []PaymentPayFrequency `json:"pay_frequencies,nullable"`
 	// Array of the Finch id (uuidv4) of every pay group associated with this payment.
-	PayGroupIDs []string `json:"pay_group_ids,nullable"`
+	PayGroupIDs []string `json:"pay_group_ids,nullable" format:"uuid"`
 	// The pay period object.
 	PayPeriod PaymentPayPeriod `json:"pay_period,nullable"`
 	JSON      paymentJSON      `json:"-"`

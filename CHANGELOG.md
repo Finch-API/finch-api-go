@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.21.0 (2025-04-04)
+
+Full Changelog: [v1.20.0...v1.21.0](https://github.com/Finch-API/finch-api-go/compare/v1.20.0...v1.21.0)
+
+### Features
+
+* **api:** add new endpoints for pay statement items ([#363](https://github.com/Finch-API/finch-api-go/issues/363)) ([5b7d3e6](https://github.com/Finch-API/finch-api-go/commit/5b7d3e6ef358e45e096d875e9875d93bfa82f988))
+* **api:** api update ([#357](https://github.com/Finch-API/finch-api-go/issues/357)) ([d4b26b6](https://github.com/Finch-API/finch-api-go/commit/d4b26b6f484c6e73969c4a6eafaa66e736cc17c2))
+* **api:** api update ([#359](https://github.com/Finch-API/finch-api-go/issues/359)) ([3a292c7](https://github.com/Finch-API/finch-api-go/commit/3a292c78c909ea0d88a81395ff2a15dee193a756))
+* **api:** api update ([#360](https://github.com/Finch-API/finch-api-go/issues/360)) ([24b0aac](https://github.com/Finch-API/finch-api-go/commit/24b0aac97dc9b19b8a3e1daf257995d614bf6439))
+* **api:** api update ([#361](https://github.com/Finch-API/finch-api-go/issues/361)) ([058dc18](https://github.com/Finch-API/finch-api-go/commit/058dc18b995a826d0eccac2711a8c20de6a67c31))
+* **api:** manual updates ([#364](https://github.com/Finch-API/finch-api-go/issues/364)) ([d71a2e0](https://github.com/Finch-API/finch-api-go/commit/d71a2e06812d2b0bc5e700ce033629e4855ca8fa))
+
+
+### Bug Fixes
+
+* **client:** return error on bad custom url instead of panic ([#362](https://github.com/Finch-API/finch-api-go/issues/362)) ([2f22ab0](https://github.com/Finch-API/finch-api-go/commit/2f22ab078c06a30cbef65b8aa34481837e336636))
+
+
+### Chores
+
+* **internal:** codegen related update ([#365](https://github.com/Finch-API/finch-api-go/issues/365)) ([a926b87](https://github.com/Finch-API/finch-api-go/commit/a926b8775cd5f3c89a5a0bb993fdc550f5948920))
+
 ## 1.20.0 (2025-03-27)
 
 Full Changelog: [v1.19.0...v1.20.0](https://github.com/Finch-API/finch-api-go/compare/v1.19.0...v1.20.0)

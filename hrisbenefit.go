@@ -268,6 +268,7 @@ func (r BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit) IsKno
 	return false
 }
 
+// The frequency of the benefit deduction/contribution.
 type BenefitFrequency string
 
 const (
@@ -363,9 +364,11 @@ func (r benefitsSupportJSON) RawJSON() string {
 }
 
 type CompanyBenefit struct {
-	BenefitID   string           `json:"benefit_id,required"`
-	Description string           `json:"description,required,nullable"`
-	Frequency   BenefitFrequency `json:"frequency,required,nullable"`
+	// The id of the benefit.
+	BenefitID   string `json:"benefit_id,required" format:"uuid"`
+	Description string `json:"description,required,nullable"`
+	// The frequency of the benefit deduction/contribution.
+	Frequency BenefitFrequency `json:"frequency,required,nullable"`
 	// Type of benefit.
 	Type BenefitType        `json:"type,required,nullable"`
 	JSON companyBenefitJSON `json:"-"`
@@ -390,7 +393,8 @@ func (r companyBenefitJSON) RawJSON() string {
 }
 
 type CreateCompanyBenefitsResponse struct {
-	BenefitID string                            `json:"benefit_id,required"`
+	// The id of the benefit.
+	BenefitID string                            `json:"benefit_id,required" format:"uuid"`
 	JSON      createCompanyBenefitsResponseJSON `json:"-"`
 }
 
@@ -525,7 +529,8 @@ func (r SupportedBenefitHsaContributionLimit) IsKnown() bool {
 }
 
 type UpdateCompanyBenefitResponse struct {
-	BenefitID string                           `json:"benefit_id,required"`
+	// The id of the benefit.
+	BenefitID string                           `json:"benefit_id,required" format:"uuid"`
 	JSON      updateCompanyBenefitResponseJSON `json:"-"`
 }
 
@@ -549,8 +554,9 @@ type HRISBenefitNewParams struct {
 	// Name of the benefit as it appears in the provider and pay statements. Recommend
 	// limiting this to <30 characters due to limitations in specific providers (e.g.
 	// Justworks).
-	Description param.Field[string]           `json:"description"`
-	Frequency   param.Field[BenefitFrequency] `json:"frequency"`
+	Description param.Field[string] `json:"description"`
+	// The frequency of the benefit deduction/contribution.
+	Frequency param.Field[BenefitFrequency] `json:"frequency"`
 	// Type of benefit.
 	Type param.Field[BenefitType] `json:"type"`
 }

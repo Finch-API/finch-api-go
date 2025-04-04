@@ -231,8 +231,9 @@ func (r unenrolledIndividualBodyJSON) RawJSON() string {
 }
 
 type HRISBenefitIndividualEnrolledIDsResponse struct {
-	BenefitID     string                                       `json:"benefit_id,required"`
-	IndividualIDs []string                                     `json:"individual_ids,required"`
+	// The id of the benefit.
+	BenefitID     string                                       `json:"benefit_id,required" format:"uuid"`
+	IndividualIDs []string                                     `json:"individual_ids,required" format:"uuid"`
 	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON `json:"-"`
 }
 

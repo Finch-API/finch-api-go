@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
@@ -237,18 +238,21 @@ func (r IntrospectionClientType) IsKnown() bool {
 }
 
 type IntrospectionConnectionStatus struct {
-	Message string                            `json:"message"`
-	Status  shared.ConnectionStatusType       `json:"status"`
-	JSON    introspectionConnectionStatusJSON `json:"-"`
+	// The datetime when the connection was last successfully synced.
+	LastSuccessfulSync time.Time                         `json:"last_successful_sync" format:"date-time"`
+	Message            string                            `json:"message"`
+	Status             shared.ConnectionStatusType       `json:"status"`
+	JSON               introspectionConnectionStatusJSON `json:"-"`
 }
 
 // introspectionConnectionStatusJSON contains the JSON metadata for the struct
 // [IntrospectionConnectionStatus]
 type introspectionConnectionStatusJSON struct {
-	Message     apijson.Field
-	Status      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	LastSuccessfulSync apijson.Field
+	Message            apijson.Field
+	Status             apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *IntrospectionConnectionStatus) UnmarshalJSON(data []byte) (err error) {
