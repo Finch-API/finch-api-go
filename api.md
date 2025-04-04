@@ -50,6 +50,32 @@ Methods:
 
 - <code title="get /employer/company">client.HRIS.Company.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#Company">Company</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+### PayStatementItem
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemListResponse">HRISCompanyPayStatementItemListResponse</a>
+
+Methods:
+
+- <code title="get /employer/pay-statement-item">client.HRIS.Company.PayStatementItem.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemListParams">HRISCompanyPayStatementItemListParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/packages/pagination#ResponsesPage">ResponsesPage</a>[<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemListResponse">HRISCompanyPayStatementItemListResponse</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+#### Rules
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleNewResponse">HRISCompanyPayStatementItemRuleNewResponse</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleUpdateResponse">HRISCompanyPayStatementItemRuleUpdateResponse</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleListResponse">HRISCompanyPayStatementItemRuleListResponse</a>
+- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleDeleteResponse">HRISCompanyPayStatementItemRuleDeleteResponse</a>
+
+Methods:
+
+- <code title="post /employer/pay-statement-item/rule">client.HRIS.Company.PayStatementItem.Rules.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleNewParams">HRISCompanyPayStatementItemRuleNewParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleNewResponse">HRISCompanyPayStatementItemRuleNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /employer/pay-statement-item/rule/{rule_id}">client.HRIS.Company.PayStatementItem.Rules.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, ruleID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleUpdateParams">HRISCompanyPayStatementItemRuleUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleUpdateResponse">HRISCompanyPayStatementItemRuleUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /employer/pay-statement-item/rule">client.HRIS.Company.PayStatementItem.Rules.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/packages/pagination#ResponsesPage">ResponsesPage</a>[<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleListResponse">HRISCompanyPayStatementItemRuleListResponse</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="delete /employer/pay-statement-item/rule/{rule_id}">client.HRIS.Company.PayStatementItem.Rules.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, ruleID <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISCompanyPayStatementItemRuleDeleteResponse">HRISCompanyPayStatementItemRuleDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 ## Directory
 
 Response Types:
