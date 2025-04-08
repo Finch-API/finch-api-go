@@ -54,7 +54,7 @@ func TestSandboxConnectionAccountUpdateWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.Sandbox.Connections.Accounts.Update(context.TODO(), finchgo.SandboxConnectionAccountUpdateParams{
-		ConnectionStatus: finchgo.F(shared.ConnectionStatusTypePending),
+		ConnectionStatus: finchgo.F(shared.ConnectionStatusTypeReauth),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
