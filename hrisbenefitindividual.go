@@ -76,7 +76,7 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *HRISBenefitIndividualUnenrollManyResponse, err error) {
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *UnenrolledIndividualBenefitResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
@@ -161,6 +161,27 @@ func (r IndividualBenefitBodyHsaContributionLimit) IsKnown() bool {
 	return false
 }
 
+type UnenrolledIndividualBenefitResponse struct {
+	JobID string                                  `json:"job_id,required" format:"uuid"`
+	JSON  unenrolledIndividualBenefitResponseJSON `json:"-"`
+}
+
+// unenrolledIndividualBenefitResponseJSON contains the JSON metadata for the
+// struct [UnenrolledIndividualBenefitResponse]
+type unenrolledIndividualBenefitResponseJSON struct {
+	JobID       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *UnenrolledIndividualBenefitResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r unenrolledIndividualBenefitResponseJSON) RawJSON() string {
+	return r.raw
+}
+
 type HRISBenefitIndividualEnrolledIDsResponse struct {
 	// The id of the benefit.
 	BenefitID     string                                       `json:"benefit_id,required" format:"uuid"`
@@ -182,27 +203,6 @@ func (r *HRISBenefitIndividualEnrolledIDsResponse) UnmarshalJSON(data []byte) (e
 }
 
 func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type HRISBenefitIndividualUnenrollManyResponse struct {
-	JobID string                                        `json:"job_id,required" format:"uuid"`
-	JSON  hrisBenefitIndividualUnenrollManyResponseJSON `json:"-"`
-}
-
-// hrisBenefitIndividualUnenrollManyResponseJSON contains the JSON metadata for the
-// struct [HRISBenefitIndividualUnenrollManyResponse]
-type hrisBenefitIndividualUnenrollManyResponseJSON struct {
-	JobID       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *HRISBenefitIndividualUnenrollManyResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r hrisBenefitIndividualUnenrollManyResponseJSON) RawJSON() string {
 	return r.raw
 }
 
