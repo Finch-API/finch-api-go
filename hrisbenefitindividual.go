@@ -76,30 +76,15 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *pagination.SinglePage[HRISBenefitIndividualUnenrollManyResponse], err error) {
-	var raw *http.Response
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *HRISBenefitIndividualUnenrollManyResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
 	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodDelete, path, body, &res, opts...)
-	if err != nil {
-		return nil, err
-	}
-	err = cfg.Execute()
-	if err != nil {
-		return nil, err
-	}
-	res.SetPageConfig(cfg, raw)
-	return res, nil
-}
-
-// Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollManyAutoPaging(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[HRISBenefitIndividualUnenrollManyResponse] {
-	return pagination.NewSinglePageAutoPager(r.UnenrollMany(ctx, benefitID, body, opts...))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
+	return
 }
 
 type IndividualBenefit struct {
@@ -200,7 +185,26 @@ func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type HRISBenefitIndividualUnenrollManyResponse = interface{}
+type HRISBenefitIndividualUnenrollManyResponse struct {
+	JobID string                                        `json:"job_id,required" format:"uuid"`
+	JSON  hrisBenefitIndividualUnenrollManyResponseJSON `json:"-"`
+}
+
+// hrisBenefitIndividualUnenrollManyResponseJSON contains the JSON metadata for the
+// struct [HRISBenefitIndividualUnenrollManyResponse]
+type hrisBenefitIndividualUnenrollManyResponseJSON struct {
+	JobID       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *HRISBenefitIndividualUnenrollManyResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r hrisBenefitIndividualUnenrollManyResponseJSON) RawJSON() string {
+	return r.raw
+}
 
 type HRISBenefitIndividualGetManyBenefitsParams struct {
 	// comma-delimited list of stable Finch uuids for each individual. If empty,
