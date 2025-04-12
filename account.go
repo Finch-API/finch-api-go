@@ -71,6 +71,8 @@ func (r disconnectResponseJSON) RawJSON() string {
 }
 
 type Introspection struct {
+	// The Finch UUID of the token being introspected.
+	ID string `json:"id,required"`
 	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
 	// instead of this account ID.
 	//
@@ -123,6 +125,7 @@ type Introspection struct {
 
 // introspectionJSON contains the JSON metadata for the struct [Introspection]
 type introspectionJSON struct {
+	ID                    apijson.Field
 	AccountID             apijson.Field
 	AuthenticationMethods apijson.Field
 	ClientID              apijson.Field
