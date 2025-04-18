@@ -18,7 +18,8 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewHRISCompanyService] method instead.
 type HRISCompanyService struct {
-	Options []option.RequestOption
+	Options          []option.RequestOption
+	PayStatementItem *HRISCompanyPayStatementItemService
 }
 
 // NewHRISCompanyService generates a new service that applies the given options to
@@ -27,6 +28,7 @@ type HRISCompanyService struct {
 func NewHRISCompanyService(opts ...option.RequestOption) (r *HRISCompanyService) {
 	r = &HRISCompanyService{}
 	r.Options = opts
+	r.PayStatementItem = NewHRISCompanyPayStatementItemService(opts...)
 	return
 }
 
@@ -54,7 +56,8 @@ type Company struct {
 	Locations []Location `json:"locations,required,nullable"`
 	// The email of the main administrator on the account.
 	PrimaryEmail string `json:"primary_email,required,nullable" format:"email"`
-	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
+	// The phone number of the main administrator on the account. Format: E.164, with
+	// extension where applicable, e.g. `+NNNNNNNNNNN xExtension`
 	PrimaryPhoneNumber string      `json:"primary_phone_number,required,nullable"`
 	JSON               companyJSON `json:"-"`
 }

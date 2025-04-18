@@ -56,8 +56,8 @@ func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRIS
 }
 
 type EmploymentData struct {
-	// string A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id"`
+	// A stable Finch `id` (UUID v4) for an individual in the company.
+	ID string `json:"id" format:"uuid"`
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code,nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
@@ -67,7 +67,8 @@ type EmploymentData struct {
 	Department EmploymentDataDepartment `json:"department,nullable"`
 	// The employment object.
 	Employment EmploymentDataEmployment `json:"employment,nullable"`
-	// The detailed employment status of the individual. Available options: `active`, `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual. Available options: `active`,
+	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status,nullable"`
 	EndDate          string                         `json:"end_date,nullable"`
 	// The legal first name of the individual.
@@ -182,7 +183,8 @@ func (r employmentDataDepartmentJSON) RawJSON() string {
 
 // The employment object.
 type EmploymentDataEmployment struct {
-	// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+	// The secondary employment type of the individual. Options: `full_time`,
+	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 	Subtype EmploymentDataEmploymentSubtype `json:"subtype,nullable"`
 	// The main employment type of the individual.
 	Type EmploymentDataEmploymentType `json:"type,nullable"`
@@ -206,7 +208,8 @@ func (r employmentDataEmploymentJSON) RawJSON() string {
 	return r.raw
 }
 
-// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+// The secondary employment type of the individual. Options: `full_time`,
+// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 type EmploymentDataEmploymentSubtype string
 
 const (
@@ -242,7 +245,8 @@ func (r EmploymentDataEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`, `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual. Available options: `active`,
+// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 type EmploymentDataEmploymentStatus string
 
 const (
@@ -266,7 +270,7 @@ func (r EmploymentDataEmploymentStatus) IsKnown() bool {
 // The manager object representing the manager of the individual within the org.
 type EmploymentDataManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                    `json:"id"`
+	ID   string                    `json:"id" format:"uuid"`
 	JSON employmentDataManagerJSON `json:"-"`
 }
 
@@ -287,9 +291,10 @@ func (r employmentDataManagerJSON) RawJSON() string {
 }
 
 type EmploymentDataResponse struct {
-	Body         EmploymentData             `json:"body"`
-	Code         int64                      `json:"code"`
-	IndividualID string                     `json:"individual_id"`
+	Body EmploymentData `json:"body"`
+	Code int64          `json:"code"`
+	// A stable Finch `id` (UUID v4) for an individual in the company.
+	IndividualID string                     `json:"individual_id" format:"uuid"`
 	JSON         employmentDataResponseJSON `json:"-"`
 }
 

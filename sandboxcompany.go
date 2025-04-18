@@ -53,7 +53,8 @@ type SandboxCompanyUpdateResponse struct {
 	Locations []Location `json:"locations,required,nullable"`
 	// The email of the main administrator on the account.
 	PrimaryEmail string `json:"primary_email,required,nullable" format:"email"`
-	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
+	// The phone number of the main administrator on the account. Format: E.164, with
+	// extension where applicable, e.g. `+NNNNNNNNNNN xExtension`
 	PrimaryPhoneNumber string                           `json:"primary_phone_number,required,nullable"`
 	JSON               sandboxCompanyUpdateResponseJSON `json:"-"`
 }
@@ -258,7 +259,8 @@ type SandboxCompanyUpdateParams struct {
 	Locations param.Field[[]LocationParam] `json:"locations,required"`
 	// The email of the main administrator on the account.
 	PrimaryEmail param.Field[string] `json:"primary_email,required" format:"email"`
-	// The phone number of the main administrator on the account. Format: `XXXXXXXXXX`
+	// The phone number of the main administrator on the account. Format: E.164, with
+	// extension where applicable, e.g. `+NNNNNNNNNNN xExtension`
 	PrimaryPhoneNumber param.Field[string] `json:"primary_phone_number,required"`
 }
 

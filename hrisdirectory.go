@@ -88,7 +88,7 @@ func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, qu
 type IndividualsPage struct {
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals"`
-	Paging      shared.Paging           `json:"paging"`
+	Paging      shared.Paging           `json:"paging,required"`
 	JSON        individualsPageJSON     `json:"-"`
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
@@ -187,8 +187,8 @@ func (r *IndividualsPageAutoPager) Index() int {
 }
 
 type IndividualInDirectory struct {
-	// A stable Finch id (UUID v4) for an individual in the company.
-	ID string `json:"id"`
+	// A stable Finch `id` (UUID v4) for an individual in the company.
+	ID string `json:"id" format:"uuid"`
 	// The department object.
 	Department IndividualInDirectoryDepartment `json:"department,nullable"`
 	// The legal first name of the individual.
@@ -252,7 +252,7 @@ func (r individualInDirectoryDepartmentJSON) RawJSON() string {
 // The manager object.
 type IndividualInDirectoryManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                           `json:"id"`
+	ID   string                           `json:"id" format:"uuid"`
 	JSON individualInDirectoryManagerJSON `json:"-"`
 }
 

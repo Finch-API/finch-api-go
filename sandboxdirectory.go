@@ -268,7 +268,7 @@ func (r SandboxDirectoryNewParamsBodyGender) IsKnown() bool {
 // The manager object representing the manager of the individual within the org.
 type SandboxDirectoryNewParamsBodyManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID param.Field[string] `json:"id"`
+	ID param.Field[string] `json:"id" format:"uuid"`
 }
 
 func (r SandboxDirectoryNewParamsBodyManager) MarshalJSON() (data []byte, err error) {
