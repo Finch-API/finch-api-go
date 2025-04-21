@@ -39,7 +39,7 @@ func NewAccessTokenService(opts ...option.RequestOption) (r *AccessTokenService)
 func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams, opts ...option.RequestOption) (res *CreateAccessTokenResponse, err error) {
 	opts = append(r.Options[:], opts...)
 
-	opts = append(opts[:], func(rc *requestconfig.RequestConfig) (err error) {
+	opts = append(opts[:], requestconfig.RequestOptionFunc(func(rc *requestconfig.RequestConfig) (err error) {
 		if body, ok := rc.Body.(*bytes.Buffer); ok {
 			b := body.Bytes()[:]
 
@@ -68,7 +68,7 @@ func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams,
 		}
 
 		return nil
-	})
+	}))
 
 	path := "auth/token"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
