@@ -1,5 +1,45 @@
 # Changelog
 
+## 1.21.0 (2025-04-21)
+
+Full Changelog: [v1.20.0...v1.21.0](https://github.com/Finch-API/finch-api-go/compare/v1.20.0...v1.21.0)
+
+### Features
+
+* **api:** add new endpoints for pay statement items ([#363](https://github.com/Finch-API/finch-api-go/issues/363)) ([5b7d3e6](https://github.com/Finch-API/finch-api-go/commit/5b7d3e6ef358e45e096d875e9875d93bfa82f988))
+* **api:** api update ([b37f375](https://github.com/Finch-API/finch-api-go/commit/b37f375ce35cf6f2a3633244109a08cee8118790))
+* **api:** api update ([eb464d7](https://github.com/Finch-API/finch-api-go/commit/eb464d79caa53281118c8f0e0719f4a6c1e10d2c))
+* **api:** api update ([#357](https://github.com/Finch-API/finch-api-go/issues/357)) ([d4b26b6](https://github.com/Finch-API/finch-api-go/commit/d4b26b6f484c6e73969c4a6eafaa66e736cc17c2))
+* **api:** api update ([#359](https://github.com/Finch-API/finch-api-go/issues/359)) ([3a292c7](https://github.com/Finch-API/finch-api-go/commit/3a292c78c909ea0d88a81395ff2a15dee193a756))
+* **api:** api update ([#360](https://github.com/Finch-API/finch-api-go/issues/360)) ([24b0aac](https://github.com/Finch-API/finch-api-go/commit/24b0aac97dc9b19b8a3e1daf257995d614bf6439))
+* **api:** api update ([#361](https://github.com/Finch-API/finch-api-go/issues/361)) ([058dc18](https://github.com/Finch-API/finch-api-go/commit/058dc18b995a826d0eccac2711a8c20de6a67c31))
+* **api:** api update ([#368](https://github.com/Finch-API/finch-api-go/issues/368)) ([bc41062](https://github.com/Finch-API/finch-api-go/commit/bc4106210aca1e866e4d9bef1193b5a65b676bd7))
+* **api:** benefits mutation API endpoints (create benefit, update benefit, enroll individual, unenroll individual) now properly return async response types ([#370](https://github.com/Finch-API/finch-api-go/issues/370)) ([a86783c](https://github.com/Finch-API/finch-api-go/commit/a86783cf9a30f8205455332c87d36e206b27a997))
+* **api:** manual updates ([#364](https://github.com/Finch-API/finch-api-go/issues/364)) ([d71a2e0](https://github.com/Finch-API/finch-api-go/commit/d71a2e06812d2b0bc5e700ce033629e4855ca8fa))
+* **client:** add support for reading base URL from environment variable ([c85444e](https://github.com/Finch-API/finch-api-go/commit/c85444ee318175f9fb9cd9f9c1091050b490ba36))
+* **client:** support custom http clients ([#366](https://github.com/Finch-API/finch-api-go/issues/366)) ([87364f6](https://github.com/Finch-API/finch-api-go/commit/87364f623dd1aa6e8282c808d3eafcb00d32da9a))
+
+
+### Bug Fixes
+
+* **client:** return error on bad custom url instead of panic ([#362](https://github.com/Finch-API/finch-api-go/issues/362)) ([2f22ab0](https://github.com/Finch-API/finch-api-go/commit/2f22ab078c06a30cbef65b8aa34481837e336636))
+* **internal:** fix linting issues due to RequestOptions ([7769979](https://github.com/Finch-API/finch-api-go/commit/7769979f5624d97b4392d11faf5301151890a753))
+
+
+### Chores
+
+* **docs:** document pre-request options ([6327608](https://github.com/Finch-API/finch-api-go/commit/632760829a009a1a3ab30f01ef953ea11576f696))
+* fix typo ([2c8df30](https://github.com/Finch-API/finch-api-go/commit/2c8df3053c7682408e1bf6c796fc6c4cab80c1b9))
+* **internal:** codegen related update ([#365](https://github.com/Finch-API/finch-api-go/issues/365)) ([a926b87](https://github.com/Finch-API/finch-api-go/commit/a926b8775cd5f3c89a5a0bb993fdc550f5948920))
+* **internal:** expand CI branch coverage ([#369](https://github.com/Finch-API/finch-api-go/issues/369)) ([05dbbb1](https://github.com/Finch-API/finch-api-go/commit/05dbbb16233c0810561a96461f87d0048430fe9a))
+* **internal:** reduce CI branch coverage ([15401bb](https://github.com/Finch-API/finch-api-go/commit/15401bbd75087957a44fc851e021055c2735ec7c))
+* **tests:** improve enum examples ([#367](https://github.com/Finch-API/finch-api-go/issues/367)) ([817dc5b](https://github.com/Finch-API/finch-api-go/commit/817dc5b0491b98221e5f35f9e1c327b39a790c0b))
+
+
+### Documentation
+
+* update documentation links to be more uniform ([1212f5a](https://github.com/Finch-API/finch-api-go/commit/1212f5a22382ab8ae63378ca0794444844b2676b))
+
 ## 1.20.0 (2025-03-27)
 
 Full Changelog: [v1.19.0...v1.20.0](https://github.com/Finch-API/finch-api-go/compare/v1.19.0...v1.20.0)
