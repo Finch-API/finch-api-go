@@ -127,11 +127,13 @@ const (
 	ConnectSessionNewParamsProductPayStatement ConnectSessionNewParamsProduct = "pay_statement"
 	ConnectSessionNewParamsProductBenefits     ConnectSessionNewParamsProduct = "benefits"
 	ConnectSessionNewParamsProductSsn          ConnectSessionNewParamsProduct = "ssn"
+	ConnectSessionNewParamsProductDeduction    ConnectSessionNewParamsProduct = "deduction"
+	ConnectSessionNewParamsProductDocuments    ConnectSessionNewParamsProduct = "documents"
 )
 
 func (r ConnectSessionNewParamsProduct) IsKnown() bool {
 	switch r {
-	case ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductSsn:
+	case ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductSsn, ConnectSessionNewParamsProductDeduction, ConnectSessionNewParamsProductDocuments:
 		return true
 	}
 	return false
@@ -206,11 +208,13 @@ const (
 	ConnectSessionReauthenticateParamsProductPayStatement ConnectSessionReauthenticateParamsProduct = "pay_statement"
 	ConnectSessionReauthenticateParamsProductBenefits     ConnectSessionReauthenticateParamsProduct = "benefits"
 	ConnectSessionReauthenticateParamsProductSsn          ConnectSessionReauthenticateParamsProduct = "ssn"
+	ConnectSessionReauthenticateParamsProductDeduction    ConnectSessionReauthenticateParamsProduct = "deduction"
+	ConnectSessionReauthenticateParamsProductDocuments    ConnectSessionReauthenticateParamsProduct = "documents"
 )
 
 func (r ConnectSessionReauthenticateParamsProduct) IsKnown() bool {
 	switch r {
-	case ConnectSessionReauthenticateParamsProductCompany, ConnectSessionReauthenticateParamsProductDirectory, ConnectSessionReauthenticateParamsProductIndividual, ConnectSessionReauthenticateParamsProductEmployment, ConnectSessionReauthenticateParamsProductPayment, ConnectSessionReauthenticateParamsProductPayStatement, ConnectSessionReauthenticateParamsProductBenefits, ConnectSessionReauthenticateParamsProductSsn:
+	case ConnectSessionReauthenticateParamsProductCompany, ConnectSessionReauthenticateParamsProductDirectory, ConnectSessionReauthenticateParamsProductIndividual, ConnectSessionReauthenticateParamsProductEmployment, ConnectSessionReauthenticateParamsProductPayment, ConnectSessionReauthenticateParamsProductPayStatement, ConnectSessionReauthenticateParamsProductBenefits, ConnectSessionReauthenticateParamsProductSsn, ConnectSessionReauthenticateParamsProductDeduction, ConnectSessionReauthenticateParamsProductDocuments:
 		return true
 	}
 	return false
