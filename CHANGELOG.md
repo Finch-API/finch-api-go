@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.22.0 (2025-04-22)
+
+Full Changelog: [v1.21.0...v1.22.0](https://github.com/Finch-API/finch-api-go/compare/v1.21.0...v1.22.0)
+
+### Features
+
+* **api:** api update ([87a175f](https://github.com/Finch-API/finch-api-go/commit/87a175f6f7973e87524e64b393db0193dba99e06))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([b293cf4](https://github.com/Finch-API/finch-api-go/commit/b293cf4af7c33b541cb5bf61928ddc310726bcdb))
+
 ## 1.21.0 (2025-04-21)
 
 Full Changelog: [v1.20.0...v1.21.0](https://github.com/Finch-API/finch-api-go/compare/v1.20.0...v1.21.0)
