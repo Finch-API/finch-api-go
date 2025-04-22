@@ -47,7 +47,7 @@ func (r *SandboxIndividualService) Update(ctx context.Context, individualID stri
 
 type SandboxIndividualUpdateResponse struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID     string                                 `json:"id"`
+	ID     string                                 `json:"id" format:"uuid"`
 	Dob    string                                 `json:"dob,nullable"`
 	Emails []SandboxIndividualUpdateResponseEmail `json:"emails,nullable"`
 	// Social Security Number of the individual in **encrypted** format. This field is
@@ -183,7 +183,7 @@ func (r SandboxIndividualUpdateResponseGender) IsKnown() bool {
 }
 
 type SandboxIndividualUpdateResponsePhoneNumber struct {
-	Data string                                          `json:"data"`
+	Data string                                          `json:"data,nullable"`
 	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type,nullable"`
 	JSON sandboxIndividualUpdateResponsePhoneNumberJSON  `json:"-"`
 }

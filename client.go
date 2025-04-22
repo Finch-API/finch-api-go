@@ -34,10 +34,13 @@ type Client struct {
 }
 
 // DefaultClientOptions read from the environment (FINCH_CLIENT_ID,
-// FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). This should be used to initialize
-// new clients.
+// FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET, FINCH_BASE_URL). This should be used
+// to initialize new clients.
 func DefaultClientOptions() []option.RequestOption {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
+	if o, ok := os.LookupEnv("FINCH_BASE_URL"); ok {
+		defaults = append(defaults, option.WithBaseURL(o))
+	}
 	if o, ok := os.LookupEnv("FINCH_CLIENT_ID"); ok {
 		defaults = append(defaults, option.WithClientID(o))
 	}
@@ -51,9 +54,10 @@ func DefaultClientOptions() []option.RequestOption {
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET). The
-// option passed in as arguments are applied after these default arguments, and all
-// option will be passed down to the services and requests that this client makes.
+// environment (FINCH_CLIENT_ID, FINCH_CLIENT_SECRET, FINCH_WEBHOOK_SECRET,
+// FINCH_BASE_URL). The option passed in as arguments are applied after these
+// default arguments, and all option will be passed down to the services and
+// requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	opts = append(DefaultClientOptions(), opts...)
 
@@ -103,7 +107,7 @@ func (r *Client) GetAccessToken(ctx context.Context, code string, redirectUri st
 		Code:         code,
 		RedirectURI:  redirectUri,
 	}
-	cfg.Apply(func(rc *requestconfig.RequestConfig) (err error) {
+	cfg.Apply(requestconfig.RequestOptionFunc(func(rc *requestconfig.RequestConfig) (err error) {
 		buf, err := json.Marshal(body)
 		if err != nil {
 			return err
@@ -111,7 +115,7 @@ func (r *Client) GetAccessToken(ctx context.Context, code string, redirectUri st
 		rc.Body = bytes.NewBuffer(buf)
 		rc.Request.Header.Set("Content-Type", "application/json")
 		return err
-	})
+	}))
 
 	err = cfg.Execute()
 	if err != nil {

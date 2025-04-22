@@ -7,13 +7,14 @@ import (
 	"errors"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestHRISPayStatementGetMany(t *testing.T) {
+func TestHRISCompanyPayStatementItemListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,12 +26,12 @@ func TestHRISPayStatementGetMany(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.PayStatements.GetMany(context.TODO(), finchgo.HRISPayStatementGetManyParams{
-		Requests: finchgo.F([]finchgo.HRISPayStatementGetManyParamsRequest{{
-			PaymentID: finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
-			Limit:     finchgo.F(int64(50)),
-			Offset:    finchgo.F(int64(0)),
-		}}),
+	_, err := client.HRIS.Company.PayStatementItem.List(context.TODO(), finchgo.HRISCompanyPayStatementItemListParams{
+		Categories: finchgo.F([]finchgo.HRISCompanyPayStatementItemListParamsCategory{finchgo.HRISCompanyPayStatementItemListParamsCategoryEarnings}),
+		EndDate:    finchgo.F(time.Now()),
+		Name:       finchgo.F("name"),
+		StartDate:  finchgo.F(time.Now()),
+		Type:       finchgo.F("base_compensation"),
 	})
 	if err != nil {
 		var apierr *finchgo.Error

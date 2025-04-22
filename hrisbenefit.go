@@ -94,7 +94,7 @@ func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.
 }
 
 // Get deductions metadata
-func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
+func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[HRISBenefitListSupportedBenefitsResponse], err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -112,7 +112,7 @@ func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...
 }
 
 // Get deductions metadata
-func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[SupportedBenefit] {
+func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[HRISBenefitListSupportedBenefitsResponse] {
 	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
 }
 
@@ -268,6 +268,7 @@ func (r BenefitFeaturesAndOperationsSupportedFeaturesHsaContributionLimit) IsKno
 	return false
 }
 
+// The frequency of the benefit deduction/contribution.
 type BenefitFrequency string
 
 const (
@@ -363,9 +364,11 @@ func (r benefitsSupportJSON) RawJSON() string {
 }
 
 type CompanyBenefit struct {
-	BenefitID   string           `json:"benefit_id,required"`
-	Description string           `json:"description,required,nullable"`
-	Frequency   BenefitFrequency `json:"frequency,required,nullable"`
+	// The id of the benefit.
+	BenefitID   string `json:"benefit_id,required" format:"uuid"`
+	Description string `json:"description,required,nullable"`
+	// The frequency of the benefit deduction/contribution.
+	Frequency BenefitFrequency `json:"frequency,required,nullable"`
 	// Type of benefit.
 	Type BenefitType        `json:"type,required,nullable"`
 	JSON companyBenefitJSON `json:"-"`
@@ -390,7 +393,9 @@ func (r companyBenefitJSON) RawJSON() string {
 }
 
 type CreateCompanyBenefitsResponse struct {
-	BenefitID string                            `json:"benefit_id,required"`
+	// The id of the benefit.
+	BenefitID string                            `json:"benefit_id,required" format:"uuid"`
+	JobID     string                            `json:"job_id,required" format:"uuid"`
 	JSON      createCompanyBenefitsResponseJSON `json:"-"`
 }
 
@@ -398,6 +403,7 @@ type CreateCompanyBenefitsResponse struct {
 // [CreateCompanyBenefitsResponse]
 type createCompanyBenefitsResponseJSON struct {
 	BenefitID   apijson.Field
+	JobID       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -433,99 +439,10 @@ func (r supportPerBenefitTypeJSON) RawJSON() string {
 	return r.raw
 }
 
-type SupportedBenefit struct {
-	// Whether the provider supports an annual maximum for this benefit.
-	AnnualMaximum bool `json:"annual_maximum,nullable"`
-	// Whether the provider supports catch up for this benefit. This field will only be
-	// true for retirement benefits.
-	CatchUp bool `json:"catch_up,nullable"`
-	// Supported contribution types. An empty array indicates contributions are not
-	// supported.
-	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution,nullable"`
-	Description         string                                `json:"description,nullable"`
-	// Supported deduction types. An empty array indicates deductions are not
-	// supported.
-	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction,nullable"`
-	// The list of frequencies supported by the provider for this benefit
-	Frequencies []BenefitFrequency `json:"frequencies"`
-	// Whether the provider supports HSA contribution limits. Empty if this feature is
-	// not supported for the benefit. This array only has values for HSA benefits.
-	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
-	// Type of benefit.
-	Type BenefitType          `json:"type,nullable"`
-	JSON supportedBenefitJSON `json:"-"`
-}
-
-// supportedBenefitJSON contains the JSON metadata for the struct
-// [SupportedBenefit]
-type supportedBenefitJSON struct {
-	AnnualMaximum        apijson.Field
-	CatchUp              apijson.Field
-	CompanyContribution  apijson.Field
-	Description          apijson.Field
-	EmployeeDeduction    apijson.Field
-	Frequencies          apijson.Field
-	HsaContributionLimit apijson.Field
-	Type                 apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r *SupportedBenefit) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r supportedBenefitJSON) RawJSON() string {
-	return r.raw
-}
-
-type SupportedBenefitCompanyContribution string
-
-const (
-	SupportedBenefitCompanyContributionFixed   SupportedBenefitCompanyContribution = "fixed"
-	SupportedBenefitCompanyContributionPercent SupportedBenefitCompanyContribution = "percent"
-)
-
-func (r SupportedBenefitCompanyContribution) IsKnown() bool {
-	switch r {
-	case SupportedBenefitCompanyContributionFixed, SupportedBenefitCompanyContributionPercent:
-		return true
-	}
-	return false
-}
-
-type SupportedBenefitEmployeeDeduction string
-
-const (
-	SupportedBenefitEmployeeDeductionFixed   SupportedBenefitEmployeeDeduction = "fixed"
-	SupportedBenefitEmployeeDeductionPercent SupportedBenefitEmployeeDeduction = "percent"
-)
-
-func (r SupportedBenefitEmployeeDeduction) IsKnown() bool {
-	switch r {
-	case SupportedBenefitEmployeeDeductionFixed, SupportedBenefitEmployeeDeductionPercent:
-		return true
-	}
-	return false
-}
-
-type SupportedBenefitHsaContributionLimit string
-
-const (
-	SupportedBenefitHsaContributionLimitIndividual SupportedBenefitHsaContributionLimit = "individual"
-	SupportedBenefitHsaContributionLimitFamily     SupportedBenefitHsaContributionLimit = "family"
-)
-
-func (r SupportedBenefitHsaContributionLimit) IsKnown() bool {
-	switch r {
-	case SupportedBenefitHsaContributionLimitIndividual, SupportedBenefitHsaContributionLimitFamily:
-		return true
-	}
-	return false
-}
-
 type UpdateCompanyBenefitResponse struct {
-	BenefitID string                           `json:"benefit_id,required"`
+	// The id of the benefit.
+	BenefitID string                           `json:"benefit_id,required" format:"uuid"`
+	JobID     string                           `json:"job_id,required" format:"uuid"`
 	JSON      updateCompanyBenefitResponseJSON `json:"-"`
 }
 
@@ -533,6 +450,7 @@ type UpdateCompanyBenefitResponse struct {
 // [UpdateCompanyBenefitResponse]
 type updateCompanyBenefitResponseJSON struct {
 	BenefitID   apijson.Field
+	JobID       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -545,12 +463,101 @@ func (r updateCompanyBenefitResponseJSON) RawJSON() string {
 	return r.raw
 }
 
+type HRISBenefitListSupportedBenefitsResponse struct {
+	// Whether the provider supports an annual maximum for this benefit.
+	AnnualMaximum bool `json:"annual_maximum,nullable"`
+	// Whether the provider supports catch up for this benefit. This field will only be
+	// true for retirement benefits.
+	CatchUp bool `json:"catch_up,nullable"`
+	// Supported contribution types. An empty array indicates contributions are not
+	// supported.
+	CompanyContribution []HRISBenefitListSupportedBenefitsResponseCompanyContribution `json:"company_contribution,nullable"`
+	Description         string                                                        `json:"description,nullable"`
+	// Supported deduction types. An empty array indicates deductions are not
+	// supported.
+	EmployeeDeduction []HRISBenefitListSupportedBenefitsResponseEmployeeDeduction `json:"employee_deduction,nullable"`
+	// The list of frequencies supported by the provider for this benefit
+	Frequencies []BenefitFrequency `json:"frequencies"`
+	// Whether the provider supports HSA contribution limits. Empty if this feature is
+	// not supported for the benefit. This array only has values for HSA benefits.
+	HsaContributionLimit []HRISBenefitListSupportedBenefitsResponseHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	JSON                 hrisBenefitListSupportedBenefitsResponseJSON                   `json:"-"`
+}
+
+// hrisBenefitListSupportedBenefitsResponseJSON contains the JSON metadata for the
+// struct [HRISBenefitListSupportedBenefitsResponse]
+type hrisBenefitListSupportedBenefitsResponseJSON struct {
+	AnnualMaximum        apijson.Field
+	CatchUp              apijson.Field
+	CompanyContribution  apijson.Field
+	Description          apijson.Field
+	EmployeeDeduction    apijson.Field
+	Frequencies          apijson.Field
+	HsaContributionLimit apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *HRISBenefitListSupportedBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r hrisBenefitListSupportedBenefitsResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type HRISBenefitListSupportedBenefitsResponseCompanyContribution string
+
+const (
+	HRISBenefitListSupportedBenefitsResponseCompanyContributionFixed   HRISBenefitListSupportedBenefitsResponseCompanyContribution = "fixed"
+	HRISBenefitListSupportedBenefitsResponseCompanyContributionPercent HRISBenefitListSupportedBenefitsResponseCompanyContribution = "percent"
+)
+
+func (r HRISBenefitListSupportedBenefitsResponseCompanyContribution) IsKnown() bool {
+	switch r {
+	case HRISBenefitListSupportedBenefitsResponseCompanyContributionFixed, HRISBenefitListSupportedBenefitsResponseCompanyContributionPercent:
+		return true
+	}
+	return false
+}
+
+type HRISBenefitListSupportedBenefitsResponseEmployeeDeduction string
+
+const (
+	HRISBenefitListSupportedBenefitsResponseEmployeeDeductionFixed   HRISBenefitListSupportedBenefitsResponseEmployeeDeduction = "fixed"
+	HRISBenefitListSupportedBenefitsResponseEmployeeDeductionPercent HRISBenefitListSupportedBenefitsResponseEmployeeDeduction = "percent"
+)
+
+func (r HRISBenefitListSupportedBenefitsResponseEmployeeDeduction) IsKnown() bool {
+	switch r {
+	case HRISBenefitListSupportedBenefitsResponseEmployeeDeductionFixed, HRISBenefitListSupportedBenefitsResponseEmployeeDeductionPercent:
+		return true
+	}
+	return false
+}
+
+type HRISBenefitListSupportedBenefitsResponseHsaContributionLimit string
+
+const (
+	HRISBenefitListSupportedBenefitsResponseHsaContributionLimitIndividual HRISBenefitListSupportedBenefitsResponseHsaContributionLimit = "individual"
+	HRISBenefitListSupportedBenefitsResponseHsaContributionLimitFamily     HRISBenefitListSupportedBenefitsResponseHsaContributionLimit = "family"
+)
+
+func (r HRISBenefitListSupportedBenefitsResponseHsaContributionLimit) IsKnown() bool {
+	switch r {
+	case HRISBenefitListSupportedBenefitsResponseHsaContributionLimitIndividual, HRISBenefitListSupportedBenefitsResponseHsaContributionLimitFamily:
+		return true
+	}
+	return false
+}
+
 type HRISBenefitNewParams struct {
 	// Name of the benefit as it appears in the provider and pay statements. Recommend
 	// limiting this to <30 characters due to limitations in specific providers (e.g.
 	// Justworks).
-	Description param.Field[string]           `json:"description"`
-	Frequency   param.Field[BenefitFrequency] `json:"frequency"`
+	Description param.Field[string] `json:"description"`
+	// The frequency of the benefit deduction/contribution.
+	Frequency param.Field[BenefitFrequency] `json:"frequency"`
 	// Type of benefit.
 	Type param.Field[BenefitType] `json:"type"`
 }
