@@ -99,7 +99,7 @@ type HRISCompanyPayStatementItemListResponseAttributes struct {
 	Employer bool `json:"employer,nullable"`
 	// The metadata of the pay statement item derived by the rules engine if available.
 	// Each attribute will be a key-value pair defined by a rule.
-	Metadata interface{} `json:"metadata,nullable"`
+	Metadata map[string]interface{} `json:"metadata,nullable"`
 	// `true` if the pay statement item is pre-tax. This field is only available for
 	// employee deductions.
 	PreTax bool `json:"pre_tax,nullable"`
