@@ -122,20 +122,20 @@ func (r IncomeParam) MarshalJSON() (data []byte, err error) {
 
 type Location struct {
 	// City, district, suburb, town, or village.
-	City string `json:"city,nullable"`
+	City string `json:"city,required,nullable"`
 	// The 2-letter ISO 3166 country code.
-	Country string `json:"country,nullable"`
+	Country string `json:"country,required,nullable"`
 	// Street address or PO box.
-	Line1 string `json:"line1,nullable"`
+	Line1 string `json:"line1,required,nullable"`
 	// Apartment, suite, unit, or building.
-	Line2 string `json:"line2,nullable"`
-	Name  string `json:"name,nullable"`
+	Line2 string `json:"line2,required,nullable"`
 	// The postal code or zip code.
-	PostalCode string `json:"postal_code,nullable"`
-	SourceID   string `json:"source_id,nullable"`
+	PostalCode string `json:"postal_code,required,nullable"`
 	// The state code.
-	State string       `json:"state,nullable"`
-	JSON  locationJSON `json:"-"`
+	State    string       `json:"state,required,nullable"`
+	Name     string       `json:"name,nullable"`
+	SourceID string       `json:"source_id,nullable"`
+	JSON     locationJSON `json:"-"`
 }
 
 // locationJSON contains the JSON metadata for the struct [Location]
@@ -144,10 +144,10 @@ type locationJSON struct {
 	Country     apijson.Field
 	Line1       apijson.Field
 	Line2       apijson.Field
-	Name        apijson.Field
 	PostalCode  apijson.Field
-	SourceID    apijson.Field
 	State       apijson.Field
+	Name        apijson.Field
+	SourceID    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -162,19 +162,19 @@ func (r locationJSON) RawJSON() string {
 
 type LocationParam struct {
 	// City, district, suburb, town, or village.
-	City param.Field[string] `json:"city"`
+	City param.Field[string] `json:"city,required"`
 	// The 2-letter ISO 3166 country code.
-	Country param.Field[string] `json:"country"`
+	Country param.Field[string] `json:"country,required"`
 	// Street address or PO box.
-	Line1 param.Field[string] `json:"line1"`
+	Line1 param.Field[string] `json:"line1,required"`
 	// Apartment, suite, unit, or building.
-	Line2 param.Field[string] `json:"line2"`
-	Name  param.Field[string] `json:"name"`
+	Line2 param.Field[string] `json:"line2,required"`
 	// The postal code or zip code.
-	PostalCode param.Field[string] `json:"postal_code"`
-	SourceID   param.Field[string] `json:"source_id"`
+	PostalCode param.Field[string] `json:"postal_code,required"`
 	// The state code.
-	State param.Field[string] `json:"state"`
+	State    param.Field[string] `json:"state,required"`
+	Name     param.Field[string] `json:"name"`
+	SourceID param.Field[string] `json:"source_id"`
 }
 
 func (r LocationParam) MarshalJSON() (data []byte, err error) {

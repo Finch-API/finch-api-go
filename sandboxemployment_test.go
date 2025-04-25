@@ -64,10 +64,10 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 				Country:    finchgo.F("country"),
 				Line1:      finchgo.F("line1"),
 				Line2:      finchgo.F("line2"),
-				Name:       finchgo.F("name"),
 				PostalCode: finchgo.F("postal_code"),
-				SourceID:   finchgo.F("source_id"),
 				State:      finchgo.F("state"),
+				Name:       finchgo.F("name"),
+				SourceID:   finchgo.F("source_id"),
 			}),
 			Manager: finchgo.F(finchgo.SandboxEmploymentUpdateParamsManager{
 				ID: finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
