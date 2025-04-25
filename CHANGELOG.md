@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.23.0 (2025-04-23)
+
+Full Changelog: [v1.22.0...v1.23.0](https://github.com/Finch-API/finch-api-go/compare/v1.22.0...v1.23.0)
+
+### Features
+
+* **api:** api update ([a0ca3df](https://github.com/Finch-API/finch-api-go/commit/a0ca3df6746da4af2cd5c23e2e342600e5f7bd86))
+
+
+### Chores
+
+* **ci:** only use depot for staging repos ([9c65e0e](https://github.com/Finch-API/finch-api-go/commit/9c65e0ee65692b5b1717343e6658bba94a49a40f))
+* **ci:** run on more branches and use depot runners ([57b2f6d](https://github.com/Finch-API/finch-api-go/commit/57b2f6de946e1496ae1b9d0f5614ba49ac9ee5ea))
+
 ## 1.22.0 (2025-04-22)
 
 Full Changelog: [v1.21.0...v1.22.0](https://github.com/Finch-API/finch-api-go/compare/v1.21.0...v1.22.0)
