@@ -105,17 +105,17 @@ func (r operationSupportMatrixJSON) RawJSON() string {
 }
 
 type Paging struct {
-	// The total number of elements for the entire query (not just the given page)
-	Count int64 `json:"count"`
 	// The current start index of the returned list of elements
-	Offset int64      `json:"offset"`
-	JSON   pagingJSON `json:"-"`
+	Offset int64 `json:"offset,required"`
+	// The total number of elements for the entire query (not just the given page)
+	Count int64      `json:"count"`
+	JSON  pagingJSON `json:"-"`
 }
 
 // pagingJSON contains the JSON metadata for the struct [Paging]
 type pagingJSON struct {
-	Count       apijson.Field
 	Offset      apijson.Field
+	Count       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
