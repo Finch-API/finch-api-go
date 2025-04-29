@@ -26,6 +26,13 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
+		CompanyContribution: finchgo.F(finchgo.HRISBenefitNewParamsCompanyContribution{
+			Tiers: finchgo.F([]finchgo.HRISBenefitNewParamsCompanyContributionTier{{
+				Match:     finchgo.F(int64(1)),
+				Threshold: finchgo.F(int64(1)),
+			}}),
+			Type: finchgo.F(finchgo.HRISBenefitNewParamsCompanyContributionTypeMatch),
+		}),
 		Description: finchgo.F("description"),
 		Frequency:   finchgo.F(finchgo.BenefitFrequencyOneTime),
 		Type:        finchgo.F(finchgo.BenefitType_401k),
