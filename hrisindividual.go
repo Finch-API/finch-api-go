@@ -134,12 +134,13 @@ func (r *Individual) UnmarshalJSON(data []byte) (err error) {
 // AsUnion returns a [IndividualUnion] interface which you can cast to the specific
 // types for more type safety.
 //
-// Possible runtime types of the union are [IndividualObject], [IndividualObject].
+// Possible runtime types of the union are [IndividualObject],
+// [IndividualBatchError].
 func (r Individual) AsUnion() IndividualUnion {
 	return r.union
 }
 
-// Union satisfied by [IndividualObject] or [IndividualObject].
+// Union satisfied by [IndividualObject] or [IndividualBatchError].
 type IndividualUnion interface {
 	implementsIndividual()
 }
@@ -154,7 +155,7 @@ func init() {
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualObject{}),
+			Type:       reflect.TypeOf(IndividualBatchError{}),
 		},
 	)
 }
@@ -335,6 +336,35 @@ func (r IndividualObjectEmailsType) IsKnown() bool {
 	}
 	return false
 }
+
+type IndividualBatchError struct {
+	Code      float64                  `json:"code,required"`
+	Message   string                   `json:"message,required"`
+	Name      string                   `json:"name,required"`
+	FinchCode string                   `json:"finch_code"`
+	JSON      individualBatchErrorJSON `json:"-"`
+}
+
+// individualBatchErrorJSON contains the JSON metadata for the struct
+// [IndividualBatchError]
+type individualBatchErrorJSON struct {
+	Code        apijson.Field
+	Message     apijson.Field
+	Name        apijson.Field
+	FinchCode   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBatchError) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBatchErrorJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r IndividualBatchError) implementsIndividual() {}
 
 // The EEOC-defined ethnicity of the individual.
 type IndividualEthnicity string
