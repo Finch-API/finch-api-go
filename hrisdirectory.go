@@ -119,7 +119,10 @@ func (r *IndividualsPage) GetNextPage() (res *IndividualsPage, err error) {
 	next := r.Paging.Offset
 
 	if next < r.Paging.Count && next != 0 {
-		cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
+		err = cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
+		if err != nil {
+			return nil, err
+		}
 	} else {
 		return nil, nil
 	}
