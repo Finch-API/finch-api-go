@@ -48,14 +48,14 @@ func NewHRISService(opts ...option.RequestOption) (r *HRISService) {
 // depending on what information the provider returns.
 type Income struct {
 	// The income amount in cents.
-	Amount int64 `json:"amount,nullable"`
+	Amount int64 `json:"amount,required,nullable"`
 	// The currency code.
-	Currency string `json:"currency,nullable"`
+	Currency string `json:"currency,required,nullable"`
 	// The date the income amount went into effect.
-	EffectiveDate string `json:"effective_date,nullable"`
+	EffectiveDate string `json:"effective_date,required,nullable"`
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
-	Unit IncomeUnit `json:"unit,nullable"`
+	Unit IncomeUnit `json:"unit,required,nullable"`
 	JSON incomeJSON `json:"-"`
 }
 
@@ -106,14 +106,14 @@ func (r IncomeUnit) IsKnown() bool {
 // depending on what information the provider returns.
 type IncomeParam struct {
 	// The income amount in cents.
-	Amount param.Field[int64] `json:"amount"`
+	Amount param.Field[int64] `json:"amount,required"`
 	// The currency code.
-	Currency param.Field[string] `json:"currency"`
+	Currency param.Field[string] `json:"currency,required"`
 	// The date the income amount went into effect.
-	EffectiveDate param.Field[string] `json:"effective_date"`
+	EffectiveDate param.Field[string] `json:"effective_date,required"`
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
-	Unit param.Field[IncomeUnit] `json:"unit"`
+	Unit param.Field[IncomeUnit] `json:"unit,required"`
 }
 
 func (r IncomeParam) MarshalJSON() (data []byte, err error) {
