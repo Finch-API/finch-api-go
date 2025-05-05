@@ -43,7 +43,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
 			}}),
 			EmployeeDeductions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeduction{{
-				Amount: finchgo.F(int64(2000)),
+				Amount: finchgo.F(int64(0)),
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
@@ -51,8 +51,8 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 						}),
 					}),
 				}),
-				Currency: finchgo.F("usd"),
-				Name:     finchgo.F("401k test"),
+				Currency: finchgo.F("currency"),
+				Name:     finchgo.F("name"),
 				PreTax:   finchgo.F(true),
 				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
@@ -73,7 +73,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Amount:   finchgo.F(int64(0)),
 				Currency: finchgo.F("currency"),
 			}),
-			IndividualID: finchgo.F("b2338cfb-472f-4f72-9faa-e028c083144a"),
+			IndividualID: finchgo.F("individual_id"),
 			NetPay: finchgo.F(finchgo.MoneyParam{
 				Amount:   finchgo.F(int64(0)),
 				Currency: finchgo.F("currency"),
