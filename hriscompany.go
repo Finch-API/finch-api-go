@@ -87,16 +87,16 @@ func (r companyJSON) RawJSON() string {
 
 type CompanyAccount struct {
 	// The name of the bank associated in the payroll/HRIS system.
-	AccountName string `json:"account_name,nullable"`
+	AccountName string `json:"account_name,required,nullable"`
 	// 10-12 digit number to specify the bank account
-	AccountNumber string `json:"account_number,nullable"`
+	AccountNumber string `json:"account_number,required,nullable"`
 	// The type of bank account.
-	AccountType CompanyAccountsAccountType `json:"account_type,nullable"`
+	AccountType CompanyAccountsAccountType `json:"account_type,required,nullable"`
 	// Name of the banking institution.
-	InstitutionName string `json:"institution_name,nullable"`
+	InstitutionName string `json:"institution_name,required,nullable"`
 	// A nine-digit code that's based on the U.S. Bank location where your account was
 	// opened.
-	RoutingNumber string             `json:"routing_number,nullable"`
+	RoutingNumber string             `json:"routing_number,required,nullable"`
 	JSON          companyAccountJSON `json:"-"`
 }
 
@@ -137,9 +137,9 @@ func (r CompanyAccountsAccountType) IsKnown() bool {
 
 type CompanyDepartment struct {
 	// The department name.
-	Name string `json:"name,nullable"`
+	Name string `json:"name,required,nullable"`
 	// The parent department, if present.
-	Parent CompanyDepartmentsParent `json:"parent,nullable"`
+	Parent CompanyDepartmentsParent `json:"parent,required,nullable"`
 	JSON   companyDepartmentJSON    `json:"-"`
 }
 
@@ -163,7 +163,7 @@ func (r companyDepartmentJSON) RawJSON() string {
 // The parent department, if present.
 type CompanyDepartmentsParent struct {
 	// The parent department's name.
-	Name string                       `json:"name,nullable"`
+	Name string                       `json:"name,required,nullable"`
 	JSON companyDepartmentsParentJSON `json:"-"`
 }
 
@@ -186,9 +186,9 @@ func (r companyDepartmentsParentJSON) RawJSON() string {
 // The entity type object.
 type CompanyEntity struct {
 	// The tax payer subtype of the company.
-	Subtype CompanyEntitySubtype `json:"subtype,nullable"`
+	Subtype CompanyEntitySubtype `json:"subtype,required,nullable"`
 	// The tax payer type of the company.
-	Type CompanyEntityType `json:"type,nullable"`
+	Type CompanyEntityType `json:"type,required,nullable"`
 	JSON companyEntityJSON `json:"-"`
 }
 

@@ -119,7 +119,10 @@ func (r *IndividualsPage) GetNextPage() (res *IndividualsPage, err error) {
 	next := r.Paging.Offset
 
 	if next < r.Paging.Count && next != 0 {
-		cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
+		err = cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
+		if err != nil {
+			return nil, err
+		}
 	} else {
 		return nil, nil
 	}
@@ -188,19 +191,19 @@ func (r *IndividualsPageAutoPager) Index() int {
 
 type IndividualInDirectory struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id" format:"uuid"`
+	ID string `json:"id,required" format:"uuid"`
 	// The department object.
-	Department IndividualInDirectoryDepartment `json:"department,nullable"`
+	Department IndividualInDirectoryDepartment `json:"department,required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name,required,nullable"`
 	// `true` if the individual is an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
+	IsActive bool `json:"is_active,required,nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,nullable"`
+	LastName string `json:"last_name,required,nullable"`
 	// The manager object.
-	Manager IndividualInDirectoryManager `json:"manager,nullable"`
+	Manager IndividualInDirectoryManager `json:"manager,required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName string                    `json:"middle_name,nullable"`
+	MiddleName string                    `json:"middle_name,required,nullable"`
 	JSON       individualInDirectoryJSON `json:"-"`
 }
 
@@ -252,7 +255,7 @@ func (r individualInDirectoryDepartmentJSON) RawJSON() string {
 // The manager object.
 type IndividualInDirectoryManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                           `json:"id" format:"uuid"`
+	ID   string                           `json:"id,required" format:"uuid"`
 	JSON individualInDirectoryManagerJSON `json:"-"`
 }
 

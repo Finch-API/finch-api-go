@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.24.0 (2025-05-06)
+
+Full Changelog: [v1.23.0...v1.24.0](https://github.com/Finch-API/finch-api-go/compare/v1.23.0...v1.24.0)
+
+### Features
+
+* **api:** api update ([e419833](https://github.com/Finch-API/finch-api-go/commit/e419833c0c7e800bf56f054d175383089ade9d2e))
+* **api:** api update ([7681758](https://github.com/Finch-API/finch-api-go/commit/7681758f544dba38444047c823a229c5550b2723))
+* **api:** api update ([bd727bc](https://github.com/Finch-API/finch-api-go/commit/bd727bc5d41651fa3a1bf0e852d90d09ebbbb4f2))
+* **api:** api update ([80d4aac](https://github.com/Finch-API/finch-api-go/commit/80d4aac589c1db7c49d80d0ba86e580df9a7074e))
+* **api:** api update ([7730e66](https://github.com/Finch-API/finch-api-go/commit/7730e66702a91b895ed9a9b8f5792127e50641ec))
+* **api:** api update ([6509c0d](https://github.com/Finch-API/finch-api-go/commit/6509c0dfa332009b8596133ac536115adb77aeaa))
+* **api:** api update ([a401cbc](https://github.com/Finch-API/finch-api-go/commit/a401cbc3e9e46c005842581e1bd13c84813107d3))
+* **api:** api update ([79dc6cf](https://github.com/Finch-API/finch-api-go/commit/79dc6cfa32a97c018a1f321fe554605edd8b401e))
+* **api:** api update ([8d0c40f](https://github.com/Finch-API/finch-api-go/commit/8d0c40f7a79f0159d256a7a88877947f373c29b6))
+* **api:** api update ([e2511a3](https://github.com/Finch-API/finch-api-go/commit/e2511a3c522852db41ba549d1de8f0cb0528f601))
+* **api:** api update ([a7ef72c](https://github.com/Finch-API/finch-api-go/commit/a7ef72cbd4c3ae8b3aefb49555041f4052d919f3))
+* **api:** api update ([1b08c3b](https://github.com/Finch-API/finch-api-go/commit/1b08c3b5dc087f606789024766f7bd51746663c8))
+* **api:** api update ([c88599a](https://github.com/Finch-API/finch-api-go/commit/c88599aacc4a4876bc56c5b2042a5a4f7fc315b0))
+* **api:** api update ([ed9f5d6](https://github.com/Finch-API/finch-api-go/commit/ed9f5d69c727bbfcb285aee844be5149910fc9a4))
+* **api:** api update ([3d42c35](https://github.com/Finch-API/finch-api-go/commit/3d42c3595a4364b3b562dac1a483e23feffbe548))
+* **api:** api update ([dcbd4f8](https://github.com/Finch-API/finch-api-go/commit/dcbd4f82f99a8b7bdaf4ed5e2584e4c1786d6e5d))
+* **api:** api update ([615e7fe](https://github.com/Finch-API/finch-api-go/commit/615e7fea2ed49e5b61bafa4007d8bf31453fddf5))
+
+
+### Bug Fixes
+
+* **client:** clean up reader resources ([d23d82f](https://github.com/Finch-API/finch-api-go/commit/d23d82fe0838695a9ed183c43ebe073e4ad12487))
+* **client:** correctly update body in WithJSONSet ([001db3d](https://github.com/Finch-API/finch-api-go/commit/001db3d87dd13e810d3855074400df2e74b6e919))
+* handle empty bodies in WithJSONSet ([e73e76e](https://github.com/Finch-API/finch-api-go/commit/e73e76ea1195d8914095701912c9d515254afee4))
+* **pagination:** handle errors when applying options ([f56bd8f](https://github.com/Finch-API/finch-api-go/commit/f56bd8f390ce53f835fee02c7c04cbe42918f575))
+
 ## 1.23.0 (2025-04-23)
 
 Full Changelog: [v1.22.0...v1.23.0](https://github.com/Finch-API/finch-api-go/compare/v1.22.0...v1.23.0)

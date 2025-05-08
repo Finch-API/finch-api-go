@@ -33,7 +33,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
-							"foo": "bar",
+							"foo": map[string]interface{}{},
 						}),
 					}),
 				}),
@@ -47,7 +47,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
-							"foo": "bar",
+							"foo": map[string]interface{}{},
 						}),
 					}),
 				}),
@@ -61,7 +61,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
-							"foo": "bar",
+							"foo": map[string]interface{}{},
 						}),
 					}),
 				}),
@@ -84,7 +84,7 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
-							"foo": "bar",
+							"foo": map[string]interface{}{},
 						}),
 					}),
 				}),

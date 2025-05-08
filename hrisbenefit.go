@@ -365,8 +365,10 @@ func (r benefitsSupportJSON) RawJSON() string {
 
 type CompanyBenefit struct {
 	// The id of the benefit.
-	BenefitID   string `json:"benefit_id,required" format:"uuid"`
-	Description string `json:"description,required,nullable"`
+	BenefitID string `json:"benefit_id,required" format:"uuid"`
+	// The company match for this benefit.
+	CompanyContribution CompanyBenefitCompanyContribution `json:"company_contribution,required,nullable"`
+	Description         string                            `json:"description,required,nullable"`
 	// The frequency of the benefit deduction/contribution.
 	Frequency BenefitFrequency `json:"frequency,required,nullable"`
 	// Type of benefit.
@@ -376,12 +378,13 @@ type CompanyBenefit struct {
 
 // companyBenefitJSON contains the JSON metadata for the struct [CompanyBenefit]
 type companyBenefitJSON struct {
-	BenefitID   apijson.Field
-	Description apijson.Field
-	Frequency   apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	BenefitID           apijson.Field
+	CompanyContribution apijson.Field
+	Description         apijson.Field
+	Frequency           apijson.Field
+	Type                apijson.Field
+	raw                 string
+	ExtraFields         map[string]apijson.Field
 }
 
 func (r *CompanyBenefit) UnmarshalJSON(data []byte) (err error) {
@@ -390,6 +393,67 @@ func (r *CompanyBenefit) UnmarshalJSON(data []byte) (err error) {
 
 func (r companyBenefitJSON) RawJSON() string {
 	return r.raw
+}
+
+// The company match for this benefit.
+type CompanyBenefitCompanyContribution struct {
+	Tiers []CompanyBenefitCompanyContributionTier `json:"tiers"`
+	Type  CompanyBenefitCompanyContributionType   `json:"type"`
+	JSON  companyBenefitCompanyContributionJSON   `json:"-"`
+}
+
+// companyBenefitCompanyContributionJSON contains the JSON metadata for the struct
+// [CompanyBenefitCompanyContribution]
+type companyBenefitCompanyContributionJSON struct {
+	Tiers       apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CompanyBenefitCompanyContribution) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r companyBenefitCompanyContributionJSON) RawJSON() string {
+	return r.raw
+}
+
+type CompanyBenefitCompanyContributionTier struct {
+	Match     int64                                     `json:"match"`
+	Threshold int64                                     `json:"threshold"`
+	JSON      companyBenefitCompanyContributionTierJSON `json:"-"`
+}
+
+// companyBenefitCompanyContributionTierJSON contains the JSON metadata for the
+// struct [CompanyBenefitCompanyContributionTier]
+type companyBenefitCompanyContributionTierJSON struct {
+	Match       apijson.Field
+	Threshold   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CompanyBenefitCompanyContributionTier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r companyBenefitCompanyContributionTierJSON) RawJSON() string {
+	return r.raw
+}
+
+type CompanyBenefitCompanyContributionType string
+
+const (
+	CompanyBenefitCompanyContributionTypeMatch CompanyBenefitCompanyContributionType = "match"
+)
+
+func (r CompanyBenefitCompanyContributionType) IsKnown() bool {
+	switch r {
+	case CompanyBenefitCompanyContributionTypeMatch:
+		return true
+	}
+	return false
 }
 
 type CreateCompanyBenefitsResponse struct {
@@ -552,6 +616,8 @@ func (r HRISBenefitListSupportedBenefitsResponseHsaContributionLimit) IsKnown() 
 }
 
 type HRISBenefitNewParams struct {
+	// The company match for this benefit.
+	CompanyContribution param.Field[HRISBenefitNewParamsCompanyContribution] `json:"company_contribution"`
 	// Name of the benefit as it appears in the provider and pay statements. Recommend
 	// limiting this to <30 characters due to limitations in specific providers (e.g.
 	// Justworks).
@@ -564,6 +630,39 @@ type HRISBenefitNewParams struct {
 
 func (r HRISBenefitNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The company match for this benefit.
+type HRISBenefitNewParamsCompanyContribution struct {
+	Tiers param.Field[[]HRISBenefitNewParamsCompanyContributionTier] `json:"tiers"`
+	Type  param.Field[HRISBenefitNewParamsCompanyContributionType]   `json:"type"`
+}
+
+func (r HRISBenefitNewParamsCompanyContribution) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISBenefitNewParamsCompanyContributionTier struct {
+	Match     param.Field[int64] `json:"match"`
+	Threshold param.Field[int64] `json:"threshold"`
+}
+
+func (r HRISBenefitNewParamsCompanyContributionTier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISBenefitNewParamsCompanyContributionType string
+
+const (
+	HRISBenefitNewParamsCompanyContributionTypeMatch HRISBenefitNewParamsCompanyContributionType = "match"
+)
+
+func (r HRISBenefitNewParamsCompanyContributionType) IsKnown() bool {
+	switch r {
+	case HRISBenefitNewParamsCompanyContributionTypeMatch:
+		return true
+	}
+	return false
 }
 
 type HRISBenefitUpdateParams struct {
