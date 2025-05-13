@@ -263,7 +263,7 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 // environment to be the "production" environment. An environment specifies which base URL
 // to use by default.
 func WithEnvironmentProduction() RequestOption {
-	return WithBaseURL("https://api.tryfinch.com/")
+	return requestconfig.WithDefaultBaseURL("https://api.tryfinch.com/")
 }
 
 // WithAccessToken returns a RequestOption that sets the client setting "access_token".
