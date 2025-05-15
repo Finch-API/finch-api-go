@@ -241,11 +241,12 @@ type SandboxPaymentNewParamsPayStatementsPaymentMethod string
 const (
 	SandboxPaymentNewParamsPayStatementsPaymentMethodCheck         SandboxPaymentNewParamsPayStatementsPaymentMethod = "check"
 	SandboxPaymentNewParamsPayStatementsPaymentMethodDirectDeposit SandboxPaymentNewParamsPayStatementsPaymentMethod = "direct_deposit"
+	SandboxPaymentNewParamsPayStatementsPaymentMethodOther         SandboxPaymentNewParamsPayStatementsPaymentMethod = "other"
 )
 
 func (r SandboxPaymentNewParamsPayStatementsPaymentMethod) IsKnown() bool {
 	switch r {
-	case SandboxPaymentNewParamsPayStatementsPaymentMethodCheck, SandboxPaymentNewParamsPayStatementsPaymentMethodDirectDeposit:
+	case SandboxPaymentNewParamsPayStatementsPaymentMethodCheck, SandboxPaymentNewParamsPayStatementsPaymentMethodDirectDeposit, SandboxPaymentNewParamsPayStatementsPaymentMethodOther:
 		return true
 	}
 	return false
