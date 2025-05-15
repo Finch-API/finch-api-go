@@ -183,8 +183,8 @@ func (r LocationParam) MarshalJSON() (data []byte, err error) {
 
 type Money struct {
 	// Amount for money object (in cents)
-	Amount   int64     `json:"amount,nullable"`
-	Currency string    `json:"currency"`
+	Amount   int64     `json:"amount,required,nullable"`
+	Currency string    `json:"currency,required"`
 	JSON     moneyJSON `json:"-"`
 }
 
@@ -206,8 +206,8 @@ func (r moneyJSON) RawJSON() string {
 
 type MoneyParam struct {
 	// Amount for money object (in cents)
-	Amount   param.Field[int64]  `json:"amount"`
-	Currency param.Field[string] `json:"currency"`
+	Amount   param.Field[int64]  `json:"amount,required"`
+	Currency param.Field[string] `json:"currency,required"`
 }
 
 func (r MoneyParam) MarshalJSON() (data []byte, err error) {

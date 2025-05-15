@@ -11,7 +11,6 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 	"github.com/Finch-API/finch-api-go/packages/pagination"
-	"github.com/Finch-API/finch-api-go/shared"
 )
 
 // HRISPayStatementService contains methods and other services that help with
@@ -64,22 +63,22 @@ func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HR
 
 type PayStatement struct {
 	// The array of earnings objects associated with this pay statement
-	Earnings []PayStatementEarning `json:"earnings,nullable"`
+	Earnings []PayStatementEarning `json:"earnings,required,nullable"`
 	// The array of deductions objects associated with this pay statement.
-	EmployeeDeductions    []PayStatementEmployeeDeduction    `json:"employee_deductions,nullable"`
-	EmployerContributions []PayStatementEmployerContribution `json:"employer_contributions,nullable"`
-	GrossPay              Money                              `json:"gross_pay,nullable"`
+	EmployeeDeductions    []PayStatementEmployeeDeduction    `json:"employee_deductions,required,nullable"`
+	EmployerContributions []PayStatementEmployerContribution `json:"employer_contributions,required,nullable"`
+	GrossPay              Money                              `json:"gross_pay,required,nullable"`
 	// A stable Finch `id` (UUID v4) for an individual in the company
-	IndividualID string `json:"individual_id"`
-	NetPay       Money  `json:"net_pay,nullable"`
+	IndividualID string `json:"individual_id,required"`
+	NetPay       Money  `json:"net_pay,required,nullable"`
 	// The payment method.
-	PaymentMethod PayStatementPaymentMethod `json:"payment_method,nullable"`
+	PaymentMethod PayStatementPaymentMethod `json:"payment_method,required,nullable"`
 	// The array of taxes objects associated with this pay statement.
-	Taxes []PayStatementTax `json:"taxes,nullable"`
+	Taxes []PayStatementTax `json:"taxes,required,nullable"`
 	// The number of hours worked for this pay period
-	TotalHours float64 `json:"total_hours,nullable"`
+	TotalHours float64 `json:"total_hours,required,nullable"`
 	// The type of the payment associated with the pay statement.
-	Type PayStatementType `json:"type,nullable"`
+	Type PayStatementType `json:"type,required,nullable"`
 	JSON payStatementJSON `json:"-"`
 }
 
@@ -109,29 +108,29 @@ func (r payStatementJSON) RawJSON() string {
 
 type PayStatementEarning struct {
 	// The earnings amount in cents.
-	Amount     int64                          `json:"amount,nullable"`
-	Attributes PayStatementEarningsAttributes `json:"attributes,nullable"`
+	Amount int64 `json:"amount,required,nullable"`
 	// The earnings currency code.
-	Currency string `json:"currency,nullable"`
+	Currency string `json:"currency,required,nullable"`
 	// The number of hours associated with this earning. (For salaried employees, this
 	// could be hours per pay period, `0` or `null`, depending on the provider).
-	Hours float64 `json:"hours,nullable"`
+	Hours float64 `json:"hours,required,nullable"`
 	// The exact name of the deduction from the pay statement.
-	Name string `json:"name,nullable"`
+	Name string `json:"name,required,nullable"`
 	// The type of earning.
-	Type PayStatementEarningsType `json:"type,nullable"`
-	JSON payStatementEarningJSON  `json:"-"`
+	Type       PayStatementEarningsType       `json:"type,required,nullable"`
+	Attributes PayStatementEarningsAttributes `json:"attributes,nullable"`
+	JSON       payStatementEarningJSON        `json:"-"`
 }
 
 // payStatementEarningJSON contains the JSON metadata for the struct
 // [PayStatementEarning]
 type payStatementEarningJSON struct {
 	Amount      apijson.Field
-	Attributes  apijson.Field
 	Currency    apijson.Field
 	Hours       apijson.Field
 	Name        apijson.Field
 	Type        apijson.Field
+	Attributes  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -141,51 +140,6 @@ func (r *PayStatementEarning) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r payStatementEarningJSON) RawJSON() string {
-	return r.raw
-}
-
-type PayStatementEarningsAttributes struct {
-	Metadata PayStatementEarningsAttributesMetadata `json:"metadata"`
-	JSON     payStatementEarningsAttributesJSON     `json:"-"`
-}
-
-// payStatementEarningsAttributesJSON contains the JSON metadata for the struct
-// [PayStatementEarningsAttributes]
-type payStatementEarningsAttributesJSON struct {
-	Metadata    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PayStatementEarningsAttributes) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r payStatementEarningsAttributesJSON) RawJSON() string {
-	return r.raw
-}
-
-type PayStatementEarningsAttributesMetadata struct {
-	// The metadata to be attached to the entity by existing rules. It is a key-value
-	// pairs where the values can be of any type (string, number, boolean, object,
-	// array, etc.).
-	Metadata map[string]interface{}                     `json:"metadata"`
-	JSON     payStatementEarningsAttributesMetadataJSON `json:"-"`
-}
-
-// payStatementEarningsAttributesMetadataJSON contains the JSON metadata for the
-// struct [PayStatementEarningsAttributesMetadata]
-type payStatementEarningsAttributesMetadataJSON struct {
-	Metadata    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PayStatementEarningsAttributesMetadata) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r payStatementEarningsAttributesMetadataJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -216,30 +170,75 @@ func (r PayStatementEarningsType) IsKnown() bool {
 	return false
 }
 
+type PayStatementEarningsAttributes struct {
+	Metadata PayStatementEarningsAttributesMetadata `json:"metadata,required"`
+	JSON     payStatementEarningsAttributesJSON     `json:"-"`
+}
+
+// payStatementEarningsAttributesJSON contains the JSON metadata for the struct
+// [PayStatementEarningsAttributes]
+type payStatementEarningsAttributesJSON struct {
+	Metadata    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PayStatementEarningsAttributes) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementEarningsAttributesJSON) RawJSON() string {
+	return r.raw
+}
+
+type PayStatementEarningsAttributesMetadata struct {
+	// The metadata to be attached to the entity by existing rules. It is a key-value
+	// pairs where the values can be of any type (string, number, boolean, object,
+	// array, etc.).
+	Metadata map[string]interface{}                     `json:"metadata,required"`
+	JSON     payStatementEarningsAttributesMetadataJSON `json:"-"`
+}
+
+// payStatementEarningsAttributesMetadataJSON contains the JSON metadata for the
+// struct [PayStatementEarningsAttributesMetadata]
+type payStatementEarningsAttributesMetadataJSON struct {
+	Metadata    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PayStatementEarningsAttributesMetadata) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementEarningsAttributesMetadataJSON) RawJSON() string {
+	return r.raw
+}
+
 type PayStatementEmployeeDeduction struct {
 	// The deduction amount in cents.
-	Amount     int64                                    `json:"amount,nullable"`
-	Attributes PayStatementEmployeeDeductionsAttributes `json:"attributes,nullable"`
+	Amount int64 `json:"amount,required,nullable"`
 	// The deduction currency.
-	Currency string `json:"currency,nullable"`
+	Currency string `json:"currency,required,nullable"`
 	// The deduction name from the pay statement.
-	Name string `json:"name,nullable"`
+	Name string `json:"name,required,nullable"`
 	// Boolean indicating if the deduction is pre-tax.
-	PreTax bool `json:"pre_tax,nullable"`
+	PreTax bool `json:"pre_tax,required,nullable"`
 	// Type of benefit.
-	Type BenefitType                       `json:"type,nullable"`
-	JSON payStatementEmployeeDeductionJSON `json:"-"`
+	Type       BenefitType                              `json:"type,required,nullable"`
+	Attributes PayStatementEmployeeDeductionsAttributes `json:"attributes,nullable"`
+	JSON       payStatementEmployeeDeductionJSON        `json:"-"`
 }
 
 // payStatementEmployeeDeductionJSON contains the JSON metadata for the struct
 // [PayStatementEmployeeDeduction]
 type payStatementEmployeeDeductionJSON struct {
 	Amount      apijson.Field
-	Attributes  apijson.Field
 	Currency    apijson.Field
 	Name        apijson.Field
 	PreTax      apijson.Field
 	Type        apijson.Field
+	Attributes  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -253,7 +252,7 @@ func (r payStatementEmployeeDeductionJSON) RawJSON() string {
 }
 
 type PayStatementEmployeeDeductionsAttributes struct {
-	Metadata PayStatementEmployeeDeductionsAttributesMetadata `json:"metadata"`
+	Metadata PayStatementEmployeeDeductionsAttributesMetadata `json:"metadata,required"`
 	JSON     payStatementEmployeeDeductionsAttributesJSON     `json:"-"`
 }
 
@@ -277,7 +276,7 @@ type PayStatementEmployeeDeductionsAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}                               `json:"metadata"`
+	Metadata map[string]interface{}                               `json:"metadata,required"`
 	JSON     payStatementEmployeeDeductionsAttributesMetadataJSON `json:"-"`
 }
 
@@ -299,25 +298,25 @@ func (r payStatementEmployeeDeductionsAttributesMetadataJSON) RawJSON() string {
 
 type PayStatementEmployerContribution struct {
 	// The contribution amount in cents.
-	Amount     int64                                       `json:"amount,nullable"`
-	Attributes PayStatementEmployerContributionsAttributes `json:"attributes,nullable"`
+	Amount int64 `json:"amount,required,nullable"`
 	// The contribution currency.
-	Currency string `json:"currency,nullable"`
+	Currency string `json:"currency,required,nullable"`
 	// The contribution name from the pay statement.
-	Name string `json:"name,nullable"`
+	Name string `json:"name,required,nullable"`
 	// Type of benefit.
-	Type BenefitType                          `json:"type,nullable"`
-	JSON payStatementEmployerContributionJSON `json:"-"`
+	Type       BenefitType                                 `json:"type,required,nullable"`
+	Attributes PayStatementEmployerContributionsAttributes `json:"attributes,nullable"`
+	JSON       payStatementEmployerContributionJSON        `json:"-"`
 }
 
 // payStatementEmployerContributionJSON contains the JSON metadata for the struct
 // [PayStatementEmployerContribution]
 type payStatementEmployerContributionJSON struct {
 	Amount      apijson.Field
-	Attributes  apijson.Field
 	Currency    apijson.Field
 	Name        apijson.Field
 	Type        apijson.Field
+	Attributes  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -331,7 +330,7 @@ func (r payStatementEmployerContributionJSON) RawJSON() string {
 }
 
 type PayStatementEmployerContributionsAttributes struct {
-	Metadata PayStatementEmployerContributionsAttributesMetadata `json:"metadata"`
+	Metadata PayStatementEmployerContributionsAttributesMetadata `json:"metadata,required"`
 	JSON     payStatementEmployerContributionsAttributesJSON     `json:"-"`
 }
 
@@ -355,7 +354,7 @@ type PayStatementEmployerContributionsAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}                                  `json:"metadata"`
+	Metadata map[string]interface{}                                  `json:"metadata,required"`
 	JSON     payStatementEmployerContributionsAttributesMetadataJSON `json:"-"`
 }
 
@@ -393,27 +392,27 @@ func (r PayStatementPaymentMethod) IsKnown() bool {
 
 type PayStatementTax struct {
 	// The tax amount in cents.
-	Amount     int64                       `json:"amount,nullable"`
-	Attributes PayStatementTaxesAttributes `json:"attributes,nullable"`
+	Amount int64 `json:"amount,required,nullable"`
 	// The currency code.
-	Currency string `json:"currency,nullable"`
+	Currency string `json:"currency,required,nullable"`
 	// `true` if the amount is paid by the employers.
-	Employer bool `json:"employer,nullable"`
+	Employer bool `json:"employer,required,nullable"`
 	// The exact name of tax from the pay statement.
-	Name string `json:"name,nullable"`
+	Name string `json:"name,required,nullable"`
 	// The type of taxes.
-	Type PayStatementTaxesType `json:"type,nullable"`
-	JSON payStatementTaxJSON   `json:"-"`
+	Type       PayStatementTaxesType       `json:"type,required,nullable"`
+	Attributes PayStatementTaxesAttributes `json:"attributes,nullable"`
+	JSON       payStatementTaxJSON         `json:"-"`
 }
 
 // payStatementTaxJSON contains the JSON metadata for the struct [PayStatementTax]
 type payStatementTaxJSON struct {
 	Amount      apijson.Field
-	Attributes  apijson.Field
 	Currency    apijson.Field
 	Employer    apijson.Field
 	Name        apijson.Field
 	Type        apijson.Field
+	Attributes  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -426,8 +425,26 @@ func (r payStatementTaxJSON) RawJSON() string {
 	return r.raw
 }
 
+// The type of taxes.
+type PayStatementTaxesType string
+
+const (
+	PayStatementTaxesTypeState   PayStatementTaxesType = "state"
+	PayStatementTaxesTypeFederal PayStatementTaxesType = "federal"
+	PayStatementTaxesTypeLocal   PayStatementTaxesType = "local"
+	PayStatementTaxesTypeFica    PayStatementTaxesType = "fica"
+)
+
+func (r PayStatementTaxesType) IsKnown() bool {
+	switch r {
+	case PayStatementTaxesTypeState, PayStatementTaxesTypeFederal, PayStatementTaxesTypeLocal, PayStatementTaxesTypeFica:
+		return true
+	}
+	return false
+}
+
 type PayStatementTaxesAttributes struct {
-	Metadata PayStatementTaxesAttributesMetadata `json:"metadata"`
+	Metadata PayStatementTaxesAttributesMetadata `json:"metadata,required"`
 	JSON     payStatementTaxesAttributesJSON     `json:"-"`
 }
 
@@ -451,7 +468,7 @@ type PayStatementTaxesAttributesMetadata struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}                  `json:"metadata"`
+	Metadata map[string]interface{}                  `json:"metadata,required"`
 	JSON     payStatementTaxesAttributesMetadataJSON `json:"-"`
 }
 
@@ -469,24 +486,6 @@ func (r *PayStatementTaxesAttributesMetadata) UnmarshalJSON(data []byte) (err er
 
 func (r payStatementTaxesAttributesMetadataJSON) RawJSON() string {
 	return r.raw
-}
-
-// The type of taxes.
-type PayStatementTaxesType string
-
-const (
-	PayStatementTaxesTypeState   PayStatementTaxesType = "state"
-	PayStatementTaxesTypeFederal PayStatementTaxesType = "federal"
-	PayStatementTaxesTypeLocal   PayStatementTaxesType = "local"
-	PayStatementTaxesTypeFica    PayStatementTaxesType = "fica"
-)
-
-func (r PayStatementTaxesType) IsKnown() bool {
-	switch r {
-	case PayStatementTaxesTypeState, PayStatementTaxesTypeFederal, PayStatementTaxesTypeLocal, PayStatementTaxesTypeFica:
-		return true
-	}
-	return false
 }
 
 // The type of the payment associated with the pay statement.
@@ -507,9 +506,9 @@ func (r PayStatementType) IsKnown() bool {
 }
 
 type PayStatementResponse struct {
-	Body      PayStatementResponseBody `json:"body"`
-	Code      int64                    `json:"code"`
-	PaymentID string                   `json:"payment_id"`
+	Body      PayStatementResponseBody `json:"body,required"`
+	Code      int64                    `json:"code,required"`
+	PaymentID string                   `json:"payment_id,required"`
 	JSON      payStatementResponseJSON `json:"-"`
 }
 
@@ -532,10 +531,9 @@ func (r payStatementResponseJSON) RawJSON() string {
 }
 
 type PayStatementResponseBody struct {
-	Paging shared.Paging `json:"paging"`
-	// The array of pay statements for the current payment.
-	PayStatements []PayStatement               `json:"pay_statements"`
-	JSON          payStatementResponseBodyJSON `json:"-"`
+	Paging        PayStatementResponseBodyPaging `json:"paging,required"`
+	PayStatements []PayStatement                 `json:"pay_statements,required"`
+	JSON          payStatementResponseBodyJSON   `json:"-"`
 }
 
 // payStatementResponseBodyJSON contains the JSON metadata for the struct
@@ -552,6 +550,31 @@ func (r *PayStatementResponseBody) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r payStatementResponseBodyJSON) RawJSON() string {
+	return r.raw
+}
+
+type PayStatementResponseBodyPaging struct {
+	// The current start index of the returned list of elements
+	Offset int64 `json:"offset,required"`
+	// The total number of elements for the entire query (not just the given page)
+	Count int64                              `json:"count"`
+	JSON  payStatementResponseBodyPagingJSON `json:"-"`
+}
+
+// payStatementResponseBodyPagingJSON contains the JSON metadata for the struct
+// [PayStatementResponseBodyPaging]
+type payStatementResponseBodyPagingJSON struct {
+	Offset      apijson.Field
+	Count       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PayStatementResponseBodyPaging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementResponseBodyPagingJSON) RawJSON() string {
 	return r.raw
 }
 
