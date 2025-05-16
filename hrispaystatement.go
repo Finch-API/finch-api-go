@@ -381,11 +381,12 @@ type PayStatementPaymentMethod string
 const (
 	PayStatementPaymentMethodCheck         PayStatementPaymentMethod = "check"
 	PayStatementPaymentMethodDirectDeposit PayStatementPaymentMethod = "direct_deposit"
+	PayStatementPaymentMethodOther         PayStatementPaymentMethod = "other"
 )
 
 func (r PayStatementPaymentMethod) IsKnown() bool {
 	switch r {
-	case PayStatementPaymentMethodCheck, PayStatementPaymentMethodDirectDeposit:
+	case PayStatementPaymentMethodCheck, PayStatementPaymentMethodDirectDeposit, PayStatementPaymentMethodOther:
 		return true
 	}
 	return false

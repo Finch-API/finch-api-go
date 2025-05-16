@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.25.0 (2025-05-16)
+
+Full Changelog: [v1.24.0...v1.25.0](https://github.com/Finch-API/finch-api-go/compare/v1.24.0...v1.25.0)
+
+### Features
+
+* **api:** api update ([f6f3540](https://github.com/Finch-API/finch-api-go/commit/f6f35408e14c207b67828e09be51069812daff4f))
+* **api:** api update ([de44168](https://github.com/Finch-API/finch-api-go/commit/de4416803674a4d3bf182537a280cbf958a35b79))
+* **api:** api update ([cbc383e](https://github.com/Finch-API/finch-api-go/commit/cbc383eef341b6f0d528b78459cb657d4409d0bf))
+* **client:** add support for endpoint-specific base URLs in python ([81ec03a](https://github.com/Finch-API/finch-api-go/commit/81ec03a698aac398b43f8bae29164cd769215cb6))
+
 ## 1.24.0 (2025-05-06)
 
 Full Changelog: [v1.23.0...v1.24.0](https://github.com/Finch-API/finch-api-go/compare/v1.23.0...v1.24.0)
