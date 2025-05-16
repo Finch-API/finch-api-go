@@ -53,12 +53,13 @@ type SandboxEmploymentUpdateResponse struct {
 	// Custom fields for the individual. These are fields which are defined by the
 	// employer in the system. Custom fields are not currently supported for assisted
 	// connections.
-	CustomFields []SandboxEmploymentUpdateResponseCustomField `json:"custom_fields"`
+	CustomFields []SandboxEmploymentUpdateResponseCustomField `json:"custom_fields,nullable"`
 	// The department object.
 	Department SandboxEmploymentUpdateResponseDepartment `json:"department,nullable"`
 	// The employment object.
 	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment,nullable"`
-	// The detailed employment status of the individual.
+	// The detailed employment status of the individual. Available options: `active`,
+	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status,nullable"`
 	EndDate          string                                          `json:"end_date,nullable"`
 	// The legal first name of the individual.
@@ -80,7 +81,7 @@ type SandboxEmploymentUpdateResponse struct {
 	// The legal middle name of the individual.
 	MiddleName string `json:"middle_name,nullable"`
 	// The source system's unique employment identifier for this individual
-	SourceID  string `json:"source_id"`
+	SourceID  string `json:"source_id,nullable"`
 	StartDate string `json:"start_date,nullable"`
 	// The current title of the individual.
 	Title string                              `json:"title,nullable"`
@@ -169,7 +170,8 @@ func (r sandboxEmploymentUpdateResponseDepartmentJSON) RawJSON() string {
 
 // The employment object.
 type SandboxEmploymentUpdateResponseEmployment struct {
-	// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+	// The secondary employment type of the individual. Options: `full_time`,
+	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 	Subtype SandboxEmploymentUpdateResponseEmploymentSubtype `json:"subtype,nullable"`
 	// The main employment type of the individual.
 	Type SandboxEmploymentUpdateResponseEmploymentType `json:"type,nullable"`
@@ -193,7 +195,8 @@ func (r sandboxEmploymentUpdateResponseEmploymentJSON) RawJSON() string {
 	return r.raw
 }
 
-// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+// The secondary employment type of the individual. Options: `full_time`,
+// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 type SandboxEmploymentUpdateResponseEmploymentSubtype string
 
 const (
@@ -229,7 +232,8 @@ func (r SandboxEmploymentUpdateResponseEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual.
+// The detailed employment status of the individual. Available options: `active`,
+// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 type SandboxEmploymentUpdateResponseEmploymentStatus string
 
 const (
@@ -284,7 +288,8 @@ type SandboxEmploymentUpdateParams struct {
 	Department param.Field[SandboxEmploymentUpdateParamsDepartment] `json:"department"`
 	// The employment object.
 	Employment param.Field[SandboxEmploymentUpdateParamsEmployment] `json:"employment"`
-	// The detailed employment status of the individual.
+	// The detailed employment status of the individual. Available options: `active`,
+	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 	EmploymentStatus param.Field[SandboxEmploymentUpdateParamsEmploymentStatus] `json:"employment_status"`
 	EndDate          param.Field[string]                                        `json:"end_date"`
 	// The legal first name of the individual.
@@ -337,7 +342,8 @@ func (r SandboxEmploymentUpdateParamsDepartment) MarshalJSON() (data []byte, err
 
 // The employment object.
 type SandboxEmploymentUpdateParamsEmployment struct {
-	// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+	// The secondary employment type of the individual. Options: `full_time`,
+	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 	Subtype param.Field[SandboxEmploymentUpdateParamsEmploymentSubtype] `json:"subtype"`
 	// The main employment type of the individual.
 	Type param.Field[SandboxEmploymentUpdateParamsEmploymentType] `json:"type"`
@@ -347,7 +353,8 @@ func (r SandboxEmploymentUpdateParamsEmployment) MarshalJSON() (data []byte, err
 	return apijson.MarshalRoot(r)
 }
 
-// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+// The secondary employment type of the individual. Options: `full_time`,
+// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 type SandboxEmploymentUpdateParamsEmploymentSubtype string
 
 const (
@@ -383,7 +390,8 @@ func (r SandboxEmploymentUpdateParamsEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual.
+// The detailed employment status of the individual. Available options: `active`,
+// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 type SandboxEmploymentUpdateParamsEmploymentStatus string
 
 const (
