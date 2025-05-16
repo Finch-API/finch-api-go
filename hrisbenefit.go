@@ -289,30 +289,30 @@ func (r BenefitFrequency) IsKnown() bool {
 type BenefitType string
 
 const (
-	BenefitType_457             BenefitType = "457"
 	BenefitType_401k            BenefitType = "401k"
 	BenefitType_401kRoth        BenefitType = "401k_roth"
 	BenefitType_401kLoan        BenefitType = "401k_loan"
 	BenefitType_403b            BenefitType = "403b"
 	BenefitType_403bRoth        BenefitType = "403b_roth"
+	BenefitType_457             BenefitType = "457"
 	BenefitType_457Roth         BenefitType = "457_roth"
+	BenefitTypeS125Medical      BenefitType = "s125_medical"
+	BenefitTypeS125Dental       BenefitType = "s125_dental"
+	BenefitTypeS125Vision       BenefitType = "s125_vision"
+	BenefitTypeHsaPre           BenefitType = "hsa_pre"
+	BenefitTypeHsaPost          BenefitType = "hsa_post"
+	BenefitTypeFsaMedical       BenefitType = "fsa_medical"
+	BenefitTypeFsaDependentCare BenefitType = "fsa_dependent_care"
+	BenefitTypeSimpleIRA        BenefitType = "simple_ira"
+	BenefitTypeSimple           BenefitType = "simple"
 	BenefitTypeCommuter         BenefitType = "commuter"
 	BenefitTypeCustomPostTax    BenefitType = "custom_post_tax"
 	BenefitTypeCustomPreTax     BenefitType = "custom_pre_tax"
-	BenefitTypeFsaDependentCare BenefitType = "fsa_dependent_care"
-	BenefitTypeFsaMedical       BenefitType = "fsa_medical"
-	BenefitTypeHsaPost          BenefitType = "hsa_post"
-	BenefitTypeHsaPre           BenefitType = "hsa_pre"
-	BenefitTypeS125Dental       BenefitType = "s125_dental"
-	BenefitTypeS125Medical      BenefitType = "s125_medical"
-	BenefitTypeS125Vision       BenefitType = "s125_vision"
-	BenefitTypeSimple           BenefitType = "simple"
-	BenefitTypeSimpleIRA        BenefitType = "simple_ira"
 )
 
 func (r BenefitType) IsKnown() bool {
 	switch r {
-	case BenefitType_457, BenefitType_401k, BenefitType_401kRoth, BenefitType_401kLoan, BenefitType_403b, BenefitType_403bRoth, BenefitType_457Roth, BenefitTypeCommuter, BenefitTypeCustomPostTax, BenefitTypeCustomPreTax, BenefitTypeFsaDependentCare, BenefitTypeFsaMedical, BenefitTypeHsaPost, BenefitTypeHsaPre, BenefitTypeS125Dental, BenefitTypeS125Medical, BenefitTypeS125Vision, BenefitTypeSimple, BenefitTypeSimpleIRA:
+	case BenefitType_401k, BenefitType_401kRoth, BenefitType_401kLoan, BenefitType_403b, BenefitType_403bRoth, BenefitType_457, BenefitType_457Roth, BenefitTypeS125Medical, BenefitTypeS125Dental, BenefitTypeS125Vision, BenefitTypeHsaPre, BenefitTypeHsaPost, BenefitTypeFsaMedical, BenefitTypeFsaDependentCare, BenefitTypeSimpleIRA, BenefitTypeSimple, BenefitTypeCommuter, BenefitTypeCustomPostTax, BenefitTypeCustomPreTax:
 		return true
 	}
 	return false

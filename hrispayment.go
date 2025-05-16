@@ -60,22 +60,22 @@ func (r *HRISPaymentService) ListAutoPaging(ctx context.Context, query HRISPayme
 
 type Payment struct {
 	// The unique id for the payment.
-	ID            string `json:"id,required" format:"uuid"`
-	CompanyDebit  Money  `json:"company_debit,required,nullable"`
-	DebitDate     string `json:"debit_date,required,nullable"`
-	EmployeeTaxes Money  `json:"employee_taxes,required,nullable"`
-	EmployerTaxes Money  `json:"employer_taxes,required,nullable"`
-	GrossPay      Money  `json:"gross_pay,required,nullable"`
+	ID            string `json:"id" format:"uuid"`
+	CompanyDebit  Money  `json:"company_debit,nullable"`
+	DebitDate     string `json:"debit_date,nullable"`
+	EmployeeTaxes Money  `json:"employee_taxes,nullable"`
+	EmployerTaxes Money  `json:"employer_taxes,nullable"`
+	GrossPay      Money  `json:"gross_pay,nullable"`
 	// Array of every individual on this payment.
-	IndividualIDs []string `json:"individual_ids,required,nullable" format:"uuid"`
-	NetPay        Money    `json:"net_pay,required,nullable"`
-	PayDate       string   `json:"pay_date,required,nullable"`
+	IndividualIDs []string `json:"individual_ids,nullable" format:"uuid"`
+	NetPay        Money    `json:"net_pay,nullable"`
+	PayDate       string   `json:"pay_date,nullable"`
 	// List of pay frequencies associated with this payment.
-	PayFrequencies []PaymentPayFrequency `json:"pay_frequencies,required,nullable"`
+	PayFrequencies []PaymentPayFrequency `json:"pay_frequencies,nullable"`
 	// Array of the Finch id (uuidv4) of every pay group associated with this payment.
-	PayGroupIDs []string `json:"pay_group_ids,required,nullable" format:"uuid"`
+	PayGroupIDs []string `json:"pay_group_ids,nullable" format:"uuid"`
 	// The pay period object.
-	PayPeriod PaymentPayPeriod `json:"pay_period,required,nullable"`
+	PayPeriod PaymentPayPeriod `json:"pay_period,nullable"`
 	JSON      paymentJSON      `json:"-"`
 }
 
@@ -109,19 +109,19 @@ type PaymentPayFrequency string
 
 const (
 	PaymentPayFrequencyAnnually     PaymentPayFrequency = "annually"
-	PaymentPayFrequencyBiWeekly     PaymentPayFrequency = "bi_weekly"
-	PaymentPayFrequencyDaily        PaymentPayFrequency = "daily"
-	PaymentPayFrequencyMonthly      PaymentPayFrequency = "monthly"
-	PaymentPayFrequencyOther        PaymentPayFrequency = "other"
-	PaymentPayFrequencyQuarterly    PaymentPayFrequency = "quarterly"
 	PaymentPayFrequencySemiAnnually PaymentPayFrequency = "semi_annually"
+	PaymentPayFrequencyQuarterly    PaymentPayFrequency = "quarterly"
+	PaymentPayFrequencyMonthly      PaymentPayFrequency = "monthly"
 	PaymentPayFrequencySemiMonthly  PaymentPayFrequency = "semi_monthly"
+	PaymentPayFrequencyBiWeekly     PaymentPayFrequency = "bi_weekly"
 	PaymentPayFrequencyWeekly       PaymentPayFrequency = "weekly"
+	PaymentPayFrequencyDaily        PaymentPayFrequency = "daily"
+	PaymentPayFrequencyOther        PaymentPayFrequency = "other"
 )
 
 func (r PaymentPayFrequency) IsKnown() bool {
 	switch r {
-	case PaymentPayFrequencyAnnually, PaymentPayFrequencyBiWeekly, PaymentPayFrequencyDaily, PaymentPayFrequencyMonthly, PaymentPayFrequencyOther, PaymentPayFrequencyQuarterly, PaymentPayFrequencySemiAnnually, PaymentPayFrequencySemiMonthly, PaymentPayFrequencyWeekly:
+	case PaymentPayFrequencyAnnually, PaymentPayFrequencySemiAnnually, PaymentPayFrequencyQuarterly, PaymentPayFrequencyMonthly, PaymentPayFrequencySemiMonthly, PaymentPayFrequencyBiWeekly, PaymentPayFrequencyWeekly, PaymentPayFrequencyDaily, PaymentPayFrequencyOther:
 		return true
 	}
 	return false
@@ -129,8 +129,8 @@ func (r PaymentPayFrequency) IsKnown() bool {
 
 // The pay period object.
 type PaymentPayPeriod struct {
-	EndDate   string               `json:"end_date,required,nullable"`
-	StartDate string               `json:"start_date,required,nullable"`
+	EndDate   string               `json:"end_date,nullable"`
+	StartDate string               `json:"start_date,nullable"`
 	JSON      paymentPayPeriodJSON `json:"-"`
 }
 
