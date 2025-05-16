@@ -105,19 +105,19 @@ type PayrollPayGroupGetResponsePayFrequency string
 
 const (
 	PayrollPayGroupGetResponsePayFrequencyAnnually     PayrollPayGroupGetResponsePayFrequency = "annually"
-	PayrollPayGroupGetResponsePayFrequencyBiWeekly     PayrollPayGroupGetResponsePayFrequency = "bi_weekly"
-	PayrollPayGroupGetResponsePayFrequencyDaily        PayrollPayGroupGetResponsePayFrequency = "daily"
-	PayrollPayGroupGetResponsePayFrequencyMonthly      PayrollPayGroupGetResponsePayFrequency = "monthly"
-	PayrollPayGroupGetResponsePayFrequencyOther        PayrollPayGroupGetResponsePayFrequency = "other"
-	PayrollPayGroupGetResponsePayFrequencyQuarterly    PayrollPayGroupGetResponsePayFrequency = "quarterly"
 	PayrollPayGroupGetResponsePayFrequencySemiAnnually PayrollPayGroupGetResponsePayFrequency = "semi_annually"
+	PayrollPayGroupGetResponsePayFrequencyQuarterly    PayrollPayGroupGetResponsePayFrequency = "quarterly"
+	PayrollPayGroupGetResponsePayFrequencyMonthly      PayrollPayGroupGetResponsePayFrequency = "monthly"
 	PayrollPayGroupGetResponsePayFrequencySemiMonthly  PayrollPayGroupGetResponsePayFrequency = "semi_monthly"
+	PayrollPayGroupGetResponsePayFrequencyBiWeekly     PayrollPayGroupGetResponsePayFrequency = "bi_weekly"
 	PayrollPayGroupGetResponsePayFrequencyWeekly       PayrollPayGroupGetResponsePayFrequency = "weekly"
+	PayrollPayGroupGetResponsePayFrequencyDaily        PayrollPayGroupGetResponsePayFrequency = "daily"
+	PayrollPayGroupGetResponsePayFrequencyOther        PayrollPayGroupGetResponsePayFrequency = "other"
 )
 
 func (r PayrollPayGroupGetResponsePayFrequency) IsKnown() bool {
 	switch r {
-	case PayrollPayGroupGetResponsePayFrequencyAnnually, PayrollPayGroupGetResponsePayFrequencyBiWeekly, PayrollPayGroupGetResponsePayFrequencyDaily, PayrollPayGroupGetResponsePayFrequencyMonthly, PayrollPayGroupGetResponsePayFrequencyOther, PayrollPayGroupGetResponsePayFrequencyQuarterly, PayrollPayGroupGetResponsePayFrequencySemiAnnually, PayrollPayGroupGetResponsePayFrequencySemiMonthly, PayrollPayGroupGetResponsePayFrequencyWeekly:
+	case PayrollPayGroupGetResponsePayFrequencyAnnually, PayrollPayGroupGetResponsePayFrequencySemiAnnually, PayrollPayGroupGetResponsePayFrequencyQuarterly, PayrollPayGroupGetResponsePayFrequencyMonthly, PayrollPayGroupGetResponsePayFrequencySemiMonthly, PayrollPayGroupGetResponsePayFrequencyBiWeekly, PayrollPayGroupGetResponsePayFrequencyWeekly, PayrollPayGroupGetResponsePayFrequencyDaily, PayrollPayGroupGetResponsePayFrequencyOther:
 		return true
 	}
 	return false
@@ -125,11 +125,11 @@ func (r PayrollPayGroupGetResponsePayFrequency) IsKnown() bool {
 
 type PayrollPayGroupListResponse struct {
 	// Finch id (uuidv4) for the pay group
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" format:"uuid"`
 	// Name of the pay group
-	Name string `json:"name,required"`
+	Name string `json:"name"`
 	// List of pay frequencies associated with this pay group
-	PayFrequencies []PayrollPayGroupListResponsePayFrequency `json:"pay_frequencies,required"`
+	PayFrequencies []PayrollPayGroupListResponsePayFrequency `json:"pay_frequencies"`
 	JSON           payrollPayGroupListResponseJSON           `json:"-"`
 }
 
@@ -155,19 +155,19 @@ type PayrollPayGroupListResponsePayFrequency string
 
 const (
 	PayrollPayGroupListResponsePayFrequencyAnnually     PayrollPayGroupListResponsePayFrequency = "annually"
-	PayrollPayGroupListResponsePayFrequencyBiWeekly     PayrollPayGroupListResponsePayFrequency = "bi_weekly"
-	PayrollPayGroupListResponsePayFrequencyDaily        PayrollPayGroupListResponsePayFrequency = "daily"
-	PayrollPayGroupListResponsePayFrequencyMonthly      PayrollPayGroupListResponsePayFrequency = "monthly"
-	PayrollPayGroupListResponsePayFrequencyOther        PayrollPayGroupListResponsePayFrequency = "other"
-	PayrollPayGroupListResponsePayFrequencyQuarterly    PayrollPayGroupListResponsePayFrequency = "quarterly"
 	PayrollPayGroupListResponsePayFrequencySemiAnnually PayrollPayGroupListResponsePayFrequency = "semi_annually"
+	PayrollPayGroupListResponsePayFrequencyQuarterly    PayrollPayGroupListResponsePayFrequency = "quarterly"
+	PayrollPayGroupListResponsePayFrequencyMonthly      PayrollPayGroupListResponsePayFrequency = "monthly"
 	PayrollPayGroupListResponsePayFrequencySemiMonthly  PayrollPayGroupListResponsePayFrequency = "semi_monthly"
+	PayrollPayGroupListResponsePayFrequencyBiWeekly     PayrollPayGroupListResponsePayFrequency = "bi_weekly"
 	PayrollPayGroupListResponsePayFrequencyWeekly       PayrollPayGroupListResponsePayFrequency = "weekly"
+	PayrollPayGroupListResponsePayFrequencyDaily        PayrollPayGroupListResponsePayFrequency = "daily"
+	PayrollPayGroupListResponsePayFrequencyOther        PayrollPayGroupListResponsePayFrequency = "other"
 )
 
 func (r PayrollPayGroupListResponsePayFrequency) IsKnown() bool {
 	switch r {
-	case PayrollPayGroupListResponsePayFrequencyAnnually, PayrollPayGroupListResponsePayFrequencyBiWeekly, PayrollPayGroupListResponsePayFrequencyDaily, PayrollPayGroupListResponsePayFrequencyMonthly, PayrollPayGroupListResponsePayFrequencyOther, PayrollPayGroupListResponsePayFrequencyQuarterly, PayrollPayGroupListResponsePayFrequencySemiAnnually, PayrollPayGroupListResponsePayFrequencySemiMonthly, PayrollPayGroupListResponsePayFrequencyWeekly:
+	case PayrollPayGroupListResponsePayFrequencyAnnually, PayrollPayGroupListResponsePayFrequencySemiAnnually, PayrollPayGroupListResponsePayFrequencyQuarterly, PayrollPayGroupListResponsePayFrequencyMonthly, PayrollPayGroupListResponsePayFrequencySemiMonthly, PayrollPayGroupListResponsePayFrequencyBiWeekly, PayrollPayGroupListResponsePayFrequencyWeekly, PayrollPayGroupListResponsePayFrequencyDaily, PayrollPayGroupListResponsePayFrequencyOther:
 		return true
 	}
 	return false
