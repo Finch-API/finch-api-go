@@ -208,9 +208,7 @@ type EmploymentDataObject struct {
 	Manager EmploymentDataObjectManager `json:"manager,required,nullable"`
 	// The legal middle name of the individual.
 	MiddleName string `json:"middle_name,required,nullable"`
-	// The source system's unique employment identifier for this individual
-	SourceID  string `json:"source_id,required,nullable"`
-	StartDate string `json:"start_date,required,nullable"`
+	StartDate  string `json:"start_date,required,nullable"`
 	// The current title of the individual.
 	Title string `json:"title,required,nullable"`
 	// This field is deprecated in favour of `source_id`
@@ -222,8 +220,10 @@ type EmploymentDataObject struct {
 	// depending on what information the provider returns.
 	Income Income `json:"income,nullable"`
 	// The array of income history.
-	IncomeHistory []Income                 `json:"income_history,nullable"`
-	JSON          employmentDataObjectJSON `json:"-"`
+	IncomeHistory []Income `json:"income_history,nullable"`
+	// The source system's unique employment identifier for this individual
+	SourceID string                   `json:"source_id,nullable"`
+	JSON     employmentDataObjectJSON `json:"-"`
 }
 
 // employmentDataObjectJSON contains the JSON metadata for the struct
@@ -243,12 +243,12 @@ type employmentDataObjectJSON struct {
 	Location         apijson.Field
 	Manager          apijson.Field
 	MiddleName       apijson.Field
-	SourceID         apijson.Field
 	StartDate        apijson.Field
 	Title            apijson.Field
 	WorkID           apijson.Field
 	Income           apijson.Field
 	IncomeHistory    apijson.Field
+	SourceID         apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
