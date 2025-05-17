@@ -186,7 +186,8 @@ type EmploymentDataObject struct {
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code,required,nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
-	// employer in the system.
+	// employer in the system. Custom fields are not currently supported for assisted
+	// connections.
 	CustomFields []EmploymentDataObjectCustomField `json:"custom_fields,required,nullable"`
 	// The department object.
 	Department EmploymentDataObjectDepartment `json:"department,required,nullable"`
@@ -264,7 +265,7 @@ func (r employmentDataObjectJSON) RawJSON() string {
 func (r EmploymentDataObject) implementsEmploymentData() {}
 
 type EmploymentDataObjectCustomField struct {
-	Name  string                                     `json:"name"`
+	Name  string                                     `json:"name,nullable"`
 	Value EmploymentDataObjectCustomFieldsValueUnion `json:"value,nullable"`
 	JSON  employmentDataObjectCustomFieldJSON        `json:"-"`
 }

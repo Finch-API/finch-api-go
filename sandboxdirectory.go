@@ -64,7 +64,8 @@ type SandboxDirectoryNewParamsBody struct {
 	Emails     param.Field[[]SandboxDirectoryNewParamsBodyEmail]    `json:"emails"`
 	// The employment object.
 	Employment param.Field[SandboxDirectoryNewParamsBodyEmployment] `json:"employment"`
-	// The detailed employment status of the individual.
+	// The detailed employment status of the individual. Available options: `active`,
+	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 	EmploymentStatus param.Field[SandboxDirectoryNewParamsBodyEmploymentStatus] `json:"employment_status"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
@@ -158,7 +159,8 @@ func (r SandboxDirectoryNewParamsBodyEmailsType) IsKnown() bool {
 
 // The employment object.
 type SandboxDirectoryNewParamsBodyEmployment struct {
-	// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+	// The secondary employment type of the individual. Options: `full_time`,
+	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 	Subtype param.Field[SandboxDirectoryNewParamsBodyEmploymentSubtype] `json:"subtype"`
 	// The main employment type of the individual.
 	Type param.Field[SandboxDirectoryNewParamsBodyEmploymentType] `json:"type"`
@@ -168,7 +170,8 @@ func (r SandboxDirectoryNewParamsBodyEmployment) MarshalJSON() (data []byte, err
 	return apijson.MarshalRoot(r)
 }
 
-// The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
+// The secondary employment type of the individual. Options: `full_time`,
+// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
 type SandboxDirectoryNewParamsBodyEmploymentSubtype string
 
 const (
@@ -204,7 +207,8 @@ func (r SandboxDirectoryNewParamsBodyEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual.
+// The detailed employment status of the individual. Available options: `active`,
+// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
 type SandboxDirectoryNewParamsBodyEmploymentStatus string
 
 const (
