@@ -35,7 +35,7 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 		}),
 		Description: finchgo.F("description"),
 		Frequency:   finchgo.F(finchgo.BenefitFrequencyOneTime),
-		Type:        finchgo.F(finchgo.BenefitType_401k),
+		Type:        finchgo.F(finchgo.BenefitType_457),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
