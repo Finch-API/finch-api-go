@@ -185,10 +185,6 @@ type EmploymentDataObject struct {
 	ID string `json:"id,required" format:"uuid"`
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code,required,nullable"`
-	// Custom fields for the individual. These are fields which are defined by the
-	// employer in the system. Custom fields are not currently supported for assisted
-	// connections.
-	CustomFields []EmploymentDataObjectCustomField `json:"custom_fields,required,nullable"`
 	// The department object.
 	Department EmploymentDataObjectDepartment `json:"department,required,nullable"`
 	// The employment object.
@@ -212,10 +208,10 @@ type EmploymentDataObject struct {
 	StartDate  string `json:"start_date,required,nullable"`
 	// The current title of the individual.
 	Title string `json:"title,required,nullable"`
-	// This field is deprecated in favour of `source_id`
-	//
-	// Deprecated: deprecated
-	WorkID string `json:"work_id,required,nullable"`
+	// Custom fields for the individual. These are fields which are defined by the
+	// employer in the system. Custom fields are not currently supported for assisted
+	// connections.
+	CustomFields []EmploymentDataObjectCustomField `json:"custom_fields,nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -223,8 +219,12 @@ type EmploymentDataObject struct {
 	// The array of income history.
 	IncomeHistory []Income `json:"income_history,nullable"`
 	// The source system's unique employment identifier for this individual
-	SourceID string                   `json:"source_id,nullable"`
-	JSON     employmentDataObjectJSON `json:"-"`
+	SourceID string `json:"source_id,nullable"`
+	// This field is deprecated in favour of `source_id`
+	//
+	// Deprecated: deprecated
+	WorkID string                   `json:"work_id,nullable"`
+	JSON   employmentDataObjectJSON `json:"-"`
 }
 
 // employmentDataObjectJSON contains the JSON metadata for the struct
@@ -232,7 +232,6 @@ type EmploymentDataObject struct {
 type employmentDataObjectJSON struct {
 	ID               apijson.Field
 	ClassCode        apijson.Field
-	CustomFields     apijson.Field
 	Department       apijson.Field
 	Employment       apijson.Field
 	EmploymentStatus apijson.Field
@@ -246,10 +245,11 @@ type employmentDataObjectJSON struct {
 	MiddleName       apijson.Field
 	StartDate        apijson.Field
 	Title            apijson.Field
-	WorkID           apijson.Field
+	CustomFields     apijson.Field
 	Income           apijson.Field
 	IncomeHistory    apijson.Field
 	SourceID         apijson.Field
+	WorkID           apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
@@ -263,68 +263,6 @@ func (r employmentDataObjectJSON) RawJSON() string {
 }
 
 func (r EmploymentDataObject) implementsEmploymentData() {}
-
-type EmploymentDataObjectCustomField struct {
-	Name  string                                     `json:"name,nullable"`
-	Value EmploymentDataObjectCustomFieldsValueUnion `json:"value,nullable"`
-	JSON  employmentDataObjectCustomFieldJSON        `json:"-"`
-}
-
-// employmentDataObjectCustomFieldJSON contains the JSON metadata for the struct
-// [EmploymentDataObjectCustomField]
-type employmentDataObjectCustomFieldJSON struct {
-	Name        apijson.Field
-	Value       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *EmploymentDataObjectCustomField) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r employmentDataObjectCustomFieldJSON) RawJSON() string {
-	return r.raw
-}
-
-// Union satisfied by [shared.UnionString],
-// [EmploymentDataObjectCustomFieldsValueArray], [shared.UnionFloat] or
-// [shared.UnionBool].
-type EmploymentDataObjectCustomFieldsValueUnion interface {
-	ImplementsEmploymentDataObjectCustomFieldsValueUnion()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*EmploymentDataObjectCustomFieldsValueUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.String,
-			Type:       reflect.TypeOf(shared.UnionString("")),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(EmploymentDataObjectCustomFieldsValueArray{}),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.Number,
-			Type:       reflect.TypeOf(shared.UnionFloat(0)),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.True,
-			Type:       reflect.TypeOf(shared.UnionBool(false)),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.False,
-			Type:       reflect.TypeOf(shared.UnionBool(false)),
-		},
-	)
-}
-
-type EmploymentDataObjectCustomFieldsValueArray []interface{}
-
-func (r EmploymentDataObjectCustomFieldsValueArray) ImplementsEmploymentDataObjectCustomFieldsValueUnion() {
-}
 
 // The department object.
 type EmploymentDataObjectDepartment struct {
@@ -456,6 +394,68 @@ func (r *EmploymentDataObjectManager) UnmarshalJSON(data []byte) (err error) {
 
 func (r employmentDataObjectManagerJSON) RawJSON() string {
 	return r.raw
+}
+
+type EmploymentDataObjectCustomField struct {
+	Name  string                                     `json:"name,nullable"`
+	Value EmploymentDataObjectCustomFieldsValueUnion `json:"value,nullable"`
+	JSON  employmentDataObjectCustomFieldJSON        `json:"-"`
+}
+
+// employmentDataObjectCustomFieldJSON contains the JSON metadata for the struct
+// [EmploymentDataObjectCustomField]
+type employmentDataObjectCustomFieldJSON struct {
+	Name        apijson.Field
+	Value       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EmploymentDataObjectCustomField) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r employmentDataObjectCustomFieldJSON) RawJSON() string {
+	return r.raw
+}
+
+// Union satisfied by [shared.UnionString],
+// [EmploymentDataObjectCustomFieldsValueArray], [shared.UnionFloat] or
+// [shared.UnionBool].
+type EmploymentDataObjectCustomFieldsValueUnion interface {
+	ImplementsEmploymentDataObjectCustomFieldsValueUnion()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*EmploymentDataObjectCustomFieldsValueUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.String,
+			Type:       reflect.TypeOf(shared.UnionString("")),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(EmploymentDataObjectCustomFieldsValueArray{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.Number,
+			Type:       reflect.TypeOf(shared.UnionFloat(0)),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.True,
+			Type:       reflect.TypeOf(shared.UnionBool(false)),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.False,
+			Type:       reflect.TypeOf(shared.UnionBool(false)),
+		},
+	)
+}
+
+type EmploymentDataObjectCustomFieldsValueArray []interface{}
+
+func (r EmploymentDataObjectCustomFieldsValueArray) ImplementsEmploymentDataObjectCustomFieldsValueUnion() {
 }
 
 type EmploymentDataBatchError struct {
