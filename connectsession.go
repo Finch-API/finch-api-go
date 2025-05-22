@@ -104,8 +104,8 @@ type ConnectSessionNewParams struct {
 	CustomerEmail param.Field[string]                             `json:"customer_email" format:"email"`
 	Integration   param.Field[ConnectSessionNewParamsIntegration] `json:"integration"`
 	Manual        param.Field[bool]                               `json:"manual"`
-	// The number of minutes until the session expires (defaults to 43,200, which is 30
-	// days)
+	// The number of minutes until the session expires (defaults to 129,600, which is
+	// 90 days)
 	MinutesToExpire param.Field[float64]                        `json:"minutes_to_expire"`
 	RedirectUri     param.Field[string]                         `json:"redirect_uri"`
 	Sandbox         param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox"`
