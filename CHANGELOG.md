@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.28.0 (2025-05-23)
+
+Full Changelog: [v1.27.0...v1.28.0](https://github.com/Finch-API/finch-api-go/compare/v1.27.0...v1.28.0)
+
+### Features
+
+* **api:** api update ([250ce50](https://github.com/Finch-API/finch-api-go/commit/250ce50c4a46bd2105c45bf87dd6e8c8611ebafb))
+* **api:** api update ([e7112b7](https://github.com/Finch-API/finch-api-go/commit/e7112b7ccdbd4e029b51cd157a082f0b6c6e8d1c))
+
+
+### Chores
+
+* **docs:** grammar improvements ([59a29f7](https://github.com/Finch-API/finch-api-go/commit/59a29f776f02dcd577e099cef497a68107289d87))
+* improve devcontainer setup ([783782b](https://github.com/Finch-API/finch-api-go/commit/783782b884055de61c09a1991edc74b15e79d7a8))
+
 ## 1.27.0 (2025-05-16)
 
 Full Changelog: [v1.26.0...v1.27.0](https://github.com/Finch-API/finch-api-go/compare/v1.26.0...v1.27.0)
