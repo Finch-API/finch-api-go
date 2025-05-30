@@ -66,11 +66,11 @@ func (r *HRISCompanyPayStatementItemService) ListAutoPaging(ctx context.Context,
 
 type HRISCompanyPayStatementItemListResponse struct {
 	// The attributes of the pay statement item.
-	Attributes HRISCompanyPayStatementItemListResponseAttributes `json:"attributes"`
+	Attributes HRISCompanyPayStatementItemListResponseAttributes `json:"attributes,required"`
 	// The category of the pay statement item.
-	Category HRISCompanyPayStatementItemListResponseCategory `json:"category"`
+	Category HRISCompanyPayStatementItemListResponseCategory `json:"category,required"`
 	// The name of the pay statement item.
-	Name string                                      `json:"name"`
+	Name string                                      `json:"name,required"`
 	JSON hrisCompanyPayStatementItemListResponseJSON `json:"-"`
 }
 
@@ -94,12 +94,12 @@ func (r hrisCompanyPayStatementItemListResponseJSON) RawJSON() string {
 
 // The attributes of the pay statement item.
 type HRISCompanyPayStatementItemListResponseAttributes struct {
+	// The metadata of the pay statement item derived by the rules engine if available.
+	// Each attribute will be a key-value pair defined by a rule.
+	Metadata map[string]interface{} `json:"metadata,required,nullable"`
 	// `true` if the amount is paid by the employers. This field is only available for
 	// taxes.
 	Employer bool `json:"employer,nullable"`
-	// The metadata of the pay statement item derived by the rules engine if available.
-	// Each attribute will be a key-value pair defined by a rule.
-	Metadata map[string]interface{} `json:"metadata,nullable"`
 	// `true` if the pay statement item is pre-tax. This field is only available for
 	// employee deductions.
 	PreTax bool `json:"pre_tax,nullable"`
@@ -111,8 +111,8 @@ type HRISCompanyPayStatementItemListResponseAttributes struct {
 // hrisCompanyPayStatementItemListResponseAttributesJSON contains the JSON metadata
 // for the struct [HRISCompanyPayStatementItemListResponseAttributes]
 type hrisCompanyPayStatementItemListResponseAttributesJSON struct {
-	Employer    apijson.Field
 	Metadata    apijson.Field
+	Employer    apijson.Field
 	PreTax      apijson.Field
 	Type        apijson.Field
 	raw         string

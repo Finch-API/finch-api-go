@@ -29,7 +29,11 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 		EndDate: finchgo.F("end_date"),
 		PayStatements: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatement{{
 			Earnings: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEarning{{
-				Amount: finchgo.F(int64(0)),
+				Amount:   finchgo.F(int64(0)),
+				Currency: finchgo.F("currency"),
+				Hours:    finchgo.F(0.000000),
+				Name:     finchgo.F("name"),
+				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
@@ -37,13 +41,13 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 						}),
 					}),
 				}),
-				Currency: finchgo.F("currency"),
-				Hours:    finchgo.F(0.000000),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEarningsTypeSalary),
 			}}),
 			EmployeeDeductions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeduction{{
-				Amount: finchgo.F(int64(2000)),
+				Amount:   finchgo.F(int64(0)),
+				Currency: finchgo.F("currency"),
+				Name:     finchgo.F("name"),
+				PreTax:   finchgo.F(true),
+				Type:     finchgo.F(finchgo.BenefitType_457),
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
@@ -51,13 +55,12 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 						}),
 					}),
 				}),
-				Currency: finchgo.F("usd"),
-				Name:     finchgo.F("401k test"),
-				PreTax:   finchgo.F(true),
-				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
 			EmployerContributions: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsEmployerContribution{{
-				Amount: finchgo.F(int64(0)),
+				Currency: finchgo.F("currency"),
+				Name:     finchgo.F("name"),
+				Type:     finchgo.F(finchgo.BenefitType_457),
+				Amount:   finchgo.F(int64(0)),
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
@@ -65,22 +68,23 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 						}),
 					}),
 				}),
-				Currency: finchgo.F("currency"),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.BenefitType_401k),
 			}}),
 			GrossPay: finchgo.F(finchgo.MoneyParam{
 				Amount:   finchgo.F(int64(0)),
 				Currency: finchgo.F("currency"),
 			}),
-			IndividualID: finchgo.F("b2338cfb-472f-4f72-9faa-e028c083144a"),
+			IndividualID: finchgo.F("individual_id"),
 			NetPay: finchgo.F(finchgo.MoneyParam{
 				Amount:   finchgo.F(int64(0)),
 				Currency: finchgo.F("currency"),
 			}),
 			PaymentMethod: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsPaymentMethodCheck),
 			Taxes: finchgo.F([]finchgo.SandboxPaymentNewParamsPayStatementsTax{{
-				Amount: finchgo.F(int64(0)),
+				Currency: finchgo.F("currency"),
+				Employer: finchgo.F(true),
+				Name:     finchgo.F("name"),
+				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
+				Amount:   finchgo.F(int64(0)),
 				Attributes: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesAttributes{
 					Metadata: finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata{
 						Metadata: finchgo.F(map[string]interface{}{
@@ -88,13 +92,9 @@ func TestSandboxPaymentNewWithOptionalParams(t *testing.T) {
 						}),
 					}),
 				}),
-				Currency: finchgo.F("currency"),
-				Employer: finchgo.F(true),
-				Name:     finchgo.F("name"),
-				Type:     finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTaxesTypeState),
 			}}),
 			TotalHours: finchgo.F(0.000000),
-			Type:       finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTypeRegularPayroll),
+			Type:       finchgo.F(finchgo.SandboxPaymentNewParamsPayStatementsTypeOffCyclePayroll),
 		}}),
 		StartDate: finchgo.F("start_date"),
 	})
