@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.28.0 (2025-06-04)
+
+Full Changelog: [v1.27.0...v1.28.0](https://github.com/Finch-API/finch-api-go/compare/v1.27.0...v1.28.0)
+
+### Features
+
+* **api:** api update ([250ce50](https://github.com/Finch-API/finch-api-go/commit/250ce50c4a46bd2105c45bf87dd6e8c8611ebafb))
+* **api:** api update ([e7112b7](https://github.com/Finch-API/finch-api-go/commit/e7112b7ccdbd4e029b51cd157a082f0b6c6e8d1c))
+
+
+### Bug Fixes
+
+* **client:** fix PayStatementResponse body ([4f5e97a](https://github.com/Finch-API/finch-api-go/commit/4f5e97a6386dc9708c584c29ffbde7239dc45145))
+* **client:** manual fix ([e450617](https://github.com/Finch-API/finch-api-go/commit/e450617055bf12bef53de59894838b1b254fad91))
+
+
+### Chores
+
+* **docs:** grammar improvements ([59a29f7](https://github.com/Finch-API/finch-api-go/commit/59a29f776f02dcd577e099cef497a68107289d87))
+* improve devcontainer setup ([783782b](https://github.com/Finch-API/finch-api-go/commit/783782b884055de61c09a1991edc74b15e79d7a8))
+* make go mod tidy continue on error ([eb899f7](https://github.com/Finch-API/finch-api-go/commit/eb899f7f539e5aa8aed822fe23d97beb0537b221))
+* **tests:** skip endpoints with basic auth ([b784dbf](https://github.com/Finch-API/finch-api-go/commit/b784dbf6f6286183e16fa2a84ee74732665be5da))
+
 ## 1.27.0 (2025-05-16)
 
 Full Changelog: [v1.26.0...v1.27.0](https://github.com/Finch-API/finch-api-go/compare/v1.26.0...v1.27.0)
