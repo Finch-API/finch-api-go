@@ -25,7 +25,6 @@ Params Types:
 
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#IncomeParam">IncomeParam</a>
 - <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#LocationParam">LocationParam</a>
-- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#MoneyParam">MoneyParam</a>
 
 Response Types:
 
@@ -112,10 +111,6 @@ Methods:
 - <code title="get /employer/payment">client.HRIS.Payments.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISPaymentService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#HRISPaymentListParams">HRISPaymentListParams</a>) (<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/packages/pagination#SinglePage">SinglePage</a>[<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#Payment">Payment</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## PayStatements
-
-Params Types:
-
-- <a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go">finchgo</a>.<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go#PayStatementParam">PayStatementParam</a>
 
 Response Types:
 
