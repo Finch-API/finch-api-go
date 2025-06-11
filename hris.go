@@ -3,6 +3,8 @@
 package finchgo
 
 import (
+	"time"
+
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/option"
@@ -52,7 +54,7 @@ type Income struct {
 	// The currency code.
 	Currency string `json:"currency,required,nullable"`
 	// The date the income amount went into effect.
-	EffectiveDate string `json:"effective_date,required,nullable"`
+	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
 	Unit IncomeUnit `json:"unit,required,nullable"`
@@ -110,7 +112,7 @@ type IncomeParam struct {
 	// The currency code.
 	Currency param.Field[string] `json:"currency,required"`
 	// The date the income amount went into effect.
-	EffectiveDate param.Field[string] `json:"effective_date,required"`
+	EffectiveDate param.Field[time.Time] `json:"effective_date,required" format:"date"`
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
 	Unit param.Field[IncomeUnit] `json:"unit,required"`
