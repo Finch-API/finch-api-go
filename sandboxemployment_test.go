@@ -7,6 +7,7 @@ import (
 	"errors"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
@@ -47,13 +48,13 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),
-				EffectiveDate: finchgo.F("effective_date"),
+				EffectiveDate: finchgo.F(time.Now()),
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}),
 			IncomeHistory: finchgo.F([]finchgo.IncomeParam{{
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),
-				EffectiveDate: finchgo.F("effective_date"),
+				EffectiveDate: finchgo.F(time.Now()),
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}}),
 			IsActive:         finchgo.F(true),
