@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -65,9 +66,10 @@ func (r sandboxPaymentNewResponseJSON) RawJSON() string {
 }
 
 type SandboxPaymentNewParams struct {
-	EndDate       param.Field[string]                                `json:"end_date"`
+	EndDate param.Field[time.Time] `json:"end_date" format:"date"`
+	// Array of pay statements to include in the payment.
 	PayStatements param.Field[[]SandboxPaymentNewParamsPayStatement] `json:"pay_statements"`
-	StartDate     param.Field[string]                                `json:"start_date"`
+	StartDate     param.Field[time.Time]                             `json:"start_date" format:"date"`
 }
 
 func (r SandboxPaymentNewParams) MarshalJSON() (data []byte, err error) {
@@ -75,23 +77,16 @@ func (r SandboxPaymentNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxPaymentNewParamsPayStatement struct {
-	// The array of earnings objects associated with this pay statement
-	Earnings param.Field[[]SandboxPaymentNewParamsPayStatementsEarning] `json:"earnings"`
-	// The array of deductions objects associated with this pay statement.
+	IndividualID          param.Field[string]                                                     `json:"individual_id,required" format:"uuid"`
+	Earnings              param.Field[[]SandboxPaymentNewParamsPayStatementsEarning]              `json:"earnings"`
 	EmployeeDeductions    param.Field[[]SandboxPaymentNewParamsPayStatementsEmployeeDeduction]    `json:"employee_deductions"`
 	EmployerContributions param.Field[[]SandboxPaymentNewParamsPayStatementsEmployerContribution] `json:"employer_contributions"`
-	GrossPay              param.Field[MoneyParam]                                                 `json:"gross_pay"`
-	// A stable Finch `id` (UUID v4) for an individual in the company
-	IndividualID param.Field[string]     `json:"individual_id"`
-	NetPay       param.Field[MoneyParam] `json:"net_pay"`
-	// The payment method.
-	PaymentMethod param.Field[SandboxPaymentNewParamsPayStatementsPaymentMethod] `json:"payment_method"`
-	// The array of taxes objects associated with this pay statement.
-	Taxes param.Field[[]SandboxPaymentNewParamsPayStatementsTax] `json:"taxes"`
-	// The number of hours worked for this pay period
-	TotalHours param.Field[float64] `json:"total_hours"`
-	// The type of the payment associated with the pay statement.
-	Type param.Field[SandboxPaymentNewParamsPayStatementsType] `json:"type"`
+	GrossPay              param.Field[int64]                                                      `json:"gross_pay"`
+	NetPay                param.Field[int64]                                                      `json:"net_pay"`
+	PaymentMethod         param.Field[SandboxPaymentNewParamsPayStatementsPaymentMethod]          `json:"payment_method"`
+	Taxes                 param.Field[[]SandboxPaymentNewParamsPayStatementsTax]                  `json:"taxes"`
+	TotalHours            param.Field[float64]                                                    `json:"total_hours"`
+	Type                  param.Field[SandboxPaymentNewParamsPayStatementsType]                   `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatement) MarshalJSON() (data []byte, err error) {
@@ -99,143 +94,127 @@ func (r SandboxPaymentNewParamsPayStatement) MarshalJSON() (data []byte, err err
 }
 
 type SandboxPaymentNewParamsPayStatementsEarning struct {
-	// The earnings amount in cents.
-	Amount     param.Field[int64]                                                  `json:"amount"`
-	Attributes param.Field[SandboxPaymentNewParamsPayStatementsEarningsAttributes] `json:"attributes"`
-	// The earnings currency code.
-	Currency param.Field[string] `json:"currency"`
-	// The number of hours associated with this earning. (For salaried employees, this
-	// could be hours per pay period, `0` or `null`, depending on the provider).
-	Hours param.Field[float64] `json:"hours"`
-	// The exact name of the deduction from the pay statement.
-	Name param.Field[string] `json:"name"`
-	// The type of earning.
-	Type param.Field[SandboxPaymentNewParamsPayStatementsEarningsType] `json:"type"`
+	Amount param.Field[int64]                                            `json:"amount"`
+	Hours  param.Field[float64]                                          `json:"hours"`
+	Name   param.Field[string]                                           `json:"name"`
+	Type   param.Field[SandboxPaymentNewParamsPayStatementsEarningsType] `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEarning) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type SandboxPaymentNewParamsPayStatementsEarningsAttributes struct {
-	Metadata param.Field[SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata] `json:"metadata"`
-}
-
-func (r SandboxPaymentNewParamsPayStatementsEarningsAttributes) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata struct {
-	// The metadata to be attached to the entity by existing rules. It is a key-value
-	// pairs where the values can be of any type (string, number, boolean, object,
-	// array, etc.).
-	Metadata param.Field[map[string]interface{}] `json:"metadata"`
-}
-
-func (r SandboxPaymentNewParamsPayStatementsEarningsAttributesMetadata) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The type of earning.
 type SandboxPaymentNewParamsPayStatementsEarningsType string
 
 const (
-	SandboxPaymentNewParamsPayStatementsEarningsTypeSalary         SandboxPaymentNewParamsPayStatementsEarningsType = "salary"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeWage           SandboxPaymentNewParamsPayStatementsEarningsType = "wage"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeReimbursement  SandboxPaymentNewParamsPayStatementsEarningsType = "reimbursement"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeOvertime       SandboxPaymentNewParamsPayStatementsEarningsType = "overtime"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeSeverance      SandboxPaymentNewParamsPayStatementsEarningsType = "severance"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeDoubleOvertime SandboxPaymentNewParamsPayStatementsEarningsType = "double_overtime"
-	SandboxPaymentNewParamsPayStatementsEarningsTypePto            SandboxPaymentNewParamsPayStatementsEarningsType = "pto"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeSick           SandboxPaymentNewParamsPayStatementsEarningsType = "sick"
 	SandboxPaymentNewParamsPayStatementsEarningsTypeBonus          SandboxPaymentNewParamsPayStatementsEarningsType = "bonus"
 	SandboxPaymentNewParamsPayStatementsEarningsTypeCommission     SandboxPaymentNewParamsPayStatementsEarningsType = "commission"
-	SandboxPaymentNewParamsPayStatementsEarningsTypeTips           SandboxPaymentNewParamsPayStatementsEarningsType = "tips"
-	SandboxPaymentNewParamsPayStatementsEarningsType1099           SandboxPaymentNewParamsPayStatementsEarningsType = "1099"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeDoubleOvertime SandboxPaymentNewParamsPayStatementsEarningsType = "double_overtime"
 	SandboxPaymentNewParamsPayStatementsEarningsTypeOther          SandboxPaymentNewParamsPayStatementsEarningsType = "other"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeOvertime       SandboxPaymentNewParamsPayStatementsEarningsType = "overtime"
+	SandboxPaymentNewParamsPayStatementsEarningsTypePto            SandboxPaymentNewParamsPayStatementsEarningsType = "pto"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeReimbursement  SandboxPaymentNewParamsPayStatementsEarningsType = "reimbursement"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeSalary         SandboxPaymentNewParamsPayStatementsEarningsType = "salary"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeSeverance      SandboxPaymentNewParamsPayStatementsEarningsType = "severance"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeSick           SandboxPaymentNewParamsPayStatementsEarningsType = "sick"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeTips           SandboxPaymentNewParamsPayStatementsEarningsType = "tips"
+	SandboxPaymentNewParamsPayStatementsEarningsTypeWage           SandboxPaymentNewParamsPayStatementsEarningsType = "wage"
+	SandboxPaymentNewParamsPayStatementsEarningsType1099           SandboxPaymentNewParamsPayStatementsEarningsType = "1099"
 )
 
 func (r SandboxPaymentNewParamsPayStatementsEarningsType) IsKnown() bool {
 	switch r {
-	case SandboxPaymentNewParamsPayStatementsEarningsTypeSalary, SandboxPaymentNewParamsPayStatementsEarningsTypeWage, SandboxPaymentNewParamsPayStatementsEarningsTypeReimbursement, SandboxPaymentNewParamsPayStatementsEarningsTypeOvertime, SandboxPaymentNewParamsPayStatementsEarningsTypeSeverance, SandboxPaymentNewParamsPayStatementsEarningsTypeDoubleOvertime, SandboxPaymentNewParamsPayStatementsEarningsTypePto, SandboxPaymentNewParamsPayStatementsEarningsTypeSick, SandboxPaymentNewParamsPayStatementsEarningsTypeBonus, SandboxPaymentNewParamsPayStatementsEarningsTypeCommission, SandboxPaymentNewParamsPayStatementsEarningsTypeTips, SandboxPaymentNewParamsPayStatementsEarningsType1099, SandboxPaymentNewParamsPayStatementsEarningsTypeOther:
+	case SandboxPaymentNewParamsPayStatementsEarningsTypeBonus, SandboxPaymentNewParamsPayStatementsEarningsTypeCommission, SandboxPaymentNewParamsPayStatementsEarningsTypeDoubleOvertime, SandboxPaymentNewParamsPayStatementsEarningsTypeOther, SandboxPaymentNewParamsPayStatementsEarningsTypeOvertime, SandboxPaymentNewParamsPayStatementsEarningsTypePto, SandboxPaymentNewParamsPayStatementsEarningsTypeReimbursement, SandboxPaymentNewParamsPayStatementsEarningsTypeSalary, SandboxPaymentNewParamsPayStatementsEarningsTypeSeverance, SandboxPaymentNewParamsPayStatementsEarningsTypeSick, SandboxPaymentNewParamsPayStatementsEarningsTypeTips, SandboxPaymentNewParamsPayStatementsEarningsTypeWage, SandboxPaymentNewParamsPayStatementsEarningsType1099:
 		return true
 	}
 	return false
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployeeDeduction struct {
-	// The deduction amount in cents.
-	Amount     param.Field[int64]                                                            `json:"amount"`
-	Attributes param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes] `json:"attributes"`
-	// The deduction currency.
-	Currency param.Field[string] `json:"currency"`
-	// The deduction name from the pay statement.
-	Name param.Field[string] `json:"name"`
-	// Boolean indicating if the deduction is pre-tax.
-	PreTax param.Field[bool] `json:"pre_tax"`
-	// Type of benefit.
-	Type param.Field[BenefitType] `json:"type"`
+	Amount param.Field[int64]                                                      `json:"amount"`
+	Name   param.Field[string]                                                     `json:"name"`
+	PreTax param.Field[bool]                                                       `json:"pre_tax"`
+	Type   param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType] `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEmployeeDeduction) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes struct {
-	Metadata param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata] `json:"metadata"`
-}
+type SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType string
 
-func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributes) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
+const (
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_457             SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "457"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_401k            SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "401k"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_401kRoth        SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "401k_roth"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_401kLoan        SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "401k_loan"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_403b            SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "403b"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_403bRoth        SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "403b_roth"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_457Roth         SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "457_roth"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeCommuter         SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "commuter"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeCustomPostTax    SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "custom_post_tax"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeCustomPreTax     SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "custom_pre_tax"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeFsaDependentCare SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "fsa_dependent_care"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeFsaMedical       SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "fsa_medical"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeHsaPost          SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "hsa_post"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeHsaPre           SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "hsa_pre"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeS125Dental       SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "s125_dental"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeS125Medical      SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "s125_medical"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeS125Vision       SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "s125_vision"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeSimple           SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "simple"
+	SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeSimpleIRA        SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType = "simple_ira"
+)
 
-type SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata struct {
-	// The metadata to be attached to the entity by existing rules. It is a key-value
-	// pairs where the values can be of any type (string, number, boolean, object,
-	// array, etc.).
-	Metadata param.Field[map[string]interface{}] `json:"metadata"`
-}
-
-func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsAttributesMetadata) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
+func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType) IsKnown() bool {
+	switch r {
+	case SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_457, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_401k, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_401kRoth, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_401kLoan, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_403b, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_403bRoth, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType_457Roth, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeCommuter, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeCustomPostTax, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeCustomPreTax, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeFsaDependentCare, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeFsaMedical, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeHsaPost, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeHsaPre, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeS125Dental, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeS125Medical, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeS125Vision, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeSimple, SandboxPaymentNewParamsPayStatementsEmployeeDeductionsTypeSimpleIRA:
+		return true
+	}
+	return false
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployerContribution struct {
-	// The contribution amount in cents.
-	Amount     param.Field[int64]                                                               `json:"amount"`
-	Attributes param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes] `json:"attributes"`
-	// The contribution currency.
-	Currency param.Field[string] `json:"currency"`
-	// The contribution name from the pay statement.
-	Name param.Field[string] `json:"name"`
-	// Type of benefit.
-	Type param.Field[BenefitType] `json:"type"`
+	Amount param.Field[int64]                                                         `json:"amount"`
+	Name   param.Field[string]                                                        `json:"name"`
+	Type   param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsType] `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEmployerContribution) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes struct {
-	Metadata param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata] `json:"metadata"`
+type SandboxPaymentNewParamsPayStatementsEmployerContributionsType string
+
+const (
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_457             SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "457"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_401k            SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "401k"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_401kRoth        SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "401k_roth"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_401kLoan        SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "401k_loan"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_403b            SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "403b"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_403bRoth        SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "403b_roth"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsType_457Roth         SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "457_roth"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeCommuter         SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "commuter"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeCustomPostTax    SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "custom_post_tax"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeCustomPreTax     SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "custom_pre_tax"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeFsaDependentCare SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "fsa_dependent_care"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeFsaMedical       SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "fsa_medical"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeHsaPost          SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "hsa_post"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeHsaPre           SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "hsa_pre"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeS125Dental       SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "s125_dental"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeS125Medical      SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "s125_medical"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeS125Vision       SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "s125_vision"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeSimple           SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "simple"
+	SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeSimpleIRA        SandboxPaymentNewParamsPayStatementsEmployerContributionsType = "simple_ira"
+)
+
+func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsType) IsKnown() bool {
+	switch r {
+	case SandboxPaymentNewParamsPayStatementsEmployerContributionsType_457, SandboxPaymentNewParamsPayStatementsEmployerContributionsType_401k, SandboxPaymentNewParamsPayStatementsEmployerContributionsType_401kRoth, SandboxPaymentNewParamsPayStatementsEmployerContributionsType_401kLoan, SandboxPaymentNewParamsPayStatementsEmployerContributionsType_403b, SandboxPaymentNewParamsPayStatementsEmployerContributionsType_403bRoth, SandboxPaymentNewParamsPayStatementsEmployerContributionsType_457Roth, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeCommuter, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeCustomPostTax, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeCustomPreTax, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeFsaDependentCare, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeFsaMedical, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeHsaPost, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeHsaPre, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeS125Dental, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeS125Medical, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeS125Vision, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeSimple, SandboxPaymentNewParamsPayStatementsEmployerContributionsTypeSimpleIRA:
+		return true
+	}
+	return false
 }
 
-func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributes) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata struct {
-	// The metadata to be attached to the entity by existing rules. It is a key-value
-	// pairs where the values can be of any type (string, number, boolean, object,
-	// array, etc.).
-	Metadata param.Field[map[string]interface{}] `json:"metadata"`
-}
-
-func (r SandboxPaymentNewParamsPayStatementsEmployerContributionsAttributesMetadata) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The payment method.
 type SandboxPaymentNewParamsPayStatementsPaymentMethod string
 
 const (
@@ -253,72 +232,44 @@ func (r SandboxPaymentNewParamsPayStatementsPaymentMethod) IsKnown() bool {
 }
 
 type SandboxPaymentNewParamsPayStatementsTax struct {
-	// The tax amount in cents.
-	Amount     param.Field[int64]                                               `json:"amount"`
-	Attributes param.Field[SandboxPaymentNewParamsPayStatementsTaxesAttributes] `json:"attributes"`
-	// The currency code.
-	Currency param.Field[string] `json:"currency"`
-	// `true` if the amount is paid by the employers.
-	Employer param.Field[bool] `json:"employer"`
-	// The exact name of tax from the pay statement.
-	Name param.Field[string] `json:"name"`
-	// The type of taxes.
-	Type param.Field[SandboxPaymentNewParamsPayStatementsTaxesType] `json:"type"`
+	Amount   param.Field[int64]                                         `json:"amount"`
+	Employer param.Field[bool]                                          `json:"employer"`
+	Name     param.Field[string]                                        `json:"name"`
+	Type     param.Field[SandboxPaymentNewParamsPayStatementsTaxesType] `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatementsTax) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type SandboxPaymentNewParamsPayStatementsTaxesAttributes struct {
-	Metadata param.Field[SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata] `json:"metadata"`
-}
-
-func (r SandboxPaymentNewParamsPayStatementsTaxesAttributes) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata struct {
-	// The metadata to be attached to the entity by existing rules. It is a key-value
-	// pairs where the values can be of any type (string, number, boolean, object,
-	// array, etc.).
-	Metadata param.Field[map[string]interface{}] `json:"metadata"`
-}
-
-func (r SandboxPaymentNewParamsPayStatementsTaxesAttributesMetadata) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The type of taxes.
 type SandboxPaymentNewParamsPayStatementsTaxesType string
 
 const (
-	SandboxPaymentNewParamsPayStatementsTaxesTypeState   SandboxPaymentNewParamsPayStatementsTaxesType = "state"
 	SandboxPaymentNewParamsPayStatementsTaxesTypeFederal SandboxPaymentNewParamsPayStatementsTaxesType = "federal"
-	SandboxPaymentNewParamsPayStatementsTaxesTypeLocal   SandboxPaymentNewParamsPayStatementsTaxesType = "local"
 	SandboxPaymentNewParamsPayStatementsTaxesTypeFica    SandboxPaymentNewParamsPayStatementsTaxesType = "fica"
+	SandboxPaymentNewParamsPayStatementsTaxesTypeLocal   SandboxPaymentNewParamsPayStatementsTaxesType = "local"
+	SandboxPaymentNewParamsPayStatementsTaxesTypeState   SandboxPaymentNewParamsPayStatementsTaxesType = "state"
 )
 
 func (r SandboxPaymentNewParamsPayStatementsTaxesType) IsKnown() bool {
 	switch r {
-	case SandboxPaymentNewParamsPayStatementsTaxesTypeState, SandboxPaymentNewParamsPayStatementsTaxesTypeFederal, SandboxPaymentNewParamsPayStatementsTaxesTypeLocal, SandboxPaymentNewParamsPayStatementsTaxesTypeFica:
+	case SandboxPaymentNewParamsPayStatementsTaxesTypeFederal, SandboxPaymentNewParamsPayStatementsTaxesTypeFica, SandboxPaymentNewParamsPayStatementsTaxesTypeLocal, SandboxPaymentNewParamsPayStatementsTaxesTypeState:
 		return true
 	}
 	return false
 }
 
-// The type of the payment associated with the pay statement.
 type SandboxPaymentNewParamsPayStatementsType string
 
 const (
-	SandboxPaymentNewParamsPayStatementsTypeRegularPayroll  SandboxPaymentNewParamsPayStatementsType = "regular_payroll"
 	SandboxPaymentNewParamsPayStatementsTypeOffCyclePayroll SandboxPaymentNewParamsPayStatementsType = "off_cycle_payroll"
 	SandboxPaymentNewParamsPayStatementsTypeOneTimePayment  SandboxPaymentNewParamsPayStatementsType = "one_time_payment"
+	SandboxPaymentNewParamsPayStatementsTypeRegularPayroll  SandboxPaymentNewParamsPayStatementsType = "regular_payroll"
 )
 
 func (r SandboxPaymentNewParamsPayStatementsType) IsKnown() bool {
 	switch r {
-	case SandboxPaymentNewParamsPayStatementsTypeRegularPayroll, SandboxPaymentNewParamsPayStatementsTypeOffCyclePayroll, SandboxPaymentNewParamsPayStatementsTypeOneTimePayment:
+	case SandboxPaymentNewParamsPayStatementsTypeOffCyclePayroll, SandboxPaymentNewParamsPayStatementsTypeOneTimePayment, SandboxPaymentNewParamsPayStatementsTypeRegularPayroll:
 		return true
 	}
 	return false
