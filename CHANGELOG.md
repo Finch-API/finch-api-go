@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.28.1 (2025-06-27)
+
+Full Changelog: [v1.28.0...v1.28.1](https://github.com/Finch-API/finch-api-go/compare/v1.28.0...v1.28.1)
+
+### Bug Fixes
+
+* don't try to deserialize as json when ResponseBodyInto is []byte ([459ebb5](https://github.com/Finch-API/finch-api-go/commit/459ebb51520a63834064f9eac79ca0b2e5216589))
+* **pagination:** check if page data is empty in GetNextPage ([2076f10](https://github.com/Finch-API/finch-api-go/commit/2076f1075cfd73b8344c5b3b081bc016451a5d6f))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([3436983](https://github.com/Finch-API/finch-api-go/commit/34369833d009f65ca912c2d245e678aa4a044382))
+
 ## 1.28.0 (2025-06-17)
 
 Full Changelog: [v1.27.0...v1.28.0](https://github.com/Finch-API/finch-api-go/compare/v1.27.0...v1.28.0)
