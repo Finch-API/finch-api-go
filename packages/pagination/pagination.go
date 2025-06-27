@@ -38,6 +38,9 @@ func (r singlePageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *SinglePage[T]) GetNextPage() (res *SinglePage[T], err error) {
+	if len(r.Items) == 0 {
+		return nil, nil
+	}
 	// This page represents a response that isn't actually paginated at the API level
 	// so there will never be a next page.
 	cfg := (*requestconfig.RequestConfig)(nil)
@@ -133,6 +136,9 @@ func (r responsesPageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *ResponsesPage[T]) GetNextPage() (res *ResponsesPage[T], err error) {
+	if len(r.Responses) == 0 {
+		return nil, nil
+	}
 	// This page represents a response that isn't actually paginated at the API level
 	// so there will never be a next page.
 	cfg := (*requestconfig.RequestConfig)(nil)
@@ -230,6 +236,9 @@ func (r pageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *Page[T]) GetNextPage() (res *Page[T], err error) {
+	if len(r.Data) == 0 {
+		return nil, nil
+	}
 	cfg := r.cfg.Clone(r.cfg.Context)
 
 	next := r.Paging.Offset
