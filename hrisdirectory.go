@@ -114,6 +114,9 @@ func (r individualsPageJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *IndividualsPage) GetNextPage() (res *IndividualsPage, err error) {
+	if len(r.Individuals) == 0 {
+		return nil, nil
+	}
 	cfg := r.cfg.Clone(r.cfg.Context)
 
 	next := r.Paging.Offset
