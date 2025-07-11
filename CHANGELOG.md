@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.28.3 (2025-07-11)
+
+Full Changelog: [v1.28.2...v1.28.3](https://github.com/Finch-API/finch-api-go/compare/v1.28.2...v1.28.3)
+
+### Chores
+
+* lint tests in subpackages ([ca578e8](https://github.com/Finch-API/finch-api-go/commit/ca578e898dcbecfee5999dede7310b0773624adf))
+
 ## 1.28.2 (2025-07-08)
 
 Full Changelog: [v1.28.1...v1.28.2](https://github.com/Finch-API/finch-api-go/compare/v1.28.1...v1.28.2)
