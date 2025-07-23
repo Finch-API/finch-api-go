@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"reflect"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
@@ -15,6 +16,7 @@ import (
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 	"github.com/Finch-API/finch-api-go/packages/pagination"
+	"github.com/tidwall/gjson"
 )
 
 // HRISBenefitIndividualService contains methods and other services that help with
@@ -88,9 +90,9 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 }
 
 type IndividualBenefit struct {
-	Body         IndividualBenefitBody `json:"body"`
-	Code         int64                 `json:"code"`
-	IndividualID string                `json:"individual_id"`
+	Body         IndividualBenefitBody `json:"body,required"`
+	Code         int64                 `json:"code,required"`
+	IndividualID string                `json:"individual_id,required"`
 	JSON         individualBenefitJSON `json:"-"`
 }
 
@@ -118,16 +120,93 @@ type IndividualBenefitBody struct {
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
 	CatchUp             bool                `json:"catch_up,nullable"`
+	Code                float64             `json:"code"`
 	CompanyContribution BenefitContribution `json:"company_contribution,nullable"`
 	EmployeeDeduction   BenefitContribution `json:"employee_deduction,nullable"`
+	FinchCode           string              `json:"finch_code"`
 	// Type for HSA contribution limit if the benefit is a HSA.
 	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	Message              string                                    `json:"message"`
+	Name                 string                                    `json:"name"`
 	JSON                 individualBenefitBodyJSON                 `json:"-"`
+	union                IndividualBenefitBodyUnion
 }
 
 // individualBenefitBodyJSON contains the JSON metadata for the struct
 // [IndividualBenefitBody]
 type individualBenefitBodyJSON struct {
+	AnnualMaximum        apijson.Field
+	CatchUp              apijson.Field
+	Code                 apijson.Field
+	CompanyContribution  apijson.Field
+	EmployeeDeduction    apijson.Field
+	FinchCode            apijson.Field
+	HsaContributionLimit apijson.Field
+	Message              apijson.Field
+	Name                 apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r individualBenefitBodyJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r *IndividualBenefitBody) UnmarshalJSON(data []byte) (err error) {
+	*r = IndividualBenefitBody{}
+	err = apijson.UnmarshalRoot(data, &r.union)
+	if err != nil {
+		return err
+	}
+	return apijson.Port(r.union, &r)
+}
+
+// AsUnion returns a [IndividualBenefitBodyUnion] interface which you can cast to
+// the specific types for more type safety.
+//
+// Possible runtime types of the union are [IndividualBenefitBodyObject],
+// [IndividualBenefitBodyBatchError].
+func (r IndividualBenefitBody) AsUnion() IndividualBenefitBodyUnion {
+	return r.union
+}
+
+// Union satisfied by [IndividualBenefitBodyObject] or
+// [IndividualBenefitBodyBatchError].
+type IndividualBenefitBodyUnion interface {
+	implementsIndividualBenefitBody()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*IndividualBenefitBodyUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(IndividualBenefitBodyObject{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(IndividualBenefitBodyBatchError{}),
+		},
+	)
+}
+
+type IndividualBenefitBodyObject struct {
+	// If the benefit supports annual maximum, the amount in cents for this individual.
+	AnnualMaximum int64 `json:"annual_maximum,required,nullable"`
+	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
+	// for this individual.
+	CatchUp             bool                `json:"catch_up,required,nullable"`
+	CompanyContribution BenefitContribution `json:"company_contribution,required,nullable"`
+	EmployeeDeduction   BenefitContribution `json:"employee_deduction,required,nullable"`
+	// Type for HSA contribution limit if the benefit is a HSA.
+	HsaContributionLimit IndividualBenefitBodyObjectHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	JSON                 individualBenefitBodyObjectJSON                 `json:"-"`
+}
+
+// individualBenefitBodyObjectJSON contains the JSON metadata for the struct
+// [IndividualBenefitBodyObject]
+type individualBenefitBodyObjectJSON struct {
 	AnnualMaximum        apijson.Field
 	CatchUp              apijson.Field
 	CompanyContribution  apijson.Field
@@ -137,13 +216,60 @@ type individualBenefitBodyJSON struct {
 	ExtraFields          map[string]apijson.Field
 }
 
-func (r *IndividualBenefitBody) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualBenefitBodyObject) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualBenefitBodyJSON) RawJSON() string {
+func (r individualBenefitBodyObjectJSON) RawJSON() string {
 	return r.raw
 }
+
+func (r IndividualBenefitBodyObject) implementsIndividualBenefitBody() {}
+
+// Type for HSA contribution limit if the benefit is a HSA.
+type IndividualBenefitBodyObjectHsaContributionLimit string
+
+const (
+	IndividualBenefitBodyObjectHsaContributionLimitIndividual IndividualBenefitBodyObjectHsaContributionLimit = "individual"
+	IndividualBenefitBodyObjectHsaContributionLimitFamily     IndividualBenefitBodyObjectHsaContributionLimit = "family"
+)
+
+func (r IndividualBenefitBodyObjectHsaContributionLimit) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyObjectHsaContributionLimitIndividual, IndividualBenefitBodyObjectHsaContributionLimitFamily:
+		return true
+	}
+	return false
+}
+
+type IndividualBenefitBodyBatchError struct {
+	Code      float64                             `json:"code,required"`
+	Message   string                              `json:"message,required"`
+	Name      string                              `json:"name,required"`
+	FinchCode string                              `json:"finch_code"`
+	JSON      individualBenefitBodyBatchErrorJSON `json:"-"`
+}
+
+// individualBenefitBodyBatchErrorJSON contains the JSON metadata for the struct
+// [IndividualBenefitBodyBatchError]
+type individualBenefitBodyBatchErrorJSON struct {
+	Code        apijson.Field
+	Message     apijson.Field
+	Name        apijson.Field
+	FinchCode   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBenefitBodyBatchError) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyBatchErrorJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r IndividualBenefitBodyBatchError) implementsIndividualBenefitBody() {}
 
 // Type for HSA contribution limit if the benefit is a HSA.
 type IndividualBenefitBodyHsaContributionLimit string
