@@ -61,12 +61,12 @@ func (r *HRISDirectoryService) ListAutoPaging(ctx context.Context, query HRISDir
 // Read company directory and organization structure
 //
 // Deprecated: use `List` instead
-func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, query HRISDirectoryListIndividualsParams, opts ...option.RequestOption) (res *IndividualsPage, err error) {
+func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, body HRISDirectoryListIndividualsParams, opts ...option.RequestOption) (res *IndividualsPage, err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/directory"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, body, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,8 +81,8 @@ func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, query HRISDi
 // Read company directory and organization structure
 //
 // Deprecated: use `List` instead
-func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, query HRISDirectoryListIndividualsParams, opts ...option.RequestOption) *IndividualsPageAutoPager {
-	return NewIndividualsPageAutoPager(r.ListIndividuals(ctx, query, opts...))
+func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, body HRISDirectoryListIndividualsParams, opts ...option.RequestOption) *IndividualsPageAutoPager {
+	return NewIndividualsPageAutoPager(r.ListIndividuals(ctx, body, opts...))
 }
 
 type IndividualsPage struct {
