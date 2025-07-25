@@ -189,22 +189,25 @@ func (r AutomatedAsyncJobType) IsKnown() bool {
 type JobAutomatedNewResponse struct {
 	// The number of allowed refreshes per hour (per hour, fixed window)
 	AllowedRefreshes int64 `json:"allowed_refreshes,required"`
-	// The id of the job that has been created.
-	JobID string `json:"job_id,required" format:"uuid"`
-	// The url that can be used to retrieve the job status
-	JobURL string `json:"job_url,required"`
 	// The number of remaining refreshes available (per hour, fixed window)
-	RemainingRefreshes int64                       `json:"remaining_refreshes,required"`
-	JSON               jobAutomatedNewResponseJSON `json:"-"`
+	RemainingRefreshes int64 `json:"remaining_refreshes,required"`
+	// The id of the job that has been created.
+	JobID string `json:"job_id" format:"uuid"`
+	// The url that can be used to retrieve the job status
+	JobURL string `json:"job_url"`
+	// ISO 8601 timestamp indicating when to retry the request
+	RetryAt string                      `json:"retry_at"`
+	JSON    jobAutomatedNewResponseJSON `json:"-"`
 }
 
 // jobAutomatedNewResponseJSON contains the JSON metadata for the struct
 // [JobAutomatedNewResponse]
 type jobAutomatedNewResponseJSON struct {
 	AllowedRefreshes   apijson.Field
+	RemainingRefreshes apijson.Field
 	JobID              apijson.Field
 	JobURL             apijson.Field
-	RemainingRefreshes apijson.Field
+	RetryAt            apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }

@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.29.0 (2025-07-24)
+
+Full Changelog: [v1.28.3...v1.29.0](https://github.com/Finch-API/finch-api-go/compare/v1.28.3...v1.29.0)
+
+### Features
+
+* **api:** api update ([857ce2b](https://github.com/Finch-API/finch-api-go/commit/857ce2b8a33452612ded1db6a0af87be93e057de))
+* **api:** api update ([80f0142](https://github.com/Finch-API/finch-api-go/commit/80f01428ce3e2c3f4c911bb4404725cde4c3443d))
+
+
+### Bug Fixes
+
+* **client:** process custom base url ahead of time ([aa2ed4d](https://github.com/Finch-API/finch-api-go/commit/aa2ed4dfd307d3cdf3f379e3fcf2ae764926ad0b))
+
+
+### Chores
+
+* **internal:** codegen related update ([7f41fc2](https://github.com/Finch-API/finch-api-go/commit/7f41fc2cc6f4f892506a767dd8a53e82264b24b6))
+
 ## 1.28.3 (2025-07-11)
 
 Full Changelog: [v1.28.2...v1.28.3](https://github.com/Finch-API/finch-api-go/compare/v1.28.2...v1.28.3)
