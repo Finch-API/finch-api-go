@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.30.0 (2025-08-06)
+
+Full Changelog: [v1.29.0...v1.30.0](https://github.com/Finch-API/finch-api-go/compare/v1.29.0...v1.30.0)
+
+### Features
+
+* **client:** support optional json html escaping ([841331b](https://github.com/Finch-API/finch-api-go/commit/841331bfb0a6368e32613ae4505e40080a20dd23))
+
 ## 1.29.0 (2025-07-24)
 
 Full Changelog: [v1.28.3...v1.29.0](https://github.com/Finch-API/finch-api-go/compare/v1.28.3...v1.29.0)
