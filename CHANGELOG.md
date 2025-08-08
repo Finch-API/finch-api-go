@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.30.1 (2025-08-08)
+
+Full Changelog: [v1.30.0...v1.30.1](https://github.com/Finch-API/finch-api-go/compare/v1.30.0...v1.30.1)
+
+### Chores
+
+* **internal:** update comment in script ([4bd9789](https://github.com/Finch-API/finch-api-go/commit/4bd9789cd3129a07e99d7fb7d4f8301f7cb2c2ba))
+* update @stainless-api/prism-cli to v5.15.0 ([d2fc659](https://github.com/Finch-API/finch-api-go/commit/d2fc659cf7b8a772470ecb9edd20c5ad97fd9c78))
+
 ## 1.30.0 (2025-08-06)
 
 Full Changelog: [v1.29.0...v1.30.0](https://github.com/Finch-API/finch-api-go/compare/v1.29.0...v1.30.0)
