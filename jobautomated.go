@@ -94,7 +94,7 @@ type AutomatedAsyncJob struct {
 	Params AutomatedAsyncJobParams `json:"params,required,nullable"`
 	// The datetime a job is scheduled to be run. For scheduled jobs, this datetime can
 	// be in the future if the job has not yet been enqueued. For ad-hoc jobs, this
-	// field will be null.
+	// field will be null.
 	ScheduledAt time.Time `json:"scheduled_at,required,nullable" format:"date-time"`
 	// The datetime a job entered into the job queue.
 	StartedAt time.Time               `json:"started_at,required,nullable" format:"date-time"`
