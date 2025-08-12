@@ -32,8 +32,8 @@ func NewRequestForwardingService(opts ...option.RequestOption) (r *RequestForwar
 }
 
 // The Forward API allows you to make direct requests to an employment system. If
-// Finch’s unified API doesn’t have a data model that cleanly fits your needs, then
-// Forward allows you to push or pull data models directly against an integration’s
+// Finch's unified API doesn't have a data model that cleanly fits your needs, then
+// Forward allows you to push or pull data models directly against an integration's
 // API.
 func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForwardingForwardParams, opts ...option.RequestOption) (res *RequestForwardingForwardResponse, err error) {
 	opts = append(r.Options[:], opts...)
@@ -43,18 +43,18 @@ func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForw
 }
 
 type RequestForwardingForwardResponse struct {
-	// A string representation of the HTTP response body of the forwarded request’s
-	// response received from the underlying integration’s API. This field may be null
-	// in the case where the upstream system’s response is empty.
+	// A string representation of the HTTP response body of the forwarded request's
+	// response received from the underlying integration's API. This field may be null
+	// in the case where the upstream system's response is empty.
 	Data string `json:"data,required,nullable"`
-	// The HTTP headers of the forwarded request’s response, exactly as received from
-	// the underlying integration’s API.
+	// The HTTP headers of the forwarded request's response, exactly as received from
+	// the underlying integration's API.
 	Headers interface{} `json:"headers,required,nullable"`
 	// An object containing details of your original forwarded request, for your ease
 	// of reference.
 	Request RequestForwardingForwardResponseRequest `json:"request,required"`
-	// The HTTP status code of the forwarded request’s response, exactly received from
-	// the underlying integration’s API. This value will be returned as an integer.
+	// The HTTP status code of the forwarded request's response, exactly received from
+	// the underlying integration's API. This value will be returned as an integer.
 	StatusCode int64                                `json:"statusCode,required"`
 	JSON       requestForwardingForwardResponseJSON `json:"-"`
 }
