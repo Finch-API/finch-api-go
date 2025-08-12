@@ -13,7 +13,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestJobManualGet(t *testing.T) {
+func TestJobManualGetWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,13 @@ func TestJobManualGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.Jobs.Manual.Get(context.TODO(), "job_id")
+	_, err := client.Jobs.Manual.Get(
+		context.TODO(),
+		"job_id",
+		finchgo.JobManualGetParams{
+			EntityID: finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
+		},
+	)
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
