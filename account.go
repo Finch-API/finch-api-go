@@ -49,7 +49,7 @@ func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestO
 }
 
 type DisconnectResponse struct {
-	// If the request is successful, Finch will return “success” (HTTP 200 status).
+	// If the request is successful, Finch will return "success" (HTTP 200 status).
 	Status string                 `json:"status,required"`
 	JSON   disconnectResponseJSON `json:"-"`
 }

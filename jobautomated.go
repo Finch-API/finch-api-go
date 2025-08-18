@@ -58,14 +58,14 @@ func (r *JobAutomatedService) New(ctx context.Context, body JobAutomatedNewParam
 }
 
 // Get an automated job by `job_id`.
-func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *AutomatedAsyncJob, err error) {
+func (r *JobAutomatedService) Get(ctx context.Context, jobID string, query JobAutomatedGetParams, opts ...option.RequestOption) (res *AutomatedAsyncJob, err error) {
 	opts = append(r.Options[:], opts...)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
 		return
 	}
 	path := fmt.Sprintf("jobs/automated/%s", jobID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -94,7 +94,7 @@ type AutomatedAsyncJob struct {
 	Params AutomatedAsyncJobParams `json:"params,required,nullable"`
 	// The datetime a job is scheduled to be run. For scheduled jobs, this datetime can
 	// be in the future if the job has not yet been enqueued. For ad-hoc jobs, this
-	// field will be null.
+	// field will be null.
 	ScheduledAt time.Time `json:"scheduled_at,required,nullable" format:"date-time"`
 	// The datetime a job entered into the job queue.
 	StartedAt time.Time               `json:"started_at,required,nullable" format:"date-time"`
@@ -388,7 +388,26 @@ func (r JobAutomatedNewParamsW4FormEmployeeSyncType) IsKnown() bool {
 	return false
 }
 
+type JobAutomatedGetParams struct {
+	// The entity ID to use when authenticating with a multi-account token. Required
+	// when using a multi-account token to specify which entity's data to access.
+	// Example: `123e4567-e89b-12d3-a456-426614174000`
+	EntityID param.Field[string] `query:"entity_id" format:"uuid"`
+}
+
+// URLQuery serializes [JobAutomatedGetParams]'s query parameters as `url.Values`.
+func (r JobAutomatedGetParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type JobAutomatedListParams struct {
+	// The entity ID to use when authenticating with a multi-account token. Required
+	// when using a multi-account token to specify which entity's data to access.
+	// Example: `123e4567-e89b-12d3-a456-426614174000`
+	EntityID param.Field[string] `query:"entity_id" format:"uuid"`
 	// Number of items to return
 	Limit param.Field[int64] `query:"limit"`
 	// Index to start from (defaults to 0)
