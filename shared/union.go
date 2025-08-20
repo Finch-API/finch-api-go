@@ -2,9 +2,22 @@
 
 package shared
 
+import (
+	"time"
+)
+
+type UnionTime time.Time
+
+func (UnionTime) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion() {}
+func (UnionTime) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion() {
+}
+
 type UnionString string
 
-func (UnionString) ImplementsEmploymentDataObjectCustomFieldsValueUnion() {}
+func (UnionString) ImplementsEmploymentDataObjectCustomFieldsValueUnion()           {}
+func (UnionString) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion() {}
+func (UnionString) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion() {
+}
 
 type UnionBool bool
 
