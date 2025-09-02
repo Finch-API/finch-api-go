@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.33.1 (2025-08-28)
+
+Full Changelog: [v1.33.0...v1.33.1](https://github.com/Finch-API/finch-api-go/compare/v1.33.0...v1.33.1)
+
+### Bug Fixes
+
+* close body before retrying ([c45453d](https://github.com/Finch-API/finch-api-go/commit/c45453d9952b614d045be0d7eeb8dfb82f7274d2))
+
 ## 1.33.0 (2025-08-21)
 
 Full Changelog: [v1.32.0...v1.33.0](https://github.com/Finch-API/finch-api-go/compare/v1.32.0...v1.33.0)
