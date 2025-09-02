@@ -66,6 +66,7 @@
   "release-type": "go",
   "extra-files": [
     "internal/version.go",
-    "README.md"
+    "README.md",
+    null
   ]
 }
