@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.33.2 (2025-09-03)
+
+Full Changelog: [v1.33.1...v1.33.2](https://github.com/Finch-API/finch-api-go/compare/v1.33.1...v1.33.2)
+
+### Bug Fixes
+
+* remove null from release please manifest ([2d036e4](https://github.com/Finch-API/finch-api-go/commit/2d036e4dd619327becd76bfa5d3707564dfa77a6))
+* use release please annotations on more places ([d2af54b](https://github.com/Finch-API/finch-api-go/commit/d2af54b8963b85be3332e31b77d831cdd0aa05f4))
+
 ## 1.33.1 (2025-08-28)
 
 Full Changelog: [v1.33.0...v1.33.1](https://github.com/Finch-API/finch-api-go/compare/v1.33.0...v1.33.1)
