@@ -31,7 +31,7 @@ go get -u 'github.com/Finch-API/finch-api-go@v1.33.2'
 
 ## Requirements
 
-This library requires Go 1.18+.
+This library requires Go 1.22+.
 
 ## Usage
 
