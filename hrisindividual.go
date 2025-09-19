@@ -6,6 +6,7 @@ import (
 	"context"
 	"net/http"
 	"reflect"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -37,7 +38,7 @@ func NewHRISIndividualService(opts ...option.RequestOption) (r *HRISIndividualSe
 // Read individual data, excluding income and employment data
 func (r *HRISIndividualService) GetMany(ctx context.Context, body HRISIndividualGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[IndividualResponse], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/individual"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)

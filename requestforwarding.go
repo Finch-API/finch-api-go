@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -36,7 +37,7 @@ func NewRequestForwardingService(opts ...option.RequestOption) (r *RequestForwar
 // Forward allows you to push or pull data models directly against an integration's
 // API.
 func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForwardingForwardParams, opts ...option.RequestOption) (res *RequestForwardingForwardResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "forward"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

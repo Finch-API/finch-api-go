@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -35,7 +36,7 @@ func NewSandboxEmploymentService(opts ...option.RequestOption) (r *SandboxEmploy
 
 // Update sandbox employment
 func (r *SandboxEmploymentService) Update(ctx context.Context, individualID string, body SandboxEmploymentUpdateParams, opts ...option.RequestOption) (res *SandboxEmploymentUpdateResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if individualID == "" {
 		err = errors.New("missing required individual_id parameter")
 		return

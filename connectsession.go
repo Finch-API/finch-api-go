@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -33,7 +34,7 @@ func NewConnectSessionService(opts ...option.RequestOption) (r *ConnectSessionSe
 
 // Create a new connect session for an employer
 func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewParams, opts ...option.RequestOption) (res *ConnectSessionNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "connect/sessions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -41,7 +42,7 @@ func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewP
 
 // Create a new Connect session for reauthenticating an existing connection
 func (r *ConnectSessionService) Reauthenticate(ctx context.Context, body ConnectSessionReauthenticateParams, opts ...option.RequestOption) (res *ConnectSessionReauthenticateResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "connect/sessions/reauthenticate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

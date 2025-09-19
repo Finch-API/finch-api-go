@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
@@ -42,7 +43,7 @@ func NewHRISCompanyPayStatementItemRuleService(opts ...option.RequestOption) (r 
 // pre-tax 401k. This metadata can be retrieved where pay statement item
 // information is available.
 func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, body HRISCompanyPayStatementItemRuleNewParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "employer/pay-statement-item/rule"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -51,7 +52,7 @@ func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, body H
 // **Beta:** this endpoint currently serves employers onboarded after March 4th and
 // historical support will be added soon Update a rule for a pay statement item.
 func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, ruleID string, body HRISCompanyPayStatementItemRuleUpdateParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleUpdateResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
 		return
@@ -65,7 +66,7 @@ func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, rul
 // historical support will be added soon List all rules of a connection account.
 func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemRuleListResponse], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement-item/rule"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -89,7 +90,7 @@ func (r *HRISCompanyPayStatementItemRuleService) ListAutoPaging(ctx context.Cont
 // **Beta:** this endpoint currently serves employers onboarded after March 4th and
 // historical support will be added soon Delete a rule for a pay statement item.
 func (r *HRISCompanyPayStatementItemRuleService) Delete(ctx context.Context, ruleID string, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleDeleteResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
 		return
