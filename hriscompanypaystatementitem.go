@@ -6,6 +6,7 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
@@ -42,7 +43,7 @@ func NewHRISCompanyPayStatementItemService(opts ...option.RequestOption) (r *HRI
 // items for the access token's connection account.
 func (r *HRISCompanyPayStatementItemService) List(ctx context.Context, query HRISCompanyPayStatementItemListParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemListResponse], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement-item"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

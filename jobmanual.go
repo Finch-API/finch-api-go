@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
@@ -38,7 +39,7 @@ func NewJobManualService(opts ...option.RequestOption) (r *JobManualService) {
 // Get a manual job by `job_id`. Manual jobs are completed by a human and include
 // Assisted Benefits jobs.
 func (r *JobManualService) Get(ctx context.Context, jobID string, query JobManualGetParams, opts ...option.RequestOption) (res *ManualAsyncJob, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
 		return

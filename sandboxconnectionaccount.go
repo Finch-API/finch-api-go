@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -34,7 +35,7 @@ func NewSandboxConnectionAccountService(opts ...option.RequestOption) (r *Sandbo
 
 // Create a new account for an existing connection (company/provider pair)
 func (r *SandboxConnectionAccountService) New(ctx context.Context, body SandboxConnectionAccountNewParams, opts ...option.RequestOption) (res *SandboxConnectionAccountNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "sandbox/connections/accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -43,7 +44,7 @@ func (r *SandboxConnectionAccountService) New(ctx context.Context, body SandboxC
 // Update an existing sandbox account. Change the connection status to understand
 // how the Finch API responds.
 func (r *SandboxConnectionAccountService) Update(ctx context.Context, body SandboxConnectionAccountUpdateParams, opts ...option.RequestOption) (res *SandboxConnectionAccountUpdateResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "sandbox/connections/accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return

@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
@@ -34,7 +35,7 @@ func NewSandboxPaymentService(opts ...option.RequestOption) (r *SandboxPaymentSe
 
 // Add a new sandbox payment
 func (r *SandboxPaymentService) New(ctx context.Context, body SandboxPaymentNewParams, opts ...option.RequestOption) (res *SandboxPaymentNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "sandbox/payment"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

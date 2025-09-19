@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
@@ -38,7 +39,7 @@ func NewPayrollPayGroupService(opts ...option.RequestOption) (r *PayrollPayGroup
 
 // Read information from a single pay group
 func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, opts ...option.RequestOption) (res *PayrollPayGroupGetResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if payGroupID == "" {
 		err = errors.New("missing required pay_group_id parameter")
 		return
@@ -51,7 +52,7 @@ func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, opt
 // Read company pay groups and frequencies
 func (r *PayrollPayGroupService) List(ctx context.Context, query PayrollPayGroupListParams, opts ...option.RequestOption) (res *pagination.SinglePage[PayrollPayGroupListResponse], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-groups"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
