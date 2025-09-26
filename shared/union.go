@@ -18,6 +18,7 @@ func (UnionString) ImplementsEmploymentDataObjectCustomFieldsValueUnion()       
 func (UnionString) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion() {}
 func (UnionString) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion() {
 }
+func (UnionString) ImplementsRequestForwardingForwardResponseRequestDataUnion() {}
 
 type UnionBool bool
 
