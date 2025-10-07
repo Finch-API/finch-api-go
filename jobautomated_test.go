@@ -37,7 +37,7 @@ func TestJobAutomatedNew(t *testing.T) {
 	}
 }
 
-func TestJobAutomatedGetWithOptionalParams(t *testing.T) {
+func TestJobAutomatedGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -49,13 +49,7 @@ func TestJobAutomatedGetWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.Jobs.Automated.Get(
-		context.TODO(),
-		"job_id",
-		finchgo.JobAutomatedGetParams{
-			EntityID: finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
-		},
-	)
+	_, err := client.Jobs.Automated.Get(context.TODO(), "job_id")
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -78,9 +72,8 @@ func TestJobAutomatedListWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.Jobs.Automated.List(context.TODO(), finchgo.JobAutomatedListParams{
-		EntityID: finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
-		Limit:    finchgo.F(int64(0)),
-		Offset:   finchgo.F(int64(0)),
+		Limit:  finchgo.F(int64(0)),
+		Offset: finchgo.F(int64(0)),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
