@@ -111,10 +111,6 @@ type Introspection struct {
 	// The name of your customer you provided to Finch when a connect session was
 	// created for this connection
 	CustomerName string `json:"customer_name,nullable"`
-	// Array of entity IDs associated with this connection.
-	EntityIDs []string `json:"entity_ids" format:"uuid"`
-	// Indicates whether this connection manages a single entity or multiple entities.
-	EntityMode IntrospectionEntityMode `json:"entity_mode"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
@@ -145,8 +141,6 @@ type introspectionJSON struct {
 	CustomerEmail         apijson.Field
 	CustomerID            apijson.Field
 	CustomerName          apijson.Field
-	EntityIDs             apijson.Field
-	EntityMode            apijson.Field
 	Manual                apijson.Field
 	PayrollProviderID     apijson.Field
 	Username              apijson.Field
@@ -338,20 +332,4 @@ func init() {
 			Type:       reflect.TypeOf(shared.UnionString("")),
 		},
 	)
-}
-
-// Indicates whether this connection manages a single entity or multiple entities.
-type IntrospectionEntityMode string
-
-const (
-	IntrospectionEntityModeSingle IntrospectionEntityMode = "single"
-	IntrospectionEntityModeMulti  IntrospectionEntityMode = "multi"
-)
-
-func (r IntrospectionEntityMode) IsKnown() bool {
-	switch r {
-	case IntrospectionEntityModeSingle, IntrospectionEntityModeMulti:
-		return true
-	}
-	return false
 }

@@ -7,12 +7,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
-	"github.com/Finch-API/finch-api-go/internal/apiquery"
-	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 )
@@ -38,14 +35,14 @@ func NewJobManualService(opts ...option.RequestOption) (r *JobManualService) {
 
 // Get a manual job by `job_id`. Manual jobs are completed by a human and include
 // Assisted Benefits jobs.
-func (r *JobManualService) Get(ctx context.Context, jobID string, query JobManualGetParams, opts ...option.RequestOption) (res *ManualAsyncJob, err error) {
+func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *ManualAsyncJob, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
 		return
 	}
 	path := fmt.Sprintf("jobs/manual/%s", jobID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -89,19 +86,4 @@ func (r ManualAsyncJobStatus) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type JobManualGetParams struct {
-	// The entity ID to use when authenticating with a multi-account token. Required
-	// when using a multi-account token to specify which entity's data to access.
-	// Example: `123e4567-e89b-12d3-a456-426614174000`
-	EntityID param.Field[string] `query:"entity_id" format:"uuid"`
-}
-
-// URLQuery serializes [JobManualGetParams]'s query parameters as `url.Values`.
-func (r JobManualGetParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
 }
