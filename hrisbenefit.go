@@ -464,11 +464,12 @@ type SupportedBenefitCompanyContribution string
 const (
 	SupportedBenefitCompanyContributionFixed   SupportedBenefitCompanyContribution = "fixed"
 	SupportedBenefitCompanyContributionPercent SupportedBenefitCompanyContribution = "percent"
+	SupportedBenefitCompanyContributionTiered  SupportedBenefitCompanyContribution = "tiered"
 )
 
 func (r SupportedBenefitCompanyContribution) IsKnown() bool {
 	switch r {
-	case SupportedBenefitCompanyContributionFixed, SupportedBenefitCompanyContributionPercent:
+	case SupportedBenefitCompanyContributionFixed, SupportedBenefitCompanyContributionPercent, SupportedBenefitCompanyContributionTiered:
 		return true
 	}
 	return false
