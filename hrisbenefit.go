@@ -117,47 +117,6 @@ func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context
 	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
 }
 
-type BenefitContribution struct {
-	// Contribution amount in cents (if `fixed`) or basis points (if `percent`).
-	Amount int64 `json:"amount,required,nullable"`
-	// Contribution type.
-	Type BenefitContributionType `json:"type,required,nullable"`
-	JSON benefitContributionJSON `json:"-"`
-}
-
-// benefitContributionJSON contains the JSON metadata for the struct
-// [BenefitContribution]
-type benefitContributionJSON struct {
-	Amount      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *BenefitContribution) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r benefitContributionJSON) RawJSON() string {
-	return r.raw
-}
-
-// Contribution type.
-type BenefitContributionType string
-
-const (
-	BenefitContributionTypeFixed   BenefitContributionType = "fixed"
-	BenefitContributionTypePercent BenefitContributionType = "percent"
-)
-
-func (r BenefitContributionType) IsKnown() bool {
-	switch r {
-	case BenefitContributionTypeFixed, BenefitContributionTypePercent:
-		return true
-	}
-	return false
-}
-
 type BenefitFeaturesAndOperations struct {
 	SupportedFeatures   SupportedBenefit                 `json:"supported_features"`
 	SupportedOperations SupportPerBenefitType            `json:"supported_operations"`
