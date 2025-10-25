@@ -26,6 +26,7 @@ func TestHRISCompanyPayStatementItemRuleNewWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.Rules.New(context.TODO(), finchgo.HRISCompanyPayStatementItemRuleNewParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		Attributes: finchgo.F(finchgo.HRISCompanyPayStatementItemRuleNewParamsAttributes{
 			Metadata: finchgo.F(map[string]interface{}{
 				"foo": "bar",
@@ -65,6 +66,7 @@ func TestHRISCompanyPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"rule_id",
 		finchgo.HRISCompanyPayStatementItemRuleUpdateParams{
+			EntityIDs:        finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 			OptionalProperty: finchgo.F[any](map[string]interface{}{}),
 		},
 	)
@@ -89,7 +91,9 @@ func TestHRISCompanyPayStatementItemRuleList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.Rules.List(context.TODO())
+	_, err := client.HRIS.Company.PayStatementItem.Rules.List(context.TODO(), finchgo.HRISCompanyPayStatementItemRuleListParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	})
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -111,7 +115,13 @@ func TestHRISCompanyPayStatementItemRuleDelete(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.Rules.Delete(context.TODO(), "rule_id")
+	_, err := client.HRIS.Company.PayStatementItem.Rules.Delete(
+		context.TODO(),
+		"rule_id",
+		finchgo.HRISCompanyPayStatementItemRuleDeleteParams{
+			EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+		},
+	)
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

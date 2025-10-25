@@ -26,6 +26,7 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		CompanyContribution: finchgo.F(finchgo.HRISBenefitNewParamsCompanyContribution{
 			Tiers: finchgo.F([]finchgo.HRISBenefitNewParamsCompanyContributionTier{{
 				Match:     finchgo.F(int64(1)),
@@ -58,7 +59,13 @@ func TestHRISBenefitGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Benefits.Get(context.TODO(), "benefit_id")
+	_, err := client.HRIS.Benefits.Get(
+		context.TODO(),
+		"benefit_id",
+		finchgo.HRISBenefitGetParams{
+			EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+		},
+	)
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -84,6 +91,7 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"benefit_id",
 		finchgo.HRISBenefitUpdateParams{
+			EntityIDs:   finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 			Description: finchgo.F("description"),
 		},
 	)
@@ -108,7 +116,9 @@ func TestHRISBenefitList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Benefits.List(context.TODO())
+	_, err := client.HRIS.Benefits.List(context.TODO(), finchgo.HRISBenefitListParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	})
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -130,7 +140,9 @@ func TestHRISBenefitListSupportedBenefits(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Benefits.ListSupportedBenefits(context.TODO())
+	_, err := client.HRIS.Benefits.ListSupportedBenefits(context.TODO(), finchgo.HRISBenefitListSupportedBenefitsParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	})
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

@@ -111,6 +111,9 @@ type Introspection struct {
 	// The name of your customer you provided to Finch when a connect session was
 	// created for this connection
 	CustomerName string `json:"customer_name,nullable"`
+	// Array of detailed entity information for each connected account in multi-account
+	// mode
+	Entities []IntrospectionEntity `json:"entities"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
@@ -141,6 +144,7 @@ type introspectionJSON struct {
 	CustomerEmail         apijson.Field
 	CustomerID            apijson.Field
 	CustomerName          apijson.Field
+	Entities              apijson.Field
 	Manual                apijson.Field
 	PayrollProviderID     apijson.Field
 	Username              apijson.Field
@@ -332,4 +336,35 @@ func init() {
 			Type:       reflect.TypeOf(shared.UnionString("")),
 		},
 	)
+}
+
+type IntrospectionEntity struct {
+	// The connection account ID for this entity
+	ID string `json:"id,required" format:"uuid"`
+	// The name of the entity (payroll provider company name)
+	Name string `json:"name,required,nullable"`
+	// The source ID of the entity
+	SourceID string `json:"source_id,required,nullable"`
+	// The type of entity
+	Type string                  `json:"type,required,nullable"`
+	JSON introspectionEntityJSON `json:"-"`
+}
+
+// introspectionEntityJSON contains the JSON metadata for the struct
+// [IntrospectionEntity]
+type introspectionEntityJSON struct {
+	ID          apijson.Field
+	Name        apijson.Field
+	SourceID    apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IntrospectionEntity) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r introspectionEntityJSON) RawJSON() string {
+	return r.raw
 }

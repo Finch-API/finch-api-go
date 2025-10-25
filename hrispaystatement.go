@@ -5,10 +5,12 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -39,12 +41,12 @@ func NewHRISPayStatementService(opts ...option.RequestOption) (r *HRISPayStateme
 //
 // Deduction and contribution types are supported by the payroll systems that
 // supports Benefits.
-func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[PayStatementResponse], err error) {
+func (r *HRISPayStatementService) GetMany(ctx context.Context, params HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[PayStatementResponse], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, params, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,8 +62,8 @@ func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayState
 //
 // Deduction and contribution types are supported by the payroll systems that
 // supports Benefits.
-func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[PayStatementResponse] {
-	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, params HRISPayStatementGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[PayStatementResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, params, opts...))
 }
 
 type PayStatement struct {
@@ -638,12 +640,23 @@ func (r payStatementResponseBodyBatchErrorJSON) RawJSON() string {
 func (r PayStatementResponseBodyBatchError) implementsPayStatementResponseBody() {}
 
 type HRISPayStatementGetManyParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// The array of batch requests.
 	Requests param.Field[[]HRISPayStatementGetManyParamsRequest] `json:"requests,required"`
 }
 
 func (r HRISPayStatementGetManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISPayStatementGetManyParams]'s query parameters as
+// `url.Values`.
+func (r HRISPayStatementGetManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
 
 type HRISPayStatementGetManyParamsRequest struct {

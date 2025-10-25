@@ -38,14 +38,14 @@ func NewPayrollPayGroupService(opts ...option.RequestOption) (r *PayrollPayGroup
 }
 
 // Read information from a single pay group
-func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, opts ...option.RequestOption) (res *PayrollPayGroupGetResponse, err error) {
+func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, query PayrollPayGroupGetParams, opts ...option.RequestOption) (res *PayrollPayGroupGetResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if payGroupID == "" {
 		err = errors.New("missing required pay_group_id parameter")
 		return
 	}
 	path := fmt.Sprintf("employer/pay-groups/%s", payGroupID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -174,7 +174,23 @@ func (r PayrollPayGroupListResponsePayFrequency) IsKnown() bool {
 	return false
 }
 
+type PayrollPayGroupGetParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+}
+
+// URLQuery serializes [PayrollPayGroupGetParams]'s query parameters as
+// `url.Values`.
+func (r PayrollPayGroupGetParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type PayrollPayGroupListParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs      param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	IndividualID   param.Field[string]   `query:"individual_id" format:"uuid"`
 	PayFrequencies param.Field[[]string] `query:"pay_frequencies"`
 }

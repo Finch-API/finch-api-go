@@ -52,6 +52,8 @@ type CreateAccessTokenResponse struct {
 	// - `provider` - connection to an external provider
 	// - `finch` - finch-generated data.
 	ConnectionType CreateAccessTokenResponseConnectionType `json:"connection_type,required"`
+	// An array of entity IDs that can be accessed with this access token
+	EntityIDs []string `json:"entity_ids,required" format:"uuid"`
 	// An array of the authorized products associated with the `access_token`
 	Products []string `json:"products,required"`
 	// The ID of the provider associated with the `access_token`
@@ -81,6 +83,7 @@ type createAccessTokenResponseJSON struct {
 	ClientType     apijson.Field
 	ConnectionID   apijson.Field
 	ConnectionType apijson.Field
+	EntityIDs      apijson.Field
 	Products       apijson.Field
 	ProviderID     apijson.Field
 	TokenType      apijson.Field

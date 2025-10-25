@@ -26,6 +26,7 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{
 			Include: finchgo.F([]string{"string"}),
 		}),

@@ -50,14 +50,14 @@ func (r *HRISDocumentService) List(ctx context.Context, query HRISDocumentListPa
 
 // **Beta:** This endpoint is in beta and may change. Retrieve details of a
 // specific document by its ID.
-func (r *HRISDocumentService) Retreive(ctx context.Context, documentID string, opts ...option.RequestOption) (res *HRISDocumentRetreiveResponse, err error) {
+func (r *HRISDocumentService) Retreive(ctx context.Context, documentID string, query HRISDocumentRetreiveParams, opts ...option.RequestOption) (res *HRISDocumentRetreiveResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if documentID == "" {
 		err = errors.New("missing required document_id parameter")
 		return
 	}
 	path := fmt.Sprintf("employer/documents/%s", documentID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -442,6 +442,8 @@ func (r HRISDocumentRetreiveResponseType) IsKnown() bool {
 }
 
 type HRISDocumentListParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// Comma-delimited list of stable Finch uuids for each individual. If empty,
 	// defaults to all individuals
 	IndividualIDs param.Field[[]string] `query:"individual_ids"`
@@ -475,4 +477,18 @@ func (r HRISDocumentListParamsType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type HRISDocumentRetreiveParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+}
+
+// URLQuery serializes [HRISDocumentRetreiveParams]'s query parameters as
+// `url.Values`.
+func (r HRISDocumentRetreiveParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

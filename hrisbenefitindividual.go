@@ -40,14 +40,14 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 }
 
 // Lists individuals currently enrolled in a given deduction.
-func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
+func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, query HRISBenefitIndividualEnrolledIDsParams, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
 	}
 	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -79,14 +79,14 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *UnenrolledIndividualBenefitResponse, err error) {
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, params HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *UnenrolledIndividualBenefitResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
 	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, params, &res, opts...)
 	return
 }
 
@@ -590,7 +590,23 @@ func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
 	return r.raw
 }
 
+type HRISBenefitIndividualEnrolledIDsParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+}
+
+// URLQuery serializes [HRISBenefitIndividualEnrolledIDsParams]'s query parameters
+// as `url.Values`.
+func (r HRISBenefitIndividualEnrolledIDsParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type HRISBenefitIndividualGetManyBenefitsParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// comma-delimited list of stable Finch uuids for each individual. If empty,
 	// defaults to all individuals
 	IndividualIDs param.Field[string] `query:"individual_ids"`
@@ -606,10 +622,21 @@ func (r HRISBenefitIndividualGetManyBenefitsParams) URLQuery() (v url.Values) {
 }
 
 type HRISBenefitIndividualUnenrollManyParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// Array of individual_ids to unenroll.
 	IndividualIDs param.Field[[]string] `json:"individual_ids"`
 }
 
 func (r HRISBenefitIndividualUnenrollManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISBenefitIndividualUnenrollManyParams]'s query parameters
+// as `url.Values`.
+func (r HRISBenefitIndividualUnenrollManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

@@ -52,7 +52,9 @@ func main() {
 	client := finchgo.NewClient(
 		option.WithAccessToken("My Access Token"),
 	)
-	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
+	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	})
 	if err != nil {
 		panic(err.Error())
 	}
@@ -162,7 +164,9 @@ This library provides some conveniences for working with paginated list endpoint
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
 ```go
-iter := client.HRIS.Directory.ListAutoPaging(context.TODO(), finchgo.HRISDirectoryListParams{})
+iter := client.HRIS.Directory.ListAutoPaging(context.TODO(), finchgo.HRISDirectoryListParams{
+	EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+})
 // Automatically fetches more pages as needed.
 for iter.Next() {
 	individualInDirectory := iter.Current()
@@ -177,7 +181,9 @@ Or you can use simple `.List()` methods to fetch a single page and receive a sta
 with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
-page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
+page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{
+	EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+})
 for page != nil {
 	for _, directory := range page.Individuals {
 		fmt.Printf("%+v\n", directory)
@@ -199,7 +205,9 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.HRIS.Company.Get(context.TODO())
+_, err := client.HRIS.Company.Get(context.TODO(), finchgo.HRISCompanyGetParams{
+	EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+})
 if err != nil {
 	var apierr *finchgo.Error
 	if errors.As(err, &apierr) {
@@ -226,7 +234,9 @@ ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
 client.HRIS.Directory.List(
 	ctx,
-	finchgo.HRISDirectoryListParams{},
+	finchgo.HRISDirectoryListParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -262,7 +272,9 @@ client := finchgo.NewClient(
 // Override per-request:
 client.HRIS.Directory.List(
 	context.TODO(),
-	finchgo.HRISDirectoryListParams{},
+	finchgo.HRISDirectoryListParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	},
 	option.WithMaxRetries(5),
 )
 ```
@@ -277,7 +289,9 @@ you need to examine response headers, status codes, or other details.
 var response *http.Response
 page, err := client.HRIS.Directory.List(
 	context.TODO(),
-	finchgo.HRISDirectoryListParams{},
+	finchgo.HRISDirectoryListParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	},
 	option.WithResponseInto(&response),
 )
 if err != nil {

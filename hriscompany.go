@@ -5,9 +5,12 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
+	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 )
@@ -34,10 +37,10 @@ func NewHRISCompanyService(opts ...option.RequestOption) (r *HRISCompanyService)
 }
 
 // Read basic company data
-func (r *HRISCompanyService) Get(ctx context.Context, opts ...option.RequestOption) (res *Company, err error) {
+func (r *HRISCompanyService) Get(ctx context.Context, query HRISCompanyGetParams, opts ...option.RequestOption) (res *Company, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "employer/company"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -245,4 +248,17 @@ func (r CompanyEntityType) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type HRISCompanyGetParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+}
+
+// URLQuery serializes [HRISCompanyGetParams]'s query parameters as `url.Values`.
+func (r HRISCompanyGetParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

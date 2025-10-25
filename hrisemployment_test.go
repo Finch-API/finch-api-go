@@ -26,6 +26,7 @@ func TestHRISEmploymentGetMany(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Employments.GetMany(context.TODO(), finchgo.HRISEmploymentGetManyParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		Requests: finchgo.F([]finchgo.HRISEmploymentGetManyParamsRequest{{
 			IndividualID: finchgo.F("individual_id"),
 		}}),

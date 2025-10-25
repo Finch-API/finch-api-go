@@ -25,7 +25,13 @@ func TestHRISBenefitIndividualEnrolledIDs(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Benefits.Individuals.EnrolledIDs(context.TODO(), "benefit_id")
+	_, err := client.HRIS.Benefits.Individuals.EnrolledIDs(
+		context.TODO(),
+		"benefit_id",
+		finchgo.HRISBenefitIndividualEnrolledIDsParams{
+			EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+		},
+	)
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -51,6 +57,7 @@ func TestHRISBenefitIndividualGetManyBenefitsWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"benefit_id",
 		finchgo.HRISBenefitIndividualGetManyBenefitsParams{
+			EntityIDs:     finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 			IndividualIDs: finchgo.F("d675d2b7-6d7b-41a8-b2d3-001eb3fb88f6,d02a6346-1f08-4312-a064-49ff3cafaa7a"),
 		},
 	)
@@ -79,6 +86,7 @@ func TestHRISBenefitIndividualUnenrollManyWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"benefit_id",
 		finchgo.HRISBenefitIndividualUnenrollManyParams{
+			EntityIDs:     finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 			IndividualIDs: finchgo.F([]string{"string"}),
 		},
 	)

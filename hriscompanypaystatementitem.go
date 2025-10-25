@@ -147,6 +147,8 @@ func (r HRISCompanyPayStatementItemListResponseCategory) IsKnown() bool {
 }
 
 type HRISCompanyPayStatementItemListParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// Comma-delimited list of pay statement item categories to filter on. If empty,
 	// defaults to all categories.
 	Categories param.Field[[]HRISCompanyPayStatementItemListParamsCategory] `query:"categories"`
