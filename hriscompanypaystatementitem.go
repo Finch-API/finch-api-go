@@ -147,14 +147,14 @@ func (r HRISCompanyPayStatementItemListResponseCategory) IsKnown() bool {
 }
 
 type HRISCompanyPayStatementItemListParams struct {
-	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// Comma-delimited list of pay statement item categories to filter on. If empty,
 	// defaults to all categories.
 	Categories param.Field[[]HRISCompanyPayStatementItemListParamsCategory] `query:"categories"`
 	// The end date to retrieve pay statement items by via their last seen pay date in
 	// `YYYY-MM-DD` format.
 	EndDate param.Field[time.Time] `query:"end_date" format:"date"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Case-insensitive partial match search by pay statement item name.
 	Name param.Field[string] `query:"name"`
 	// The start date to retrieve pay statement items by via their last seen pay date

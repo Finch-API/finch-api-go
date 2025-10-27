@@ -539,10 +539,10 @@ func (r employmentDataResponseJSON) RawJSON() string {
 }
 
 type HRISEmploymentGetManyParams struct {
-	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// The array of batch requests.
 	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests,required"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 func (r HRISEmploymentGetManyParams) MarshalJSON() (data []byte, err error) {

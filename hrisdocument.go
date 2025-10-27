@@ -443,7 +443,7 @@ func (r HRISDocumentRetreiveResponseType) IsKnown() bool {
 
 type HRISDocumentListParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Comma-delimited list of stable Finch uuids for each individual. If empty,
 	// defaults to all individuals
 	IndividualIDs param.Field[[]string] `query:"individual_ids"`
@@ -481,7 +481,7 @@ func (r HRISDocumentListParamsType) IsKnown() bool {
 
 type HRISDocumentRetreiveParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISDocumentRetreiveParams]'s query parameters as

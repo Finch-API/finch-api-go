@@ -617,7 +617,7 @@ func (r HRISCompanyPayStatementItemRuleDeleteResponseEntityType) IsKnown() bool 
 
 type HRISCompanyPayStatementItemRuleNewParams struct {
 	// The entity IDs to create the rule for.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Specifies the fields to be applied when the condition is met.
 	Attributes param.Field[HRISCompanyPayStatementItemRuleNewParamsAttributes]  `json:"attributes"`
 	Conditions param.Field[[]HRISCompanyPayStatementItemRuleNewParamsCondition] `json:"conditions"`
@@ -698,7 +698,7 @@ func (r HRISCompanyPayStatementItemRuleNewParamsEntityType) IsKnown() bool {
 
 type HRISCompanyPayStatementItemRuleUpdateParams struct {
 	// The entity IDs to update the rule for.
-	EntityIDs        param.Field[[]string]    `query:"entity_ids,required" format:"uuid"`
+	EntityIDs        param.Field[[]string]    `query:"entity_ids" format:"uuid"`
 	OptionalProperty param.Field[interface{}] `json:"optionalProperty"`
 }
 
@@ -717,7 +717,7 @@ func (r HRISCompanyPayStatementItemRuleUpdateParams) URLQuery() (v url.Values) {
 
 type HRISCompanyPayStatementItemRuleListParams struct {
 	// The entity IDs to retrieve rules for.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISCompanyPayStatementItemRuleListParams]'s query
@@ -731,7 +731,7 @@ func (r HRISCompanyPayStatementItemRuleListParams) URLQuery() (v url.Values) {
 
 type HRISCompanyPayStatementItemRuleDeleteParams struct {
 	// The entity IDs to delete the rule for.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISCompanyPayStatementItemRuleDeleteParams]'s query

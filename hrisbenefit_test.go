@@ -47,7 +47,7 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISBenefitGet(t *testing.T) {
+func TestHRISBenefitGetWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -104,7 +104,7 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISBenefitList(t *testing.T) {
+func TestHRISBenefitListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -128,7 +128,7 @@ func TestHRISBenefitList(t *testing.T) {
 	}
 }
 
-func TestHRISBenefitListSupportedBenefits(t *testing.T) {
+func TestHRISBenefitListSupportedBenefitsWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

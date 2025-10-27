@@ -492,7 +492,7 @@ func (r updateCompanyBenefitResponseJSON) RawJSON() string {
 
 type HRISBenefitNewParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// The company match for this benefit.
 	CompanyContribution param.Field[HRISBenefitNewParamsCompanyContribution] `json:"company_contribution"`
 	// Name of the benefit as it appears in the provider and pay statements. Recommend
@@ -552,7 +552,7 @@ func (r HRISBenefitNewParamsCompanyContributionType) IsKnown() bool {
 
 type HRISBenefitGetParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISBenefitGetParams]'s query parameters as `url.Values`.
@@ -565,7 +565,7 @@ func (r HRISBenefitGetParams) URLQuery() (v url.Values) {
 
 type HRISBenefitUpdateParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Updated name or description.
 	Description param.Field[string] `json:"description"`
 }
@@ -585,7 +585,7 @@ func (r HRISBenefitUpdateParams) URLQuery() (v url.Values) {
 
 type HRISBenefitListParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISBenefitListParams]'s query parameters as `url.Values`.
@@ -598,7 +598,7 @@ func (r HRISBenefitListParams) URLQuery() (v url.Values) {
 
 type HRISBenefitListSupportedBenefitsParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISBenefitListSupportedBenefitsParams]'s query parameters

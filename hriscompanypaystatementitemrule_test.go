@@ -79,7 +79,7 @@ func TestHRISCompanyPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISCompanyPayStatementItemRuleList(t *testing.T) {
+func TestHRISCompanyPayStatementItemRuleListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -103,7 +103,7 @@ func TestHRISCompanyPayStatementItemRuleList(t *testing.T) {
 	}
 }
 
-func TestHRISCompanyPayStatementItemRuleDelete(t *testing.T) {
+func TestHRISCompanyPayStatementItemRuleDeleteWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

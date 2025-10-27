@@ -436,7 +436,7 @@ func (r individualResponseJSON) RawJSON() string {
 
 type HRISIndividualGetManyParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string]                             `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string]                             `query:"entity_ids" format:"uuid"`
 	Options   param.Field[HRISIndividualGetManyParamsOptions]   `json:"options"`
 	Requests  param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests"`
 }
