@@ -252,7 +252,7 @@ func (r CompanyEntityType) IsKnown() bool {
 
 type HRISCompanyGetParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISCompanyGetParams]'s query parameters as `url.Values`.

@@ -592,7 +592,7 @@ func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
 
 type HRISBenefitIndividualEnrolledIDsParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISBenefitIndividualEnrolledIDsParams]'s query parameters
@@ -606,7 +606,7 @@ func (r HRISBenefitIndividualEnrolledIDsParams) URLQuery() (v url.Values) {
 
 type HRISBenefitIndividualGetManyBenefitsParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// comma-delimited list of stable Finch uuids for each individual. If empty,
 	// defaults to all individuals
 	IndividualIDs param.Field[string] `query:"individual_ids"`
@@ -623,7 +623,7 @@ func (r HRISBenefitIndividualGetManyBenefitsParams) URLQuery() (v url.Values) {
 
 type HRISBenefitIndividualUnenrollManyParams struct {
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Array of individual_ids to unenroll.
 	IndividualIDs param.Field[[]string] `json:"individual_ids"`
 }

@@ -156,11 +156,11 @@ type HRISPaymentListParams struct {
 	// The end date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
 	// format.
 	EndDate param.Field[time.Time] `query:"end_date,required" format:"date"`
-	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
 	// format.
 	StartDate param.Field[time.Time] `query:"start_date,required" format:"date"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 // URLQuery serializes [HRISPaymentListParams]'s query parameters as `url.Values`.

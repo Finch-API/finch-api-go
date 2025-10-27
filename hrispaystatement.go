@@ -640,10 +640,10 @@ func (r payStatementResponseBodyBatchErrorJSON) RawJSON() string {
 func (r PayStatementResponseBodyBatchError) implementsPayStatementResponseBody() {}
 
 type HRISPayStatementGetManyParams struct {
-	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// The array of batch requests.
 	Requests param.Field[[]HRISPayStatementGetManyParamsRequest] `json:"requests,required"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 func (r HRISPayStatementGetManyParams) MarshalJSON() (data []byte, err error) {

@@ -24,9 +24,7 @@ func TestManualPagination(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{
-		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
-	})
+	page, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
