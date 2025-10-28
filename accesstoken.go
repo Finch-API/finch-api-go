@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -37,7 +38,7 @@ func NewAccessTokenService(opts ...option.RequestOption) (r *AccessTokenService)
 
 // Exchange the authorization code for an access token
 func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams, opts ...option.RequestOption) (res *CreateAccessTokenResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 
 	opts = append(opts[:], requestconfig.RequestOptionFunc(func(rc *requestconfig.RequestConfig) (err error) {
 		if body, ok := rc.Body.(*bytes.Buffer); ok {
@@ -172,12 +173,12 @@ func (r CreateAccessTokenResponseConnectionType) IsKnown() bool {
 }
 
 type AccessTokenNewParams struct {
-	// The client ID for your application
-	ClientID param.Field[string] `json:"client_id,required" format:"uuid"`
-	// The client secret for your application
-	ClientSecret param.Field[string] `json:"client_secret,required"`
 	// The authorization code received from the authorization server
 	Code param.Field[string] `json:"code,required"`
+	// The client ID for your application
+	ClientID param.Field[string] `json:"client_id" format:"uuid"`
+	// The client secret for your application
+	ClientSecret param.Field[string] `json:"client_secret"`
 	// The redirect URI used in the authorization request (optional)
 	RedirectUri param.Field[string] `json:"redirect_uri"`
 }

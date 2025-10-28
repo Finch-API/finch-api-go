@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -35,7 +36,7 @@ func NewSandboxJobService(opts ...option.RequestOption) (r *SandboxJobService) {
 
 // Enqueue a new sandbox job
 func (r *SandboxJobService) New(ctx context.Context, body SandboxJobNewParams, opts ...option.RequestOption) (res *SandboxJobNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "sandbox/jobs"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

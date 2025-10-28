@@ -6,6 +6,7 @@ import (
 	"context"
 	"net/http"
 	"reflect"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
@@ -35,7 +36,7 @@ func NewAccountService(opts ...option.RequestOption) (r *AccountService) {
 
 // Disconnect one or more `access_token`s from your application.
 func (r *AccountService) Disconnect(ctx context.Context, opts ...option.RequestOption) (res *DisconnectResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "disconnect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
 	return
@@ -43,7 +44,7 @@ func (r *AccountService) Disconnect(ctx context.Context, opts ...option.RequestO
 
 // Read account information associated with an `access_token`
 func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestOption) (res *Introspection, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "introspect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -110,10 +111,6 @@ type Introspection struct {
 	// The name of your customer you provided to Finch when a connect session was
 	// created for this connection
 	CustomerName string `json:"customer_name,nullable"`
-	// Array of entity IDs associated with this connection.
-	EntityIDs []string `json:"entity_ids" format:"uuid"`
-	// Indicates whether this connection manages a single entity or multiple entities.
-	EntityMode IntrospectionEntityMode `json:"entity_mode"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
@@ -144,8 +141,6 @@ type introspectionJSON struct {
 	CustomerEmail         apijson.Field
 	CustomerID            apijson.Field
 	CustomerName          apijson.Field
-	EntityIDs             apijson.Field
-	EntityMode            apijson.Field
 	Manual                apijson.Field
 	PayrollProviderID     apijson.Field
 	Username              apijson.Field
@@ -337,20 +332,4 @@ func init() {
 			Type:       reflect.TypeOf(shared.UnionString("")),
 		},
 	)
-}
-
-// Indicates whether this connection manages a single entity or multiple entities.
-type IntrospectionEntityMode string
-
-const (
-	IntrospectionEntityModeSingle IntrospectionEntityMode = "single"
-	IntrospectionEntityModeMulti  IntrospectionEntityMode = "multi"
-)
-
-func (r IntrospectionEntityMode) IsKnown() bool {
-	switch r {
-	case IntrospectionEntityModeSingle, IntrospectionEntityModeMulti:
-		return true
-	}
-	return false
 }

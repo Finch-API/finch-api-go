@@ -26,9 +26,9 @@ func TestAccessTokenNewWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.AccessTokens.New(context.TODO(), finchgo.AccessTokenNewParams{
+		Code:         finchgo.F("code"),
 		ClientID:     finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
 		ClientSecret: finchgo.F("client_secret"),
-		Code:         finchgo.F("code"),
 		RedirectUri:  finchgo.F("redirect_uri"),
 	})
 	if err != nil {

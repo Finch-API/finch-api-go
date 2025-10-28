@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -40,7 +41,7 @@ func NewHRISBenefitService(opts ...option.RequestOption) (r *HRISBenefitService)
 // Creates a new company-wide deduction or contribution. Please use the
 // `/providers` endpoint to view available types for each provider.
 func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams, opts ...option.RequestOption) (res *CreateCompanyBenefitsResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "employer/benefits"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -48,7 +49,7 @@ func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams,
 
 // Lists deductions and contributions information for a given item
 func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
@@ -60,7 +61,7 @@ func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...
 
 // Updates an existing company-wide deduction or contribution
 func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
@@ -73,7 +74,7 @@ func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body 
 // List all company-wide deductions and contributions.
 func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[CompanyBenefit], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -96,7 +97,7 @@ func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.
 // Get deductions metadata
 func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits/meta"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -114,47 +115,6 @@ func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...
 // Get deductions metadata
 func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[SupportedBenefit] {
 	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
-}
-
-type BenefitContribution struct {
-	// Contribution amount in cents (if `fixed`) or basis points (if `percent`).
-	Amount int64 `json:"amount,required,nullable"`
-	// Contribution type.
-	Type BenefitContributionType `json:"type,required,nullable"`
-	JSON benefitContributionJSON `json:"-"`
-}
-
-// benefitContributionJSON contains the JSON metadata for the struct
-// [BenefitContribution]
-type benefitContributionJSON struct {
-	Amount      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *BenefitContribution) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r benefitContributionJSON) RawJSON() string {
-	return r.raw
-}
-
-// Contribution type.
-type BenefitContributionType string
-
-const (
-	BenefitContributionTypeFixed   BenefitContributionType = "fixed"
-	BenefitContributionTypePercent BenefitContributionType = "percent"
-)
-
-func (r BenefitContributionType) IsKnown() bool {
-	switch r {
-	case BenefitContributionTypeFixed, BenefitContributionTypePercent:
-		return true
-	}
-	return false
 }
 
 type BenefitFeaturesAndOperations struct {
@@ -463,11 +423,12 @@ type SupportedBenefitCompanyContribution string
 const (
 	SupportedBenefitCompanyContributionFixed   SupportedBenefitCompanyContribution = "fixed"
 	SupportedBenefitCompanyContributionPercent SupportedBenefitCompanyContribution = "percent"
+	SupportedBenefitCompanyContributionTiered  SupportedBenefitCompanyContribution = "tiered"
 )
 
 func (r SupportedBenefitCompanyContribution) IsKnown() bool {
 	switch r {
-	case SupportedBenefitCompanyContributionFixed, SupportedBenefitCompanyContributionPercent:
+	case SupportedBenefitCompanyContributionFixed, SupportedBenefitCompanyContributionPercent, SupportedBenefitCompanyContributionTiered:
 		return true
 	}
 	return false

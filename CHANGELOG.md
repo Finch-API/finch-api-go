@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.34.0 (2025-10-20)
+
+Full Changelog: [v1.33.2...v1.34.0](https://github.com/Finch-API/finch-api-go/compare/v1.33.2...v1.34.0)
+
+### Features
+
+* **api:** api update ([43c3891](https://github.com/Finch-API/finch-api-go/commit/43c389178d6be88d9d1cd2638e189f953370b7f1))
+* **api:** api update ([a53a029](https://github.com/Finch-API/finch-api-go/commit/a53a029fbd2e821f08685aefef91c2c0d9f3d3e1))
+* **api:** api update ([2c9e789](https://github.com/Finch-API/finch-api-go/commit/2c9e789c3162de1809abbd57e6f03fa16a76b727))
+* **api:** api update ([60bf088](https://github.com/Finch-API/finch-api-go/commit/60bf088b6afa8630760dd2007e66a8c43ea5de40))
+* **api:** api update ([53c45a8](https://github.com/Finch-API/finch-api-go/commit/53c45a836aa01abd9737665ecfd9ddd1c5cb679f))
+* **api:** api update ([354e4c3](https://github.com/Finch-API/finch-api-go/commit/354e4c3722b7210890548d2d9103e06332ba6f53))
+* **api:** api update ([1aa153d](https://github.com/Finch-API/finch-api-go/commit/1aa153d00917d893699176acdfe9d3b3acacea20))
+* **api:** make client id, client secret optional again ([5bfaa44](https://github.com/Finch-API/finch-api-go/commit/5bfaa44c9e604b4d44d33233b26771112ec2c69c))
+
+
+### Bug Fixes
+
+* bugfix for setting JSON keys with special characters ([4b6d358](https://github.com/Finch-API/finch-api-go/commit/4b6d3589dd0d3634b220cb81838b3e7c8c75cba8))
+* use slices.Concat instead of sometimes modifying r.Options ([e8b5902](https://github.com/Finch-API/finch-api-go/commit/e8b59026ca96f113dd42f37190011353ab2a7d97))
+
+
+### Chores
+
+* bump minimum go version to 1.22 ([db25736](https://github.com/Finch-API/finch-api-go/commit/db257362e7b469706ef3ad5a56c489c8e20836b8))
+* do not install brew dependencies in ./scripts/bootstrap by default ([f6b2004](https://github.com/Finch-API/finch-api-go/commit/f6b2004593e177bb7e180b2a42c9830ad50222d3))
+* update more docs for 1.22 ([b3492e0](https://github.com/Finch-API/finch-api-go/commit/b3492e03c084c87546647b2e060a8e9fbaadfca6))
+
 ## 1.33.2 (2025-09-03)
 
 Full Changelog: [v1.33.1...v1.33.2](https://github.com/Finch-API/finch-api-go/compare/v1.33.1...v1.33.2)

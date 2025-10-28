@@ -26,15 +26,14 @@ func TestRequestForwardingForwardWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.RequestForwarding.Forward(context.TODO(), finchgo.RequestForwardingForwardParams{
-		Method: finchgo.F("POST"),
-		Route:  finchgo.F("/people/search"),
-		Data:   finchgo.Null[string](),
-		Headers: finchgo.F[any](map[string]interface{}{
-			"content-type": "application/json",
+		Method: finchgo.F("method"),
+		Route:  finchgo.F("route"),
+		Data:   finchgo.F("data"),
+		Headers: finchgo.F(map[string]interface{}{
+			"foo": "bar",
 		}),
-		Params: finchgo.F[any](map[string]interface{}{
-			"showInactive":  true,
-			"humanReadable": true,
+		Params: finchgo.F(map[string]interface{}{
+			"foo": "bar",
 		}),
 	})
 	if err != nil {

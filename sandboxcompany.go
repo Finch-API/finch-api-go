@@ -5,6 +5,7 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
@@ -33,7 +34,7 @@ func NewSandboxCompanyService(opts ...option.RequestOption) (r *SandboxCompanySe
 
 // Update a sandbox company's data
 func (r *SandboxCompanyService) Update(ctx context.Context, body SandboxCompanyUpdateParams, opts ...option.RequestOption) (res *SandboxCompanyUpdateResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "sandbox/company"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return
