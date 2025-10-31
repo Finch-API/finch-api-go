@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.34.1 (2025-10-31)
+
+Full Changelog: [v1.34.0...v1.34.1](https://github.com/Finch-API/finch-api-go/compare/v1.34.0...v1.34.1)
+
+### Chores
+
+* **ownership:** move from data to platform team ([#389](https://github.com/Finch-API/finch-api-go/issues/389)) ([49df6d9](https://github.com/Finch-API/finch-api-go/commit/49df6d94014a042f091932f76ed61ca376390ff2))
+
 ## 1.34.0 (2025-10-20)
 
 Full Changelog: [v1.33.2...v1.34.0](https://github.com/Finch-API/finch-api-go/compare/v1.33.2...v1.34.0)
