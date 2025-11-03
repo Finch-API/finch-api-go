@@ -99,59 +99,29 @@ func (r connectSessionReauthenticateResponseJSON) RawJSON() string {
 }
 
 type ConnectSessionNewParams struct {
-	// Email address of the customer
-	CustomerEmail param.Field[string] `json:"customer_email,required" format:"email"`
 	// Unique identifier for the customer
 	CustomerID param.Field[string] `json:"customer_id,required"`
 	// Name of the customer
 	CustomerName param.Field[string] `json:"customer_name,required"`
-	// Integration configuration for the connect session
-	Integration param.Field[ConnectSessionNewParamsIntegration] `json:"integration,required"`
-	// Enable manual authentication mode
-	Manual param.Field[bool] `json:"manual,required"`
-	// The number of minutes until the session expires (defaults to 129,600, which is
-	// 90 days)
-	MinutesToExpire param.Field[float64] `json:"minutes_to_expire,required"`
 	// The Finch products to request access to
 	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products,required"`
+	// Email address of the customer
+	CustomerEmail param.Field[string] `json:"customer_email" format:"email"`
+	// Integration configuration for the connect session
+	Integration param.Field[ConnectSessionNewParamsIntegration] `json:"integration"`
+	// Enable manual authentication mode
+	Manual param.Field[bool] `json:"manual"`
+	// The number of minutes until the session expires (defaults to 129,600, which is
+	// 90 days)
+	MinutesToExpire param.Field[float64] `json:"minutes_to_expire"`
 	// The URI to redirect to after the Connect flow is completed
-	RedirectUri param.Field[string] `json:"redirect_uri,required"`
+	RedirectUri param.Field[string] `json:"redirect_uri"`
 	// Sandbox mode for testing
-	Sandbox param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox,required"`
+	Sandbox param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox"`
 }
 
 func (r ConnectSessionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-// Integration configuration for the connect session
-type ConnectSessionNewParamsIntegration struct {
-	// The authentication method to use
-	AuthMethod param.Field[ConnectSessionNewParamsIntegrationAuthMethod] `json:"auth_method,required"`
-	// The provider to integrate with
-	Provider param.Field[string] `json:"provider,required"`
-}
-
-func (r ConnectSessionNewParamsIntegration) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-// The authentication method to use
-type ConnectSessionNewParamsIntegrationAuthMethod string
-
-const (
-	ConnectSessionNewParamsIntegrationAuthMethodAssisted   ConnectSessionNewParamsIntegrationAuthMethod = "assisted"
-	ConnectSessionNewParamsIntegrationAuthMethodCredential ConnectSessionNewParamsIntegrationAuthMethod = "credential"
-	ConnectSessionNewParamsIntegrationAuthMethodOAuth      ConnectSessionNewParamsIntegrationAuthMethod = "oauth"
-	ConnectSessionNewParamsIntegrationAuthMethodAPIToken   ConnectSessionNewParamsIntegrationAuthMethod = "api_token"
-)
-
-func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
-	switch r {
-	case ConnectSessionNewParamsIntegrationAuthMethodAssisted, ConnectSessionNewParamsIntegrationAuthMethodCredential, ConnectSessionNewParamsIntegrationAuthMethodOAuth, ConnectSessionNewParamsIntegrationAuthMethodAPIToken:
-		return true
-	}
-	return false
 }
 
 // The Finch products that can be requested during the Connect flow.
@@ -178,6 +148,36 @@ func (r ConnectSessionNewParamsProduct) IsKnown() bool {
 	return false
 }
 
+// Integration configuration for the connect session
+type ConnectSessionNewParamsIntegration struct {
+	// The provider to integrate with
+	Provider param.Field[string] `json:"provider,required"`
+	// The authentication method to use
+	AuthMethod param.Field[ConnectSessionNewParamsIntegrationAuthMethod] `json:"auth_method"`
+}
+
+func (r ConnectSessionNewParamsIntegration) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The authentication method to use
+type ConnectSessionNewParamsIntegrationAuthMethod string
+
+const (
+	ConnectSessionNewParamsIntegrationAuthMethodAssisted   ConnectSessionNewParamsIntegrationAuthMethod = "assisted"
+	ConnectSessionNewParamsIntegrationAuthMethodCredential ConnectSessionNewParamsIntegrationAuthMethod = "credential"
+	ConnectSessionNewParamsIntegrationAuthMethodOAuth      ConnectSessionNewParamsIntegrationAuthMethod = "oauth"
+	ConnectSessionNewParamsIntegrationAuthMethodAPIToken   ConnectSessionNewParamsIntegrationAuthMethod = "api_token"
+)
+
+func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
+	switch r {
+	case ConnectSessionNewParamsIntegrationAuthMethodAssisted, ConnectSessionNewParamsIntegrationAuthMethodCredential, ConnectSessionNewParamsIntegrationAuthMethodOAuth, ConnectSessionNewParamsIntegrationAuthMethodAPIToken:
+		return true
+	}
+	return false
+}
+
 // Sandbox mode for testing
 type ConnectSessionNewParamsSandbox string
 
@@ -199,11 +199,11 @@ type ConnectSessionReauthenticateParams struct {
 	ConnectionID param.Field[string] `json:"connection_id,required"`
 	// The number of minutes until the session expires (defaults to 43,200, which is 30
 	// days)
-	MinutesToExpire param.Field[int64] `json:"minutes_to_expire,required"`
+	MinutesToExpire param.Field[int64] `json:"minutes_to_expire"`
 	// The products to request access to (optional for reauthentication)
-	Products param.Field[[]ConnectSessionReauthenticateParamsProduct] `json:"products,required"`
+	Products param.Field[[]ConnectSessionReauthenticateParamsProduct] `json:"products"`
 	// The URI to redirect to after the Connect flow is completed
-	RedirectUri param.Field[string] `json:"redirect_uri,required" format:"uri"`
+	RedirectUri param.Field[string] `json:"redirect_uri" format:"uri"`
 }
 
 func (r ConnectSessionReauthenticateParams) MarshalJSON() (data []byte, err error) {
