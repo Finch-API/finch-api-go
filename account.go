@@ -344,10 +344,8 @@ type IntrospectionEntity struct {
 	// The name of the entity (payroll provider company name)
 	Name string `json:"name,required,nullable"`
 	// The source ID of the entity
-	SourceID string `json:"source_id,required,nullable"`
-	// The type of entity
-	Type string                  `json:"type,required,nullable"`
-	JSON introspectionEntityJSON `json:"-"`
+	SourceID string                  `json:"source_id,required,nullable"`
+	JSON     introspectionEntityJSON `json:"-"`
 }
 
 // introspectionEntityJSON contains the JSON metadata for the struct
@@ -356,7 +354,6 @@ type introspectionEntityJSON struct {
 	ID          apijson.Field
 	Name        apijson.Field
 	SourceID    apijson.Field
-	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
