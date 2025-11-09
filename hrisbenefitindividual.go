@@ -201,9 +201,14 @@ type IndividualBenefitBodyObject struct {
 	AnnualMaximum int64 `json:"annual_maximum,required,nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp             bool                                           `json:"catch_up,required,nullable"`
+	CatchUp bool `json:"catch_up,required,nullable"`
+	// Company contribution configuration. Supports fixed amounts (in cents),
+	// percentage-based contributions (in basis points where 100 = 1%), or tiered
+	// matching structures.
 	CompanyContribution IndividualBenefitBodyObjectCompanyContribution `json:"company_contribution,required,nullable"`
-	EmployeeDeduction   IndividualBenefitBodyObjectEmployeeDeduction   `json:"employee_deduction,required,nullable"`
+	// Employee deduction configuration. Supports both fixed amounts (in cents) and
+	// percentage-based contributions (in basis points where 100 = 1%).
+	EmployeeDeduction IndividualBenefitBodyObjectEmployeeDeduction `json:"employee_deduction,required,nullable"`
 	// Type for HSA contribution limit if the benefit is a HSA.
 	HsaContributionLimit IndividualBenefitBodyObjectHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
 	JSON                 individualBenefitBodyObjectJSON                 `json:"-"`
@@ -231,10 +236,15 @@ func (r individualBenefitBodyObjectJSON) RawJSON() string {
 
 func (r IndividualBenefitBodyObject) implementsIndividualBenefitBody() {}
 
+// Company contribution configuration. Supports fixed amounts (in cents),
+// percentage-based contributions (in basis points where 100 = 1%), or tiered
+// matching structures.
 type IndividualBenefitBodyObjectCompanyContribution struct {
-	// Fixed contribution type.
+	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+	// (amount in basis points), or "tiered" (multi-tier matching).
 	Type IndividualBenefitBodyObjectCompanyContributionType `json:"type,required"`
-	// Contribution amount in cents.
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%). Not used for type=tiered.
 	Amount int64 `json:"amount"`
 	// This field can have the runtime type of
 	// [[]IndividualBenefitBodyObjectCompanyContributionObjectTier].
@@ -277,6 +287,10 @@ func (r IndividualBenefitBodyObjectCompanyContribution) AsUnion() IndividualBene
 	return r.union
 }
 
+// Company contribution configuration. Supports fixed amounts (in cents),
+// percentage-based contributions (in basis points where 100 = 1%), or tiered
+// matching structures.
+//
 // Union satisfied by [IndividualBenefitBodyObjectCompanyContributionObject],
 // [IndividualBenefitBodyObjectCompanyContributionObject] or
 // [IndividualBenefitBodyObjectCompanyContributionObject].
@@ -304,9 +318,11 @@ func init() {
 }
 
 type IndividualBenefitBodyObjectCompanyContributionObject struct {
-	// Contribution amount in cents.
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%). Not used for type=tiered.
 	Amount int64 `json:"amount,required"`
-	// Fixed contribution type.
+	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+	// (amount in basis points), or "tiered" (multi-tier matching).
 	Type IndividualBenefitBodyObjectCompanyContributionObjectType `json:"type,required"`
 	JSON individualBenefitBodyObjectCompanyContributionObjectJSON `json:"-"`
 }
@@ -331,7 +347,8 @@ func (r individualBenefitBodyObjectCompanyContributionObjectJSON) RawJSON() stri
 func (r IndividualBenefitBodyObjectCompanyContributionObject) implementsIndividualBenefitBodyObjectCompanyContribution() {
 }
 
-// Fixed contribution type.
+// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+// (amount in basis points), or "tiered" (multi-tier matching).
 type IndividualBenefitBodyObjectCompanyContributionObjectType string
 
 const (
@@ -346,7 +363,8 @@ func (r IndividualBenefitBodyObjectCompanyContributionObjectType) IsKnown() bool
 	return false
 }
 
-// Fixed contribution type.
+// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+// (amount in basis points), or "tiered" (multi-tier matching).
 type IndividualBenefitBodyObjectCompanyContributionType string
 
 const (
@@ -363,10 +381,14 @@ func (r IndividualBenefitBodyObjectCompanyContributionType) IsKnown() bool {
 	return false
 }
 
+// Employee deduction configuration. Supports both fixed amounts (in cents) and
+// percentage-based contributions (in basis points where 100 = 1%).
 type IndividualBenefitBodyObjectEmployeeDeduction struct {
-	// Contribution amount in cents.
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%).
 	Amount int64 `json:"amount,required"`
-	// Fixed contribution type.
+	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+	// (amount in basis points).
 	Type  IndividualBenefitBodyObjectEmployeeDeductionType `json:"type,required"`
 	JSON  individualBenefitBodyObjectEmployeeDeductionJSON `json:"-"`
 	union IndividualBenefitBodyObjectEmployeeDeductionUnion
@@ -404,6 +426,9 @@ func (r IndividualBenefitBodyObjectEmployeeDeduction) AsUnion() IndividualBenefi
 	return r.union
 }
 
+// Employee deduction configuration. Supports both fixed amounts (in cents) and
+// percentage-based contributions (in basis points where 100 = 1%).
+//
 // Union satisfied by [IndividualBenefitBodyObjectEmployeeDeductionObject] or
 // [IndividualBenefitBodyObjectEmployeeDeductionObject].
 type IndividualBenefitBodyObjectEmployeeDeductionUnion interface {
@@ -426,9 +451,11 @@ func init() {
 }
 
 type IndividualBenefitBodyObjectEmployeeDeductionObject struct {
-	// Contribution amount in cents.
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%).
 	Amount int64 `json:"amount,required"`
-	// Fixed contribution type.
+	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+	// (amount in basis points).
 	Type IndividualBenefitBodyObjectEmployeeDeductionObjectType `json:"type,required"`
 	JSON individualBenefitBodyObjectEmployeeDeductionObjectJSON `json:"-"`
 }
@@ -453,7 +480,8 @@ func (r individualBenefitBodyObjectEmployeeDeductionObjectJSON) RawJSON() string
 func (r IndividualBenefitBodyObjectEmployeeDeductionObject) implementsIndividualBenefitBodyObjectEmployeeDeduction() {
 }
 
-// Fixed contribution type.
+// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+// (amount in basis points).
 type IndividualBenefitBodyObjectEmployeeDeductionObjectType string
 
 const (
@@ -468,7 +496,8 @@ func (r IndividualBenefitBodyObjectEmployeeDeductionObjectType) IsKnown() bool {
 	return false
 }
 
-// Fixed contribution type.
+// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+// (amount in basis points).
 type IndividualBenefitBodyObjectEmployeeDeductionType string
 
 const (
