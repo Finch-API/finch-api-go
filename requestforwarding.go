@@ -93,7 +93,7 @@ type RequestForwardingForwardResponseRequest struct {
 	// The body that was specified for the forwarded request.
 	Data RequestForwardingForwardResponseRequestDataUnion `json:"data,nullable"`
 	// The HTTP headers that were specified for the forwarded request.
-	Headers map[string]interface{} `json:"headers,nullable"`
+	Headers map[string]string `json:"headers,nullable"`
 	// The query parameters that were specified for the forwarded request.
 	Params map[string]interface{}                      `json:"params,nullable"`
 	JSON   requestForwardingForwardResponseRequestJSON `json:"-"`
