@@ -13,7 +13,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestConnectSessionNewWithOptionalParams(t *testing.T) {
+func TestConnectSessionConnectWithOptionalParams(t *testing.T) {
 	t.Skip("prism tests are broken")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,19 +26,19 @@ func TestConnectSessionNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.Connect.Sessions.New(context.TODO(), finchgo.ConnectSessionNewParams{
+	_, err := client.Connect.Sessions.Connect(context.TODO(), finchgo.ConnectSessionConnectParams{
 		CustomerID:    finchgo.F("x"),
 		CustomerName:  finchgo.F("x"),
-		Products:      finchgo.F([]finchgo.ConnectSessionNewParamsProduct{finchgo.ConnectSessionNewParamsProductBenefits}),
+		Products:      finchgo.F([]finchgo.ConnectSessionConnectParamsProduct{finchgo.ConnectSessionConnectParamsProductBenefits}),
 		CustomerEmail: finchgo.F("dev@stainless.com"),
-		Integration: finchgo.F(finchgo.ConnectSessionNewParamsIntegration{
+		Integration: finchgo.F(finchgo.ConnectSessionConnectParamsIntegration{
 			Provider:   finchgo.F("provider"),
-			AuthMethod: finchgo.F(finchgo.ConnectSessionNewParamsIntegrationAuthMethodAssisted),
+			AuthMethod: finchgo.F(finchgo.ConnectSessionConnectParamsIntegrationAuthMethodAssisted),
 		}),
 		Manual:          finchgo.F(true),
 		MinutesToExpire: finchgo.F(1.000000),
 		RedirectUri:     finchgo.F("redirect_uri"),
-		Sandbox:         finchgo.F(finchgo.ConnectSessionNewParamsSandboxFinch),
+		Sandbox:         finchgo.F(finchgo.ConnectSessionConnectParamsSandboxFinch),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
