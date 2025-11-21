@@ -33,7 +33,7 @@ func NewConnectSessionService(opts ...option.RequestOption) (r *ConnectSessionSe
 }
 
 // Create a new connect session for an employer
-func (r *ConnectSessionService) Connect(ctx context.Context, body ConnectSessionConnectParams, opts ...option.RequestOption) (res *ConnectSessionConnectResponse, err error) {
+func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewParams, opts ...option.RequestOption) (res *ConnectSessionNewResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "connect/sessions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -48,28 +48,28 @@ func (r *ConnectSessionService) Reauthenticate(ctx context.Context, body Connect
 	return
 }
 
-type ConnectSessionConnectResponse struct {
+type ConnectSessionNewResponse struct {
 	// The Connect URL to redirect the user to for authentication
 	ConnectURL string `json:"connect_url,required" format:"uri"`
 	// The unique identifier for the created connect session
-	SessionID string                            `json:"session_id,required"`
-	JSON      connectSessionConnectResponseJSON `json:"-"`
+	SessionID string                        `json:"session_id,required"`
+	JSON      connectSessionNewResponseJSON `json:"-"`
 }
 
-// connectSessionConnectResponseJSON contains the JSON metadata for the struct
-// [ConnectSessionConnectResponse]
-type connectSessionConnectResponseJSON struct {
+// connectSessionNewResponseJSON contains the JSON metadata for the struct
+// [ConnectSessionNewResponse]
+type connectSessionNewResponseJSON struct {
 	ConnectURL  apijson.Field
 	SessionID   apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *ConnectSessionConnectResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *ConnectSessionNewResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r connectSessionConnectResponseJSON) RawJSON() string {
+func (r connectSessionNewResponseJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -98,17 +98,17 @@ func (r connectSessionReauthenticateResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type ConnectSessionConnectParams struct {
+type ConnectSessionNewParams struct {
 	// Unique identifier for the customer
 	CustomerID param.Field[string] `json:"customer_id,required"`
 	// Name of the customer
 	CustomerName param.Field[string] `json:"customer_name,required"`
 	// The Finch products to request access to
-	Products param.Field[[]ConnectSessionConnectParamsProduct] `json:"products,required"`
+	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products,required"`
 	// Email address of the customer
 	CustomerEmail param.Field[string] `json:"customer_email" format:"email"`
 	// Integration configuration for the connect session
-	Integration param.Field[ConnectSessionConnectParamsIntegration] `json:"integration"`
+	Integration param.Field[ConnectSessionNewParamsIntegration] `json:"integration"`
 	// Enable manual authentication mode
 	Manual param.Field[bool] `json:"manual"`
 	// The number of minutes until the session expires (defaults to 129,600, which is
@@ -117,78 +117,78 @@ type ConnectSessionConnectParams struct {
 	// The URI to redirect to after the Connect flow is completed
 	RedirectUri param.Field[string] `json:"redirect_uri"`
 	// Sandbox mode for testing
-	Sandbox param.Field[ConnectSessionConnectParamsSandbox] `json:"sandbox"`
+	Sandbox param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox"`
 }
 
-func (r ConnectSessionConnectParams) MarshalJSON() (data []byte, err error) {
+func (r ConnectSessionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // The Finch products that can be requested during the Connect flow.
-type ConnectSessionConnectParamsProduct string
+type ConnectSessionNewParamsProduct string
 
 const (
-	ConnectSessionConnectParamsProductBenefits     ConnectSessionConnectParamsProduct = "benefits"
-	ConnectSessionConnectParamsProductCompany      ConnectSessionConnectParamsProduct = "company"
-	ConnectSessionConnectParamsProductDeduction    ConnectSessionConnectParamsProduct = "deduction"
-	ConnectSessionConnectParamsProductDirectory    ConnectSessionConnectParamsProduct = "directory"
-	ConnectSessionConnectParamsProductDocuments    ConnectSessionConnectParamsProduct = "documents"
-	ConnectSessionConnectParamsProductEmployment   ConnectSessionConnectParamsProduct = "employment"
-	ConnectSessionConnectParamsProductIndividual   ConnectSessionConnectParamsProduct = "individual"
-	ConnectSessionConnectParamsProductPayment      ConnectSessionConnectParamsProduct = "payment"
-	ConnectSessionConnectParamsProductPayStatement ConnectSessionConnectParamsProduct = "pay_statement"
-	ConnectSessionConnectParamsProductSsn          ConnectSessionConnectParamsProduct = "ssn"
+	ConnectSessionNewParamsProductBenefits     ConnectSessionNewParamsProduct = "benefits"
+	ConnectSessionNewParamsProductCompany      ConnectSessionNewParamsProduct = "company"
+	ConnectSessionNewParamsProductDeduction    ConnectSessionNewParamsProduct = "deduction"
+	ConnectSessionNewParamsProductDirectory    ConnectSessionNewParamsProduct = "directory"
+	ConnectSessionNewParamsProductDocuments    ConnectSessionNewParamsProduct = "documents"
+	ConnectSessionNewParamsProductEmployment   ConnectSessionNewParamsProduct = "employment"
+	ConnectSessionNewParamsProductIndividual   ConnectSessionNewParamsProduct = "individual"
+	ConnectSessionNewParamsProductPayment      ConnectSessionNewParamsProduct = "payment"
+	ConnectSessionNewParamsProductPayStatement ConnectSessionNewParamsProduct = "pay_statement"
+	ConnectSessionNewParamsProductSsn          ConnectSessionNewParamsProduct = "ssn"
 )
 
-func (r ConnectSessionConnectParamsProduct) IsKnown() bool {
+func (r ConnectSessionNewParamsProduct) IsKnown() bool {
 	switch r {
-	case ConnectSessionConnectParamsProductBenefits, ConnectSessionConnectParamsProductCompany, ConnectSessionConnectParamsProductDeduction, ConnectSessionConnectParamsProductDirectory, ConnectSessionConnectParamsProductDocuments, ConnectSessionConnectParamsProductEmployment, ConnectSessionConnectParamsProductIndividual, ConnectSessionConnectParamsProductPayment, ConnectSessionConnectParamsProductPayStatement, ConnectSessionConnectParamsProductSsn:
+	case ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDeduction, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductDocuments, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductSsn:
 		return true
 	}
 	return false
 }
 
 // Integration configuration for the connect session
-type ConnectSessionConnectParamsIntegration struct {
+type ConnectSessionNewParamsIntegration struct {
 	// The provider to integrate with
 	Provider param.Field[string] `json:"provider,required"`
 	// The authentication method to use
-	AuthMethod param.Field[ConnectSessionConnectParamsIntegrationAuthMethod] `json:"auth_method"`
+	AuthMethod param.Field[ConnectSessionNewParamsIntegrationAuthMethod] `json:"auth_method"`
 }
 
-func (r ConnectSessionConnectParamsIntegration) MarshalJSON() (data []byte, err error) {
+func (r ConnectSessionNewParamsIntegration) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
 // The authentication method to use
-type ConnectSessionConnectParamsIntegrationAuthMethod string
+type ConnectSessionNewParamsIntegrationAuthMethod string
 
 const (
-	ConnectSessionConnectParamsIntegrationAuthMethodAssisted   ConnectSessionConnectParamsIntegrationAuthMethod = "assisted"
-	ConnectSessionConnectParamsIntegrationAuthMethodCredential ConnectSessionConnectParamsIntegrationAuthMethod = "credential"
-	ConnectSessionConnectParamsIntegrationAuthMethodOAuth      ConnectSessionConnectParamsIntegrationAuthMethod = "oauth"
-	ConnectSessionConnectParamsIntegrationAuthMethodAPIToken   ConnectSessionConnectParamsIntegrationAuthMethod = "api_token"
+	ConnectSessionNewParamsIntegrationAuthMethodAssisted   ConnectSessionNewParamsIntegrationAuthMethod = "assisted"
+	ConnectSessionNewParamsIntegrationAuthMethodCredential ConnectSessionNewParamsIntegrationAuthMethod = "credential"
+	ConnectSessionNewParamsIntegrationAuthMethodOAuth      ConnectSessionNewParamsIntegrationAuthMethod = "oauth"
+	ConnectSessionNewParamsIntegrationAuthMethodAPIToken   ConnectSessionNewParamsIntegrationAuthMethod = "api_token"
 )
 
-func (r ConnectSessionConnectParamsIntegrationAuthMethod) IsKnown() bool {
+func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
 	switch r {
-	case ConnectSessionConnectParamsIntegrationAuthMethodAssisted, ConnectSessionConnectParamsIntegrationAuthMethodCredential, ConnectSessionConnectParamsIntegrationAuthMethodOAuth, ConnectSessionConnectParamsIntegrationAuthMethodAPIToken:
+	case ConnectSessionNewParamsIntegrationAuthMethodAssisted, ConnectSessionNewParamsIntegrationAuthMethodCredential, ConnectSessionNewParamsIntegrationAuthMethodOAuth, ConnectSessionNewParamsIntegrationAuthMethodAPIToken:
 		return true
 	}
 	return false
 }
 
 // Sandbox mode for testing
-type ConnectSessionConnectParamsSandbox string
+type ConnectSessionNewParamsSandbox string
 
 const (
-	ConnectSessionConnectParamsSandboxFinch    ConnectSessionConnectParamsSandbox = "finch"
-	ConnectSessionConnectParamsSandboxProvider ConnectSessionConnectParamsSandbox = "provider"
+	ConnectSessionNewParamsSandboxFinch    ConnectSessionNewParamsSandbox = "finch"
+	ConnectSessionNewParamsSandboxProvider ConnectSessionNewParamsSandbox = "provider"
 )
 
-func (r ConnectSessionConnectParamsSandbox) IsKnown() bool {
+func (r ConnectSessionNewParamsSandbox) IsKnown() bool {
 	switch r {
-	case ConnectSessionConnectParamsSandboxFinch, ConnectSessionConnectParamsSandboxProvider:
+	case ConnectSessionNewParamsSandboxFinch, ConnectSessionNewParamsSandboxProvider:
 		return true
 	}
 	return false
