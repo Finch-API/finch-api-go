@@ -29,10 +29,10 @@ func TestRequestForwardingForwardWithOptionalParams(t *testing.T) {
 		Method: finchgo.F("method"),
 		Route:  finchgo.F("route"),
 		Data:   finchgo.F("data"),
-		Headers: finchgo.F(map[string]interface{}{
+		Params: finchgo.F(map[string]interface{}{
 			"foo": "bar",
 		}),
-		Params: finchgo.F(map[string]interface{}{
+		RequestHeaders: finchgo.F(map[string]interface{}{
 			"foo": "bar",
 		}),
 	})

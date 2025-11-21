@@ -158,13 +158,13 @@ type RequestForwardingForwardParams struct {
 	// The body for the forwarded request. This value must be specified as either a
 	// string or a valid JSON object.
 	Data param.Field[string] `json:"data"`
-	// The HTTP headers to include on the forwarded request. This value must be
-	// specified as an object of key-value pairs. Example:
-	// `{"Content-Type": "application/xml", "X-API-Version": "v1" }`
-	Headers param.Field[map[string]interface{}] `json:"headers"`
 	// The query parameters for the forwarded request. This value must be specified as
 	// a valid JSON object rather than a query string.
 	Params param.Field[map[string]interface{}] `json:"params"`
+	// The HTTP headers to include on the forwarded request. This value must be
+	// specified as an object of key-value pairs. Example:
+	// `{"Content-Type": "application/xml", "X-API-Version": "v1" }`
+	RequestHeaders param.Field[map[string]interface{}] `json:"request_headers"`
 }
 
 func (r RequestForwardingForwardParams) MarshalJSON() (data []byte, err error) {
