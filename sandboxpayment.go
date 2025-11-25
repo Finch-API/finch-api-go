@@ -132,7 +132,8 @@ func (r SandboxPaymentNewParamsPayStatementsEarningsType) IsKnown() bool {
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployeeDeduction struct {
-	Amount param.Field[int64]                                                      `json:"amount"`
+	Amount param.Field[int64] `json:"amount"`
+	// The deduction name. Required when type is specified.
 	Name   param.Field[string]                                                     `json:"name"`
 	PreTax param.Field[bool]                                                       `json:"pre_tax"`
 	Type   param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType] `json:"type"`
@@ -175,9 +176,10 @@ func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType) IsKnown() bo
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployerContribution struct {
-	Amount param.Field[int64]                                                         `json:"amount"`
-	Name   param.Field[string]                                                        `json:"name"`
-	Type   param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsType] `json:"type"`
+	Amount param.Field[int64] `json:"amount"`
+	// The contribution name. Required when type is specified.
+	Name param.Field[string]                                                        `json:"name"`
+	Type param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsType] `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEmployerContribution) MarshalJSON() (data []byte, err error) {
