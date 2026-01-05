@@ -54,8 +54,10 @@ type SandboxConnectionNewResponse struct {
 	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required" format:"uuid"`
 	// The ID of the new connection
-	ConnectionID string   `json:"connection_id,required" format:"uuid"`
-	Products     []string `json:"products,required"`
+	ConnectionID string `json:"connection_id,required" format:"uuid"`
+	// The ID of the entity for this connection
+	EntityID string   `json:"entity_id,required" format:"uuid"`
+	Products []string `json:"products,required"`
 	// The ID of the provider associated with the `access_token`.
 	ProviderID string                           `json:"provider_id,required" format:"uuid"`
 	TokenType  string                           `json:"token_type"`
@@ -70,6 +72,7 @@ type sandboxConnectionNewResponseJSON struct {
 	AuthenticationType apijson.Field
 	CompanyID          apijson.Field
 	ConnectionID       apijson.Field
+	EntityID           apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
 	TokenType          apijson.Field

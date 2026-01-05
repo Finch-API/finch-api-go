@@ -62,8 +62,10 @@ type SandboxConnectionAccountNewResponse struct {
 	// Deprecated: deprecated
 	CompanyID string `json:"company_id,required" format:"uuid"`
 	// The ID of the new connection
-	ConnectionID string   `json:"connection_id,required" format:"uuid"`
-	Products     []string `json:"products,required"`
+	ConnectionID string `json:"connection_id,required" format:"uuid"`
+	// The ID of the entity for this connection
+	EntityID string   `json:"entity_id,required" format:"uuid"`
+	Products []string `json:"products,required"`
 	// The ID of the provider associated with the `access_token`
 	ProviderID string                                  `json:"provider_id,required"`
 	JSON       sandboxConnectionAccountNewResponseJSON `json:"-"`
@@ -77,6 +79,7 @@ type sandboxConnectionAccountNewResponseJSON struct {
 	AuthenticationType apijson.Field
 	CompanyID          apijson.Field
 	ConnectionID       apijson.Field
+	EntityID           apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
 	raw                string
@@ -117,13 +120,15 @@ type SandboxConnectionAccountUpdateResponse struct {
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
 	//
 	// Deprecated: deprecated
-	CompanyID string   `json:"company_id,required" format:"uuid"`
-	Products  []string `json:"products,required"`
-	// The ID of the provider associated with the `access_token`
-	ProviderID string `json:"provider_id,required"`
+	CompanyID string `json:"company_id,required" format:"uuid"`
 	// The ID of the new connection
-	ConnectionID string                                     `json:"connection_id" format:"uuid"`
-	JSON         sandboxConnectionAccountUpdateResponseJSON `json:"-"`
+	ConnectionID string `json:"connection_id,required" format:"uuid"`
+	// The ID of the entity whose status was updated
+	EntityID string   `json:"entity_id,required" format:"uuid"`
+	Products []string `json:"products,required"`
+	// The ID of the provider associated with the `access_token`
+	ProviderID string                                     `json:"provider_id,required"`
+	JSON       sandboxConnectionAccountUpdateResponseJSON `json:"-"`
 }
 
 // sandboxConnectionAccountUpdateResponseJSON contains the JSON metadata for the
@@ -132,9 +137,10 @@ type sandboxConnectionAccountUpdateResponseJSON struct {
 	AccountID          apijson.Field
 	AuthenticationType apijson.Field
 	CompanyID          apijson.Field
+	ConnectionID       apijson.Field
+	EntityID           apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
-	ConnectionID       apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
