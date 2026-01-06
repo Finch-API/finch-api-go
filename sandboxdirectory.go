@@ -65,8 +65,7 @@ type SandboxDirectoryNewParamsBody struct {
 	Emails     param.Field[[]SandboxDirectoryNewParamsBodyEmail]    `json:"emails"`
 	// The employment object.
 	Employment param.Field[SandboxDirectoryNewParamsBodyEmployment] `json:"employment"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus param.Field[SandboxDirectoryNewParamsBodyEmploymentStatus] `json:"employment_status"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
@@ -208,8 +207,7 @@ func (r SandboxDirectoryNewParamsBodyEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type SandboxDirectoryNewParamsBodyEmploymentStatus string
 
 const (

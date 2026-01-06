@@ -33,8 +33,8 @@ func NewJobManualService(opts ...option.RequestOption) (r *JobManualService) {
 	return
 }
 
-// Get a manual job by `job_id`. Manual jobs are completed by a human and include
-// Assisted Benefits jobs.
+// Check the status and outcome of a job by `job_id`. This includes all deductions
+// jobs including those for both automated and assisted integrations.
 func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *ManualAsyncJob, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if jobID == "" {

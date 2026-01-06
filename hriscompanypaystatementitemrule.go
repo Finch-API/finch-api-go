@@ -38,12 +38,10 @@ func NewHRISCompanyPayStatementItemRuleService(opts ...option.RequestOption) (r 
 	return
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Custom rules can be created to associate
-// specific attributes to pay statement items depending on the use case. For
-// example, pay statement items that meet certain conditions can be labeled as a
-// pre-tax 401k. This metadata can be retrieved where pay statement item
-// information is available.
+// Custom rules can be created to associate specific attributes to pay statement
+// items depending on the use case. For example, pay statement items that meet
+// certain conditions can be labeled as a pre-tax 401k. This metadata can be
+// retrieved where pay statement item information is available.
 func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, params HRISCompanyPayStatementItemRuleNewParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleNewResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "employer/pay-statement-item/rule"
@@ -51,8 +49,7 @@ func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, params
 	return
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Update a rule for a pay statement item.
+// Update a rule for a pay statement item.
 func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, ruleID string, params HRISCompanyPayStatementItemRuleUpdateParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleUpdateResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if ruleID == "" {
@@ -64,8 +61,7 @@ func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, rul
 	return
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon List all rules of a connection account.
+// List all rules of a connection account.
 func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, query HRISCompanyPayStatementItemRuleListParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemRuleListResponse], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
@@ -83,14 +79,12 @@ func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, query
 	return res, nil
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon List all rules of a connection account.
+// List all rules of a connection account.
 func (r *HRISCompanyPayStatementItemRuleService) ListAutoPaging(ctx context.Context, query HRISCompanyPayStatementItemRuleListParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[HRISCompanyPayStatementItemRuleListResponse] {
 	return pagination.NewResponsesPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Delete a rule for a pay statement item.
+// Delete a rule for a pay statement item.
 func (r *HRISCompanyPayStatementItemRuleService) Delete(ctx context.Context, ruleID string, body HRISCompanyPayStatementItemRuleDeleteParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleDeleteResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if ruleID == "" {

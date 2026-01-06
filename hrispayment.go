@@ -154,10 +154,10 @@ func (r paymentPayPeriodJSON) RawJSON() string {
 
 type HRISPaymentListParams struct {
 	// The end date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
-	// format.
+	// format. Filters payments by their **pay_date** field.
 	EndDate param.Field[time.Time] `query:"end_date,required" format:"date"`
 	// The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
-	// format.
+	// format. Filters payments by their **pay_date** field.
 	StartDate param.Field[time.Time] `query:"start_date,required" format:"date"`
 	// The entity IDs to specify which entities' data to access.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
