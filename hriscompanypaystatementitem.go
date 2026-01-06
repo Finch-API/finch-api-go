@@ -38,9 +38,8 @@ func NewHRISCompanyPayStatementItemService(opts ...option.RequestOption) (r *HRI
 	return
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Retrieve a list of detailed pay statement
-// items for the access token's connection account.
+// Retrieve a list of detailed pay statement items for the access token's
+// connection account.
 func (r *HRISCompanyPayStatementItemService) List(ctx context.Context, query HRISCompanyPayStatementItemListParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemListResponse], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
@@ -58,9 +57,8 @@ func (r *HRISCompanyPayStatementItemService) List(ctx context.Context, query HRI
 	return res, nil
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Retrieve a list of detailed pay statement
-// items for the access token's connection account.
+// Retrieve a list of detailed pay statement items for the access token's
+// connection account.
 func (r *HRISCompanyPayStatementItemService) ListAutoPaging(ctx context.Context, query HRISCompanyPayStatementItemListParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[HRISCompanyPayStatementItemListResponse] {
 	return pagination.NewResponsesPageAutoPager(r.List(ctx, query, opts...))
 }

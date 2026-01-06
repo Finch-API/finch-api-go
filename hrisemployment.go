@@ -73,8 +73,7 @@ type EmploymentData struct {
 	Department interface{} `json:"department"`
 	// This field can have the runtime type of [EmploymentDataObjectEmployment].
 	Employment interface{} `json:"employment"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status,nullable"`
 	EndDate          string                         `json:"end_date,nullable"`
 	FinchCode        string                         `json:"finch_code"`
@@ -192,8 +191,7 @@ type EmploymentDataObject struct {
 	Department EmploymentDataObjectDepartment `json:"department,required,nullable"`
 	// The employment object.
 	Employment EmploymentDataObjectEmployment `json:"employment,required,nullable"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus EmploymentDataObjectEmploymentStatus `json:"employment_status,required,nullable"`
 	EndDate          string                               `json:"end_date,required,nullable"`
 	// The legal first name of the individual.
@@ -354,8 +352,7 @@ func (r EmploymentDataObjectEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type EmploymentDataObjectEmploymentStatus string
 
 const (
@@ -490,8 +487,7 @@ func (r employmentDataBatchErrorJSON) RawJSON() string {
 
 func (r EmploymentDataBatchError) implementsEmploymentData() {}
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type EmploymentDataEmploymentStatus string
 
 const (

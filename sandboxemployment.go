@@ -59,8 +59,7 @@ type SandboxEmploymentUpdateResponse struct {
 	Department SandboxEmploymentUpdateResponseDepartment `json:"department,nullable"`
 	// The employment object.
 	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment,nullable"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status,nullable"`
 	EndDate          string                                          `json:"end_date,nullable"`
 	// The legal first name of the individual.
@@ -233,8 +232,7 @@ func (r SandboxEmploymentUpdateResponseEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type SandboxEmploymentUpdateResponseEmploymentStatus string
 
 const (
@@ -289,8 +287,7 @@ type SandboxEmploymentUpdateParams struct {
 	Department param.Field[SandboxEmploymentUpdateParamsDepartment] `json:"department"`
 	// The employment object.
 	Employment param.Field[SandboxEmploymentUpdateParamsEmployment] `json:"employment"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus param.Field[SandboxEmploymentUpdateParamsEmploymentStatus] `json:"employment_status"`
 	EndDate          param.Field[string]                                        `json:"end_date"`
 	// The legal first name of the individual.
@@ -391,8 +388,7 @@ func (r SandboxEmploymentUpdateParamsEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type SandboxEmploymentUpdateParamsEmploymentStatus string
 
 const (
