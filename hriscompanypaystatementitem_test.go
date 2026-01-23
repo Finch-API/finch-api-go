@@ -25,6 +25,8 @@ func TestHRISCompanyPayStatementItemListWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.List(context.TODO(), finchgo.HRISCompanyPayStatementItemListParams{
 		Categories: finchgo.F([]finchgo.HRISCompanyPayStatementItemListParamsCategory{finchgo.HRISCompanyPayStatementItemListParamsCategoryEarnings}),

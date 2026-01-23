@@ -24,6 +24,8 @@ func TestHRISCompanyPayStatementItemRuleNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.Rules.New(context.TODO(), finchgo.HRISCompanyPayStatementItemRuleNewParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
@@ -61,6 +63,8 @@ func TestHRISCompanyPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.Rules.Update(
 		context.TODO(),
@@ -90,6 +94,8 @@ func TestHRISCompanyPayStatementItemRuleListWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.Rules.List(context.TODO(), finchgo.HRISCompanyPayStatementItemRuleListParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
@@ -114,6 +120,8 @@ func TestHRISCompanyPayStatementItemRuleDeleteWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.Rules.Delete(
 		context.TODO(),

@@ -24,6 +24,8 @@ func TestPayrollPayGroupGetWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Payroll.PayGroups.Get(
 		context.TODO(),
@@ -52,6 +54,8 @@ func TestPayrollPayGroupListWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Payroll.PayGroups.List(context.TODO(), finchgo.PayrollPayGroupListParams{
 		EntityIDs:      finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),

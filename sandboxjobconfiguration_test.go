@@ -24,6 +24,8 @@ func TestSandboxJobConfigurationGet(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Jobs.Configuration.Get(context.TODO())
 	if err != nil {
@@ -46,6 +48,8 @@ func TestSandboxJobConfigurationUpdate(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Jobs.Configuration.Update(context.TODO(), finchgo.SandboxJobConfigurationUpdateParams{
 		CompletionStatus: finchgo.F(finchgo.SandboxJobConfigurationUpdateParamsCompletionStatusComplete),
