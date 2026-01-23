@@ -24,6 +24,8 @@ func TestHRISBenefitNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
@@ -58,6 +60,8 @@ func TestHRISBenefitGetWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.Get(
 		context.TODO(),
@@ -86,6 +90,8 @@ func TestHRISBenefitUpdateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.Update(
 		context.TODO(),
@@ -115,6 +121,8 @@ func TestHRISBenefitListWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.List(context.TODO(), finchgo.HRISBenefitListParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
@@ -139,6 +147,8 @@ func TestHRISBenefitListSupportedBenefitsWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Benefits.ListSupportedBenefits(context.TODO(), finchgo.HRISBenefitListSupportedBenefitsParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
