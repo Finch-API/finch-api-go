@@ -5,10 +5,12 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -37,12 +39,12 @@ func NewHRISEmploymentService(opts ...option.RequestOption) (r *HRISEmploymentSe
 }
 
 // Read individual employment and income data
-func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[EmploymentDataResponse], err error) {
+func (r *HRISEmploymentService) GetMany(ctx context.Context, params HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[EmploymentDataResponse], err error) {
 	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/employment"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, params, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,8 +57,8 @@ func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmployment
 }
 
 // Read individual employment and income data
-func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[EmploymentDataResponse] {
-	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, params HRISEmploymentGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[EmploymentDataResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, params, opts...))
 }
 
 type EmploymentData struct {
@@ -537,12 +539,23 @@ func (r employmentDataResponseJSON) RawJSON() string {
 }
 
 type HRISEmploymentGetManyParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids,required" format:"uuid"`
 	// The array of batch requests.
 	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests,required"`
 }
 
 func (r HRISEmploymentGetManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISEmploymentGetManyParams]'s query parameters as
+// `url.Values`.
+func (r HRISEmploymentGetManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
 
 type HRISEmploymentGetManyParamsRequest struct {

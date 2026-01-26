@@ -27,6 +27,7 @@ func TestHRISCompanyPayStatementItemListWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Company.PayStatementItem.List(context.TODO(), finchgo.HRISCompanyPayStatementItemListParams{
+		EntityIDs:  finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		Categories: finchgo.F([]finchgo.HRISCompanyPayStatementItemListParamsCategory{finchgo.HRISCompanyPayStatementItemListParamsCategoryEarnings}),
 		EndDate:    finchgo.F(time.Now()),
 		Name:       finchgo.F("name"),

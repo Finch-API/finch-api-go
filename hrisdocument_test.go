@@ -26,6 +26,7 @@ func TestHRISDocumentListWithOptionalParams(t *testing.T) {
 		option.WithAccessToken("My Access Token"),
 	)
 	_, err := client.HRIS.Documents.List(context.TODO(), finchgo.HRISDocumentListParams{
+		EntityIDs:     finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		IndividualIDs: finchgo.F([]string{"string"}),
 		Limit:         finchgo.F(int64(0)),
 		Offset:        finchgo.F(int64(0)),
@@ -52,7 +53,13 @@ func TestHRISDocumentRetreive(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Documents.Retreive(context.TODO(), "document_id")
+	_, err := client.HRIS.Documents.Retreive(
+		context.TODO(),
+		"document_id",
+		finchgo.HRISDocumentRetreiveParams{
+			EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+		},
+	)
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

@@ -25,7 +25,9 @@ func TestHRISCompanyGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
 	)
-	_, err := client.HRIS.Company.Get(context.TODO())
+	_, err := client.HRIS.Company.Get(context.TODO(), finchgo.HRISCompanyGetParams{
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+	})
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {

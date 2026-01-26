@@ -28,6 +28,7 @@ func TestHRISPaymentList(t *testing.T) {
 	)
 	_, err := client.HRIS.Payments.List(context.TODO(), finchgo.HRISPaymentListParams{
 		EndDate:   finchgo.F(time.Now()),
+		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		StartDate: finchgo.F(time.Now()),
 	})
 	if err != nil {
