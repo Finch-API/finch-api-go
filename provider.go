@@ -35,7 +35,8 @@ func NewProviderService(opts ...option.RequestOption) (r *ProviderService) {
 // Return details on all available payroll and HR systems.
 func (r *ProviderService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[ProviderListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "providers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)

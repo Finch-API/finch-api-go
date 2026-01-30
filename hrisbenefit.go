@@ -43,7 +43,8 @@ func NewHRISBenefitService(opts ...option.RequestOption) (r *HRISBenefitService)
 // Creates a new company-wide deduction or contribution. Please use the
 // `/providers` endpoint to view available types for each provider.
 func (r *HRISBenefitService) New(ctx context.Context, params HRISBenefitNewParams, opts ...option.RequestOption) (res *CreateCompanyBenefitsResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/benefits"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return
@@ -51,7 +52,8 @@ func (r *HRISBenefitService) New(ctx context.Context, params HRISBenefitNewParam
 
 // Lists deductions and contributions information for a given item
 func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, query HRISBenefitGetParams, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
@@ -63,7 +65,8 @@ func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, query HR
 
 // Updates an existing company-wide deduction or contribution
 func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, params HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
@@ -76,7 +79,8 @@ func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, param
 // List all company-wide deductions and contributions.
 func (r *HRISBenefitService) List(ctx context.Context, query HRISBenefitListParams, opts ...option.RequestOption) (res *pagination.SinglePage[CompanyBenefit], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -99,7 +103,8 @@ func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, query HRISBenef
 // Get deductions metadata
 func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, query HRISBenefitListSupportedBenefitsParams, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits/meta"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

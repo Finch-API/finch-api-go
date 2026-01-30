@@ -34,7 +34,8 @@ func NewSandboxCompanyService(opts ...option.RequestOption) (r *SandboxCompanySe
 
 // Update a sandbox company's data
 func (r *SandboxCompanyService) Update(ctx context.Context, body SandboxCompanyUpdateParams, opts ...option.RequestOption) (res *SandboxCompanyUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/company"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return

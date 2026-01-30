@@ -34,7 +34,8 @@ func NewConnectSessionService(opts ...option.RequestOption) (r *ConnectSessionSe
 
 // Create a new connect session for an employer
 func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewParams, opts ...option.RequestOption) (res *ConnectSessionNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "connect/sessions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -42,7 +43,8 @@ func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewP
 
 // Create a new Connect session for reauthenticating an existing connection
 func (r *ConnectSessionService) Reauthenticate(ctx context.Context, body ConnectSessionReauthenticateParams, opts ...option.RequestOption) (res *ConnectSessionReauthenticateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "connect/sessions/reauthenticate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

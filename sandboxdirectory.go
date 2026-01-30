@@ -34,7 +34,8 @@ func NewSandboxDirectoryService(opts ...option.RequestOption) (r *SandboxDirecto
 
 // Add new individuals to a sandbox company
 func (r *SandboxDirectoryService) New(ctx context.Context, body SandboxDirectoryNewParams, opts ...option.RequestOption) (res *[]SandboxDirectoryNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/directory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

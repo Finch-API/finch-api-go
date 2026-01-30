@@ -35,7 +35,8 @@ func NewSandboxConnectionAccountService(opts ...option.RequestOption) (r *Sandbo
 
 // Create a new account for an existing connection (company/provider pair)
 func (r *SandboxConnectionAccountService) New(ctx context.Context, body SandboxConnectionAccountNewParams, opts ...option.RequestOption) (res *SandboxConnectionAccountNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections/accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -44,7 +45,8 @@ func (r *SandboxConnectionAccountService) New(ctx context.Context, body SandboxC
 // Update an existing sandbox account. Change the connection status to understand
 // how the Finch API responds.
 func (r *SandboxConnectionAccountService) Update(ctx context.Context, body SandboxConnectionAccountUpdateParams, opts ...option.RequestOption) (res *SandboxConnectionAccountUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections/accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return

@@ -36,7 +36,8 @@ func NewJobManualService(opts ...option.RequestOption) (r *JobManualService) {
 // Check the status and outcome of a job by `job_id`. This includes all deductions
 // jobs including those for both automated and assisted integrations.
 func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *ManualAsyncJob, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
 		return

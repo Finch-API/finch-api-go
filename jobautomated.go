@@ -52,7 +52,8 @@ func NewJobAutomatedService(opts ...option.RequestOption) (r *JobAutomatedServic
 // This endpoint is available for _Scale_ tier customers as an add-on. To request
 // access to this endpoint, please contact your Finch account manager.
 func (r *JobAutomatedService) New(ctx context.Context, body JobAutomatedNewParams, opts ...option.RequestOption) (res *JobAutomatedNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "jobs/automated"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -60,7 +61,8 @@ func (r *JobAutomatedService) New(ctx context.Context, body JobAutomatedNewParam
 
 // Get an automated job by `job_id`.
 func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *AutomatedAsyncJob, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
 		return
@@ -74,7 +76,8 @@ func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...opt
 // jobs are sorted in descending order by submission time. For scheduled jobs such
 // as data syncs, only the next scheduled job is shown.
 func (r *JobAutomatedService) List(ctx context.Context, query JobAutomatedListParams, opts ...option.RequestOption) (res *JobAutomatedListResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "jobs/automated"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return

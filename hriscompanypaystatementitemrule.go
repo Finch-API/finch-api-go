@@ -43,7 +43,8 @@ func NewHRISCompanyPayStatementItemRuleService(opts ...option.RequestOption) (r 
 // certain conditions can be labeled as a pre-tax 401k. This metadata can be
 // retrieved where pay statement item information is available.
 func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, params HRISCompanyPayStatementItemRuleNewParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/pay-statement-item/rule"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return
@@ -51,7 +52,8 @@ func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, params
 
 // Update a rule for a pay statement item.
 func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, ruleID string, params HRISCompanyPayStatementItemRuleUpdateParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
 		return
@@ -64,7 +66,8 @@ func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, rul
 // List all rules of a connection account.
 func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, query HRISCompanyPayStatementItemRuleListParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemRuleListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement-item/rule"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -86,7 +89,8 @@ func (r *HRISCompanyPayStatementItemRuleService) ListAutoPaging(ctx context.Cont
 
 // Delete a rule for a pay statement item.
 func (r *HRISCompanyPayStatementItemRuleService) Delete(ctx context.Context, ruleID string, body HRISCompanyPayStatementItemRuleDeleteParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleDeleteResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
 		return

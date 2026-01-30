@@ -36,7 +36,8 @@ func NewSandboxConnectionService(opts ...option.RequestOption) (r *SandboxConnec
 
 // Create a new connection (new company/provider pair) with a new account
 func (r *SandboxConnectionService) New(ctx context.Context, body SandboxConnectionNewParams, opts ...option.RequestOption) (res *SandboxConnectionNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

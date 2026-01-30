@@ -34,7 +34,8 @@ func NewSandboxJobConfigurationService(opts ...option.RequestOption) (r *Sandbox
 
 // Get configurations for sandbox jobs
 func (r *SandboxJobConfigurationService) Get(ctx context.Context, opts ...option.RequestOption) (res *[]SandboxJobConfiguration, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs/configuration"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -42,7 +43,8 @@ func (r *SandboxJobConfigurationService) Get(ctx context.Context, opts ...option
 
 // Update configurations for sandbox jobs
 func (r *SandboxJobConfigurationService) Update(ctx context.Context, body SandboxJobConfigurationUpdateParams, opts ...option.RequestOption) (res *SandboxJobConfiguration, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs/configuration"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return

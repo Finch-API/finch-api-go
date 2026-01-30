@@ -42,7 +42,8 @@ func NewHRISDocumentService(opts ...option.RequestOption) (r *HRISDocumentServic
 // **Beta:** This endpoint is in beta and may change. Retrieve a list of
 // company-wide documents.
 func (r *HRISDocumentService) List(ctx context.Context, query HRISDocumentListParams, opts ...option.RequestOption) (res *HRISDocumentListResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/documents"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
@@ -51,7 +52,8 @@ func (r *HRISDocumentService) List(ctx context.Context, query HRISDocumentListPa
 // **Beta:** This endpoint is in beta and may change. Retrieve details of a
 // specific document by its ID.
 func (r *HRISDocumentService) Retreive(ctx context.Context, documentID string, query HRISDocumentRetreiveParams, opts ...option.RequestOption) (res *HRISDocumentRetreiveResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if documentID == "" {
 		err = errors.New("missing required document_id parameter")
 		return
