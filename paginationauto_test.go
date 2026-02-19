@@ -27,7 +27,7 @@ func TestAutoPagination(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	iter := client.HRIS.Directory.ListAutoPaging(context.TODO(), finchgo.HRISDirectoryListParams{})
-	// Prism mock isn't going to give us real pagination
+	// The mock server isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
 		directory := iter.Current()
 		t.Logf("%+v\n", directory.ID)
