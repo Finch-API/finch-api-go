@@ -44,9 +44,9 @@ func (r *SandboxPaymentService) New(ctx context.Context, body SandboxPaymentNewP
 
 type SandboxPaymentNewResponse struct {
 	// The date of the payment.
-	PayDate string `json:"pay_date,required"`
+	PayDate string `json:"pay_date" api:"required"`
 	// The ID of the payment.
-	PaymentID string                        `json:"payment_id,required"`
+	PaymentID string                        `json:"payment_id" api:"required"`
 	JSON      sandboxPaymentNewResponseJSON `json:"-"`
 }
 
@@ -79,7 +79,7 @@ func (r SandboxPaymentNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxPaymentNewParamsPayStatement struct {
-	IndividualID          param.Field[string]                                                     `json:"individual_id,required" format:"uuid"`
+	IndividualID          param.Field[string]                                                     `json:"individual_id" api:"required" format:"uuid"`
 	Earnings              param.Field[[]SandboxPaymentNewParamsPayStatementsEarning]              `json:"earnings"`
 	EmployeeDeductions    param.Field[[]SandboxPaymentNewParamsPayStatementsEmployeeDeduction]    `json:"employee_deductions"`
 	EmployerContributions param.Field[[]SandboxPaymentNewParamsPayStatementsEmployerContribution] `json:"employer_contributions"`

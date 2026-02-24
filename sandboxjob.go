@@ -45,13 +45,13 @@ func (r *SandboxJobService) New(ctx context.Context, body SandboxJobNewParams, o
 
 type SandboxJobNewResponse struct {
 	// The number of allowed refreshes per hour (per hour, fixed window)
-	AllowedRefreshes int64 `json:"allowed_refreshes,required"`
+	AllowedRefreshes int64 `json:"allowed_refreshes" api:"required"`
 	// The id of the job that has been created.
-	JobID string `json:"job_id,required" format:"uuid"`
+	JobID string `json:"job_id" api:"required" format:"uuid"`
 	// The url that can be used to retrieve the job status
-	JobURL string `json:"job_url,required"`
+	JobURL string `json:"job_url" api:"required"`
 	// The number of remaining refreshes available (per hour, fixed window)
-	RemainingRefreshes int64                     `json:"remaining_refreshes,required"`
+	RemainingRefreshes int64                     `json:"remaining_refreshes" api:"required"`
 	JSON               sandboxJobNewResponseJSON `json:"-"`
 }
 
@@ -76,7 +76,7 @@ func (r sandboxJobNewResponseJSON) RawJSON() string {
 
 type SandboxJobNewParams struct {
 	// The type of job to start. Currently the only supported type is `data_sync_all`
-	Type param.Field[SandboxJobNewParamsType] `json:"type,required"`
+	Type param.Field[SandboxJobNewParamsType] `json:"type" api:"required"`
 }
 
 func (r SandboxJobNewParams) MarshalJSON() (data []byte, err error) {

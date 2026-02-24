@@ -65,36 +65,36 @@ type Individual struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID   string  `json:"id" format:"uuid"`
 	Code float64 `json:"code"`
-	Dob  string  `json:"dob,nullable"`
+	Dob  string  `json:"dob" api:"nullable"`
 	// This field can have the runtime type of [[]IndividualObjectEmail].
 	Emails interface{} `json:"emails"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
-	EncryptedSsn string `json:"encrypted_ssn,nullable"`
+	EncryptedSsn string `json:"encrypted_ssn" api:"nullable"`
 	// The EEOC-defined ethnicity of the individual.
-	Ethnicity IndividualEthnicity `json:"ethnicity,nullable"`
+	Ethnicity IndividualEthnicity `json:"ethnicity" api:"nullable"`
 	FinchCode string              `json:"finch_code"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
 	// The gender of the individual.
-	Gender IndividualGender `json:"gender,nullable"`
+	Gender IndividualGender `json:"gender" api:"nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,nullable"`
+	LastName string `json:"last_name" api:"nullable"`
 	Message  string `json:"message"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	Name       string `json:"name"`
 	// This field can have the runtime type of [[]IndividualObjectPhoneNumber].
 	PhoneNumbers interface{} `json:"phone_numbers"`
 	// The preferred name of the individual.
-	PreferredName string   `json:"preferred_name,nullable"`
-	Residence     Location `json:"residence,nullable"`
+	PreferredName string   `json:"preferred_name" api:"nullable"`
+	Residence     Location `json:"residence" api:"nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
 	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
-	Ssn   string         `json:"ssn,nullable"`
+	Ssn   string         `json:"ssn" api:"nullable"`
 	JSON  individualJSON `json:"-"`
 	union IndividualUnion
 }
@@ -166,32 +166,32 @@ func init() {
 
 type IndividualObject struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID  string `json:"id,required" format:"uuid"`
-	Dob string `json:"dob,required,nullable"`
+	ID  string `json:"id" api:"required" format:"uuid"`
+	Dob string `json:"dob" api:"required,nullable"`
 	// The EEOC-defined ethnicity of the individual.
-	Ethnicity IndividualObjectEthnicity `json:"ethnicity,required,nullable"`
+	Ethnicity IndividualObjectEthnicity `json:"ethnicity" api:"required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,required,nullable"`
+	FirstName string `json:"first_name" api:"required,nullable"`
 	// The gender of the individual.
-	Gender IndividualObjectGender `json:"gender,required,nullable"`
+	Gender IndividualObjectGender `json:"gender" api:"required,nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,required,nullable"`
+	LastName string `json:"last_name" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName   string                        `json:"middle_name,required,nullable"`
-	PhoneNumbers []IndividualObjectPhoneNumber `json:"phone_numbers,required,nullable"`
+	MiddleName   string                        `json:"middle_name" api:"required,nullable"`
+	PhoneNumbers []IndividualObjectPhoneNumber `json:"phone_numbers" api:"required,nullable"`
 	// The preferred name of the individual.
-	PreferredName string                  `json:"preferred_name,required,nullable"`
-	Residence     Location                `json:"residence,required,nullable"`
-	Emails        []IndividualObjectEmail `json:"emails,nullable"`
+	PreferredName string                  `json:"preferred_name" api:"required,nullable"`
+	Residence     Location                `json:"residence" api:"required,nullable"`
+	Emails        []IndividualObjectEmail `json:"emails" api:"nullable"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
-	EncryptedSsn string `json:"encrypted_ssn,nullable"`
+	EncryptedSsn string `json:"encrypted_ssn" api:"nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
 	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
-	Ssn  string               `json:"ssn,nullable"`
+	Ssn  string               `json:"ssn" api:"nullable"`
 	JSON individualObjectJSON `json:"-"`
 }
 
@@ -266,8 +266,8 @@ func (r IndividualObjectGender) IsKnown() bool {
 }
 
 type IndividualObjectPhoneNumber struct {
-	Data string                           `json:"data,required,nullable"`
-	Type IndividualObjectPhoneNumbersType `json:"type,required,nullable"`
+	Data string                           `json:"data" api:"required,nullable"`
+	Type IndividualObjectPhoneNumbersType `json:"type" api:"required,nullable"`
 	JSON individualObjectPhoneNumberJSON  `json:"-"`
 }
 
@@ -304,8 +304,8 @@ func (r IndividualObjectPhoneNumbersType) IsKnown() bool {
 }
 
 type IndividualObjectEmail struct {
-	Data string                     `json:"data,required"`
-	Type IndividualObjectEmailsType `json:"type,required,nullable"`
+	Data string                     `json:"data" api:"required"`
+	Type IndividualObjectEmailsType `json:"type" api:"required,nullable"`
 	JSON individualObjectEmailJSON  `json:"-"`
 }
 
@@ -342,9 +342,9 @@ func (r IndividualObjectEmailsType) IsKnown() bool {
 }
 
 type IndividualBatchError struct {
-	Code      float64                  `json:"code,required"`
-	Message   string                   `json:"message,required"`
-	Name      string                   `json:"name,required"`
+	Code      float64                  `json:"code" api:"required"`
+	Message   string                   `json:"message" api:"required"`
+	Name      string                   `json:"name" api:"required"`
 	FinchCode string                   `json:"finch_code"`
 	JSON      individualBatchErrorJSON `json:"-"`
 }
@@ -411,9 +411,9 @@ func (r IndividualGender) IsKnown() bool {
 }
 
 type IndividualResponse struct {
-	Body         Individual             `json:"body,required"`
-	Code         int64                  `json:"code,required"`
-	IndividualID string                 `json:"individual_id,required"`
+	Body         Individual             `json:"body" api:"required"`
+	Code         int64                  `json:"code" api:"required"`
+	IndividualID string                 `json:"individual_id" api:"required"`
 	JSON         individualResponseJSON `json:"-"`
 }
 

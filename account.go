@@ -54,7 +54,7 @@ func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestO
 
 type DisconnectResponse struct {
 	// If the request is successful, Finch will return "success" (HTTP 200 status).
-	Status string                 `json:"status,required"`
+	Status string                 `json:"status" api:"required"`
 	JSON   disconnectResponseJSON `json:"-"`
 }
 
@@ -76,23 +76,23 @@ func (r disconnectResponseJSON) RawJSON() string {
 
 type Introspection struct {
 	// The Finch UUID of the token being introspected
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The client ID of the application associated with the `access_token`
-	ClientID string `json:"client_id,required"`
+	ClientID string `json:"client_id" api:"required"`
 	// The type of application associated with a token.
-	ClientType IntrospectionClientType `json:"client_type,required"`
+	ClientType IntrospectionClientType `json:"client_type" api:"required"`
 	// The Finch UUID of the connection associated with the `access_token`
-	ConnectionID     string                        `json:"connection_id,required"`
-	ConnectionStatus IntrospectionConnectionStatus `json:"connection_status,required"`
+	ConnectionID     string                        `json:"connection_id" api:"required"`
+	ConnectionStatus IntrospectionConnectionStatus `json:"connection_status" api:"required"`
 	// The type of the connection associated with the token.
 	//
 	// - `provider` - connection to an external provider
 	// - `finch` - finch-generated data.
-	ConnectionType IntrospectionConnectionType `json:"connection_type,required"`
+	ConnectionType IntrospectionConnectionType `json:"connection_type" api:"required"`
 	// An array of the authorized products associated with the `access_token`.
-	Products []string `json:"products,required"`
+	Products []string `json:"products" api:"required"`
 	// The ID of the provider associated with the `access_token`.
-	ProviderID string `json:"provider_id,required"`
+	ProviderID string `json:"provider_id" api:"required"`
 	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
 	// instead of this account ID
 	//
@@ -106,13 +106,13 @@ type Introspection struct {
 	CompanyID string `json:"company_id"`
 	// The email of your customer you provided to Finch when a connect session was
 	// created for this connection
-	CustomerEmail string `json:"customer_email,nullable"`
+	CustomerEmail string `json:"customer_email" api:"nullable"`
 	// The ID of your customer you provided to Finch when a connect session was created
 	// for this connection
-	CustomerID string `json:"customer_id,nullable"`
+	CustomerID string `json:"customer_id" api:"nullable"`
 	// The name of your customer you provided to Finch when a connect session was
 	// created for this connection
-	CustomerName string `json:"customer_name,nullable"`
+	CustomerName string `json:"customer_name" api:"nullable"`
 	// Array of detailed entity information for each connected account in multi-account
 	// mode
 	Entities []IntrospectionEntity `json:"entities"`
@@ -126,7 +126,7 @@ type Introspection struct {
 	// Deprecated: deprecated
 	PayrollProviderID string `json:"payroll_provider_id"`
 	// The account username used for login associated with the `access_token`.
-	Username string            `json:"username,nullable"`
+	Username string            `json:"username" api:"nullable"`
 	JSON     introspectionJSON `json:"-"`
 }
 
@@ -180,9 +180,9 @@ func (r IntrospectionClientType) IsKnown() bool {
 }
 
 type IntrospectionConnectionStatus struct {
-	Status shared.ConnectionStatusType `json:"status,required"`
+	Status shared.ConnectionStatusType `json:"status" api:"required"`
 	// The datetime when the connection was last successfully synced
-	LastSuccessfulSync IntrospectionConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync,nullable" format:"date-time"`
+	LastSuccessfulSync IntrospectionConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync" api:"nullable" format:"date-time"`
 	Message            string                                               `json:"message"`
 	JSON               introspectionConnectionStatusJSON                    `json:"-"`
 }
@@ -248,7 +248,7 @@ func (r IntrospectionConnectionType) IsKnown() bool {
 
 type IntrospectionAuthenticationMethod struct {
 	// The type of authentication method
-	Type             IntrospectionAuthenticationMethodsType             `json:"type,required"`
+	Type             IntrospectionAuthenticationMethodsType             `json:"type" api:"required"`
 	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
 	// An array of the authorized products associated with the `access_token`
 	Products []string                              `json:"products"`
@@ -293,9 +293,9 @@ func (r IntrospectionAuthenticationMethodsType) IsKnown() bool {
 }
 
 type IntrospectionAuthenticationMethodsConnectionStatus struct {
-	Status shared.ConnectionStatusType `json:"status,required"`
+	Status shared.ConnectionStatusType `json:"status" api:"required"`
 	// The datetime when the connection was last successfully synced
-	LastSuccessfulSync IntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync,nullable" format:"date-time"`
+	LastSuccessfulSync IntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync" api:"nullable" format:"date-time"`
 	Message            string                                                                    `json:"message"`
 	JSON               introspectionAuthenticationMethodsConnectionStatusJSON                    `json:"-"`
 }
@@ -342,11 +342,11 @@ func init() {
 
 type IntrospectionEntity struct {
 	// The connection account ID for this entity
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// The name of the entity (payroll provider company name)
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// The source ID of the entity
-	SourceID string                  `json:"source_id,required,nullable"`
+	SourceID string                  `json:"source_id" api:"required,nullable"`
 	JSON     introspectionEntityJSON `json:"-"`
 }
 

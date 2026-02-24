@@ -52,9 +52,9 @@ func (r *ConnectSessionService) Reauthenticate(ctx context.Context, body Connect
 
 type ConnectSessionNewResponse struct {
 	// The Connect URL to redirect the user to for authentication
-	ConnectURL string `json:"connect_url,required" format:"uri"`
+	ConnectURL string `json:"connect_url" api:"required" format:"uri"`
 	// The unique identifier for the created connect session
-	SessionID string                        `json:"session_id,required"`
+	SessionID string                        `json:"session_id" api:"required"`
 	JSON      connectSessionNewResponseJSON `json:"-"`
 }
 
@@ -77,9 +77,9 @@ func (r connectSessionNewResponseJSON) RawJSON() string {
 
 type ConnectSessionReauthenticateResponse struct {
 	// The Connect URL to redirect the user to for reauthentication
-	ConnectURL string `json:"connect_url,required" format:"uri"`
+	ConnectURL string `json:"connect_url" api:"required" format:"uri"`
 	// The unique identifier for the created connect session
-	SessionID string                                   `json:"session_id,required"`
+	SessionID string                                   `json:"session_id" api:"required"`
 	JSON      connectSessionReauthenticateResponseJSON `json:"-"`
 }
 
@@ -102,11 +102,11 @@ func (r connectSessionReauthenticateResponseJSON) RawJSON() string {
 
 type ConnectSessionNewParams struct {
 	// Unique identifier for the customer
-	CustomerID param.Field[string] `json:"customer_id,required"`
+	CustomerID param.Field[string] `json:"customer_id" api:"required"`
 	// Name of the customer
-	CustomerName param.Field[string] `json:"customer_name,required"`
+	CustomerName param.Field[string] `json:"customer_name" api:"required"`
 	// The Finch products to request access to
-	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products,required"`
+	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products" api:"required"`
 	// Email address of the customer
 	CustomerEmail param.Field[string] `json:"customer_email" format:"email"`
 	// Integration configuration for the connect session
@@ -153,7 +153,7 @@ func (r ConnectSessionNewParamsProduct) IsKnown() bool {
 // Integration configuration for the connect session
 type ConnectSessionNewParamsIntegration struct {
 	// The provider to integrate with
-	Provider param.Field[string] `json:"provider,required"`
+	Provider param.Field[string] `json:"provider" api:"required"`
 	// The authentication method to use
 	AuthMethod param.Field[ConnectSessionNewParamsIntegrationAuthMethod] `json:"auth_method"`
 }
@@ -198,7 +198,7 @@ func (r ConnectSessionNewParamsSandbox) IsKnown() bool {
 
 type ConnectSessionReauthenticateParams struct {
 	// The ID of the existing connection to reauthenticate
-	ConnectionID param.Field[string] `json:"connection_id,required"`
+	ConnectionID param.Field[string] `json:"connection_id" api:"required"`
 	// The number of minutes until the session expires (defaults to 43,200, which is 30
 	// days)
 	MinutesToExpire param.Field[int64] `json:"minutes_to_expire"`

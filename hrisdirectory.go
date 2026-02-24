@@ -74,7 +74,7 @@ func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, body HRISDir
 type IndividualsPage struct {
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals"`
-	Paging      shared.Paging           `json:"paging,required"`
+	Paging      shared.Paging           `json:"paging" api:"required"`
 	JSON        individualsPageJSON     `json:"-"`
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
@@ -182,19 +182,19 @@ func (r *IndividualsPageAutoPager) Index() int {
 
 type IndividualInDirectory struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// The department object.
-	Department IndividualInDirectoryDepartment `json:"department,required,nullable"`
+	Department IndividualInDirectoryDepartment `json:"department" api:"required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,required,nullable"`
+	FirstName string `json:"first_name" api:"required,nullable"`
 	// `true` if the individual is an active employee or contractor at the company.
-	IsActive bool `json:"is_active,required,nullable"`
+	IsActive bool `json:"is_active" api:"required,nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,required,nullable"`
+	LastName string `json:"last_name" api:"required,nullable"`
 	// The manager object.
-	Manager IndividualInDirectoryManager `json:"manager,required,nullable"`
+	Manager IndividualInDirectoryManager `json:"manager" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName string                    `json:"middle_name,required,nullable"`
+	MiddleName string                    `json:"middle_name" api:"required,nullable"`
 	JSON       individualInDirectoryJSON `json:"-"`
 }
 
@@ -223,7 +223,7 @@ func (r individualInDirectoryJSON) RawJSON() string {
 // The department object.
 type IndividualInDirectoryDepartment struct {
 	// The name of the department.
-	Name string                              `json:"name,nullable"`
+	Name string                              `json:"name" api:"nullable"`
 	JSON individualInDirectoryDepartmentJSON `json:"-"`
 }
 
@@ -246,7 +246,7 @@ func (r individualInDirectoryDepartmentJSON) RawJSON() string {
 // The manager object.
 type IndividualInDirectoryManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                           `json:"id,required" format:"uuid"`
+	ID   string                           `json:"id" api:"required" format:"uuid"`
 	JSON individualInDirectoryManagerJSON `json:"-"`
 }
 

@@ -65,17 +65,17 @@ func (r *HRISDocumentService) Retreive(ctx context.Context, documentID string, q
 
 type DocumentResponse struct {
 	// A stable Finch id for the document.
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// The ID of the individual associated with the document. This will be null for
 	// employer-level documents.
-	IndividualID string `json:"individual_id,required,nullable"`
+	IndividualID string `json:"individual_id" api:"required,nullable"`
 	// The type of document.
-	Type DocumentResponseType `json:"type,required"`
+	Type DocumentResponseType `json:"type" api:"required"`
 	// A URL to access the document. Format:
 	// `https://api.tryfinch.com/employer/documents/:document_id`.
-	URL string `json:"url,required" format:"uri"`
+	URL string `json:"url" api:"required" format:"uri"`
 	// The year the document applies to, if available.
-	Year float64              `json:"year,required"`
+	Year float64              `json:"year" api:"required"`
 	JSON documentResponseJSON `json:"-"`
 }
 
@@ -119,11 +119,11 @@ func (r DocumentResponseType) IsKnown() bool {
 // filing status, dependents, and withholding details.
 type W42005 struct {
 	// Detailed information specific to the 2005 W4 form.
-	Data W42005Data `json:"data,required"`
+	Data W42005Data `json:"data" api:"required"`
 	// Specifies the form type, indicating that this document is a 2005 W4 form.
-	Type W42005Type `json:"type,required"`
+	Type W42005Type `json:"type" api:"required"`
 	// The tax year this W4 document applies to.
-	Year float64    `json:"year,required"`
+	Year float64    `json:"year" api:"required"`
 	JSON w42005JSON `json:"-"`
 }
 
@@ -149,15 +149,15 @@ func (r W42005) implementsHRISDocumentRetreiveResponse() {}
 // Detailed information specific to the 2005 W4 form.
 type W42005Data struct {
 	// Additional withholding amount (in cents).
-	AdditionalWithholding int64 `json:"additional_withholding,required"`
+	AdditionalWithholding int64 `json:"additional_withholding" api:"required"`
 	// Indicates exemption status from federal tax withholding.
-	Exemption W42005DataExemption `json:"exemption,required,nullable"`
+	Exemption W42005DataExemption `json:"exemption" api:"required,nullable"`
 	// The individual's filing status for tax purposes.
-	FilingStatus W42005DataFilingStatus `json:"filing_status,required,nullable"`
+	FilingStatus W42005DataFilingStatus `json:"filing_status" api:"required,nullable"`
 	// The unique identifier for the individual associated with this 2005 W4 form.
-	IndividualID string `json:"individual_id,required" format:"uuid"`
+	IndividualID string `json:"individual_id" api:"required" format:"uuid"`
 	// Total number of allowances claimed (in cents).
-	TotalNumberOfAllowances int64          `json:"total_number_of_allowances,required"`
+	TotalNumberOfAllowances int64          `json:"total_number_of_allowances" api:"required"`
 	JSON                    w42005DataJSON `json:"-"`
 }
 
@@ -232,11 +232,11 @@ func (r W42005Type) IsKnown() bool {
 // filing status, dependents, and withholding details.
 type W42020 struct {
 	// Detailed information specific to the 2020 W4 form.
-	Data W42020Data `json:"data,required"`
+	Data W42020Data `json:"data" api:"required"`
 	// Specifies the form type, indicating that this document is a 2020 W4 form.
-	Type W42020Type `json:"type,required"`
+	Type W42020Type `json:"type" api:"required"`
 	// The tax year this W4 document applies to.
-	Year float64    `json:"year,required"`
+	Year float64    `json:"year" api:"required"`
 	JSON w42020JSON `json:"-"`
 }
 
@@ -263,21 +263,21 @@ func (r W42020) implementsHRISDocumentRetreiveResponse() {}
 type W42020Data struct {
 	// Amount claimed for dependents other than qualifying children under 17 (in
 	// cents).
-	AmountForOtherDependents int64 `json:"amount_for_other_dependents,required"`
+	AmountForOtherDependents int64 `json:"amount_for_other_dependents" api:"required"`
 	// Amount claimed for dependents under 17 years old (in cents).
-	AmountForQualifyingChildrenUnder17 int64 `json:"amount_for_qualifying_children_under_17,required"`
+	AmountForQualifyingChildrenUnder17 int64 `json:"amount_for_qualifying_children_under_17" api:"required"`
 	// Deductible expenses (in cents).
-	Deductions int64 `json:"deductions,required"`
+	Deductions int64 `json:"deductions" api:"required"`
 	// Additional withholding amount (in cents).
-	ExtraWithholding int64 `json:"extra_withholding,required"`
+	ExtraWithholding int64 `json:"extra_withholding" api:"required"`
 	// The individual's filing status for tax purposes.
-	FilingStatus W42020DataFilingStatus `json:"filing_status,required,nullable"`
+	FilingStatus W42020DataFilingStatus `json:"filing_status" api:"required,nullable"`
 	// The unique identifier for the individual associated with this document.
-	IndividualID string `json:"individual_id,required" format:"uuid"`
+	IndividualID string `json:"individual_id" api:"required" format:"uuid"`
 	// Additional income from sources outside of primary employment (in cents).
-	OtherIncome int64 `json:"other_income,required"`
+	OtherIncome int64 `json:"other_income" api:"required"`
 	// Total amount claimed for dependents and other credits (in cents).
-	TotalClaimDependentAndOtherCredits int64          `json:"total_claim_dependent_and_other_credits,required"`
+	TotalClaimDependentAndOtherCredits int64          `json:"total_claim_dependent_and_other_credits" api:"required"`
 	JSON                               w42020DataJSON `json:"-"`
 }
 
@@ -336,8 +336,8 @@ func (r W42020Type) IsKnown() bool {
 }
 
 type HRISDocumentListResponse struct {
-	Documents []DocumentResponse           `json:"documents,required"`
-	Paging    shared.Paging                `json:"paging,required"`
+	Documents []DocumentResponse           `json:"documents" api:"required"`
+	Paging    shared.Paging                `json:"paging" api:"required"`
 	JSON      hrisDocumentListResponseJSON `json:"-"`
 }
 
@@ -362,11 +362,11 @@ func (r hrisDocumentListResponseJSON) RawJSON() string {
 // filing status, dependents, and withholding details.
 type HRISDocumentRetreiveResponse struct {
 	// This field can have the runtime type of [W42020Data], [W42005Data].
-	Data interface{} `json:"data,required"`
+	Data interface{} `json:"data" api:"required"`
 	// Specifies the form type, indicating that this document is a 2020 W4 form.
-	Type HRISDocumentRetreiveResponseType `json:"type,required"`
+	Type HRISDocumentRetreiveResponseType `json:"type" api:"required"`
 	// The tax year this W4 document applies to.
-	Year  float64                          `json:"year,required"`
+	Year  float64                          `json:"year" api:"required"`
 	JSON  hrisDocumentRetreiveResponseJSON `json:"-"`
 	union HRISDocumentRetreiveResponseUnion
 }

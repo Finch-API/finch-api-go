@@ -66,7 +66,7 @@ type EmploymentData struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" format:"uuid"`
 	// Worker's compensation classification code for this employee
-	ClassCode string  `json:"class_code,nullable"`
+	ClassCode string  `json:"class_code" api:"nullable"`
 	Code      float64 `json:"code"`
 	// This field can have the runtime type of [[]EmploymentDataObjectCustomField].
 	CustomFields interface{} `json:"custom_fields"`
@@ -75,38 +75,38 @@ type EmploymentData struct {
 	// This field can have the runtime type of [EmploymentDataObjectEmployment].
 	Employment interface{} `json:"employment"`
 	// The detailed employment status of the individual.
-	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status,nullable"`
-	EndDate          string                         `json:"end_date,nullable"`
+	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status" api:"nullable"`
+	EndDate          string                         `json:"end_date" api:"nullable"`
 	FinchCode        string                         `json:"finch_code"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
-	Income Income `json:"income,nullable"`
+	Income Income `json:"income" api:"nullable"`
 	// This field can have the runtime type of [[]Income].
 	IncomeHistory interface{} `json:"income_history"`
 	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
+	IsActive bool `json:"is_active" api:"nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,nullable"`
-	Location         Location `json:"location,nullable"`
+	LastName         string   `json:"last_name" api:"nullable"`
+	LatestRehireDate string   `json:"latest_rehire_date" api:"nullable"`
+	Location         Location `json:"location" api:"nullable"`
 	// This field can have the runtime type of [EmploymentDataObjectManager].
 	Manager interface{} `json:"manager"`
 	Message string      `json:"message"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	Name       string `json:"name"`
 	// The source system's unique employment identifier for this individual
-	SourceID  string `json:"source_id,nullable"`
-	StartDate string `json:"start_date,nullable"`
+	SourceID  string `json:"source_id" api:"nullable"`
+	StartDate string `json:"start_date" api:"nullable"`
 	// The current title of the individual.
-	Title string `json:"title,nullable"`
+	Title string `json:"title" api:"nullable"`
 	// This field is deprecated in favour of `source_id`
 	//
 	// Deprecated: deprecated
-	WorkID string             `json:"work_id,nullable"`
+	WorkID string             `json:"work_id" api:"nullable"`
 	JSON   employmentDataJSON `json:"-"`
 	union  EmploymentDataUnion
 }
@@ -185,47 +185,47 @@ func init() {
 
 type EmploymentDataObject struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// Worker's compensation classification code for this employee
-	ClassCode string `json:"class_code,required,nullable"`
+	ClassCode string `json:"class_code" api:"required,nullable"`
 	// The department object.
-	Department EmploymentDataObjectDepartment `json:"department,required,nullable"`
+	Department EmploymentDataObjectDepartment `json:"department" api:"required,nullable"`
 	// The employment object.
-	Employment EmploymentDataObjectEmployment `json:"employment,required,nullable"`
+	Employment EmploymentDataObjectEmployment `json:"employment" api:"required,nullable"`
 	// The detailed employment status of the individual.
-	EmploymentStatus EmploymentDataObjectEmploymentStatus `json:"employment_status,required,nullable"`
-	EndDate          string                               `json:"end_date,required,nullable"`
+	EmploymentStatus EmploymentDataObjectEmploymentStatus `json:"employment_status" api:"required,nullable"`
+	EndDate          string                               `json:"end_date" api:"required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,required,nullable"`
+	FirstName string `json:"first_name" api:"required,nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,required,nullable"`
+	IsActive bool `json:"is_active" api:"required,nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,required,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,required,nullable"`
-	Location         Location `json:"location,required,nullable"`
+	LastName         string   `json:"last_name" api:"required,nullable"`
+	LatestRehireDate string   `json:"latest_rehire_date" api:"required,nullable"`
+	Location         Location `json:"location" api:"required,nullable"`
 	// The manager object representing the manager of the individual within the org.
-	Manager EmploymentDataObjectManager `json:"manager,required,nullable"`
+	Manager EmploymentDataObjectManager `json:"manager" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,required,nullable"`
-	StartDate  string `json:"start_date,required,nullable"`
+	MiddleName string `json:"middle_name" api:"required,nullable"`
+	StartDate  string `json:"start_date" api:"required,nullable"`
 	// The current title of the individual.
-	Title string `json:"title,required,nullable"`
+	Title string `json:"title" api:"required,nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
 	// employer in the system. Custom fields are not currently supported for assisted
 	// connections.
-	CustomFields []EmploymentDataObjectCustomField `json:"custom_fields,nullable"`
+	CustomFields []EmploymentDataObjectCustomField `json:"custom_fields" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
-	Income Income `json:"income,nullable"`
+	Income Income `json:"income" api:"nullable"`
 	// The array of income history.
-	IncomeHistory []Income `json:"income_history,nullable"`
+	IncomeHistory []Income `json:"income_history" api:"nullable"`
 	// The source system's unique employment identifier for this individual
-	SourceID string `json:"source_id,nullable"`
+	SourceID string `json:"source_id" api:"nullable"`
 	// This field is deprecated in favour of `source_id`
 	//
 	// Deprecated: deprecated
-	WorkID string                   `json:"work_id,nullable"`
+	WorkID string                   `json:"work_id" api:"nullable"`
 	JSON   employmentDataObjectJSON `json:"-"`
 }
 
@@ -269,7 +269,7 @@ func (r EmploymentDataObject) implementsEmploymentData() {}
 // The department object.
 type EmploymentDataObjectDepartment struct {
 	// The name of the department associated with the individual.
-	Name string                             `json:"name,required,nullable"`
+	Name string                             `json:"name" api:"required,nullable"`
 	JSON employmentDataObjectDepartmentJSON `json:"-"`
 }
 
@@ -293,9 +293,9 @@ func (r employmentDataObjectDepartmentJSON) RawJSON() string {
 type EmploymentDataObjectEmployment struct {
 	// The secondary employment type of the individual. Options: `full_time`,
 	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
-	Subtype EmploymentDataObjectEmploymentSubtype `json:"subtype,required,nullable"`
+	Subtype EmploymentDataObjectEmploymentSubtype `json:"subtype" api:"required,nullable"`
 	// The main employment type of the individual.
-	Type EmploymentDataObjectEmploymentType `json:"type,required,nullable"`
+	Type EmploymentDataObjectEmploymentType `json:"type" api:"required,nullable"`
 	JSON employmentDataObjectEmploymentJSON `json:"-"`
 }
 
@@ -377,7 +377,7 @@ func (r EmploymentDataObjectEmploymentStatus) IsKnown() bool {
 // The manager object representing the manager of the individual within the org.
 type EmploymentDataObjectManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                          `json:"id,required" format:"uuid"`
+	ID   string                          `json:"id" api:"required" format:"uuid"`
 	JSON employmentDataObjectManagerJSON `json:"-"`
 }
 
@@ -398,8 +398,8 @@ func (r employmentDataObjectManagerJSON) RawJSON() string {
 }
 
 type EmploymentDataObjectCustomField struct {
-	Name  string                                     `json:"name,nullable"`
-	Value EmploymentDataObjectCustomFieldsValueUnion `json:"value,nullable"`
+	Name  string                                     `json:"name" api:"nullable"`
+	Value EmploymentDataObjectCustomFieldsValueUnion `json:"value" api:"nullable"`
 	JSON  employmentDataObjectCustomFieldJSON        `json:"-"`
 }
 
@@ -460,9 +460,9 @@ func (r EmploymentDataObjectCustomFieldsValueArray) ImplementsEmploymentDataObje
 }
 
 type EmploymentDataBatchError struct {
-	Code      float64                      `json:"code,required"`
-	Message   string                       `json:"message,required"`
-	Name      string                       `json:"name,required"`
+	Code      float64                      `json:"code" api:"required"`
+	Message   string                       `json:"message" api:"required"`
+	Name      string                       `json:"name" api:"required"`
 	FinchCode string                       `json:"finch_code"`
 	JSON      employmentDataBatchErrorJSON `json:"-"`
 }
@@ -510,10 +510,10 @@ func (r EmploymentDataEmploymentStatus) IsKnown() bool {
 }
 
 type EmploymentDataResponse struct {
-	Body EmploymentData `json:"body,required"`
-	Code int64          `json:"code,required"`
+	Body EmploymentData `json:"body" api:"required"`
+	Code int64          `json:"code" api:"required"`
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	IndividualID string                     `json:"individual_id,required" format:"uuid"`
+	IndividualID string                     `json:"individual_id" api:"required" format:"uuid"`
 	JSON         employmentDataResponseJSON `json:"-"`
 }
 
@@ -537,7 +537,7 @@ func (r employmentDataResponseJSON) RawJSON() string {
 
 type HRISEmploymentGetManyParams struct {
 	// The array of batch requests.
-	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests,required"`
+	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests" api:"required"`
 	// The entity IDs to specify which entities' data to access.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
@@ -559,7 +559,7 @@ type HRISEmploymentGetManyParamsRequest struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company. There is no
 	// limit to the number of `individual_id` to send per request. It is preferantial
 	// to send all ids in a single request for Finch to optimize provider rate-limits.
-	IndividualID param.Field[string] `json:"individual_id,required"`
+	IndividualID param.Field[string] `json:"individual_id" api:"required"`
 }
 
 func (r HRISEmploymentGetManyParamsRequest) MarshalJSON() (data []byte, err error) {

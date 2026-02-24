@@ -57,8 +57,8 @@ func (r accountUpdateEventJSON) RawJSON() string {
 func (r AccountUpdateEvent) implementsWebhookEventUnion() {}
 
 type AccountUpdateEventData struct {
-	AuthenticationMethod AccountUpdateEventDataAuthenticationMethod `json:"authentication_method,required"`
-	Status               shared.ConnectionStatusType                `json:"status,required"`
+	AuthenticationMethod AccountUpdateEventDataAuthenticationMethod `json:"authentication_method" api:"required"`
+	Status               shared.ConnectionStatusType                `json:"status" api:"required"`
 	JSON                 accountUpdateEventDataJSON                 `json:"-"`
 }
 
@@ -82,9 +82,9 @@ func (r accountUpdateEventDataJSON) RawJSON() string {
 type AccountUpdateEventDataAuthenticationMethod struct {
 	// Each benefit type and their supported features. If the benefit type is not
 	// supported, the property will be null
-	BenefitsSupport BenefitsSupport `json:"benefits_support,nullable"`
+	BenefitsSupport BenefitsSupport `json:"benefits_support" api:"nullable"`
 	// The supported data fields returned by our HR and payroll endpoints
-	SupportedFields AccountUpdateEventDataAuthenticationMethodSupportedFields `json:"supported_fields,nullable"`
+	SupportedFields AccountUpdateEventDataAuthenticationMethodSupportedFields `json:"supported_fields" api:"nullable"`
 	// The type of authentication method.
 	Type AccountUpdateEventDataAuthenticationMethodType `json:"type"`
 	JSON accountUpdateEventDataAuthenticationMethodJSON `json:"-"`
@@ -776,8 +776,8 @@ func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementJSO
 }
 
 type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPaging struct {
-	Count  bool                                                                            `json:"count,required"`
-	Offset bool                                                                            `json:"offset,required"`
+	Count  bool                                                                            `json:"count" api:"required"`
+	Offset bool                                                                            `json:"offset" api:"required"`
 	JSON   accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPagingJSON `json:"-"`
 }
 
@@ -1060,12 +1060,12 @@ type BaseWebhookEvent struct {
 	// with this event.
 	//
 	// Deprecated: deprecated
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// [DEPRECATED] Unique Finch ID of the company for which data has been updated. Use
 	// `connection_id` instead to identify the connection associated with this event.
 	//
 	// Deprecated: deprecated
-	CompanyID string `json:"company_id,required"`
+	CompanyID string `json:"company_id" api:"required"`
 	// Unique Finch ID of the connection associated with the webhook event.
 	ConnectionID string               `json:"connection_id"`
 	JSON         baseWebhookEventJSON `json:"-"`
@@ -1090,7 +1090,7 @@ func (r baseWebhookEventJSON) RawJSON() string {
 }
 
 type CompanyEvent struct {
-	Data      map[string]interface{} `json:"data,nullable"`
+	Data      map[string]interface{} `json:"data" api:"nullable"`
 	EventType CompanyEventEventType  `json:"event_type"`
 	JSON      companyEventJSON       `json:"-"`
 	BaseWebhookEvent
@@ -1345,9 +1345,9 @@ func (r JobCompletionEvent) implementsWebhookEventUnion() {}
 
 type JobCompletionEventData struct {
 	// The id of the job which has completed.
-	JobID string `json:"job_id,required"`
+	JobID string `json:"job_id" api:"required"`
 	// The url to query the result of the job.
-	JobURL string                     `json:"job_url,required"`
+	JobURL string                     `json:"job_url" api:"required"`
 	JSON   jobCompletionEventDataJSON `json:"-"`
 }
 
@@ -1481,9 +1481,9 @@ func (r PaymentEvent) implementsWebhookEventUnion() {}
 
 type PaymentEventData struct {
 	// The date of the payment.
-	PayDate string `json:"pay_date,required"`
+	PayDate string `json:"pay_date" api:"required"`
 	// The ID of the payment.
-	PaymentID string               `json:"payment_id,required"`
+	PaymentID string               `json:"payment_id" api:"required"`
 	JSON      paymentEventDataJSON `json:"-"`
 }
 

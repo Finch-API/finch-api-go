@@ -210,7 +210,7 @@ func (r *ResponsesPageAutoPager[T]) Index() int {
 
 type Page[T any] struct {
 	Data   []T           `json:"data"`
-	Paging shared.Paging `json:"paging,required"`
+	Paging shared.Paging `json:"paging" api:"required"`
 	JSON   pageJSON      `json:"-"`
 	cfg    *requestconfig.RequestConfig
 	res    *http.Response
