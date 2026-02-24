@@ -94,9 +94,9 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 }
 
 type IndividualBenefit struct {
-	Body         IndividualBenefitBody `json:"body,required"`
-	Code         int64                 `json:"code,required"`
-	IndividualID string                `json:"individual_id,required"`
+	Body         IndividualBenefitBody `json:"body" api:"required"`
+	Code         int64                 `json:"code" api:"required"`
+	IndividualID string                `json:"individual_id" api:"required"`
 	JSON         individualBenefitJSON `json:"-"`
 }
 
@@ -120,10 +120,10 @@ func (r individualBenefitJSON) RawJSON() string {
 
 type IndividualBenefitBody struct {
 	// If the benefit supports annual maximum, the amount in cents for this individual.
-	AnnualMaximum int64 `json:"annual_maximum,nullable"`
+	AnnualMaximum int64 `json:"annual_maximum" api:"nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp bool    `json:"catch_up,nullable"`
+	CatchUp bool    `json:"catch_up" api:"nullable"`
 	Code    float64 `json:"code"`
 	// This field can have the runtime type of
 	// [IndividualBenefitBodyObjectCompanyContribution].
@@ -133,7 +133,7 @@ type IndividualBenefitBody struct {
 	EmployeeDeduction interface{} `json:"employee_deduction"`
 	FinchCode         string      `json:"finch_code"`
 	// Type for HSA contribution limit if the benefit is a HSA.
-	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit" api:"nullable"`
 	Message              string                                    `json:"message"`
 	Name                 string                                    `json:"name"`
 	JSON                 individualBenefitBodyJSON                 `json:"-"`
@@ -201,19 +201,19 @@ func init() {
 
 type IndividualBenefitBodyObject struct {
 	// If the benefit supports annual maximum, the amount in cents for this individual.
-	AnnualMaximum int64 `json:"annual_maximum,required,nullable"`
+	AnnualMaximum int64 `json:"annual_maximum" api:"required,nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp bool `json:"catch_up,required,nullable"`
+	CatchUp bool `json:"catch_up" api:"required,nullable"`
 	// Company contribution configuration. Supports fixed amounts (in cents),
 	// percentage-based contributions (in basis points where 100 = 1%), or tiered
 	// matching structures.
-	CompanyContribution IndividualBenefitBodyObjectCompanyContribution `json:"company_contribution,required,nullable"`
+	CompanyContribution IndividualBenefitBodyObjectCompanyContribution `json:"company_contribution" api:"required,nullable"`
 	// Employee deduction configuration. Supports both fixed amounts (in cents) and
 	// percentage-based contributions (in basis points where 100 = 1%).
-	EmployeeDeduction IndividualBenefitBodyObjectEmployeeDeduction `json:"employee_deduction,required,nullable"`
+	EmployeeDeduction IndividualBenefitBodyObjectEmployeeDeduction `json:"employee_deduction" api:"required,nullable"`
 	// Type for HSA contribution limit if the benefit is a HSA.
-	HsaContributionLimit IndividualBenefitBodyObjectHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	HsaContributionLimit IndividualBenefitBodyObjectHsaContributionLimit `json:"hsa_contribution_limit" api:"nullable"`
 	JSON                 individualBenefitBodyObjectJSON                 `json:"-"`
 }
 
@@ -245,7 +245,7 @@ func (r IndividualBenefitBodyObject) implementsIndividualBenefitBody() {}
 type IndividualBenefitBodyObjectCompanyContribution struct {
 	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
 	// (amount in basis points), or "tiered" (multi-tier matching).
-	Type IndividualBenefitBodyObjectCompanyContributionType `json:"type,required"`
+	Type IndividualBenefitBodyObjectCompanyContributionType `json:"type" api:"required"`
 	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
 	// where 100 = 1%). Not used for type=tiered.
 	Amount int64 `json:"amount"`
@@ -323,10 +323,10 @@ func init() {
 type IndividualBenefitBodyObjectCompanyContributionObject struct {
 	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
 	// where 100 = 1%). Not used for type=tiered.
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
 	// (amount in basis points), or "tiered" (multi-tier matching).
-	Type IndividualBenefitBodyObjectCompanyContributionObjectType `json:"type,required"`
+	Type IndividualBenefitBodyObjectCompanyContributionObjectType `json:"type" api:"required"`
 	JSON individualBenefitBodyObjectCompanyContributionObjectJSON `json:"-"`
 }
 
@@ -389,10 +389,10 @@ func (r IndividualBenefitBodyObjectCompanyContributionType) IsKnown() bool {
 type IndividualBenefitBodyObjectEmployeeDeduction struct {
 	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
 	// where 100 = 1%).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
 	// (amount in basis points).
-	Type  IndividualBenefitBodyObjectEmployeeDeductionType `json:"type,required"`
+	Type  IndividualBenefitBodyObjectEmployeeDeductionType `json:"type" api:"required"`
 	JSON  individualBenefitBodyObjectEmployeeDeductionJSON `json:"-"`
 	union IndividualBenefitBodyObjectEmployeeDeductionUnion
 }
@@ -456,10 +456,10 @@ func init() {
 type IndividualBenefitBodyObjectEmployeeDeductionObject struct {
 	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
 	// where 100 = 1%).
-	Amount int64 `json:"amount,required"`
+	Amount int64 `json:"amount" api:"required"`
 	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
 	// (amount in basis points).
-	Type IndividualBenefitBodyObjectEmployeeDeductionObjectType `json:"type,required"`
+	Type IndividualBenefitBodyObjectEmployeeDeductionObjectType `json:"type" api:"required"`
 	JSON individualBenefitBodyObjectEmployeeDeductionObjectJSON `json:"-"`
 }
 
@@ -533,9 +533,9 @@ func (r IndividualBenefitBodyObjectHsaContributionLimit) IsKnown() bool {
 }
 
 type IndividualBenefitBodyBatchError struct {
-	Code      float64                             `json:"code,required"`
-	Message   string                              `json:"message,required"`
-	Name      string                              `json:"name,required"`
+	Code      float64                             `json:"code" api:"required"`
+	Message   string                              `json:"message" api:"required"`
+	Name      string                              `json:"name" api:"required"`
 	FinchCode string                              `json:"finch_code"`
 	JSON      individualBenefitBodyBatchErrorJSON `json:"-"`
 }
@@ -578,7 +578,7 @@ func (r IndividualBenefitBodyHsaContributionLimit) IsKnown() bool {
 }
 
 type UnenrolledIndividualBenefitResponse struct {
-	JobID string                                  `json:"job_id,required" format:"uuid"`
+	JobID string                                  `json:"job_id" api:"required" format:"uuid"`
 	JSON  unenrolledIndividualBenefitResponseJSON `json:"-"`
 }
 
@@ -600,8 +600,8 @@ func (r unenrolledIndividualBenefitResponseJSON) RawJSON() string {
 
 type HRISBenefitIndividualEnrolledIDsResponse struct {
 	// The id of the benefit.
-	BenefitID     string                                       `json:"benefit_id,required" format:"uuid"`
-	IndividualIDs []string                                     `json:"individual_ids,required" format:"uuid"`
+	BenefitID     string                                       `json:"benefit_id" api:"required" format:"uuid"`
+	IndividualIDs []string                                     `json:"individual_ids" api:"required" format:"uuid"`
 	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON `json:"-"`
 }
 

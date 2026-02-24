@@ -49,9 +49,9 @@ func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option
 
 type ManualAsyncJob struct {
 	// Specific information about the job, such as individual statuses for batch jobs.
-	Body   []interface{}        `json:"body,required,nullable"`
-	JobID  string               `json:"job_id,required" format:"uuid"`
-	Status ManualAsyncJobStatus `json:"status,required"`
+	Body   []interface{}        `json:"body" api:"required,nullable"`
+	JobID  string               `json:"job_id" api:"required" format:"uuid"`
+	Status ManualAsyncJobStatus `json:"status" api:"required"`
 	JSON   manualAsyncJobJSON   `json:"-"`
 }
 

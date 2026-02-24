@@ -200,19 +200,19 @@ func (r BenefitType) IsKnown() bool {
 // Each benefit type and their supported features. If the benefit type is not
 // supported, the property will be null
 type BenefitsSupport struct {
-	Commuter         BenefitFeaturesAndOperations            `json:"commuter,nullable"`
-	CustomPostTax    BenefitFeaturesAndOperations            `json:"custom_post_tax,nullable"`
-	CustomPreTax     BenefitFeaturesAndOperations            `json:"custom_pre_tax,nullable"`
-	FsaDependentCare BenefitFeaturesAndOperations            `json:"fsa_dependent_care,nullable"`
-	FsaMedical       BenefitFeaturesAndOperations            `json:"fsa_medical,nullable"`
-	HsaPost          BenefitFeaturesAndOperations            `json:"hsa_post,nullable"`
-	HsaPre           BenefitFeaturesAndOperations            `json:"hsa_pre,nullable"`
-	S125Dental       BenefitFeaturesAndOperations            `json:"s125_dental,nullable"`
-	S125Medical      BenefitFeaturesAndOperations            `json:"s125_medical,nullable"`
-	S125Vision       BenefitFeaturesAndOperations            `json:"s125_vision,nullable"`
-	Simple           BenefitFeaturesAndOperations            `json:"simple,nullable"`
-	SimpleIRA        BenefitFeaturesAndOperations            `json:"simple_ira,nullable"`
-	ExtraFields      map[string]BenefitFeaturesAndOperations `json:"-,extras"`
+	Commuter         BenefitFeaturesAndOperations            `json:"commuter" api:"nullable"`
+	CustomPostTax    BenefitFeaturesAndOperations            `json:"custom_post_tax" api:"nullable"`
+	CustomPreTax     BenefitFeaturesAndOperations            `json:"custom_pre_tax" api:"nullable"`
+	FsaDependentCare BenefitFeaturesAndOperations            `json:"fsa_dependent_care" api:"nullable"`
+	FsaMedical       BenefitFeaturesAndOperations            `json:"fsa_medical" api:"nullable"`
+	HsaPost          BenefitFeaturesAndOperations            `json:"hsa_post" api:"nullable"`
+	HsaPre           BenefitFeaturesAndOperations            `json:"hsa_pre" api:"nullable"`
+	S125Dental       BenefitFeaturesAndOperations            `json:"s125_dental" api:"nullable"`
+	S125Medical      BenefitFeaturesAndOperations            `json:"s125_medical" api:"nullable"`
+	S125Vision       BenefitFeaturesAndOperations            `json:"s125_vision" api:"nullable"`
+	Simple           BenefitFeaturesAndOperations            `json:"simple" api:"nullable"`
+	SimpleIRA        BenefitFeaturesAndOperations            `json:"simple_ira" api:"nullable"`
+	ExtraFields      map[string]BenefitFeaturesAndOperations `json:"-" api:"extrafields"`
 	JSON             benefitsSupportJSON                     `json:"-"`
 }
 
@@ -244,14 +244,14 @@ func (r benefitsSupportJSON) RawJSON() string {
 
 type CompanyBenefit struct {
 	// The id of the benefit.
-	BenefitID   string `json:"benefit_id,required" format:"uuid"`
-	Description string `json:"description,required,nullable"`
+	BenefitID   string `json:"benefit_id" api:"required" format:"uuid"`
+	Description string `json:"description" api:"required,nullable"`
 	// The frequency of the benefit deduction/contribution.
-	Frequency BenefitFrequency `json:"frequency,required,nullable"`
+	Frequency BenefitFrequency `json:"frequency" api:"required,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,required,nullable"`
+	Type BenefitType `json:"type" api:"required,nullable"`
 	// The company match for this benefit.
-	CompanyContribution CompanyBenefitCompanyContribution `json:"company_contribution,nullable"`
+	CompanyContribution CompanyBenefitCompanyContribution `json:"company_contribution" api:"nullable"`
 	JSON                companyBenefitJSON                `json:"-"`
 }
 
@@ -276,8 +276,8 @@ func (r companyBenefitJSON) RawJSON() string {
 
 // The company match for this benefit.
 type CompanyBenefitCompanyContribution struct {
-	Tiers []CompanyBenefitCompanyContributionTier `json:"tiers,required"`
-	Type  CompanyBenefitCompanyContributionType   `json:"type,required"`
+	Tiers []CompanyBenefitCompanyContributionTier `json:"tiers" api:"required"`
+	Type  CompanyBenefitCompanyContributionType   `json:"type" api:"required"`
 	JSON  companyBenefitCompanyContributionJSON   `json:"-"`
 }
 
@@ -299,8 +299,8 @@ func (r companyBenefitCompanyContributionJSON) RawJSON() string {
 }
 
 type CompanyBenefitCompanyContributionTier struct {
-	Match     int64                                     `json:"match,required"`
-	Threshold int64                                     `json:"threshold,required"`
+	Match     int64                                     `json:"match" api:"required"`
+	Threshold int64                                     `json:"threshold" api:"required"`
 	JSON      companyBenefitCompanyContributionTierJSON `json:"-"`
 }
 
@@ -337,8 +337,8 @@ func (r CompanyBenefitCompanyContributionType) IsKnown() bool {
 
 type CreateCompanyBenefitsResponse struct {
 	// The id of the benefit.
-	BenefitID string                            `json:"benefit_id,required" format:"uuid"`
-	JobID     string                            `json:"job_id,required" format:"uuid"`
+	BenefitID string                            `json:"benefit_id" api:"required" format:"uuid"`
+	JobID     string                            `json:"job_id" api:"required" format:"uuid"`
 	JSON      createCompanyBenefitsResponseJSON `json:"-"`
 }
 
@@ -384,22 +384,22 @@ func (r supportPerBenefitTypeJSON) RawJSON() string {
 
 type SupportedBenefit struct {
 	// Whether the provider supports an annual maximum for this benefit.
-	AnnualMaximum bool `json:"annual_maximum,required,nullable"`
+	AnnualMaximum bool `json:"annual_maximum" api:"required,nullable"`
 	// Supported contribution types. An empty array indicates contributions are not
 	// supported.
-	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution,required,nullable"`
-	Description         string                                `json:"description,required,nullable"`
+	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution" api:"required,nullable"`
+	Description         string                                `json:"description" api:"required,nullable"`
 	// Supported deduction types. An empty array indicates deductions are not
 	// supported.
-	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction,required,nullable"`
+	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction" api:"required,nullable"`
 	// The list of frequencies supported by the provider for this benefit
-	Frequencies []BenefitFrequency `json:"frequencies,required"`
+	Frequencies []BenefitFrequency `json:"frequencies" api:"required"`
 	// Whether the provider supports catch up for this benefit. This field will only be
 	// true for retirement benefits.
-	CatchUp bool `json:"catch_up,nullable"`
+	CatchUp bool `json:"catch_up" api:"nullable"`
 	// Whether the provider supports HSA contribution limits. Empty if this feature is
 	// not supported for the benefit. This array only has values for HSA benefits.
-	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit" api:"nullable"`
 	JSON                 supportedBenefitJSON                   `json:"-"`
 }
 
@@ -473,8 +473,8 @@ func (r SupportedBenefitHsaContributionLimit) IsKnown() bool {
 
 type UpdateCompanyBenefitResponse struct {
 	// The id of the benefit.
-	BenefitID string                           `json:"benefit_id,required" format:"uuid"`
-	JobID     string                           `json:"job_id,required" format:"uuid"`
+	BenefitID string                           `json:"benefit_id" api:"required" format:"uuid"`
+	JobID     string                           `json:"job_id" api:"required" format:"uuid"`
 	JSON      updateCompanyBenefitResponseJSON `json:"-"`
 }
 
@@ -524,8 +524,8 @@ func (r HRISBenefitNewParams) URLQuery() (v url.Values) {
 
 // The company match for this benefit.
 type HRISBenefitNewParamsCompanyContribution struct {
-	Tiers param.Field[[]HRISBenefitNewParamsCompanyContributionTier] `json:"tiers,required"`
-	Type  param.Field[HRISBenefitNewParamsCompanyContributionType]   `json:"type,required"`
+	Tiers param.Field[[]HRISBenefitNewParamsCompanyContributionTier] `json:"tiers" api:"required"`
+	Type  param.Field[HRISBenefitNewParamsCompanyContributionType]   `json:"type" api:"required"`
 }
 
 func (r HRISBenefitNewParamsCompanyContribution) MarshalJSON() (data []byte, err error) {
@@ -533,8 +533,8 @@ func (r HRISBenefitNewParamsCompanyContribution) MarshalJSON() (data []byte, err
 }
 
 type HRISBenefitNewParamsCompanyContributionTier struct {
-	Match     param.Field[int64] `json:"match,required"`
-	Threshold param.Field[int64] `json:"threshold,required"`
+	Match     param.Field[int64] `json:"match" api:"required"`
+	Threshold param.Field[int64] `json:"threshold" api:"required"`
 }
 
 func (r HRISBenefitNewParamsCompanyContributionTier) MarshalJSON() (data []byte, err error) {

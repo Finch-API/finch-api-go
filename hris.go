@@ -50,14 +50,14 @@ func NewHRISService(opts ...option.RequestOption) (r *HRISService) {
 // depending on what information the provider returns.
 type Income struct {
 	// The income amount in cents.
-	Amount int64 `json:"amount,required,nullable"`
+	Amount int64 `json:"amount" api:"required,nullable"`
 	// The currency code.
-	Currency string `json:"currency,required,nullable"`
+	Currency string `json:"currency" api:"required,nullable"`
 	// The date the income amount went into effect.
-	EffectiveDate time.Time `json:"effective_date,required,nullable" format:"date"`
+	EffectiveDate time.Time `json:"effective_date" api:"required,nullable" format:"date"`
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
-	Unit IncomeUnit `json:"unit,required,nullable"`
+	Unit IncomeUnit `json:"unit" api:"required,nullable"`
 	JSON incomeJSON `json:"-"`
 }
 
@@ -108,14 +108,14 @@ func (r IncomeUnit) IsKnown() bool {
 // depending on what information the provider returns.
 type IncomeParam struct {
 	// The income amount in cents.
-	Amount param.Field[int64] `json:"amount,required"`
+	Amount param.Field[int64] `json:"amount" api:"required"`
 	// The currency code.
-	Currency param.Field[string] `json:"currency,required"`
+	Currency param.Field[string] `json:"currency" api:"required"`
 	// The date the income amount went into effect.
-	EffectiveDate param.Field[time.Time] `json:"effective_date,required" format:"date"`
+	EffectiveDate param.Field[time.Time] `json:"effective_date" api:"required" format:"date"`
 	// The income unit of payment. Options: `yearly`, `quarterly`, `monthly`,
 	// `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.
-	Unit param.Field[IncomeUnit] `json:"unit,required"`
+	Unit param.Field[IncomeUnit] `json:"unit" api:"required"`
 }
 
 func (r IncomeParam) MarshalJSON() (data []byte, err error) {
@@ -124,19 +124,19 @@ func (r IncomeParam) MarshalJSON() (data []byte, err error) {
 
 type Location struct {
 	// City, district, suburb, town, or village.
-	City string `json:"city,required,nullable"`
+	City string `json:"city" api:"required,nullable"`
 	// The 2-letter ISO 3166 country code.
-	Country string `json:"country,required,nullable"`
+	Country string `json:"country" api:"required,nullable"`
 	// Street address or PO box.
-	Line1 string `json:"line1,required,nullable"`
+	Line1 string `json:"line1" api:"required,nullable"`
 	// Apartment, suite, unit, or building.
-	Line2 string `json:"line2,required,nullable"`
+	Line2 string `json:"line2" api:"required,nullable"`
 	// The postal code or zip code.
-	PostalCode string `json:"postal_code,required,nullable"`
+	PostalCode string `json:"postal_code" api:"required,nullable"`
 	// The state code.
-	State    string       `json:"state,required,nullable"`
-	Name     string       `json:"name,nullable"`
-	SourceID string       `json:"source_id,nullable"`
+	State    string       `json:"state" api:"required,nullable"`
+	Name     string       `json:"name" api:"nullable"`
+	SourceID string       `json:"source_id" api:"nullable"`
 	JSON     locationJSON `json:"-"`
 }
 
@@ -164,17 +164,17 @@ func (r locationJSON) RawJSON() string {
 
 type LocationParam struct {
 	// City, district, suburb, town, or village.
-	City param.Field[string] `json:"city,required"`
+	City param.Field[string] `json:"city" api:"required"`
 	// The 2-letter ISO 3166 country code.
-	Country param.Field[string] `json:"country,required"`
+	Country param.Field[string] `json:"country" api:"required"`
 	// Street address or PO box.
-	Line1 param.Field[string] `json:"line1,required"`
+	Line1 param.Field[string] `json:"line1" api:"required"`
 	// Apartment, suite, unit, or building.
-	Line2 param.Field[string] `json:"line2,required"`
+	Line2 param.Field[string] `json:"line2" api:"required"`
 	// The postal code or zip code.
-	PostalCode param.Field[string] `json:"postal_code,required"`
+	PostalCode param.Field[string] `json:"postal_code" api:"required"`
 	// The state code.
-	State    param.Field[string] `json:"state,required"`
+	State    param.Field[string] `json:"state" api:"required"`
 	Name     param.Field[string] `json:"name"`
 	SourceID param.Field[string] `json:"source_id"`
 }
@@ -185,8 +185,8 @@ func (r LocationParam) MarshalJSON() (data []byte, err error) {
 
 type Money struct {
 	// Amount for money object (in cents)
-	Amount   int64     `json:"amount,required,nullable"`
-	Currency string    `json:"currency,required"`
+	Amount   int64     `json:"amount" api:"required,nullable"`
+	Currency string    `json:"currency" api:"required"`
 	JSON     moneyJSON `json:"-"`
 }
 

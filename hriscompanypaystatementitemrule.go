@@ -109,9 +109,9 @@ type HRISCompanyPayStatementItemRuleNewResponse struct {
 	// The datetime when the rule was created.
 	CreatedAt time.Time `json:"created_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleNewResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -236,9 +236,9 @@ type HRISCompanyPayStatementItemRuleUpdateResponse struct {
 	// The datetime when the rule was created.
 	CreatedAt time.Time `json:"created_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleUpdateResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -364,9 +364,9 @@ type HRISCompanyPayStatementItemRuleListResponse struct {
 	// The datetime when the rule was created.
 	CreatedAt time.Time `json:"created_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleListResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -493,9 +493,9 @@ type HRISCompanyPayStatementItemRuleDeleteResponse struct {
 	// The datetime when the rule was deleted.
 	DeletedAt time.Time `json:"deleted_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleDeleteResponseEntityType `json:"entity_type"`
 	// The priority of the rule.

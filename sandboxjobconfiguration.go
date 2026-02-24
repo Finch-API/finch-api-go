@@ -51,8 +51,8 @@ func (r *SandboxJobConfigurationService) Update(ctx context.Context, body Sandbo
 }
 
 type SandboxJobConfiguration struct {
-	CompletionStatus SandboxJobConfigurationCompletionStatus `json:"completion_status,required"`
-	Type             SandboxJobConfigurationType             `json:"type,required"`
+	CompletionStatus SandboxJobConfigurationCompletionStatus `json:"completion_status" api:"required"`
+	Type             SandboxJobConfigurationType             `json:"type" api:"required"`
 	JSON             sandboxJobConfigurationJSON             `json:"-"`
 }
 
@@ -105,8 +105,8 @@ func (r SandboxJobConfigurationType) IsKnown() bool {
 }
 
 type SandboxJobConfigurationUpdateParams struct {
-	CompletionStatus param.Field[SandboxJobConfigurationUpdateParamsCompletionStatus] `json:"completion_status,required"`
-	Type             param.Field[SandboxJobConfigurationUpdateParamsType]             `json:"type,required"`
+	CompletionStatus param.Field[SandboxJobConfigurationUpdateParamsCompletionStatus] `json:"completion_status" api:"required"`
+	Type             param.Field[SandboxJobConfigurationUpdateParamsType]             `json:"type" api:"required"`
 }
 
 func (r SandboxJobConfigurationUpdateParams) MarshalJSON() (data []byte, err error) {

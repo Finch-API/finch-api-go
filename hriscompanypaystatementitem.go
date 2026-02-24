@@ -66,11 +66,11 @@ func (r *HRISCompanyPayStatementItemService) ListAutoPaging(ctx context.Context,
 
 type HRISCompanyPayStatementItemListResponse struct {
 	// The attributes of the pay statement item.
-	Attributes HRISCompanyPayStatementItemListResponseAttributes `json:"attributes,required"`
+	Attributes HRISCompanyPayStatementItemListResponseAttributes `json:"attributes" api:"required"`
 	// The category of the pay statement item.
-	Category HRISCompanyPayStatementItemListResponseCategory `json:"category,required"`
+	Category HRISCompanyPayStatementItemListResponseCategory `json:"category" api:"required"`
 	// The name of the pay statement item.
-	Name string                                      `json:"name,required"`
+	Name string                                      `json:"name" api:"required"`
 	JSON hrisCompanyPayStatementItemListResponseJSON `json:"-"`
 }
 
@@ -96,15 +96,15 @@ func (r hrisCompanyPayStatementItemListResponseJSON) RawJSON() string {
 type HRISCompanyPayStatementItemListResponseAttributes struct {
 	// The metadata of the pay statement item derived by the rules engine if available.
 	// Each attribute will be a key-value pair defined by a rule.
-	Metadata map[string]interface{} `json:"metadata,required,nullable"`
+	Metadata map[string]interface{} `json:"metadata" api:"required,nullable"`
 	// `true` if the amount is paid by the employers. This field is only available for
 	// taxes.
-	Employer bool `json:"employer,nullable"`
+	Employer bool `json:"employer" api:"nullable"`
 	// `true` if the pay statement item is pre-tax. This field is only available for
 	// employee deductions.
-	PreTax bool `json:"pre_tax,nullable"`
+	PreTax bool `json:"pre_tax" api:"nullable"`
 	// The type of the pay statement item.
-	Type string                                                `json:"type,nullable"`
+	Type string                                                `json:"type" api:"nullable"`
 	JSON hrisCompanyPayStatementItemListResponseAttributesJSON `json:"-"`
 }
 

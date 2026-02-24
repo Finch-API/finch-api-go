@@ -62,22 +62,22 @@ func (r *HRISPaymentService) ListAutoPaging(ctx context.Context, query HRISPayme
 
 type Payment struct {
 	// The unique id for the payment.
-	ID            string `json:"id,required" format:"uuid"`
-	CompanyDebit  Money  `json:"company_debit,required,nullable"`
-	DebitDate     string `json:"debit_date,required,nullable"`
-	EmployeeTaxes Money  `json:"employee_taxes,required,nullable"`
-	EmployerTaxes Money  `json:"employer_taxes,required,nullable"`
-	GrossPay      Money  `json:"gross_pay,required,nullable"`
+	ID            string `json:"id" api:"required" format:"uuid"`
+	CompanyDebit  Money  `json:"company_debit" api:"required,nullable"`
+	DebitDate     string `json:"debit_date" api:"required,nullable"`
+	EmployeeTaxes Money  `json:"employee_taxes" api:"required,nullable"`
+	EmployerTaxes Money  `json:"employer_taxes" api:"required,nullable"`
+	GrossPay      Money  `json:"gross_pay" api:"required,nullable"`
 	// Array of every individual on this payment.
-	IndividualIDs []string `json:"individual_ids,required,nullable" format:"uuid"`
-	NetPay        Money    `json:"net_pay,required,nullable"`
-	PayDate       string   `json:"pay_date,required,nullable"`
+	IndividualIDs []string `json:"individual_ids" api:"required,nullable" format:"uuid"`
+	NetPay        Money    `json:"net_pay" api:"required,nullable"`
+	PayDate       string   `json:"pay_date" api:"required,nullable"`
 	// List of pay frequencies associated with this payment.
-	PayFrequencies []PaymentPayFrequency `json:"pay_frequencies,required,nullable"`
+	PayFrequencies []PaymentPayFrequency `json:"pay_frequencies" api:"required,nullable"`
 	// Array of the Finch id (uuidv4) of every pay group associated with this payment.
-	PayGroupIDs []string `json:"pay_group_ids,required,nullable" format:"uuid"`
+	PayGroupIDs []string `json:"pay_group_ids" api:"required,nullable" format:"uuid"`
 	// The pay period object.
-	PayPeriod PaymentPayPeriod `json:"pay_period,required,nullable"`
+	PayPeriod PaymentPayPeriod `json:"pay_period" api:"required,nullable"`
 	JSON      paymentJSON      `json:"-"`
 }
 
@@ -131,8 +131,8 @@ func (r PaymentPayFrequency) IsKnown() bool {
 
 // The pay period object.
 type PaymentPayPeriod struct {
-	EndDate   string               `json:"end_date,required,nullable"`
-	StartDate string               `json:"start_date,required,nullable"`
+	EndDate   string               `json:"end_date" api:"required,nullable"`
+	StartDate string               `json:"start_date" api:"required,nullable"`
 	JSON      paymentPayPeriodJSON `json:"-"`
 }
 
@@ -156,10 +156,10 @@ func (r paymentPayPeriodJSON) RawJSON() string {
 type HRISPaymentListParams struct {
 	// The end date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
 	// format. Filters payments by their **pay_date** field.
-	EndDate param.Field[time.Time] `query:"end_date,required" format:"date"`
+	EndDate param.Field[time.Time] `query:"end_date" api:"required" format:"date"`
 	// The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
 	// format. Filters payments by their **pay_date** field.
-	StartDate param.Field[time.Time] `query:"start_date,required" format:"date"`
+	StartDate param.Field[time.Time] `query:"start_date" api:"required" format:"date"`
 	// The entity IDs to specify which entities' data to access.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }

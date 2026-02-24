@@ -51,41 +51,41 @@ type SandboxEmploymentUpdateResponse struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" format:"uuid"`
 	// Worker's compensation classification code for this employee
-	ClassCode string `json:"class_code,nullable"`
+	ClassCode string `json:"class_code" api:"nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
 	// employer in the system. Custom fields are not currently supported for assisted
 	// connections.
-	CustomFields []SandboxEmploymentUpdateResponseCustomField `json:"custom_fields,nullable"`
+	CustomFields []SandboxEmploymentUpdateResponseCustomField `json:"custom_fields" api:"nullable"`
 	// The department object.
-	Department SandboxEmploymentUpdateResponseDepartment `json:"department,nullable"`
+	Department SandboxEmploymentUpdateResponseDepartment `json:"department" api:"nullable"`
 	// The employment object.
-	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment,nullable"`
+	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment" api:"nullable"`
 	// The detailed employment status of the individual.
-	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status,nullable"`
-	EndDate          string                                          `json:"end_date,nullable"`
+	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status" api:"nullable"`
+	EndDate          string                                          `json:"end_date" api:"nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
-	Income Income `json:"income,nullable"`
+	Income Income `json:"income" api:"nullable"`
 	// The array of income history.
-	IncomeHistory []Income `json:"income_history,nullable"`
+	IncomeHistory []Income `json:"income_history" api:"nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
+	IsActive bool `json:"is_active" api:"nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,nullable"`
-	Location         Location `json:"location,nullable"`
+	LastName         string   `json:"last_name" api:"nullable"`
+	LatestRehireDate string   `json:"latest_rehire_date" api:"nullable"`
+	Location         Location `json:"location" api:"nullable"`
 	// The manager object representing the manager of the individual within the org.
-	Manager SandboxEmploymentUpdateResponseManager `json:"manager,nullable"`
+	Manager SandboxEmploymentUpdateResponseManager `json:"manager" api:"nullable"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	// The source system's unique employment identifier for this individual
-	SourceID  string `json:"source_id,nullable"`
-	StartDate string `json:"start_date,nullable"`
+	SourceID  string `json:"source_id" api:"nullable"`
+	StartDate string `json:"start_date" api:"nullable"`
 	// The current title of the individual.
-	Title string                              `json:"title,nullable"`
+	Title string                              `json:"title" api:"nullable"`
 	JSON  sandboxEmploymentUpdateResponseJSON `json:"-"`
 }
 
@@ -124,7 +124,7 @@ func (r sandboxEmploymentUpdateResponseJSON) RawJSON() string {
 }
 
 type SandboxEmploymentUpdateResponseCustomField struct {
-	Name  string                                         `json:"name,nullable"`
+	Name  string                                         `json:"name" api:"nullable"`
 	Value interface{}                                    `json:"value"`
 	JSON  sandboxEmploymentUpdateResponseCustomFieldJSON `json:"-"`
 }
@@ -149,7 +149,7 @@ func (r sandboxEmploymentUpdateResponseCustomFieldJSON) RawJSON() string {
 // The department object.
 type SandboxEmploymentUpdateResponseDepartment struct {
 	// The name of the department associated with the individual.
-	Name string                                        `json:"name,nullable"`
+	Name string                                        `json:"name" api:"nullable"`
 	JSON sandboxEmploymentUpdateResponseDepartmentJSON `json:"-"`
 }
 
@@ -173,9 +173,9 @@ func (r sandboxEmploymentUpdateResponseDepartmentJSON) RawJSON() string {
 type SandboxEmploymentUpdateResponseEmployment struct {
 	// The secondary employment type of the individual. Options: `full_time`,
 	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
-	Subtype SandboxEmploymentUpdateResponseEmploymentSubtype `json:"subtype,nullable"`
+	Subtype SandboxEmploymentUpdateResponseEmploymentSubtype `json:"subtype" api:"nullable"`
 	// The main employment type of the individual.
-	Type SandboxEmploymentUpdateResponseEmploymentType `json:"type,nullable"`
+	Type SandboxEmploymentUpdateResponseEmploymentType `json:"type" api:"nullable"`
 	JSON sandboxEmploymentUpdateResponseEmploymentJSON `json:"-"`
 }
 

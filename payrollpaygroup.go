@@ -76,12 +76,12 @@ func (r *PayrollPayGroupService) ListAutoPaging(ctx context.Context, query Payro
 
 type PayrollPayGroupGetResponse struct {
 	// Finch id (uuidv4) for the pay group
-	ID            string   `json:"id,required" format:"uuid"`
-	IndividualIDs []string `json:"individual_ids,required" format:"uuid"`
+	ID            string   `json:"id" api:"required" format:"uuid"`
+	IndividualIDs []string `json:"individual_ids" api:"required" format:"uuid"`
 	// Name of the pay group
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// List of pay frequencies associated with this pay group
-	PayFrequencies []PayrollPayGroupGetResponsePayFrequency `json:"pay_frequencies,required"`
+	PayFrequencies []PayrollPayGroupGetResponsePayFrequency `json:"pay_frequencies" api:"required"`
 	JSON           payrollPayGroupGetResponseJSON           `json:"-"`
 }
 
@@ -128,11 +128,11 @@ func (r PayrollPayGroupGetResponsePayFrequency) IsKnown() bool {
 
 type PayrollPayGroupListResponse struct {
 	// Finch id (uuidv4) for the pay group
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// Name of the pay group
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// List of pay frequencies associated with this pay group
-	PayFrequencies []PayrollPayGroupListResponsePayFrequency `json:"pay_frequencies,required"`
+	PayFrequencies []PayrollPayGroupListResponsePayFrequency `json:"pay_frequencies" api:"required"`
 	JSON           payrollPayGroupListResponseJSON           `json:"-"`
 }
 
