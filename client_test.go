@@ -40,7 +40,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.HRIS.Directory.List(context.Background(), finchgo.HRISDirectoryListParams{})
+	_, _ = client.HRIS.Directory.List(context.Background(), finchgo.HRISDirectoryListParams{})
 	if userAgent != fmt.Sprintf("Finch/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
