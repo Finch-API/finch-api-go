@@ -38,7 +38,7 @@ func (r *SandboxDirectoryService) New(ctx context.Context, body SandboxDirectory
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/directory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxDirectoryNewResponse = interface{}

@@ -45,11 +45,11 @@ func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitI
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Get enrollment information for the given individuals.
@@ -60,7 +60,7 @@ func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, bene
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -86,11 +86,11 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, params, &res, opts...)
-	return
+	return res, err
 }
 
 type IndividualBenefit struct {

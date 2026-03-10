@@ -47,7 +47,7 @@ func (r *HRISBenefitService) New(ctx context.Context, params HRISBenefitNewParam
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/benefits"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
-	return
+	return res, err
 }
 
 // Lists deductions and contributions information for a given item
@@ -56,11 +56,11 @@ func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, query HR
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Updates an existing company-wide deduction or contribution
@@ -69,11 +69,11 @@ func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, param
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
-	return
+	return res, err
 }
 
 // List all company-wide deductions and contributions.

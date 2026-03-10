@@ -40,7 +40,7 @@ func (r *SandboxJobService) New(ctx context.Context, body SandboxJobNewParams, o
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxJobNewResponse struct {

@@ -38,7 +38,7 @@ func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewP
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "connect/sessions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Create a new Connect session for reauthenticating an existing connection
@@ -47,7 +47,7 @@ func (r *ConnectSessionService) Reauthenticate(ctx context.Context, body Connect
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "connect/sessions/reauthenticate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type ConnectSessionNewResponse struct {

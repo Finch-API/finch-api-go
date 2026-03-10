@@ -38,7 +38,7 @@ func (r *SandboxJobConfigurationService) Get(ctx context.Context, opts ...option
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs/configuration"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update configurations for sandbox jobs
@@ -47,7 +47,7 @@ func (r *SandboxJobConfigurationService) Update(ctx context.Context, body Sandbo
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs/configuration"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxJobConfiguration struct {

@@ -43,11 +43,11 @@ func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, que
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if payGroupID == "" {
 		err = errors.New("missing required pay_group_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/pay-groups/%s", payGroupID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Read company pay groups and frequencies

@@ -44,7 +44,7 @@ func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForw
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "forward"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type RequestForwardingForwardResponse struct {

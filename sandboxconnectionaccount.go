@@ -39,7 +39,7 @@ func (r *SandboxConnectionAccountService) New(ctx context.Context, body SandboxC
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections/accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Update an existing sandbox account. Change the connection status to understand
@@ -49,7 +49,7 @@ func (r *SandboxConnectionAccountService) Update(ctx context.Context, body Sandb
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections/accounts"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxConnectionAccountNewResponse struct {

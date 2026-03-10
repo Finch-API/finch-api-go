@@ -38,7 +38,7 @@ func (r *SandboxCompanyService) Update(ctx context.Context, body SandboxCompanyU
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/company"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxCompanyUpdateResponse struct {
