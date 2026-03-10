@@ -65,6 +65,9 @@ type SandboxEmploymentUpdateResponse struct {
 	EndDate          string                                          `json:"end_date" api:"nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name" api:"nullable"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus SandboxEmploymentUpdateResponseFlsaStatus `json:"flsa_status" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -100,6 +103,7 @@ type sandboxEmploymentUpdateResponseJSON struct {
 	EmploymentStatus apijson.Field
 	EndDate          apijson.Field
 	FirstName        apijson.Field
+	FlsaStatus       apijson.Field
 	Income           apijson.Field
 	IncomeHistory    apijson.Field
 	IsActive         apijson.Field
@@ -254,6 +258,24 @@ func (r SandboxEmploymentUpdateResponseEmploymentStatus) IsKnown() bool {
 	return false
 }
 
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type SandboxEmploymentUpdateResponseFlsaStatus string
+
+const (
+	SandboxEmploymentUpdateResponseFlsaStatusExempt    SandboxEmploymentUpdateResponseFlsaStatus = "exempt"
+	SandboxEmploymentUpdateResponseFlsaStatusNonExempt SandboxEmploymentUpdateResponseFlsaStatus = "non_exempt"
+	SandboxEmploymentUpdateResponseFlsaStatusUnknown   SandboxEmploymentUpdateResponseFlsaStatus = "unknown"
+)
+
+func (r SandboxEmploymentUpdateResponseFlsaStatus) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateResponseFlsaStatusExempt, SandboxEmploymentUpdateResponseFlsaStatusNonExempt, SandboxEmploymentUpdateResponseFlsaStatusUnknown:
+		return true
+	}
+	return false
+}
+
 // The manager object representing the manager of the individual within the org.
 type SandboxEmploymentUpdateResponseManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
@@ -293,6 +315,9 @@ type SandboxEmploymentUpdateParams struct {
 	EndDate          param.Field[string]                                        `json:"end_date"`
 	// The legal first name of the individual.
 	FirstName param.Field[string] `json:"first_name"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus param.Field[SandboxEmploymentUpdateParamsFlsaStatus] `json:"flsa_status"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -405,6 +430,24 @@ const (
 func (r SandboxEmploymentUpdateParamsEmploymentStatus) IsKnown() bool {
 	switch r {
 	case SandboxEmploymentUpdateParamsEmploymentStatusActive, SandboxEmploymentUpdateParamsEmploymentStatusDeceased, SandboxEmploymentUpdateParamsEmploymentStatusLeave, SandboxEmploymentUpdateParamsEmploymentStatusOnboarding, SandboxEmploymentUpdateParamsEmploymentStatusPrehire, SandboxEmploymentUpdateParamsEmploymentStatusRetired, SandboxEmploymentUpdateParamsEmploymentStatusTerminated:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type SandboxEmploymentUpdateParamsFlsaStatus string
+
+const (
+	SandboxEmploymentUpdateParamsFlsaStatusExempt    SandboxEmploymentUpdateParamsFlsaStatus = "exempt"
+	SandboxEmploymentUpdateParamsFlsaStatusNonExempt SandboxEmploymentUpdateParamsFlsaStatus = "non_exempt"
+	SandboxEmploymentUpdateParamsFlsaStatusUnknown   SandboxEmploymentUpdateParamsFlsaStatus = "unknown"
+)
+
+func (r SandboxEmploymentUpdateParamsFlsaStatus) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateParamsFlsaStatusExempt, SandboxEmploymentUpdateParamsFlsaStatusNonExempt, SandboxEmploymentUpdateParamsFlsaStatusUnknown:
 		return true
 	}
 	return false

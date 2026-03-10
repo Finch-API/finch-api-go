@@ -52,6 +52,7 @@ func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
 			EndDate:          finchgo.F("end_date"),
 			Ethnicity:        finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEthnicityAsian),
 			FirstName:        finchgo.F("first_name"),
+			FlsaStatus:       finchgo.F(finchgo.SandboxDirectoryNewParamsBodyFlsaStatusExempt),
 			Gender:           finchgo.F(finchgo.SandboxDirectoryNewParamsBodyGenderFemale),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),

@@ -80,6 +80,9 @@ type EmploymentData struct {
 	FinchCode        string                         `json:"finch_code"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name" api:"nullable"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus EmploymentDataFlsaStatus `json:"flsa_status" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -123,6 +126,7 @@ type employmentDataJSON struct {
 	EndDate          apijson.Field
 	FinchCode        apijson.Field
 	FirstName        apijson.Field
+	FlsaStatus       apijson.Field
 	Income           apijson.Field
 	IncomeHistory    apijson.Field
 	IsActive         apijson.Field
@@ -197,6 +201,9 @@ type EmploymentDataObject struct {
 	EndDate          string                               `json:"end_date" api:"required,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name" api:"required,nullable"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus EmploymentDataObjectFlsaStatus `json:"flsa_status" api:"required,nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active" api:"required,nullable"`
 	// The legal last name of the individual.
@@ -239,6 +246,7 @@ type employmentDataObjectJSON struct {
 	EmploymentStatus apijson.Field
 	EndDate          apijson.Field
 	FirstName        apijson.Field
+	FlsaStatus       apijson.Field
 	IsActive         apijson.Field
 	LastName         apijson.Field
 	LatestRehireDate apijson.Field
@@ -374,6 +382,24 @@ func (r EmploymentDataObjectEmploymentStatus) IsKnown() bool {
 	return false
 }
 
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type EmploymentDataObjectFlsaStatus string
+
+const (
+	EmploymentDataObjectFlsaStatusExempt    EmploymentDataObjectFlsaStatus = "exempt"
+	EmploymentDataObjectFlsaStatusNonExempt EmploymentDataObjectFlsaStatus = "non_exempt"
+	EmploymentDataObjectFlsaStatusUnknown   EmploymentDataObjectFlsaStatus = "unknown"
+)
+
+func (r EmploymentDataObjectFlsaStatus) IsKnown() bool {
+	switch r {
+	case EmploymentDataObjectFlsaStatusExempt, EmploymentDataObjectFlsaStatusNonExempt, EmploymentDataObjectFlsaStatusUnknown:
+		return true
+	}
+	return false
+}
+
 // The manager object representing the manager of the individual within the org.
 type EmploymentDataObjectManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
@@ -504,6 +530,24 @@ const (
 func (r EmploymentDataEmploymentStatus) IsKnown() bool {
 	switch r {
 	case EmploymentDataEmploymentStatusActive, EmploymentDataEmploymentStatusDeceased, EmploymentDataEmploymentStatusLeave, EmploymentDataEmploymentStatusOnboarding, EmploymentDataEmploymentStatusPrehire, EmploymentDataEmploymentStatusRetired, EmploymentDataEmploymentStatusTerminated:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type EmploymentDataFlsaStatus string
+
+const (
+	EmploymentDataFlsaStatusExempt    EmploymentDataFlsaStatus = "exempt"
+	EmploymentDataFlsaStatusNonExempt EmploymentDataFlsaStatus = "non_exempt"
+	EmploymentDataFlsaStatusUnknown   EmploymentDataFlsaStatus = "unknown"
+)
+
+func (r EmploymentDataFlsaStatus) IsKnown() bool {
+	switch r {
+	case EmploymentDataFlsaStatusExempt, EmploymentDataFlsaStatusNonExempt, EmploymentDataFlsaStatusUnknown:
 		return true
 	}
 	return false
