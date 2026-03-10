@@ -47,6 +47,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			EmploymentStatus: finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentStatusActive),
 			EndDate:          finchgo.F("end_date"),
 			FirstName:        finchgo.F("first_name"),
+			FlsaStatus:       finchgo.F(finchgo.SandboxEmploymentUpdateParamsFlsaStatusExempt),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),

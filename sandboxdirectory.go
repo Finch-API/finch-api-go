@@ -77,6 +77,9 @@ type SandboxDirectoryNewParamsBody struct {
 	Ethnicity param.Field[SandboxDirectoryNewParamsBodyEthnicity] `json:"ethnicity"`
 	// The legal first name of the individual.
 	FirstName param.Field[string] `json:"first_name"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus param.Field[SandboxDirectoryNewParamsBodyFlsaStatus] `json:"flsa_status"`
 	// The gender of the individual.
 	Gender param.Field[SandboxDirectoryNewParamsBodyGender] `json:"gender"`
 	// The employee's income as reported by the provider. This may not always be
@@ -246,6 +249,24 @@ const (
 func (r SandboxDirectoryNewParamsBodyEthnicity) IsKnown() bool {
 	switch r {
 	case SandboxDirectoryNewParamsBodyEthnicityAsian, SandboxDirectoryNewParamsBodyEthnicityWhite, SandboxDirectoryNewParamsBodyEthnicityBlackOrAfricanAmerican, SandboxDirectoryNewParamsBodyEthnicityNativeHawaiianOrPacificIslander, SandboxDirectoryNewParamsBodyEthnicityAmericanIndianOrAlaskaNative, SandboxDirectoryNewParamsBodyEthnicityHispanicOrLatino, SandboxDirectoryNewParamsBodyEthnicityTwoOrMoreRaces, SandboxDirectoryNewParamsBodyEthnicityDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type SandboxDirectoryNewParamsBodyFlsaStatus string
+
+const (
+	SandboxDirectoryNewParamsBodyFlsaStatusExempt    SandboxDirectoryNewParamsBodyFlsaStatus = "exempt"
+	SandboxDirectoryNewParamsBodyFlsaStatusNonExempt SandboxDirectoryNewParamsBodyFlsaStatus = "non_exempt"
+	SandboxDirectoryNewParamsBodyFlsaStatusUnknown   SandboxDirectoryNewParamsBodyFlsaStatus = "unknown"
+)
+
+func (r SandboxDirectoryNewParamsBodyFlsaStatus) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyFlsaStatusExempt, SandboxDirectoryNewParamsBodyFlsaStatusNonExempt, SandboxDirectoryNewParamsBodyFlsaStatusUnknown:
 		return true
 	}
 	return false
