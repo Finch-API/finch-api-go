@@ -42,7 +42,7 @@ func (r *HRISCompanyService) Get(ctx context.Context, query HRISCompanyGetParams
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/company"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type Company struct {

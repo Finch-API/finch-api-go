@@ -40,7 +40,7 @@ func (r *AccountService) Disconnect(ctx context.Context, opts ...option.RequestO
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "disconnect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Read account information associated with an `access_token`
@@ -49,7 +49,7 @@ func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestO
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "introspect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type DisconnectResponse struct {

@@ -40,11 +40,11 @@ func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("jobs/manual/%s", jobID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type ManualAsyncJob struct {

@@ -68,7 +68,7 @@ func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, body HRISDir
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/directory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type IndividualsPage struct {

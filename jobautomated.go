@@ -56,7 +56,7 @@ func (r *JobAutomatedService) New(ctx context.Context, body JobAutomatedNewParam
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "jobs/automated"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Get an automated job by `job_id`.
@@ -65,11 +65,11 @@ func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...opt
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("jobs/automated/%s", jobID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Get all automated jobs. Automated jobs are completed by a machine. By default,
@@ -80,7 +80,7 @@ func (r *JobAutomatedService) List(ctx context.Context, query JobAutomatedListPa
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "jobs/automated"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type AutomatedAsyncJob struct {

@@ -40,7 +40,7 @@ func (r *SandboxConnectionService) New(ctx context.Context, body SandboxConnecti
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxConnectionNewResponse struct {

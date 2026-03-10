@@ -46,7 +46,7 @@ func (r *HRISDocumentService) List(ctx context.Context, query HRISDocumentListPa
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/documents"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // **Beta:** This endpoint is in beta and may change. Retrieve details of a
@@ -56,11 +56,11 @@ func (r *HRISDocumentService) Retreive(ctx context.Context, documentID string, q
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if documentID == "" {
 		err = errors.New("missing required document_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/documents/%s", documentID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type DocumentResponse struct {

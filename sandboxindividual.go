@@ -40,11 +40,11 @@ func (r *SandboxIndividualService) Update(ctx context.Context, individualID stri
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if individualID == "" {
 		err = errors.New("missing required individual_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("sandbox/individual/%s", individualID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxIndividualUpdateResponse struct {

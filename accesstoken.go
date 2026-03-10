@@ -73,7 +73,7 @@ func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams,
 
 	path := "auth/token"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 
 }
 

@@ -39,7 +39,7 @@ func (r *SandboxPaymentService) New(ctx context.Context, body SandboxPaymentNewP
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/payment"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxPaymentNewResponse struct {

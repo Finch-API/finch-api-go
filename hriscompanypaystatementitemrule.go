@@ -47,7 +47,7 @@ func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, params
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/pay-statement-item/rule"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a rule for a pay statement item.
@@ -56,11 +56,11 @@ func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, rul
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/pay-statement-item/rule/%s", ruleID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, params, &res, opts...)
-	return
+	return res, err
 }
 
 // List all rules of a connection account.
@@ -93,11 +93,11 @@ func (r *HRISCompanyPayStatementItemRuleService) Delete(ctx context.Context, rul
 	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/pay-statement-item/rule/%s", ruleID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type HRISCompanyPayStatementItemRuleNewResponse struct {
