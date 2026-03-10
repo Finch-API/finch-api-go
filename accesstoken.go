@@ -73,8 +73,11 @@ type CreateAccessTokenResponse struct {
 	CompanyID string `json:"company_id"`
 	// The ID of your customer you provided to Finch when a connect session was created
 	// for this connection
-	CustomerID string                        `json:"customer_id" api:"nullable"`
-	JSON       createAccessTokenResponseJSON `json:"-"`
+	CustomerID string `json:"customer_id" api:"nullable"`
+	// The name of your customer you provided to Finch when a connect session was
+	// created for this connection
+	CustomerName string                        `json:"customer_name" api:"nullable"`
+	JSON         createAccessTokenResponseJSON `json:"-"`
 }
 
 // createAccessTokenResponseJSON contains the JSON metadata for the struct
@@ -91,6 +94,7 @@ type createAccessTokenResponseJSON struct {
 	AccountID      apijson.Field
 	CompanyID      apijson.Field
 	CustomerID     apijson.Field
+	CustomerName   apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
