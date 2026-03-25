@@ -346,8 +346,10 @@ type IntrospectionEntity struct {
 	// The name of the entity (payroll provider company name)
 	Name string `json:"name" api:"required,nullable"`
 	// The source ID of the entity
-	SourceID string                  `json:"source_id" api:"required,nullable"`
-	JSON     introspectionEntityJSON `json:"-"`
+	SourceID string `json:"source_id" api:"required,nullable"`
+	// The status of the entity connection
+	Status IntrospectionEntitiesStatus `json:"status" api:"required"`
+	JSON   introspectionEntityJSON     `json:"-"`
 }
 
 // introspectionEntityJSON contains the JSON metadata for the struct
@@ -356,6 +358,7 @@ type introspectionEntityJSON struct {
 	ID          apijson.Field
 	Name        apijson.Field
 	SourceID    apijson.Field
+	Status      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -366,4 +369,25 @@ func (r *IntrospectionEntity) UnmarshalJSON(data []byte) (err error) {
 
 func (r introspectionEntityJSON) RawJSON() string {
 	return r.raw
+}
+
+// The status of the entity connection
+type IntrospectionEntitiesStatus string
+
+const (
+	IntrospectionEntitiesStatusPending             IntrospectionEntitiesStatus = "pending"
+	IntrospectionEntitiesStatusProcessing          IntrospectionEntitiesStatus = "processing"
+	IntrospectionEntitiesStatusConnected           IntrospectionEntitiesStatus = "connected"
+	IntrospectionEntitiesStatusErrorNoAccountSetup IntrospectionEntitiesStatus = "error_no_account_setup"
+	IntrospectionEntitiesStatusErrorPermissions    IntrospectionEntitiesStatus = "error_permissions"
+	IntrospectionEntitiesStatusReauth              IntrospectionEntitiesStatus = "reauth"
+	IntrospectionEntitiesStatusDisconnected        IntrospectionEntitiesStatus = "disconnected"
+)
+
+func (r IntrospectionEntitiesStatus) IsKnown() bool {
+	switch r {
+	case IntrospectionEntitiesStatusPending, IntrospectionEntitiesStatusProcessing, IntrospectionEntitiesStatusConnected, IntrospectionEntitiesStatusErrorNoAccountSetup, IntrospectionEntitiesStatusErrorPermissions, IntrospectionEntitiesStatusReauth, IntrospectionEntitiesStatusDisconnected:
+		return true
+	}
+	return false
 }
