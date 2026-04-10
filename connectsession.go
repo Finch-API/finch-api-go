@@ -105,7 +105,9 @@ type ConnectSessionNewParams struct {
 	CustomerID param.Field[string] `json:"customer_id" api:"required"`
 	// Name of the customer
 	CustomerName param.Field[string] `json:"customer_name" api:"required"`
-	// The Finch products to request access to
+	// The Finch products to request access to. Use `benefits` to access deductions
+	// endpoints — `deduction` is a deprecated alias that is still accepted but should
+	// not be combined with `benefits`.
 	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products" api:"required"`
 	// Email address of the customer
 	CustomerEmail param.Field[string] `json:"customer_email" format:"email"`
@@ -126,7 +128,6 @@ func (r ConnectSessionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The Finch products that can be requested during the Connect flow.
 type ConnectSessionNewParamsProduct string
 
 const (
@@ -202,7 +203,9 @@ type ConnectSessionReauthenticateParams struct {
 	// The number of minutes until the session expires (defaults to 43,200, which is 30
 	// days)
 	MinutesToExpire param.Field[int64] `json:"minutes_to_expire"`
-	// The products to request access to (optional for reauthentication)
+	// The products to request access to (optional for reauthentication). Use
+	// `benefits` to access deductions endpoints — `deduction` is a deprecated alias
+	// that is still accepted but should not be combined with `benefits`.
 	Products param.Field[[]ConnectSessionReauthenticateParamsProduct] `json:"products"`
 	// The URI to redirect to after the Connect flow is completed
 	RedirectUri param.Field[string] `json:"redirect_uri" format:"uri"`
@@ -212,7 +215,6 @@ func (r ConnectSessionReauthenticateParams) MarshalJSON() (data []byte, err erro
 	return apijson.MarshalRoot(r)
 }
 
-// The Finch products that can be requested during the Connect flow.
 type ConnectSessionReauthenticateParamsProduct string
 
 const (
