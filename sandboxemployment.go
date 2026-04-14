@@ -36,7 +36,8 @@ func NewSandboxEmploymentService(opts ...option.RequestOption) (r *SandboxEmploy
 
 // Update sandbox employment
 func (r *SandboxEmploymentService) Update(ctx context.Context, individualID string, body SandboxEmploymentUpdateParams, opts ...option.RequestOption) (res *SandboxEmploymentUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if individualID == "" {
 		err = errors.New("missing required individual_id parameter")
 		return

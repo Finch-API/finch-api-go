@@ -39,7 +39,8 @@ func NewHRISDirectoryService(opts ...option.RequestOption) (r *HRISDirectoryServ
 // Read company directory and organization structure
 func (r *HRISDirectoryService) List(ctx context.Context, query HRISDirectoryListParams, opts ...option.RequestOption) (res *IndividualsPage, err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/directory"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -63,7 +64,8 @@ func (r *HRISDirectoryService) ListAutoPaging(ctx context.Context, query HRISDir
 //
 // Deprecated: use `List` instead
 func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, body HRISDirectoryListIndividualsParams, opts ...option.RequestOption) (res *HRISDirectoryListIndividualsResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/directory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, body, &res, opts...)
 	return

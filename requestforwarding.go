@@ -40,7 +40,8 @@ func NewRequestForwardingService(opts ...option.RequestOption) (r *RequestForwar
 // Forward allows you to push or pull data models directly against an integration's
 // API.
 func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForwardingForwardParams, opts ...option.RequestOption) (res *RequestForwardingForwardResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "forward"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

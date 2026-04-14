@@ -41,7 +41,8 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 
 // Lists individuals currently enrolled in a given deduction.
 func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, query HRISBenefitIndividualEnrolledIDsParams, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return
@@ -54,7 +55,8 @@ func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitI
 // Get enrollment information for the given individuals.
 func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *pagination.SinglePage[IndividualBenefit], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
@@ -80,7 +82,8 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 
 // Unenroll individuals from a deduction or contribution
 func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, params HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *UnenrolledIndividualBenefitResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
 		return

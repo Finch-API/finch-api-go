@@ -38,7 +38,8 @@ func NewHRISCompanyService(opts ...option.RequestOption) (r *HRISCompanyService)
 
 // Read basic company data
 func (r *HRISCompanyService) Get(ctx context.Context, query HRISCompanyGetParams, opts ...option.RequestOption) (res *Company, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/company"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return

@@ -39,7 +39,8 @@ func NewPayrollPayGroupService(opts ...option.RequestOption) (r *PayrollPayGroup
 
 // Read information from a single pay group
 func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, query PayrollPayGroupGetParams, opts ...option.RequestOption) (res *PayrollPayGroupGetResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if payGroupID == "" {
 		err = errors.New("missing required pay_group_id parameter")
 		return
@@ -52,7 +53,8 @@ func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, que
 // Read company pay groups and frequencies
 func (r *PayrollPayGroupService) List(ctx context.Context, query PayrollPayGroupListParams, opts ...option.RequestOption) (res *pagination.SinglePage[PayrollPayGroupListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-groups"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)

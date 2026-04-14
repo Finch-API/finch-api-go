@@ -36,7 +36,8 @@ func NewSandboxJobService(opts ...option.RequestOption) (r *SandboxJobService) {
 
 // Enqueue a new sandbox job
 func (r *SandboxJobService) New(ctx context.Context, body SandboxJobNewParams, opts ...option.RequestOption) (res *SandboxJobNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

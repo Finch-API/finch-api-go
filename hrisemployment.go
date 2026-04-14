@@ -41,7 +41,8 @@ func NewHRISEmploymentService(opts ...option.RequestOption) (r *HRISEmploymentSe
 // Read individual employment and income data
 func (r *HRISEmploymentService) GetMany(ctx context.Context, params HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[EmploymentDataResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/employment"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, params, &res, opts...)
