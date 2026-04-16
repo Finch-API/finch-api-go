@@ -1457,17 +1457,20 @@ func (r jobCompletionEventDataJSON) RawJSON() string {
 type JobCompletionEventEventType string
 
 const (
-	JobCompletionEventEventTypeJobBenefitCreateCompleted   JobCompletionEventEventType = "job.benefit_create.completed"
-	JobCompletionEventEventTypeJobBenefitEnrollCompleted   JobCompletionEventEventType = "job.benefit_enroll.completed"
-	JobCompletionEventEventTypeJobBenefitRegisterCompleted JobCompletionEventEventType = "job.benefit_register.completed"
-	JobCompletionEventEventTypeJobBenefitUnenrollCompleted JobCompletionEventEventType = "job.benefit_unenroll.completed"
-	JobCompletionEventEventTypeJobBenefitUpdateCompleted   JobCompletionEventEventType = "job.benefit_update.completed"
-	JobCompletionEventEventTypeJobDataSyncAllCompleted     JobCompletionEventEventType = "job.data_sync_all.completed"
+	JobCompletionEventEventTypeJobBenefitCreateCompleted          JobCompletionEventEventType = "job.benefit_create.completed"
+	JobCompletionEventEventTypeJobBenefitEnrollCompleted          JobCompletionEventEventType = "job.benefit_enroll.completed"
+	JobCompletionEventEventTypeJobBenefitRegisterCompleted        JobCompletionEventEventType = "job.benefit_register.completed"
+	JobCompletionEventEventTypeJobBenefitUnenrollCompleted        JobCompletionEventEventType = "job.benefit_unenroll.completed"
+	JobCompletionEventEventTypeJobBenefitUpdateCompleted          JobCompletionEventEventType = "job.benefit_update.completed"
+	JobCompletionEventEventTypeJobDataSyncAllCompleted            JobCompletionEventEventType = "job.data_sync_all.completed"
+	JobCompletionEventEventTypeJobW4FormEmployeeSyncCompleted     JobCompletionEventEventType = "job.w4_form_employee_sync.completed"
+	JobCompletionEventEventTypeJobInitialDataSyncOrgSucceeded     JobCompletionEventEventType = "job.initial_data_sync_org.succeeded"
+	JobCompletionEventEventTypeJobInitialDataSyncPayrollSucceeded JobCompletionEventEventType = "job.initial_data_sync_payroll.succeeded"
 )
 
 func (r JobCompletionEventEventType) IsKnown() bool {
 	switch r {
-	case JobCompletionEventEventTypeJobBenefitCreateCompleted, JobCompletionEventEventTypeJobBenefitEnrollCompleted, JobCompletionEventEventTypeJobBenefitRegisterCompleted, JobCompletionEventEventTypeJobBenefitUnenrollCompleted, JobCompletionEventEventTypeJobBenefitUpdateCompleted, JobCompletionEventEventTypeJobDataSyncAllCompleted:
+	case JobCompletionEventEventTypeJobBenefitCreateCompleted, JobCompletionEventEventTypeJobBenefitEnrollCompleted, JobCompletionEventEventTypeJobBenefitRegisterCompleted, JobCompletionEventEventTypeJobBenefitUnenrollCompleted, JobCompletionEventEventTypeJobBenefitUpdateCompleted, JobCompletionEventEventTypeJobDataSyncAllCompleted, JobCompletionEventEventTypeJobW4FormEmployeeSyncCompleted, JobCompletionEventEventTypeJobInitialDataSyncOrgSucceeded, JobCompletionEventEventTypeJobInitialDataSyncPayrollSucceeded:
 		return true
 	}
 	return false
@@ -1651,6 +1654,21 @@ func init() {
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
 			DiscriminatorValue: "job.data_sync_all.completed",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.w4_form_employee_sync.completed",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.initial_data_sync_org.succeeded",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.initial_data_sync_payroll.succeeded",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
