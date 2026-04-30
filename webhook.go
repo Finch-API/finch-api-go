@@ -1067,8 +1067,10 @@ type BaseWebhookEvent struct {
 	// Deprecated: deprecated
 	CompanyID string `json:"company_id" api:"required"`
 	// Unique Finch ID of the connection associated with the webhook event.
-	ConnectionID string               `json:"connection_id"`
-	JSON         baseWebhookEventJSON `json:"-"`
+	ConnectionID string `json:"connection_id"`
+	// Unique Finch id of the entity for which data has been updated.
+	EntityID string               `json:"entity_id"`
+	JSON     baseWebhookEventJSON `json:"-"`
 }
 
 // baseWebhookEventJSON contains the JSON metadata for the struct
@@ -1077,6 +1079,7 @@ type baseWebhookEventJSON struct {
 	AccountID    apijson.Field
 	CompanyID    apijson.Field
 	ConnectionID apijson.Field
+	EntityID     apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
