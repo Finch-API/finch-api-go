@@ -66,7 +66,7 @@ type Individual struct {
 	ID   string  `json:"id" format:"uuid"`
 	Code float64 `json:"code"`
 	Dob  string  `json:"dob" api:"nullable"`
-	// This field can have the runtime type of [[]IndividualObjectEmail].
+	// This field can have the runtime type of [[]IndividualIndividualEmail].
 	Emails interface{} `json:"emails"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
@@ -85,7 +85,7 @@ type Individual struct {
 	// The legal middle name of the individual.
 	MiddleName string `json:"middle_name" api:"nullable"`
 	Name       string `json:"name"`
-	// This field can have the runtime type of [[]IndividualObjectPhoneNumber].
+	// This field can have the runtime type of [[]IndividualIndividualPhoneNumber].
 	PhoneNumbers interface{} `json:"phone_numbers"`
 	// The preferred name of the individual.
 	PreferredName string   `json:"preferred_name" api:"nullable"`
@@ -138,13 +138,13 @@ func (r *Individual) UnmarshalJSON(data []byte) (err error) {
 // AsUnion returns a [IndividualUnion] interface which you can cast to the specific
 // types for more type safety.
 //
-// Possible runtime types of the union are [IndividualObject],
+// Possible runtime types of the union are [IndividualIndividual],
 // [IndividualBatchError].
 func (r Individual) AsUnion() IndividualUnion {
 	return r.union
 }
 
-// Union satisfied by [IndividualObject] or [IndividualBatchError].
+// Union satisfied by [IndividualIndividual] or [IndividualBatchError].
 type IndividualUnion interface {
 	implementsIndividual()
 }
@@ -155,7 +155,7 @@ func init() {
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualObject{}),
+			Type:       reflect.TypeOf(IndividualIndividual{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
@@ -164,25 +164,25 @@ func init() {
 	)
 }
 
-type IndividualObject struct {
+type IndividualIndividual struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID  string `json:"id" api:"required" format:"uuid"`
 	Dob string `json:"dob" api:"required,nullable"`
 	// The EEOC-defined ethnicity of the individual.
-	Ethnicity IndividualObjectEthnicity `json:"ethnicity" api:"required,nullable"`
+	Ethnicity IndividualIndividualEthnicity `json:"ethnicity" api:"required,nullable"`
 	// The legal first name of the individual.
 	FirstName string `json:"first_name" api:"required,nullable"`
 	// The gender of the individual.
-	Gender IndividualObjectGender `json:"gender" api:"required,nullable"`
+	Gender IndividualIndividualGender `json:"gender" api:"required,nullable"`
 	// The legal last name of the individual.
 	LastName string `json:"last_name" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName   string                        `json:"middle_name" api:"required,nullable"`
-	PhoneNumbers []IndividualObjectPhoneNumber `json:"phone_numbers" api:"required,nullable"`
+	MiddleName   string                            `json:"middle_name" api:"required,nullable"`
+	PhoneNumbers []IndividualIndividualPhoneNumber `json:"phone_numbers" api:"required,nullable"`
 	// The preferred name of the individual.
-	PreferredName string                  `json:"preferred_name" api:"required,nullable"`
-	Residence     Location                `json:"residence" api:"required,nullable"`
-	Emails        []IndividualObjectEmail `json:"emails" api:"nullable"`
+	PreferredName string                      `json:"preferred_name" api:"required,nullable"`
+	Residence     Location                    `json:"residence" api:"required,nullable"`
+	Emails        []IndividualIndividualEmail `json:"emails" api:"nullable"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
@@ -191,13 +191,13 @@ type IndividualObject struct {
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
 	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
-	Ssn  string               `json:"ssn" api:"nullable"`
-	JSON individualObjectJSON `json:"-"`
+	Ssn  string                   `json:"ssn" api:"nullable"`
+	JSON individualIndividualJSON `json:"-"`
 }
 
-// individualObjectJSON contains the JSON metadata for the struct
-// [IndividualObject]
-type individualObjectJSON struct {
+// individualIndividualJSON contains the JSON metadata for the struct
+// [IndividualIndividual]
+type individualIndividualJSON struct {
 	ID            apijson.Field
 	Dob           apijson.Field
 	Ethnicity     apijson.Field
@@ -215,127 +215,127 @@ type individualObjectJSON struct {
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *IndividualObject) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualIndividual) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualObjectJSON) RawJSON() string {
+func (r individualIndividualJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r IndividualObject) implementsIndividual() {}
+func (r IndividualIndividual) implementsIndividual() {}
 
 // The EEOC-defined ethnicity of the individual.
-type IndividualObjectEthnicity string
+type IndividualIndividualEthnicity string
 
 const (
-	IndividualObjectEthnicityAsian                           IndividualObjectEthnicity = "asian"
-	IndividualObjectEthnicityWhite                           IndividualObjectEthnicity = "white"
-	IndividualObjectEthnicityBlackOrAfricanAmerican          IndividualObjectEthnicity = "black_or_african_american"
-	IndividualObjectEthnicityNativeHawaiianOrPacificIslander IndividualObjectEthnicity = "native_hawaiian_or_pacific_islander"
-	IndividualObjectEthnicityAmericanIndianOrAlaskaNative    IndividualObjectEthnicity = "american_indian_or_alaska_native"
-	IndividualObjectEthnicityHispanicOrLatino                IndividualObjectEthnicity = "hispanic_or_latino"
-	IndividualObjectEthnicityTwoOrMoreRaces                  IndividualObjectEthnicity = "two_or_more_races"
-	IndividualObjectEthnicityDeclineToSpecify                IndividualObjectEthnicity = "decline_to_specify"
+	IndividualIndividualEthnicityAsian                           IndividualIndividualEthnicity = "asian"
+	IndividualIndividualEthnicityWhite                           IndividualIndividualEthnicity = "white"
+	IndividualIndividualEthnicityBlackOrAfricanAmerican          IndividualIndividualEthnicity = "black_or_african_american"
+	IndividualIndividualEthnicityNativeHawaiianOrPacificIslander IndividualIndividualEthnicity = "native_hawaiian_or_pacific_islander"
+	IndividualIndividualEthnicityAmericanIndianOrAlaskaNative    IndividualIndividualEthnicity = "american_indian_or_alaska_native"
+	IndividualIndividualEthnicityHispanicOrLatino                IndividualIndividualEthnicity = "hispanic_or_latino"
+	IndividualIndividualEthnicityTwoOrMoreRaces                  IndividualIndividualEthnicity = "two_or_more_races"
+	IndividualIndividualEthnicityDeclineToSpecify                IndividualIndividualEthnicity = "decline_to_specify"
 )
 
-func (r IndividualObjectEthnicity) IsKnown() bool {
+func (r IndividualIndividualEthnicity) IsKnown() bool {
 	switch r {
-	case IndividualObjectEthnicityAsian, IndividualObjectEthnicityWhite, IndividualObjectEthnicityBlackOrAfricanAmerican, IndividualObjectEthnicityNativeHawaiianOrPacificIslander, IndividualObjectEthnicityAmericanIndianOrAlaskaNative, IndividualObjectEthnicityHispanicOrLatino, IndividualObjectEthnicityTwoOrMoreRaces, IndividualObjectEthnicityDeclineToSpecify:
+	case IndividualIndividualEthnicityAsian, IndividualIndividualEthnicityWhite, IndividualIndividualEthnicityBlackOrAfricanAmerican, IndividualIndividualEthnicityNativeHawaiianOrPacificIslander, IndividualIndividualEthnicityAmericanIndianOrAlaskaNative, IndividualIndividualEthnicityHispanicOrLatino, IndividualIndividualEthnicityTwoOrMoreRaces, IndividualIndividualEthnicityDeclineToSpecify:
 		return true
 	}
 	return false
 }
 
 // The gender of the individual.
-type IndividualObjectGender string
+type IndividualIndividualGender string
 
 const (
-	IndividualObjectGenderFemale           IndividualObjectGender = "female"
-	IndividualObjectGenderMale             IndividualObjectGender = "male"
-	IndividualObjectGenderOther            IndividualObjectGender = "other"
-	IndividualObjectGenderDeclineToSpecify IndividualObjectGender = "decline_to_specify"
+	IndividualIndividualGenderFemale           IndividualIndividualGender = "female"
+	IndividualIndividualGenderMale             IndividualIndividualGender = "male"
+	IndividualIndividualGenderOther            IndividualIndividualGender = "other"
+	IndividualIndividualGenderDeclineToSpecify IndividualIndividualGender = "decline_to_specify"
 )
 
-func (r IndividualObjectGender) IsKnown() bool {
+func (r IndividualIndividualGender) IsKnown() bool {
 	switch r {
-	case IndividualObjectGenderFemale, IndividualObjectGenderMale, IndividualObjectGenderOther, IndividualObjectGenderDeclineToSpecify:
+	case IndividualIndividualGenderFemale, IndividualIndividualGenderMale, IndividualIndividualGenderOther, IndividualIndividualGenderDeclineToSpecify:
 		return true
 	}
 	return false
 }
 
-type IndividualObjectPhoneNumber struct {
-	Data string                           `json:"data" api:"required,nullable"`
-	Type IndividualObjectPhoneNumbersType `json:"type" api:"required,nullable"`
-	JSON individualObjectPhoneNumberJSON  `json:"-"`
+type IndividualIndividualPhoneNumber struct {
+	Data string                               `json:"data" api:"required,nullable"`
+	Type IndividualIndividualPhoneNumbersType `json:"type" api:"required,nullable"`
+	JSON individualIndividualPhoneNumberJSON  `json:"-"`
 }
 
-// individualObjectPhoneNumberJSON contains the JSON metadata for the struct
-// [IndividualObjectPhoneNumber]
-type individualObjectPhoneNumberJSON struct {
+// individualIndividualPhoneNumberJSON contains the JSON metadata for the struct
+// [IndividualIndividualPhoneNumber]
+type individualIndividualPhoneNumberJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualObjectPhoneNumber) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualIndividualPhoneNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualObjectPhoneNumberJSON) RawJSON() string {
+func (r individualIndividualPhoneNumberJSON) RawJSON() string {
 	return r.raw
 }
 
-type IndividualObjectPhoneNumbersType string
+type IndividualIndividualPhoneNumbersType string
 
 const (
-	IndividualObjectPhoneNumbersTypeWork     IndividualObjectPhoneNumbersType = "work"
-	IndividualObjectPhoneNumbersTypePersonal IndividualObjectPhoneNumbersType = "personal"
+	IndividualIndividualPhoneNumbersTypeWork     IndividualIndividualPhoneNumbersType = "work"
+	IndividualIndividualPhoneNumbersTypePersonal IndividualIndividualPhoneNumbersType = "personal"
 )
 
-func (r IndividualObjectPhoneNumbersType) IsKnown() bool {
+func (r IndividualIndividualPhoneNumbersType) IsKnown() bool {
 	switch r {
-	case IndividualObjectPhoneNumbersTypeWork, IndividualObjectPhoneNumbersTypePersonal:
+	case IndividualIndividualPhoneNumbersTypeWork, IndividualIndividualPhoneNumbersTypePersonal:
 		return true
 	}
 	return false
 }
 
-type IndividualObjectEmail struct {
-	Data string                     `json:"data" api:"required"`
-	Type IndividualObjectEmailsType `json:"type" api:"required,nullable"`
-	JSON individualObjectEmailJSON  `json:"-"`
+type IndividualIndividualEmail struct {
+	Data string                         `json:"data" api:"required"`
+	Type IndividualIndividualEmailsType `json:"type" api:"required,nullable"`
+	JSON individualIndividualEmailJSON  `json:"-"`
 }
 
-// individualObjectEmailJSON contains the JSON metadata for the struct
-// [IndividualObjectEmail]
-type individualObjectEmailJSON struct {
+// individualIndividualEmailJSON contains the JSON metadata for the struct
+// [IndividualIndividualEmail]
+type individualIndividualEmailJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualObjectEmail) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualIndividualEmail) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualObjectEmailJSON) RawJSON() string {
+func (r individualIndividualEmailJSON) RawJSON() string {
 	return r.raw
 }
 
-type IndividualObjectEmailsType string
+type IndividualIndividualEmailsType string
 
 const (
-	IndividualObjectEmailsTypeWork     IndividualObjectEmailsType = "work"
-	IndividualObjectEmailsTypePersonal IndividualObjectEmailsType = "personal"
+	IndividualIndividualEmailsTypeWork     IndividualIndividualEmailsType = "work"
+	IndividualIndividualEmailsTypePersonal IndividualIndividualEmailsType = "personal"
 )
 
-func (r IndividualObjectEmailsType) IsKnown() bool {
+func (r IndividualIndividualEmailsType) IsKnown() bool {
 	switch r {
-	case IndividualObjectEmailsTypeWork, IndividualObjectEmailsTypePersonal:
+	case IndividualIndividualEmailsTypeWork, IndividualIndividualEmailsTypePersonal:
 		return true
 	}
 	return false
