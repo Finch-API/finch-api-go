@@ -9,6 +9,7 @@ import (
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 	"github.com/Finch-API/finch-api-go/shared"
@@ -43,6 +44,16 @@ func (r *AccountService) Disconnect(ctx context.Context, opts ...option.RequestO
 	return res, err
 }
 
+// Disconnect entity(s) from a connection without affecting other entities
+// associated with the same connection.
+func (r *AccountService) DisconnectEntity(ctx context.Context, body AccountDisconnectEntityParams, opts ...option.RequestOption) (res *DisconnectEntityResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
+	path := "disconnect-entity"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return res, err
+}
+
 // Read account information associated with an `access_token`
 func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestOption) (res *Introspection, err error) {
 	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
@@ -50,6 +61,28 @@ func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestO
 	path := "introspect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return res, err
+}
+
+type DisconnectEntityResponse struct {
+	// If the request is successful, Finch will return "success" (HTTP 200 status).
+	Status string                       `json:"status" api:"required"`
+	JSON   disconnectEntityResponseJSON `json:"-"`
+}
+
+// disconnectEntityResponseJSON contains the JSON metadata for the struct
+// [DisconnectEntityResponse]
+type disconnectEntityResponseJSON struct {
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DisconnectEntityResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r disconnectEntityResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type DisconnectResponse struct {
@@ -390,4 +423,13 @@ func (r IntrospectionEntitiesStatus) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type AccountDisconnectEntityParams struct {
+	// Array of entity UUIDs to disconnect. At least one entity ID must be provided.
+	EntityIDs param.Field[[]string] `json:"entity_ids" api:"required" format:"uuid"`
+}
+
+func (r AccountDisconnectEntityParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }

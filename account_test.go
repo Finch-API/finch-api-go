@@ -37,6 +37,32 @@ func TestAccountDisconnect(t *testing.T) {
 	}
 }
 
+func TestAccountDisconnectEntity(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := finchgo.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
+	)
+	_, err := client.Account.DisconnectEntity(context.TODO(), finchgo.AccountDisconnectEntityParams{
+		EntityIDs: finchgo.F([]string{"3c90c3cc-0d44-4b50-8888-8dd25736052a", "5e6f7a8b-9c10-4d11-a12b-c13d14e15f16"}),
+	})
+	if err != nil {
+		var apierr *finchgo.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestAccountIntrospect(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
