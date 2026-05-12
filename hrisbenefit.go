@@ -124,6 +124,16 @@ func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context
 	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, query, opts...))
 }
 
+// Register existing benefits from the customer on the provider, on Finch's end.
+// Please use the `/provider` endpoint to view available types for each provider.
+func (r *HRISBenefitService) Register(ctx context.Context, params HRISBenefitRegisterParams, opts ...option.RequestOption) (res *RegisterCompanyBenefitResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
+	path := "employer/benefits/register"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
 type BenefitFeaturesAndOperations struct {
 	SupportedFeatures   SupportedBenefit                 `json:"supported_features"`
 	SupportedOperations SupportPerBenefitType            `json:"supported_operations"`
@@ -356,6 +366,30 @@ func (r *CreateCompanyBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r createCompanyBenefitsResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type RegisterCompanyBenefitResponse struct {
+	// The id of the benefit.
+	BenefitID string                             `json:"benefit_id" api:"required" format:"uuid"`
+	JobID     string                             `json:"job_id" api:"required" format:"uuid"`
+	JSON      registerCompanyBenefitResponseJSON `json:"-"`
+}
+
+// registerCompanyBenefitResponseJSON contains the JSON metadata for the struct
+// [RegisterCompanyBenefitResponse]
+type registerCompanyBenefitResponseJSON struct {
+	BenefitID   apijson.Field
+	JobID       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RegisterCompanyBenefitResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r registerCompanyBenefitResponseJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -609,6 +643,29 @@ type HRISBenefitListSupportedBenefitsParams struct {
 // URLQuery serializes [HRISBenefitListSupportedBenefitsParams]'s query parameters
 // as `url.Values`.
 func (r HRISBenefitListSupportedBenefitsParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISBenefitRegisterParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs   param.Field[[]string] `query:"entity_ids" format:"uuid"`
+	Description param.Field[string]   `json:"description"`
+	// The frequency of the benefit deduction/contribution.
+	Frequency param.Field[BenefitFrequency] `json:"frequency"`
+	// Type of benefit.
+	Type param.Field[BenefitType] `json:"type"`
+}
+
+func (r HRISBenefitRegisterParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISBenefitRegisterParams]'s query parameters as
+// `url.Values`.
+func (r HRISBenefitRegisterParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
