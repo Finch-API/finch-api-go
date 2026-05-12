@@ -7,12 +7,15 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
+	"github.com/tidwall/gjson"
 )
 
 // SandboxEmploymentService contains methods and other services that help with
@@ -128,9 +131,9 @@ func (r sandboxEmploymentUpdateResponseJSON) RawJSON() string {
 }
 
 type SandboxEmploymentUpdateResponseCustomField struct {
-	Name  string                                         `json:"name" api:"nullable"`
-	Value interface{}                                    `json:"value"`
-	JSON  sandboxEmploymentUpdateResponseCustomFieldJSON `json:"-"`
+	Name  string                                                `json:"name" api:"nullable"`
+	Value SandboxEmploymentUpdateResponseCustomFieldsValueUnion `json:"value" api:"nullable"`
+	JSON  sandboxEmploymentUpdateResponseCustomFieldJSON        `json:"-"`
 }
 
 // sandboxEmploymentUpdateResponseCustomFieldJSON contains the JSON metadata for
@@ -148,6 +151,45 @@ func (r *SandboxEmploymentUpdateResponseCustomField) UnmarshalJSON(data []byte) 
 
 func (r sandboxEmploymentUpdateResponseCustomFieldJSON) RawJSON() string {
 	return r.raw
+}
+
+// Union satisfied by [shared.UnionString],
+// [SandboxEmploymentUpdateResponseCustomFieldsValueArray], [shared.UnionFloat] or
+// [shared.UnionBool].
+type SandboxEmploymentUpdateResponseCustomFieldsValueUnion interface {
+	ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*SandboxEmploymentUpdateResponseCustomFieldsValueUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.String,
+			Type:       reflect.TypeOf(shared.UnionString("")),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(SandboxEmploymentUpdateResponseCustomFieldsValueArray{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.Number,
+			Type:       reflect.TypeOf(shared.UnionFloat(0)),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.True,
+			Type:       reflect.TypeOf(shared.UnionBool(false)),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.False,
+			Type:       reflect.TypeOf(shared.UnionBool(false)),
+		},
+	)
+}
+
+type SandboxEmploymentUpdateResponseCustomFieldsValueArray []interface{}
+
+func (r SandboxEmploymentUpdateResponseCustomFieldsValueArray) ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion() {
 }
 
 // The department object.
@@ -346,12 +388,26 @@ func (r SandboxEmploymentUpdateParams) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxEmploymentUpdateParamsCustomField struct {
-	Name  param.Field[string]      `json:"name"`
-	Value param.Field[interface{}] `json:"value"`
+	Name  param.Field[string]                                              `json:"name"`
+	Value param.Field[SandboxEmploymentUpdateParamsCustomFieldsValueUnion] `json:"value"`
 }
 
 func (r SandboxEmploymentUpdateParamsCustomField) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Satisfied by [shared.UnionString],
+// [SandboxEmploymentUpdateParamsCustomFieldsValueArray], [shared.UnionFloat],
+// [shared.UnionBool].
+//
+// Use [Raw()] to specify an arbitrary value for this param
+type SandboxEmploymentUpdateParamsCustomFieldsValueUnion interface {
+	ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion()
+}
+
+type SandboxEmploymentUpdateParamsCustomFieldsValueArray []interface{}
+
+func (r SandboxEmploymentUpdateParamsCustomFieldsValueArray) ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion() {
 }
 
 // The department object.

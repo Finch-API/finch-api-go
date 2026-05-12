@@ -12,6 +12,7 @@ import (
 	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
 )
 
 func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
@@ -33,7 +34,7 @@ func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
 			ClassCode: finchgo.F("class_code"),
 			CustomFields: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyCustomField{{
 				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
+				Value: finchgo.F[finchgo.SandboxDirectoryNewParamsBodyCustomFieldsValueUnion](shared.UnionString("string")),
 			}}),
 			Department: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyDepartment{
 				Name: finchgo.F("name"),

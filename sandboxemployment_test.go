@@ -12,6 +12,7 @@ import (
 	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
 )
 
 func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
@@ -35,7 +36,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			ClassCode: finchgo.F("class_code"),
 			CustomFields: finchgo.F([]finchgo.SandboxEmploymentUpdateParamsCustomField{{
 				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
+				Value: finchgo.F[finchgo.SandboxEmploymentUpdateParamsCustomFieldsValueUnion](shared.UnionString("string")),
 			}}),
 			Department: finchgo.F(finchgo.SandboxEmploymentUpdateParamsDepartment{
 				Name: finchgo.F("name"),
@@ -78,7 +79,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			}),
 			MiddleName: finchgo.F("middle_name"),
 			SourceID:   finchgo.F("source_id"),
-			StartDate:  finchgo.F("start_date"),
+			StartDate:  finchgo.F("3/4/2020"),
 			Title:      finchgo.F("title"),
 		},
 	)
