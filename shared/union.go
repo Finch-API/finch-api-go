@@ -14,16 +14,16 @@ func (UnionTime) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLas
 
 type UnionString string
 
-func (UnionString) ImplementsEmploymentDataEmploymentDataCustomFieldsValueUnion()   {}
-func (UnionString) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion() {}
+func (UnionString) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {}
+func (UnionString) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion()           {}
 func (UnionString) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion() {
 }
 func (UnionString) ImplementsRequestForwardingForwardResponseRequestDataUnion() {}
 
 type UnionBool bool
 
-func (UnionBool) ImplementsEmploymentDataEmploymentDataCustomFieldsValueUnion() {}
+func (UnionBool) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {}
 
 type UnionFloat float64
 
-func (UnionFloat) ImplementsEmploymentDataEmploymentDataCustomFieldsValueUnion() {}
+func (UnionFloat) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {}
