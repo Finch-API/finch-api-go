@@ -119,12 +119,26 @@ func (r SandboxDirectoryNewParamsBody) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxDirectoryNewParamsBodyCustomField struct {
-	Name  param.Field[string]      `json:"name"`
-	Value param.Field[interface{}] `json:"value"`
+	Name  param.Field[string]                                              `json:"name"`
+	Value param.Field[SandboxDirectoryNewParamsBodyCustomFieldsValueUnion] `json:"value"`
 }
 
 func (r SandboxDirectoryNewParamsBodyCustomField) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Satisfied by [shared.UnionString],
+// [SandboxDirectoryNewParamsBodyCustomFieldsValueArray], [shared.UnionFloat],
+// [shared.UnionBool].
+//
+// Use [Raw()] to specify an arbitrary value for this param
+type SandboxDirectoryNewParamsBodyCustomFieldsValueUnion interface {
+	ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion()
+}
+
+type SandboxDirectoryNewParamsBodyCustomFieldsValueArray []interface{}
+
+func (r SandboxDirectoryNewParamsBodyCustomFieldsValueArray) ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion() {
 }
 
 // The department object.
