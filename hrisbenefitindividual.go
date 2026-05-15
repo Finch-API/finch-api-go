@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"reflect"
 	"slices"
+	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/apiquery"
@@ -37,6 +38,22 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 	r = &HRISBenefitIndividualService{}
 	r.Options = opts
 	return
+}
+
+// Enroll an individual into a deduction or contribution. This is an overwrite
+// operation. If the employee is already enrolled, the enrollment amounts will be
+// adjusted. Making the same request multiple times will not create new
+// enrollments, but will continue to set the state of the existing enrollment.
+func (r *HRISBenefitIndividualService) EnrollMany(ctx context.Context, benefitID string, params HRISBenefitIndividualEnrollManyParams, opts ...option.RequestOption) (res *EnrolledIndividualBenefitResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
+	if benefitID == "" {
+		err = errors.New("missing required benefit_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
 }
 
 // Lists individuals currently enrolled in a given deduction.
@@ -91,6 +108,27 @@ func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefit
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, params, &res, opts...)
 	return res, err
+}
+
+type EnrolledIndividualBenefitResponse struct {
+	JobID string                                `json:"job_id" api:"required" format:"uuid"`
+	JSON  enrolledIndividualBenefitResponseJSON `json:"-"`
+}
+
+// enrolledIndividualBenefitResponseJSON contains the JSON metadata for the struct
+// [EnrolledIndividualBenefitResponse]
+type enrolledIndividualBenefitResponseJSON struct {
+	JobID       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *EnrolledIndividualBenefitResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r enrolledIndividualBenefitResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type IndividualBenefit struct {
@@ -794,6 +832,138 @@ func (r *HRISBenefitIndividualEnrolledIDsResponse) UnmarshalJSON(data []byte) (e
 
 func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
 	return r.raw
+}
+
+type HRISBenefitIndividualEnrollManyParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+	// Array of the individual_id to enroll and a configuration object.
+	Individuals []HRISBenefitIndividualEnrollManyParamsIndividual `json:"individuals"`
+}
+
+func (r HRISBenefitIndividualEnrollManyParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r.Individuals)
+}
+
+// URLQuery serializes [HRISBenefitIndividualEnrollManyParams]'s query parameters
+// as `url.Values`.
+func (r HRISBenefitIndividualEnrollManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividual struct {
+	Configuration param.Field[HRISBenefitIndividualEnrollManyParamsIndividualsConfiguration] `json:"configuration"`
+	// Finch id (uuidv4) for the individual to enroll
+	IndividualID param.Field[string] `json:"individual_id"`
+}
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividual) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfiguration struct {
+	// For HSA benefits only - whether the contribution limit is for an individual or
+	// family
+	AnnualContributionLimit param.Field[HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimit] `json:"annual_contribution_limit"`
+	// Maximum annual amount in cents
+	AnnualMaximum param.Field[int64] `json:"annual_maximum"`
+	// For retirement benefits only - whether catch up contributions are enabled
+	CatchUp             param.Field[bool]                                                                             `json:"catch_up"`
+	CompanyContribution param.Field[HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContribution] `json:"company_contribution"`
+	// The date the enrollment will take effect
+	EffectiveDate     param.Field[time.Time]                                                                      `json:"effective_date" format:"date"`
+	EmployeeDeduction param.Field[HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeduction] `json:"employee_deduction"`
+}
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfiguration) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// For HSA benefits only - whether the contribution limit is for an individual or
+// family
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimit string
+
+const (
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimitIndividual HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimit = "individual"
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimitFamily     HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimit = "family"
+)
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimit) IsKnown() bool {
+	switch r {
+	case HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimitIndividual, HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationAnnualContributionLimitFamily:
+		return true
+	}
+	return false
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContribution struct {
+	// Amount in cents for fixed type or basis points (1/100th of a percent) for
+	// percent type
+	Amount param.Field[int64] `json:"amount"`
+	// Array of tier objects for tiered contribution matching (required when type is
+	// tiered)
+	Tiers param.Field[[]HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTier] `json:"tiers"`
+	Type  param.Field[HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionType]   `json:"type"`
+}
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContribution) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTier struct {
+	// The employer match percentage in basis points (0-10000 = 0-100%)
+	Match param.Field[int64] `json:"match" api:"required"`
+	// The employee contribution threshold in basis points (0-10000 = 0-100%)
+	Threshold param.Field[int64] `json:"threshold" api:"required"`
+}
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTier) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionType string
+
+const (
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTypeFixed   HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionType = "fixed"
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTypePercent HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionType = "percent"
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTypeTiered  HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionType = "tiered"
+)
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionType) IsKnown() bool {
+	switch r {
+	case HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTypeFixed, HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTypePercent, HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationCompanyContributionTypeTiered:
+		return true
+	}
+	return false
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeduction struct {
+	// Amount in cents for fixed type or basis points (1/100th of a percent) for
+	// percent type
+	Amount param.Field[int64]                                                                              `json:"amount"`
+	Type   param.Field[HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionType] `json:"type"`
+}
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeduction) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionType string
+
+const (
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionTypeFixed   HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionType = "fixed"
+	HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionTypePercent HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionType = "percent"
+)
+
+func (r HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionType) IsKnown() bool {
+	switch r {
+	case HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionTypeFixed, HRISBenefitIndividualEnrollManyParamsIndividualsConfigurationEmployeeDeductionTypePercent:
+		return true
+	}
+	return false
 }
 
 type HRISBenefitIndividualEnrolledIDsParams struct {

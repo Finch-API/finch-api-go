@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.36.0 (2026-05-15)
+
+Full Changelog: [v1.35.0...v1.36.0](https://github.com/Finch-API/finch-api-go/compare/v1.35.0...v1.36.0)
+
+### Features
+
+* **api:** add enroll many ([3a2cdfa](https://github.com/Finch-API/finch-api-go/commit/3a2cdfa1acd3082c96b6ccfefea742dfaab7361e))
+
 ## 1.35.0 (2026-05-13)
 
 Full Changelog: [v1.34.1...v1.35.0](https://github.com/Finch-API/finch-api-go/compare/v1.34.1...v1.35.0)
