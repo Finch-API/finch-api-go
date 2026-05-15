@@ -12,6 +12,7 @@ import (
 	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
 )
 
 func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
@@ -25,6 +26,8 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Employment.Update(
 		context.TODO(),
@@ -33,7 +36,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			ClassCode: finchgo.F("class_code"),
 			CustomFields: finchgo.F([]finchgo.SandboxEmploymentUpdateParamsCustomField{{
 				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
+				Value: finchgo.F[finchgo.SandboxEmploymentUpdateParamsCustomFieldsValueUnion](shared.UnionString("string")),
 			}}),
 			Department: finchgo.F(finchgo.SandboxEmploymentUpdateParamsDepartment{
 				Name: finchgo.F("name"),
@@ -45,6 +48,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			EmploymentStatus: finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentStatusActive),
 			EndDate:          finchgo.F("end_date"),
 			FirstName:        finchgo.F("first_name"),
+			FlsaStatus:       finchgo.F(finchgo.SandboxEmploymentUpdateParamsFlsaStatusExempt),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),
@@ -75,7 +79,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			}),
 			MiddleName: finchgo.F("middle_name"),
 			SourceID:   finchgo.F("source_id"),
-			StartDate:  finchgo.F("start_date"),
+			StartDate:  finchgo.F("3/4/2020"),
 			Title:      finchgo.F("title"),
 		},
 	)

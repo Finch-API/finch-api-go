@@ -33,24 +33,25 @@ func NewJobManualService(opts ...option.RequestOption) (r *JobManualService) {
 	return
 }
 
-// Get a manual job by `job_id`. Manual jobs are completed by a human and include
-// Assisted Benefits jobs.
+// Check the status and outcome of a job by `job_id`. This includes all deductions
+// jobs including those for both automated and assisted integrations.
 func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *ManualAsyncJob, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("jobs/manual/%s", jobID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type ManualAsyncJob struct {
 	// Specific information about the job, such as individual statuses for batch jobs.
-	Body   []interface{}        `json:"body,required,nullable"`
-	JobID  string               `json:"job_id,required" format:"uuid"`
-	Status ManualAsyncJobStatus `json:"status,required"`
+	Body   []interface{}        `json:"body" api:"required,nullable"`
+	JobID  string               `json:"job_id" api:"required" format:"uuid"`
+	Status ManualAsyncJobStatus `json:"status" api:"required"`
 	JSON   manualAsyncJobJSON   `json:"-"`
 }
 

@@ -40,25 +40,27 @@ func NewHRISBenefitIndividualService(opts ...option.RequestOption) (r *HRISBenef
 }
 
 // Lists individuals currently enrolled in a given deduction.
-func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+func (r *HRISBenefitIndividualService) EnrolledIDs(ctx context.Context, benefitID string, query HRISBenefitIndividualEnrolledIDsParams, opts ...option.RequestOption) (res *HRISBenefitIndividualEnrolledIDsResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s/enrolled", benefitID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return res, err
 }
 
 // Get enrollment information for the given individuals.
 func (r *HRISBenefitIndividualService) GetManyBenefits(ctx context.Context, benefitID string, query HRISBenefitIndividualGetManyBenefitsParams, opts ...option.RequestOption) (res *pagination.SinglePage[IndividualBenefit], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -79,21 +81,22 @@ func (r *HRISBenefitIndividualService) GetManyBenefitsAutoPaging(ctx context.Con
 }
 
 // Unenroll individuals from a deduction or contribution
-func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, body HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *UnenrolledIndividualBenefitResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+func (r *HRISBenefitIndividualService) UnenrollMany(ctx context.Context, benefitID string, params HRISBenefitIndividualUnenrollManyParams, opts ...option.RequestOption) (res *UnenrolledIndividualBenefitResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s/individuals", benefitID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, params, &res, opts...)
+	return res, err
 }
 
 type IndividualBenefit struct {
-	Body         IndividualBenefitBody `json:"body,required"`
-	Code         int64                 `json:"code,required"`
-	IndividualID string                `json:"individual_id,required"`
+	Body         IndividualBenefitBody `json:"body" api:"required"`
+	Code         int64                 `json:"code" api:"required"`
+	IndividualID string                `json:"individual_id" api:"required"`
 	JSON         individualBenefitJSON `json:"-"`
 }
 
@@ -117,20 +120,20 @@ func (r individualBenefitJSON) RawJSON() string {
 
 type IndividualBenefitBody struct {
 	// If the benefit supports annual maximum, the amount in cents for this individual.
-	AnnualMaximum int64 `json:"annual_maximum,nullable"`
+	AnnualMaximum int64 `json:"annual_maximum" api:"nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp bool    `json:"catch_up,nullable"`
+	CatchUp bool    `json:"catch_up" api:"nullable"`
 	Code    float64 `json:"code"`
 	// This field can have the runtime type of
-	// [IndividualBenefitBodyObjectCompanyContribution].
+	// [IndividualBenefitBodyIndividualBenefitCompanyContribution].
 	CompanyContribution interface{} `json:"company_contribution"`
 	// This field can have the runtime type of
-	// [IndividualBenefitBodyObjectEmployeeDeduction].
+	// [IndividualBenefitBodyIndividualBenefitEmployeeDeduction].
 	EmployeeDeduction interface{} `json:"employee_deduction"`
 	FinchCode         string      `json:"finch_code"`
 	// Type for HSA contribution limit if the benefit is a HSA.
-	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	HsaContributionLimit IndividualBenefitBodyHsaContributionLimit `json:"hsa_contribution_limit" api:"nullable"`
 	Message              string                                    `json:"message"`
 	Name                 string                                    `json:"name"`
 	JSON                 individualBenefitBodyJSON                 `json:"-"`
@@ -169,13 +172,13 @@ func (r *IndividualBenefitBody) UnmarshalJSON(data []byte) (err error) {
 // AsUnion returns a [IndividualBenefitBodyUnion] interface which you can cast to
 // the specific types for more type safety.
 //
-// Possible runtime types of the union are [IndividualBenefitBodyObject],
-// [IndividualBenefitBodyBatchError].
+// Possible runtime types of the union are
+// [IndividualBenefitBodyIndividualBenefit], [IndividualBenefitBodyBatchError].
 func (r IndividualBenefitBody) AsUnion() IndividualBenefitBodyUnion {
 	return r.union
 }
 
-// Union satisfied by [IndividualBenefitBodyObject] or
+// Union satisfied by [IndividualBenefitBodyIndividualBenefit] or
 // [IndividualBenefitBodyBatchError].
 type IndividualBenefitBodyUnion interface {
 	implementsIndividualBenefitBody()
@@ -187,7 +190,7 @@ func init() {
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualBenefitBodyObject{}),
+			Type:       reflect.TypeOf(IndividualBenefitBodyIndividualBenefit{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
@@ -196,22 +199,27 @@ func init() {
 	)
 }
 
-type IndividualBenefitBodyObject struct {
+type IndividualBenefitBodyIndividualBenefit struct {
 	// If the benefit supports annual maximum, the amount in cents for this individual.
-	AnnualMaximum int64 `json:"annual_maximum,required,nullable"`
+	AnnualMaximum int64 `json:"annual_maximum" api:"required,nullable"`
 	// If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled
 	// for this individual.
-	CatchUp             bool                                           `json:"catch_up,required,nullable"`
-	CompanyContribution IndividualBenefitBodyObjectCompanyContribution `json:"company_contribution,required,nullable"`
-	EmployeeDeduction   IndividualBenefitBodyObjectEmployeeDeduction   `json:"employee_deduction,required,nullable"`
+	CatchUp bool `json:"catch_up" api:"required,nullable"`
+	// Company contribution configuration. Supports fixed amounts (in cents),
+	// percentage-based contributions (in basis points where 100 = 1%), or tiered
+	// matching structures.
+	CompanyContribution IndividualBenefitBodyIndividualBenefitCompanyContribution `json:"company_contribution" api:"required,nullable"`
+	// Employee deduction configuration. Supports both fixed amounts (in cents) and
+	// percentage-based contributions (in basis points where 100 = 1%).
+	EmployeeDeduction IndividualBenefitBodyIndividualBenefitEmployeeDeduction `json:"employee_deduction" api:"required,nullable"`
 	// Type for HSA contribution limit if the benefit is a HSA.
-	HsaContributionLimit IndividualBenefitBodyObjectHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
-	JSON                 individualBenefitBodyObjectJSON                 `json:"-"`
+	HsaContributionLimit IndividualBenefitBodyIndividualBenefitHsaContributionLimit `json:"hsa_contribution_limit" api:"nullable"`
+	JSON                 individualBenefitBodyIndividualBenefitJSON                 `json:"-"`
 }
 
-// individualBenefitBodyObjectJSON contains the JSON metadata for the struct
-// [IndividualBenefitBodyObject]
-type individualBenefitBodyObjectJSON struct {
+// individualBenefitBodyIndividualBenefitJSON contains the JSON metadata for the
+// struct [IndividualBenefitBodyIndividualBenefit]
+type individualBenefitBodyIndividualBenefitJSON struct {
 	AnnualMaximum        apijson.Field
 	CatchUp              apijson.Field
 	CompanyContribution  apijson.Field
@@ -221,31 +229,37 @@ type individualBenefitBodyObjectJSON struct {
 	ExtraFields          map[string]apijson.Field
 }
 
-func (r *IndividualBenefitBodyObject) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualBenefitBodyIndividualBenefit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualBenefitBodyObjectJSON) RawJSON() string {
+func (r individualBenefitBodyIndividualBenefitJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r IndividualBenefitBodyObject) implementsIndividualBenefitBody() {}
+func (r IndividualBenefitBodyIndividualBenefit) implementsIndividualBenefitBody() {}
 
-type IndividualBenefitBodyObjectCompanyContribution struct {
-	// Fixed contribution type.
-	Type IndividualBenefitBodyObjectCompanyContributionType `json:"type,required"`
-	// Contribution amount in cents.
+// Company contribution configuration. Supports fixed amounts (in cents),
+// percentage-based contributions (in basis points where 100 = 1%), or tiered
+// matching structures.
+type IndividualBenefitBodyIndividualBenefitCompanyContribution struct {
+	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+	// (amount in basis points), or "tiered" (multi-tier matching).
+	Type IndividualBenefitBodyIndividualBenefitCompanyContributionType `json:"type" api:"required"`
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%). Not used for type=tiered.
 	Amount int64 `json:"amount"`
 	// This field can have the runtime type of
-	// [[]IndividualBenefitBodyObjectCompanyContributionObjectTier].
-	Tiers interface{}                                        `json:"tiers"`
-	JSON  individualBenefitBodyObjectCompanyContributionJSON `json:"-"`
-	union IndividualBenefitBodyObjectCompanyContributionUnion
+	// [[]IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTier].
+	Tiers interface{}                                                   `json:"tiers"`
+	JSON  individualBenefitBodyIndividualBenefitCompanyContributionJSON `json:"-"`
+	union IndividualBenefitBodyIndividualBenefitCompanyContributionUnion
 }
 
-// individualBenefitBodyObjectCompanyContributionJSON contains the JSON metadata
-// for the struct [IndividualBenefitBodyObjectCompanyContribution]
-type individualBenefitBodyObjectCompanyContributionJSON struct {
+// individualBenefitBodyIndividualBenefitCompanyContributionJSON contains the JSON
+// metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitCompanyContribution]
+type individualBenefitBodyIndividualBenefitCompanyContributionJSON struct {
 	Type        apijson.Field
 	Amount      apijson.Field
 	Tiers       apijson.Field
@@ -253,12 +267,12 @@ type individualBenefitBodyObjectCompanyContributionJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r individualBenefitBodyObjectCompanyContributionJSON) RawJSON() string {
+func (r individualBenefitBodyIndividualBenefitCompanyContributionJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *IndividualBenefitBodyObjectCompanyContribution) UnmarshalJSON(data []byte) (err error) {
-	*r = IndividualBenefitBodyObjectCompanyContribution{}
+func (r *IndividualBenefitBodyIndividualBenefitCompanyContribution) UnmarshalJSON(data []byte) (err error) {
+	*r = IndividualBenefitBodyIndividualBenefitCompanyContribution{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -266,244 +280,436 @@ func (r *IndividualBenefitBodyObjectCompanyContribution) UnmarshalJSON(data []by
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [IndividualBenefitBodyObjectCompanyContributionUnion]
+// AsUnion returns a
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionUnion] interface which
+// you can cast to the specific types for more type safety.
+//
+// Possible runtime types of the union are
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed],
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent],
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered].
+func (r IndividualBenefitBodyIndividualBenefitCompanyContribution) AsUnion() IndividualBenefitBodyIndividualBenefitCompanyContributionUnion {
+	return r.union
+}
+
+// Company contribution configuration. Supports fixed amounts (in cents),
+// percentage-based contributions (in basis points where 100 = 1%), or tiered
+// matching structures.
+//
+// Union satisfied by
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed],
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent]
+// or
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered].
+type IndividualBenefitBodyIndividualBenefitCompanyContributionUnion interface {
+	implementsIndividualBenefitBodyIndividualBenefitCompanyContribution()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*IndividualBenefitBodyIndividualBenefitCompanyContributionUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered{}),
+		},
+	)
+}
+
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed struct {
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%). Not used for type=tiered.
+	Amount int64 `json:"amount" api:"required"`
+	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+	// (amount in basis points), or "tiered" (multi-tier matching).
+	Type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedType `json:"type" api:"required"`
+	JSON individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedJSON `json:"-"`
+}
+
+// individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedJSON
+// contains the JSON metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed]
+type individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedJSON struct {
+	Amount      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixed) implementsIndividualBenefitBodyIndividualBenefitCompanyContribution() {
+}
+
+// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+// (amount in basis points), or "tiered" (multi-tier matching).
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedType string
+
+const (
+	IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedTypeFixed IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedType = "fixed"
+)
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedType) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionFixedTypeFixed:
+		return true
+	}
+	return false
+}
+
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent struct {
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%). Not used for type=tiered.
+	Amount int64 `json:"amount" api:"required"`
+	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+	// (amount in basis points), or "tiered" (multi-tier matching).
+	Type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentType `json:"type" api:"required"`
+	JSON individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentJSON `json:"-"`
+}
+
+// individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentJSON
+// contains the JSON metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent]
+type individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentJSON struct {
+	Amount      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercent) implementsIndividualBenefitBodyIndividualBenefitCompanyContribution() {
+}
+
+// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+// (amount in basis points), or "tiered" (multi-tier matching).
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentType string
+
+const (
+	IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentTypePercent IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentType = "percent"
+)
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentType) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionPercentTypePercent:
+		return true
+	}
+	return false
+}
+
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered struct {
+	// Array of tier objects defining employer match tiers based on employee
+	// contribution thresholds. Required when type=tiered.
+	Tiers []IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTier `json:"tiers" api:"required"`
+	// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+	// (amount in basis points), or "tiered" (multi-tier matching).
+	Type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredType `json:"type" api:"required"`
+	JSON individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredJSON `json:"-"`
+}
+
+// individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredJSON
+// contains the JSON metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered]
+type individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredJSON struct {
+	Tiers       apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTiered) implementsIndividualBenefitBodyIndividualBenefitCompanyContribution() {
+}
+
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTier struct {
+	Match     int64                                                                                      `json:"match" api:"required"`
+	Threshold int64                                                                                      `json:"threshold" api:"required"`
+	JSON      individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTierJSON `json:"-"`
+}
+
+// individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTierJSON
+// contains the JSON metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTier]
+type individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTierJSON struct {
+	Match       apijson.Field
+	Threshold   apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTierJSON) RawJSON() string {
+	return r.raw
+}
+
+// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+// (amount in basis points), or "tiered" (multi-tier matching).
+type IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredType string
+
+const (
+	IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTypeTiered IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredType = "tiered"
+)
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredType) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyIndividualBenefitCompanyContributionCompanyContributionTieredTypeTiered:
+		return true
+	}
+	return false
+}
+
+// Contribution type. Supported values: "fixed" (amount in cents), "percent"
+// (amount in basis points), or "tiered" (multi-tier matching).
+type IndividualBenefitBodyIndividualBenefitCompanyContributionType string
+
+const (
+	IndividualBenefitBodyIndividualBenefitCompanyContributionTypeFixed   IndividualBenefitBodyIndividualBenefitCompanyContributionType = "fixed"
+	IndividualBenefitBodyIndividualBenefitCompanyContributionTypePercent IndividualBenefitBodyIndividualBenefitCompanyContributionType = "percent"
+	IndividualBenefitBodyIndividualBenefitCompanyContributionTypeTiered  IndividualBenefitBodyIndividualBenefitCompanyContributionType = "tiered"
+)
+
+func (r IndividualBenefitBodyIndividualBenefitCompanyContributionType) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyIndividualBenefitCompanyContributionTypeFixed, IndividualBenefitBodyIndividualBenefitCompanyContributionTypePercent, IndividualBenefitBodyIndividualBenefitCompanyContributionTypeTiered:
+		return true
+	}
+	return false
+}
+
+// Employee deduction configuration. Supports both fixed amounts (in cents) and
+// percentage-based contributions (in basis points where 100 = 1%).
+type IndividualBenefitBodyIndividualBenefitEmployeeDeduction struct {
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%).
+	Amount int64 `json:"amount" api:"required"`
+	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+	// (amount in basis points).
+	Type  IndividualBenefitBodyIndividualBenefitEmployeeDeductionType `json:"type" api:"required"`
+	JSON  individualBenefitBodyIndividualBenefitEmployeeDeductionJSON `json:"-"`
+	union IndividualBenefitBodyIndividualBenefitEmployeeDeductionUnion
+}
+
+// individualBenefitBodyIndividualBenefitEmployeeDeductionJSON contains the JSON
+// metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeduction]
+type individualBenefitBodyIndividualBenefitEmployeeDeductionJSON struct {
+	Amount      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r individualBenefitBodyIndividualBenefitEmployeeDeductionJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r *IndividualBenefitBodyIndividualBenefitEmployeeDeduction) UnmarshalJSON(data []byte) (err error) {
+	*r = IndividualBenefitBodyIndividualBenefitEmployeeDeduction{}
+	err = apijson.UnmarshalRoot(data, &r.union)
+	if err != nil {
+		return err
+	}
+	return apijson.Port(r.union, &r)
+}
+
+// AsUnion returns a [IndividualBenefitBodyIndividualBenefitEmployeeDeductionUnion]
 // interface which you can cast to the specific types for more type safety.
 //
 // Possible runtime types of the union are
-// [IndividualBenefitBodyObjectCompanyContributionObject],
-// [IndividualBenefitBodyObjectCompanyContributionObject],
-// [IndividualBenefitBodyObjectCompanyContributionObject].
-func (r IndividualBenefitBodyObjectCompanyContribution) AsUnion() IndividualBenefitBodyObjectCompanyContributionUnion {
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed],
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent].
+func (r IndividualBenefitBodyIndividualBenefitEmployeeDeduction) AsUnion() IndividualBenefitBodyIndividualBenefitEmployeeDeductionUnion {
 	return r.union
 }
 
-// Union satisfied by [IndividualBenefitBodyObjectCompanyContributionObject],
-// [IndividualBenefitBodyObjectCompanyContributionObject] or
-// [IndividualBenefitBodyObjectCompanyContributionObject].
-type IndividualBenefitBodyObjectCompanyContributionUnion interface {
-	implementsIndividualBenefitBodyObjectCompanyContribution()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*IndividualBenefitBodyObjectCompanyContributionUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualBenefitBodyObjectCompanyContributionObject{}),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualBenefitBodyObjectCompanyContributionObject{}),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualBenefitBodyObjectCompanyContributionObject{}),
-		},
-	)
-}
-
-type IndividualBenefitBodyObjectCompanyContributionObject struct {
-	// Contribution amount in cents.
-	Amount int64 `json:"amount,required"`
-	// Fixed contribution type.
-	Type IndividualBenefitBodyObjectCompanyContributionObjectType `json:"type,required"`
-	JSON individualBenefitBodyObjectCompanyContributionObjectJSON `json:"-"`
-}
-
-// individualBenefitBodyObjectCompanyContributionObjectJSON contains the JSON
-// metadata for the struct [IndividualBenefitBodyObjectCompanyContributionObject]
-type individualBenefitBodyObjectCompanyContributionObjectJSON struct {
-	Amount      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *IndividualBenefitBodyObjectCompanyContributionObject) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r individualBenefitBodyObjectCompanyContributionObjectJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r IndividualBenefitBodyObjectCompanyContributionObject) implementsIndividualBenefitBodyObjectCompanyContribution() {
-}
-
-// Fixed contribution type.
-type IndividualBenefitBodyObjectCompanyContributionObjectType string
-
-const (
-	IndividualBenefitBodyObjectCompanyContributionObjectTypeFixed IndividualBenefitBodyObjectCompanyContributionObjectType = "fixed"
-)
-
-func (r IndividualBenefitBodyObjectCompanyContributionObjectType) IsKnown() bool {
-	switch r {
-	case IndividualBenefitBodyObjectCompanyContributionObjectTypeFixed:
-		return true
-	}
-	return false
-}
-
-// Fixed contribution type.
-type IndividualBenefitBodyObjectCompanyContributionType string
-
-const (
-	IndividualBenefitBodyObjectCompanyContributionTypeFixed   IndividualBenefitBodyObjectCompanyContributionType = "fixed"
-	IndividualBenefitBodyObjectCompanyContributionTypePercent IndividualBenefitBodyObjectCompanyContributionType = "percent"
-	IndividualBenefitBodyObjectCompanyContributionTypeTiered  IndividualBenefitBodyObjectCompanyContributionType = "tiered"
-)
-
-func (r IndividualBenefitBodyObjectCompanyContributionType) IsKnown() bool {
-	switch r {
-	case IndividualBenefitBodyObjectCompanyContributionTypeFixed, IndividualBenefitBodyObjectCompanyContributionTypePercent, IndividualBenefitBodyObjectCompanyContributionTypeTiered:
-		return true
-	}
-	return false
-}
-
-type IndividualBenefitBodyObjectEmployeeDeduction struct {
-	// Contribution amount in cents.
-	Amount int64 `json:"amount,required"`
-	// Fixed contribution type.
-	Type  IndividualBenefitBodyObjectEmployeeDeductionType `json:"type,required"`
-	JSON  individualBenefitBodyObjectEmployeeDeductionJSON `json:"-"`
-	union IndividualBenefitBodyObjectEmployeeDeductionUnion
-}
-
-// individualBenefitBodyObjectEmployeeDeductionJSON contains the JSON metadata for
-// the struct [IndividualBenefitBodyObjectEmployeeDeduction]
-type individualBenefitBodyObjectEmployeeDeductionJSON struct {
-	Amount      apijson.Field
-	Type        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r individualBenefitBodyObjectEmployeeDeductionJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r *IndividualBenefitBodyObjectEmployeeDeduction) UnmarshalJSON(data []byte) (err error) {
-	*r = IndividualBenefitBodyObjectEmployeeDeduction{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
-}
-
-// AsUnion returns a [IndividualBenefitBodyObjectEmployeeDeductionUnion] interface
-// which you can cast to the specific types for more type safety.
+// Employee deduction configuration. Supports both fixed amounts (in cents) and
+// percentage-based contributions (in basis points where 100 = 1%).
 //
-// Possible runtime types of the union are
-// [IndividualBenefitBodyObjectEmployeeDeductionObject],
-// [IndividualBenefitBodyObjectEmployeeDeductionObject].
-func (r IndividualBenefitBodyObjectEmployeeDeduction) AsUnion() IndividualBenefitBodyObjectEmployeeDeductionUnion {
-	return r.union
-}
-
-// Union satisfied by [IndividualBenefitBodyObjectEmployeeDeductionObject] or
-// [IndividualBenefitBodyObjectEmployeeDeductionObject].
-type IndividualBenefitBodyObjectEmployeeDeductionUnion interface {
-	implementsIndividualBenefitBodyObjectEmployeeDeduction()
+// Union satisfied by
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed]
+// or
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent].
+type IndividualBenefitBodyIndividualBenefitEmployeeDeductionUnion interface {
+	implementsIndividualBenefitBodyIndividualBenefitEmployeeDeduction()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*IndividualBenefitBodyObjectEmployeeDeductionUnion)(nil)).Elem(),
+		reflect.TypeOf((*IndividualBenefitBodyIndividualBenefitEmployeeDeductionUnion)(nil)).Elem(),
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualBenefitBodyObjectEmployeeDeductionObject{}),
+			Type:       reflect.TypeOf(IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualBenefitBodyObjectEmployeeDeductionObject{}),
+			Type:       reflect.TypeOf(IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent{}),
 		},
 	)
 }
 
-type IndividualBenefitBodyObjectEmployeeDeductionObject struct {
-	// Contribution amount in cents.
-	Amount int64 `json:"amount,required"`
-	// Fixed contribution type.
-	Type IndividualBenefitBodyObjectEmployeeDeductionObjectType `json:"type,required"`
-	JSON individualBenefitBodyObjectEmployeeDeductionObjectJSON `json:"-"`
+type IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed struct {
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%).
+	Amount int64 `json:"amount" api:"required"`
+	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+	// (amount in basis points).
+	Type IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedType `json:"type" api:"required"`
+	JSON individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedJSON `json:"-"`
 }
 
-// individualBenefitBodyObjectEmployeeDeductionObjectJSON contains the JSON
-// metadata for the struct [IndividualBenefitBodyObjectEmployeeDeductionObject]
-type individualBenefitBodyObjectEmployeeDeductionObjectJSON struct {
+// individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedJSON
+// contains the JSON metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed]
+type individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedJSON struct {
 	Amount      apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualBenefitBodyObjectEmployeeDeductionObject) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualBenefitBodyObjectEmployeeDeductionObjectJSON) RawJSON() string {
+func (r individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r IndividualBenefitBodyObjectEmployeeDeductionObject) implementsIndividualBenefitBodyObjectEmployeeDeduction() {
+func (r IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixed) implementsIndividualBenefitBodyIndividualBenefitEmployeeDeduction() {
 }
 
-// Fixed contribution type.
-type IndividualBenefitBodyObjectEmployeeDeductionObjectType string
+// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+// (amount in basis points).
+type IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedType string
 
 const (
-	IndividualBenefitBodyObjectEmployeeDeductionObjectTypeFixed IndividualBenefitBodyObjectEmployeeDeductionObjectType = "fixed"
+	IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedTypeFixed IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedType = "fixed"
 )
 
-func (r IndividualBenefitBodyObjectEmployeeDeductionObjectType) IsKnown() bool {
+func (r IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedType) IsKnown() bool {
 	switch r {
-	case IndividualBenefitBodyObjectEmployeeDeductionObjectTypeFixed:
+	case IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionFixedTypeFixed:
 		return true
 	}
 	return false
 }
 
-// Fixed contribution type.
-type IndividualBenefitBodyObjectEmployeeDeductionType string
+type IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent struct {
+	// Contribution amount in cents (for type=fixed) or basis points (for type=percent,
+	// where 100 = 1%).
+	Amount int64 `json:"amount" api:"required"`
+	// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+	// (amount in basis points).
+	Type IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentType `json:"type" api:"required"`
+	JSON individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentJSON `json:"-"`
+}
+
+// individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentJSON
+// contains the JSON metadata for the struct
+// [IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent]
+type individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentJSON struct {
+	Amount      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r individualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercent) implementsIndividualBenefitBodyIndividualBenefitEmployeeDeduction() {
+}
+
+// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+// (amount in basis points).
+type IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentType string
 
 const (
-	IndividualBenefitBodyObjectEmployeeDeductionTypeFixed   IndividualBenefitBodyObjectEmployeeDeductionType = "fixed"
-	IndividualBenefitBodyObjectEmployeeDeductionTypePercent IndividualBenefitBodyObjectEmployeeDeductionType = "percent"
+	IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentTypePercent IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentType = "percent"
 )
 
-func (r IndividualBenefitBodyObjectEmployeeDeductionType) IsKnown() bool {
+func (r IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentType) IsKnown() bool {
 	switch r {
-	case IndividualBenefitBodyObjectEmployeeDeductionTypeFixed, IndividualBenefitBodyObjectEmployeeDeductionTypePercent:
+	case IndividualBenefitBodyIndividualBenefitEmployeeDeductionEmployeeDeductionContributionPercentTypePercent:
+		return true
+	}
+	return false
+}
+
+// Contribution type. Supported values: "fixed" (amount in cents) or "percent"
+// (amount in basis points).
+type IndividualBenefitBodyIndividualBenefitEmployeeDeductionType string
+
+const (
+	IndividualBenefitBodyIndividualBenefitEmployeeDeductionTypeFixed   IndividualBenefitBodyIndividualBenefitEmployeeDeductionType = "fixed"
+	IndividualBenefitBodyIndividualBenefitEmployeeDeductionTypePercent IndividualBenefitBodyIndividualBenefitEmployeeDeductionType = "percent"
+)
+
+func (r IndividualBenefitBodyIndividualBenefitEmployeeDeductionType) IsKnown() bool {
+	switch r {
+	case IndividualBenefitBodyIndividualBenefitEmployeeDeductionTypeFixed, IndividualBenefitBodyIndividualBenefitEmployeeDeductionTypePercent:
 		return true
 	}
 	return false
 }
 
 // Type for HSA contribution limit if the benefit is a HSA.
-type IndividualBenefitBodyObjectHsaContributionLimit string
+type IndividualBenefitBodyIndividualBenefitHsaContributionLimit string
 
 const (
-	IndividualBenefitBodyObjectHsaContributionLimitIndividual IndividualBenefitBodyObjectHsaContributionLimit = "individual"
-	IndividualBenefitBodyObjectHsaContributionLimitFamily     IndividualBenefitBodyObjectHsaContributionLimit = "family"
+	IndividualBenefitBodyIndividualBenefitHsaContributionLimitIndividual IndividualBenefitBodyIndividualBenefitHsaContributionLimit = "individual"
+	IndividualBenefitBodyIndividualBenefitHsaContributionLimitFamily     IndividualBenefitBodyIndividualBenefitHsaContributionLimit = "family"
 )
 
-func (r IndividualBenefitBodyObjectHsaContributionLimit) IsKnown() bool {
+func (r IndividualBenefitBodyIndividualBenefitHsaContributionLimit) IsKnown() bool {
 	switch r {
-	case IndividualBenefitBodyObjectHsaContributionLimitIndividual, IndividualBenefitBodyObjectHsaContributionLimitFamily:
+	case IndividualBenefitBodyIndividualBenefitHsaContributionLimitIndividual, IndividualBenefitBodyIndividualBenefitHsaContributionLimitFamily:
 		return true
 	}
 	return false
 }
 
 type IndividualBenefitBodyBatchError struct {
-	Code      float64                             `json:"code,required"`
-	Message   string                              `json:"message,required"`
-	Name      string                              `json:"name,required"`
+	Code      float64                             `json:"code" api:"required"`
+	Message   string                              `json:"message" api:"required"`
+	Name      string                              `json:"name" api:"required"`
 	FinchCode string                              `json:"finch_code"`
 	JSON      individualBenefitBodyBatchErrorJSON `json:"-"`
 }
@@ -546,7 +752,7 @@ func (r IndividualBenefitBodyHsaContributionLimit) IsKnown() bool {
 }
 
 type UnenrolledIndividualBenefitResponse struct {
-	JobID string                                  `json:"job_id,required" format:"uuid"`
+	JobID string                                  `json:"job_id" api:"required" format:"uuid"`
 	JSON  unenrolledIndividualBenefitResponseJSON `json:"-"`
 }
 
@@ -568,8 +774,8 @@ func (r unenrolledIndividualBenefitResponseJSON) RawJSON() string {
 
 type HRISBenefitIndividualEnrolledIDsResponse struct {
 	// The id of the benefit.
-	BenefitID     string                                       `json:"benefit_id,required" format:"uuid"`
-	IndividualIDs []string                                     `json:"individual_ids,required" format:"uuid"`
+	BenefitID     string                                       `json:"benefit_id" api:"required" format:"uuid"`
+	IndividualIDs []string                                     `json:"individual_ids" api:"required" format:"uuid"`
 	JSON          hrisBenefitIndividualEnrolledIDsResponseJSON `json:"-"`
 }
 
@@ -590,7 +796,23 @@ func (r hrisBenefitIndividualEnrolledIDsResponseJSON) RawJSON() string {
 	return r.raw
 }
 
+type HRISBenefitIndividualEnrolledIDsParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [HRISBenefitIndividualEnrolledIDsParams]'s query parameters
+// as `url.Values`.
+func (r HRISBenefitIndividualEnrolledIDsParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type HRISBenefitIndividualGetManyBenefitsParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// comma-delimited list of stable Finch uuids for each individual. If empty,
 	// defaults to all individuals
 	IndividualIDs param.Field[string] `query:"individual_ids"`
@@ -606,10 +828,21 @@ func (r HRISBenefitIndividualGetManyBenefitsParams) URLQuery() (v url.Values) {
 }
 
 type HRISBenefitIndividualUnenrollManyParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Array of individual_ids to unenroll.
 	IndividualIDs param.Field[[]string] `json:"individual_ids"`
 }
 
 func (r HRISBenefitIndividualUnenrollManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISBenefitIndividualUnenrollManyParams]'s query parameters
+// as `url.Values`.
+func (r HRISBenefitIndividualUnenrollManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

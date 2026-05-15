@@ -34,23 +34,25 @@ func NewSandboxJobConfigurationService(opts ...option.RequestOption) (r *Sandbox
 
 // Get configurations for sandbox jobs
 func (r *SandboxJobConfigurationService) Get(ctx context.Context, opts ...option.RequestOption) (res *[]SandboxJobConfiguration, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs/configuration"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update configurations for sandbox jobs
 func (r *SandboxJobConfigurationService) Update(ctx context.Context, body SandboxJobConfigurationUpdateParams, opts ...option.RequestOption) (res *SandboxJobConfiguration, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/jobs/configuration"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxJobConfiguration struct {
-	CompletionStatus SandboxJobConfigurationCompletionStatus `json:"completion_status,required"`
-	Type             SandboxJobConfigurationType             `json:"type,required"`
+	CompletionStatus SandboxJobConfigurationCompletionStatus `json:"completion_status" api:"required"`
+	Type             SandboxJobConfigurationType             `json:"type" api:"required"`
 	JSON             sandboxJobConfigurationJSON             `json:"-"`
 }
 
@@ -103,8 +105,8 @@ func (r SandboxJobConfigurationType) IsKnown() bool {
 }
 
 type SandboxJobConfigurationUpdateParams struct {
-	CompletionStatus param.Field[SandboxJobConfigurationUpdateParamsCompletionStatus] `json:"completion_status,required"`
-	Type             param.Field[SandboxJobConfigurationUpdateParamsType]             `json:"type,required"`
+	CompletionStatus param.Field[SandboxJobConfigurationUpdateParamsCompletionStatus] `json:"completion_status" api:"required"`
+	Type             param.Field[SandboxJobConfigurationUpdateParamsType]             `json:"type" api:"required"`
 }
 
 func (r SandboxJobConfigurationUpdateParams) MarshalJSON() (data []byte, err error) {

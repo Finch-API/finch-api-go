@@ -106,7 +106,7 @@ func (r operationSupportMatrixJSON) RawJSON() string {
 
 type Paging struct {
 	// The current start index of the returned list of elements
-	Offset int64 `json:"offset,required"`
+	Offset int64 `json:"offset" api:"required"`
 	// The total number of elements for the entire query (not just the given page)
 	Count int64      `json:"count"`
 	JSON  pagingJSON `json:"-"`

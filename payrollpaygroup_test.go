@@ -13,7 +13,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestPayrollPayGroupGet(t *testing.T) {
+func TestPayrollPayGroupGetWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,8 +24,16 @@ func TestPayrollPayGroupGet(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.Payroll.PayGroups.Get(context.TODO(), "pay_group_id")
+	_, err := client.Payroll.PayGroups.Get(
+		context.TODO(),
+		"pay_group_id",
+		finchgo.PayrollPayGroupGetParams{
+			EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
+		},
+	)
 	if err != nil {
 		var apierr *finchgo.Error
 		if errors.As(err, &apierr) {
@@ -46,8 +54,11 @@ func TestPayrollPayGroupListWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Payroll.PayGroups.List(context.TODO(), finchgo.PayrollPayGroupListParams{
+		EntityIDs:      finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		IndividualID:   finchgo.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
 		PayFrequencies: finchgo.F([]string{"string"}),
 	})

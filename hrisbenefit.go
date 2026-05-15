@@ -7,9 +7,11 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -40,44 +42,48 @@ func NewHRISBenefitService(opts ...option.RequestOption) (r *HRISBenefitService)
 
 // Creates a new company-wide deduction or contribution. Please use the
 // `/providers` endpoint to view available types for each provider.
-func (r *HRISBenefitService) New(ctx context.Context, body HRISBenefitNewParams, opts ...option.RequestOption) (res *CreateCompanyBenefitsResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+func (r *HRISBenefitService) New(ctx context.Context, params HRISBenefitNewParams, opts ...option.RequestOption) (res *CreateCompanyBenefitsResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/benefits"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
 }
 
 // Lists deductions and contributions information for a given item
-func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
-	opts = slices.Concat(r.Options, opts)
+func (r *HRISBenefitService) Get(ctx context.Context, benefitID string, query HRISBenefitGetParams, opts ...option.RequestOption) (res *CompanyBenefit, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return res, err
 }
 
 // Updates an existing company-wide deduction or contribution
-func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, body HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+func (r *HRISBenefitService) Update(ctx context.Context, benefitID string, params HRISBenefitUpdateParams, opts ...option.RequestOption) (res *UpdateCompanyBenefitResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if benefitID == "" {
 		err = errors.New("missing required benefit_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/benefits/%s", benefitID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
 }
 
 // List all company-wide deductions and contributions.
-func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[CompanyBenefit], err error) {
+func (r *HRISBenefitService) List(ctx context.Context, query HRISBenefitListParams, opts ...option.RequestOption) (res *pagination.SinglePage[CompanyBenefit], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,17 +96,18 @@ func (r *HRISBenefitService) List(ctx context.Context, opts ...option.RequestOpt
 }
 
 // List all company-wide deductions and contributions.
-func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[CompanyBenefit] {
-	return pagination.NewSinglePageAutoPager(r.List(ctx, opts...))
+func (r *HRISBenefitService) ListAutoPaging(ctx context.Context, query HRISBenefitListParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[CompanyBenefit] {
+	return pagination.NewSinglePageAutoPager(r.List(ctx, query, opts...))
 }
 
 // Get deductions metadata
-func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
+func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, query HRISBenefitListSupportedBenefitsParams, opts ...option.RequestOption) (res *pagination.SinglePage[SupportedBenefit], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/benefits/meta"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -113,8 +120,18 @@ func (r *HRISBenefitService) ListSupportedBenefits(ctx context.Context, opts ...
 }
 
 // Get deductions metadata
-func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.SinglePageAutoPager[SupportedBenefit] {
-	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, opts...))
+func (r *HRISBenefitService) ListSupportedBenefitsAutoPaging(ctx context.Context, query HRISBenefitListSupportedBenefitsParams, opts ...option.RequestOption) *pagination.SinglePageAutoPager[SupportedBenefit] {
+	return pagination.NewSinglePageAutoPager(r.ListSupportedBenefits(ctx, query, opts...))
+}
+
+// Register existing benefits from the customer on the provider, on Finch's end.
+// Please use the `/provider` endpoint to view available types for each provider.
+func (r *HRISBenefitService) Register(ctx context.Context, params HRISBenefitRegisterParams, opts ...option.RequestOption) (res *RegisterCompanyBenefitResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
+	path := "employer/benefits/register"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
 }
 
 type BenefitFeaturesAndOperations struct {
@@ -193,19 +210,19 @@ func (r BenefitType) IsKnown() bool {
 // Each benefit type and their supported features. If the benefit type is not
 // supported, the property will be null
 type BenefitsSupport struct {
-	Commuter         BenefitFeaturesAndOperations            `json:"commuter,nullable"`
-	CustomPostTax    BenefitFeaturesAndOperations            `json:"custom_post_tax,nullable"`
-	CustomPreTax     BenefitFeaturesAndOperations            `json:"custom_pre_tax,nullable"`
-	FsaDependentCare BenefitFeaturesAndOperations            `json:"fsa_dependent_care,nullable"`
-	FsaMedical       BenefitFeaturesAndOperations            `json:"fsa_medical,nullable"`
-	HsaPost          BenefitFeaturesAndOperations            `json:"hsa_post,nullable"`
-	HsaPre           BenefitFeaturesAndOperations            `json:"hsa_pre,nullable"`
-	S125Dental       BenefitFeaturesAndOperations            `json:"s125_dental,nullable"`
-	S125Medical      BenefitFeaturesAndOperations            `json:"s125_medical,nullable"`
-	S125Vision       BenefitFeaturesAndOperations            `json:"s125_vision,nullable"`
-	Simple           BenefitFeaturesAndOperations            `json:"simple,nullable"`
-	SimpleIRA        BenefitFeaturesAndOperations            `json:"simple_ira,nullable"`
-	ExtraFields      map[string]BenefitFeaturesAndOperations `json:"-,extras"`
+	Commuter         BenefitFeaturesAndOperations            `json:"commuter" api:"nullable"`
+	CustomPostTax    BenefitFeaturesAndOperations            `json:"custom_post_tax" api:"nullable"`
+	CustomPreTax     BenefitFeaturesAndOperations            `json:"custom_pre_tax" api:"nullable"`
+	FsaDependentCare BenefitFeaturesAndOperations            `json:"fsa_dependent_care" api:"nullable"`
+	FsaMedical       BenefitFeaturesAndOperations            `json:"fsa_medical" api:"nullable"`
+	HsaPost          BenefitFeaturesAndOperations            `json:"hsa_post" api:"nullable"`
+	HsaPre           BenefitFeaturesAndOperations            `json:"hsa_pre" api:"nullable"`
+	S125Dental       BenefitFeaturesAndOperations            `json:"s125_dental" api:"nullable"`
+	S125Medical      BenefitFeaturesAndOperations            `json:"s125_medical" api:"nullable"`
+	S125Vision       BenefitFeaturesAndOperations            `json:"s125_vision" api:"nullable"`
+	Simple           BenefitFeaturesAndOperations            `json:"simple" api:"nullable"`
+	SimpleIRA        BenefitFeaturesAndOperations            `json:"simple_ira" api:"nullable"`
+	ExtraFields      map[string]BenefitFeaturesAndOperations `json:"-" api:"extrafields"`
 	JSON             benefitsSupportJSON                     `json:"-"`
 }
 
@@ -237,14 +254,14 @@ func (r benefitsSupportJSON) RawJSON() string {
 
 type CompanyBenefit struct {
 	// The id of the benefit.
-	BenefitID   string `json:"benefit_id,required" format:"uuid"`
-	Description string `json:"description,required,nullable"`
+	BenefitID   string `json:"benefit_id" api:"required" format:"uuid"`
+	Description string `json:"description" api:"required,nullable"`
 	// The frequency of the benefit deduction/contribution.
-	Frequency BenefitFrequency `json:"frequency,required,nullable"`
+	Frequency BenefitFrequency `json:"frequency" api:"required,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,required,nullable"`
+	Type BenefitType `json:"type" api:"required,nullable"`
 	// The company match for this benefit.
-	CompanyContribution CompanyBenefitCompanyContribution `json:"company_contribution,nullable"`
+	CompanyContribution CompanyBenefitCompanyContribution `json:"company_contribution" api:"nullable"`
 	JSON                companyBenefitJSON                `json:"-"`
 }
 
@@ -269,8 +286,8 @@ func (r companyBenefitJSON) RawJSON() string {
 
 // The company match for this benefit.
 type CompanyBenefitCompanyContribution struct {
-	Tiers []CompanyBenefitCompanyContributionTier `json:"tiers,required"`
-	Type  CompanyBenefitCompanyContributionType   `json:"type,required"`
+	Tiers []CompanyBenefitCompanyContributionTier `json:"tiers" api:"required"`
+	Type  CompanyBenefitCompanyContributionType   `json:"type" api:"required"`
 	JSON  companyBenefitCompanyContributionJSON   `json:"-"`
 }
 
@@ -292,8 +309,8 @@ func (r companyBenefitCompanyContributionJSON) RawJSON() string {
 }
 
 type CompanyBenefitCompanyContributionTier struct {
-	Match     int64                                     `json:"match,required"`
-	Threshold int64                                     `json:"threshold,required"`
+	Match     int64                                     `json:"match" api:"required"`
+	Threshold int64                                     `json:"threshold" api:"required"`
 	JSON      companyBenefitCompanyContributionTierJSON `json:"-"`
 }
 
@@ -330,8 +347,8 @@ func (r CompanyBenefitCompanyContributionType) IsKnown() bool {
 
 type CreateCompanyBenefitsResponse struct {
 	// The id of the benefit.
-	BenefitID string                            `json:"benefit_id,required" format:"uuid"`
-	JobID     string                            `json:"job_id,required" format:"uuid"`
+	BenefitID string                            `json:"benefit_id" api:"required" format:"uuid"`
+	JobID     string                            `json:"job_id" api:"required" format:"uuid"`
 	JSON      createCompanyBenefitsResponseJSON `json:"-"`
 }
 
@@ -349,6 +366,30 @@ func (r *CreateCompanyBenefitsResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r createCompanyBenefitsResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type RegisterCompanyBenefitResponse struct {
+	// The id of the benefit.
+	BenefitID string                             `json:"benefit_id" api:"required" format:"uuid"`
+	JobID     string                             `json:"job_id" api:"required" format:"uuid"`
+	JSON      registerCompanyBenefitResponseJSON `json:"-"`
+}
+
+// registerCompanyBenefitResponseJSON contains the JSON metadata for the struct
+// [RegisterCompanyBenefitResponse]
+type registerCompanyBenefitResponseJSON struct {
+	BenefitID   apijson.Field
+	JobID       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RegisterCompanyBenefitResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r registerCompanyBenefitResponseJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -377,22 +418,22 @@ func (r supportPerBenefitTypeJSON) RawJSON() string {
 
 type SupportedBenefit struct {
 	// Whether the provider supports an annual maximum for this benefit.
-	AnnualMaximum bool `json:"annual_maximum,required,nullable"`
+	AnnualMaximum bool `json:"annual_maximum" api:"required,nullable"`
 	// Supported contribution types. An empty array indicates contributions are not
 	// supported.
-	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution,required,nullable"`
-	Description         string                                `json:"description,required,nullable"`
+	CompanyContribution []SupportedBenefitCompanyContribution `json:"company_contribution" api:"required,nullable"`
+	Description         string                                `json:"description" api:"required,nullable"`
 	// Supported deduction types. An empty array indicates deductions are not
 	// supported.
-	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction,required,nullable"`
+	EmployeeDeduction []SupportedBenefitEmployeeDeduction `json:"employee_deduction" api:"required,nullable"`
 	// The list of frequencies supported by the provider for this benefit
-	Frequencies []BenefitFrequency `json:"frequencies,required"`
+	Frequencies []BenefitFrequency `json:"frequencies" api:"required"`
 	// Whether the provider supports catch up for this benefit. This field will only be
 	// true for retirement benefits.
-	CatchUp bool `json:"catch_up,nullable"`
+	CatchUp bool `json:"catch_up" api:"nullable"`
 	// Whether the provider supports HSA contribution limits. Empty if this feature is
 	// not supported for the benefit. This array only has values for HSA benefits.
-	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit,nullable"`
+	HsaContributionLimit []SupportedBenefitHsaContributionLimit `json:"hsa_contribution_limit" api:"nullable"`
 	JSON                 supportedBenefitJSON                   `json:"-"`
 }
 
@@ -466,8 +507,8 @@ func (r SupportedBenefitHsaContributionLimit) IsKnown() bool {
 
 type UpdateCompanyBenefitResponse struct {
 	// The id of the benefit.
-	BenefitID string                           `json:"benefit_id,required" format:"uuid"`
-	JobID     string                           `json:"job_id,required" format:"uuid"`
+	BenefitID string                           `json:"benefit_id" api:"required" format:"uuid"`
+	JobID     string                           `json:"job_id" api:"required" format:"uuid"`
 	JSON      updateCompanyBenefitResponseJSON `json:"-"`
 }
 
@@ -489,6 +530,8 @@ func (r updateCompanyBenefitResponseJSON) RawJSON() string {
 }
 
 type HRISBenefitNewParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// The company match for this benefit.
 	CompanyContribution param.Field[HRISBenefitNewParamsCompanyContribution] `json:"company_contribution"`
 	// Name of the benefit as it appears in the provider and pay statements. Recommend
@@ -505,10 +548,18 @@ func (r HRISBenefitNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// URLQuery serializes [HRISBenefitNewParams]'s query parameters as `url.Values`.
+func (r HRISBenefitNewParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 // The company match for this benefit.
 type HRISBenefitNewParamsCompanyContribution struct {
-	Tiers param.Field[[]HRISBenefitNewParamsCompanyContributionTier] `json:"tiers,required"`
-	Type  param.Field[HRISBenefitNewParamsCompanyContributionType]   `json:"type,required"`
+	Tiers param.Field[[]HRISBenefitNewParamsCompanyContributionTier] `json:"tiers" api:"required"`
+	Type  param.Field[HRISBenefitNewParamsCompanyContributionType]   `json:"type" api:"required"`
 }
 
 func (r HRISBenefitNewParamsCompanyContribution) MarshalJSON() (data []byte, err error) {
@@ -516,8 +567,8 @@ func (r HRISBenefitNewParamsCompanyContribution) MarshalJSON() (data []byte, err
 }
 
 type HRISBenefitNewParamsCompanyContributionTier struct {
-	Match     param.Field[int64] `json:"match,required"`
-	Threshold param.Field[int64] `json:"threshold,required"`
+	Match     param.Field[int64] `json:"match" api:"required"`
+	Threshold param.Field[int64] `json:"threshold" api:"required"`
 }
 
 func (r HRISBenefitNewParamsCompanyContributionTier) MarshalJSON() (data []byte, err error) {
@@ -538,11 +589,85 @@ func (r HRISBenefitNewParamsCompanyContributionType) IsKnown() bool {
 	return false
 }
 
+type HRISBenefitGetParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [HRISBenefitGetParams]'s query parameters as `url.Values`.
+func (r HRISBenefitGetParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type HRISBenefitUpdateParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Updated name or description.
 	Description param.Field[string] `json:"description"`
 }
 
 func (r HRISBenefitUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISBenefitUpdateParams]'s query parameters as
+// `url.Values`.
+func (r HRISBenefitUpdateParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISBenefitListParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [HRISBenefitListParams]'s query parameters as `url.Values`.
+func (r HRISBenefitListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISBenefitListSupportedBenefitsParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [HRISBenefitListSupportedBenefitsParams]'s query parameters
+// as `url.Values`.
+func (r HRISBenefitListSupportedBenefitsParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISBenefitRegisterParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs   param.Field[[]string] `query:"entity_ids" format:"uuid"`
+	Description param.Field[string]   `json:"description"`
+	// The frequency of the benefit deduction/contribution.
+	Frequency param.Field[BenefitFrequency] `json:"frequency"`
+	// Type of benefit.
+	Type param.Field[BenefitType] `json:"type"`
+}
+
+func (r HRISBenefitRegisterParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISBenefitRegisterParams]'s query parameters as
+// `url.Values`.
+func (r HRISBenefitRegisterParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

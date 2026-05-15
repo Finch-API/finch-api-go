@@ -34,29 +34,30 @@ func NewSandboxCompanyService(opts ...option.RequestOption) (r *SandboxCompanySe
 
 // Update a sandbox company's data
 func (r *SandboxCompanyService) Update(ctx context.Context, body SandboxCompanyUpdateParams, opts ...option.RequestOption) (res *SandboxCompanyUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/company"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxCompanyUpdateResponse struct {
 	// An array of bank account objects associated with the payroll/HRIS system.
-	Accounts []SandboxCompanyUpdateResponseAccount `json:"accounts,required,nullable"`
+	Accounts []SandboxCompanyUpdateResponseAccount `json:"accounts" api:"required,nullable"`
 	// The array of company departments.
-	Departments []SandboxCompanyUpdateResponseDepartment `json:"departments,required,nullable"`
+	Departments []SandboxCompanyUpdateResponseDepartment `json:"departments" api:"required,nullable"`
 	// The employer identification number.
-	Ein string `json:"ein,required,nullable"`
+	Ein string `json:"ein" api:"required,nullable"`
 	// The entity type object.
-	Entity SandboxCompanyUpdateResponseEntity `json:"entity,required,nullable"`
+	Entity SandboxCompanyUpdateResponseEntity `json:"entity" api:"required,nullable"`
 	// The legal name of the company.
-	LegalName string     `json:"legal_name,required,nullable"`
-	Locations []Location `json:"locations,required,nullable"`
+	LegalName string     `json:"legal_name" api:"required,nullable"`
+	Locations []Location `json:"locations" api:"required,nullable"`
 	// The email of the main administrator on the account.
-	PrimaryEmail string `json:"primary_email,required,nullable" format:"email"`
+	PrimaryEmail string `json:"primary_email" api:"required,nullable" format:"email"`
 	// The phone number of the main administrator on the account. Format: E.164, with
 	// extension where applicable, e.g. `+NNNNNNNNNNN xExtension`
-	PrimaryPhoneNumber string                           `json:"primary_phone_number,required,nullable"`
+	PrimaryPhoneNumber string                           `json:"primary_phone_number" api:"required,nullable"`
 	JSON               sandboxCompanyUpdateResponseJSON `json:"-"`
 }
 
@@ -85,16 +86,16 @@ func (r sandboxCompanyUpdateResponseJSON) RawJSON() string {
 
 type SandboxCompanyUpdateResponseAccount struct {
 	// The name of the bank associated in the payroll/HRIS system.
-	AccountName string `json:"account_name,nullable"`
+	AccountName string `json:"account_name" api:"nullable"`
 	// 10-12 digit number to specify the bank account
-	AccountNumber string `json:"account_number,nullable"`
+	AccountNumber string `json:"account_number" api:"nullable"`
 	// The type of bank account.
-	AccountType SandboxCompanyUpdateResponseAccountsAccountType `json:"account_type,nullable"`
+	AccountType SandboxCompanyUpdateResponseAccountsAccountType `json:"account_type" api:"nullable"`
 	// Name of the banking institution.
-	InstitutionName string `json:"institution_name,nullable"`
+	InstitutionName string `json:"institution_name" api:"nullable"`
 	// A nine-digit code that's based on the U.S. Bank location where your account was
 	// opened.
-	RoutingNumber string                                  `json:"routing_number,nullable"`
+	RoutingNumber string                                  `json:"routing_number" api:"nullable"`
 	JSON          sandboxCompanyUpdateResponseAccountJSON `json:"-"`
 }
 
@@ -136,9 +137,9 @@ func (r SandboxCompanyUpdateResponseAccountsAccountType) IsKnown() bool {
 
 type SandboxCompanyUpdateResponseDepartment struct {
 	// The department name.
-	Name string `json:"name,nullable"`
+	Name string `json:"name" api:"nullable"`
 	// The parent department, if present.
-	Parent SandboxCompanyUpdateResponseDepartmentsParent `json:"parent,nullable"`
+	Parent SandboxCompanyUpdateResponseDepartmentsParent `json:"parent" api:"nullable"`
 	JSON   sandboxCompanyUpdateResponseDepartmentJSON    `json:"-"`
 }
 
@@ -162,7 +163,7 @@ func (r sandboxCompanyUpdateResponseDepartmentJSON) RawJSON() string {
 // The parent department, if present.
 type SandboxCompanyUpdateResponseDepartmentsParent struct {
 	// The parent department's name.
-	Name string                                            `json:"name,nullable"`
+	Name string                                            `json:"name" api:"nullable"`
 	JSON sandboxCompanyUpdateResponseDepartmentsParentJSON `json:"-"`
 }
 
@@ -185,9 +186,9 @@ func (r sandboxCompanyUpdateResponseDepartmentsParentJSON) RawJSON() string {
 // The entity type object.
 type SandboxCompanyUpdateResponseEntity struct {
 	// The tax payer subtype of the company.
-	Subtype SandboxCompanyUpdateResponseEntitySubtype `json:"subtype,nullable"`
+	Subtype SandboxCompanyUpdateResponseEntitySubtype `json:"subtype" api:"nullable"`
 	// The tax payer type of the company.
-	Type SandboxCompanyUpdateResponseEntityType `json:"type,nullable"`
+	Type SandboxCompanyUpdateResponseEntityType `json:"type" api:"nullable"`
 	JSON sandboxCompanyUpdateResponseEntityJSON `json:"-"`
 }
 
@@ -248,21 +249,21 @@ func (r SandboxCompanyUpdateResponseEntityType) IsKnown() bool {
 
 type SandboxCompanyUpdateParams struct {
 	// An array of bank account objects associated with the payroll/HRIS system.
-	Accounts param.Field[[]SandboxCompanyUpdateParamsAccount] `json:"accounts,required"`
+	Accounts param.Field[[]SandboxCompanyUpdateParamsAccount] `json:"accounts" api:"required"`
 	// The array of company departments.
-	Departments param.Field[[]SandboxCompanyUpdateParamsDepartment] `json:"departments,required"`
+	Departments param.Field[[]SandboxCompanyUpdateParamsDepartment] `json:"departments" api:"required"`
 	// The employer identification number.
-	Ein param.Field[string] `json:"ein,required"`
+	Ein param.Field[string] `json:"ein" api:"required"`
 	// The entity type object.
-	Entity param.Field[SandboxCompanyUpdateParamsEntity] `json:"entity,required"`
+	Entity param.Field[SandboxCompanyUpdateParamsEntity] `json:"entity" api:"required"`
 	// The legal name of the company.
-	LegalName param.Field[string]          `json:"legal_name,required"`
-	Locations param.Field[[]LocationParam] `json:"locations,required"`
+	LegalName param.Field[string]          `json:"legal_name" api:"required"`
+	Locations param.Field[[]LocationParam] `json:"locations" api:"required"`
 	// The email of the main administrator on the account.
-	PrimaryEmail param.Field[string] `json:"primary_email,required" format:"email"`
+	PrimaryEmail param.Field[string] `json:"primary_email" api:"required" format:"email"`
 	// The phone number of the main administrator on the account. Format: E.164, with
 	// extension where applicable, e.g. `+NNNNNNNNNNN xExtension`
-	PrimaryPhoneNumber param.Field[string] `json:"primary_phone_number,required"`
+	PrimaryPhoneNumber param.Field[string] `json:"primary_phone_number" api:"required"`
 }
 
 func (r SandboxCompanyUpdateParams) MarshalJSON() (data []byte, err error) {

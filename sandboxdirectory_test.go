@@ -12,6 +12,7 @@ import (
 	"github.com/Finch-API/finch-api-go"
 	"github.com/Finch-API/finch-api-go/internal/testutil"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
 )
 
 func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
@@ -25,13 +26,15 @@ func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Sandbox.Directory.New(context.TODO(), finchgo.SandboxDirectoryNewParams{
 		Body: []finchgo.SandboxDirectoryNewParamsBody{{
 			ClassCode: finchgo.F("class_code"),
 			CustomFields: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyCustomField{{
 				Name:  finchgo.F("name"),
-				Value: finchgo.F[any](map[string]interface{}{}),
+				Value: finchgo.F[finchgo.SandboxDirectoryNewParamsBodyCustomFieldsValueUnion](shared.UnionString("string")),
 			}}),
 			Department: finchgo.F(finchgo.SandboxDirectoryNewParamsBodyDepartment{
 				Name: finchgo.F("name"),
@@ -50,6 +53,7 @@ func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
 			EndDate:          finchgo.F("end_date"),
 			Ethnicity:        finchgo.F(finchgo.SandboxDirectoryNewParamsBodyEthnicityAsian),
 			FirstName:        finchgo.F("first_name"),
+			FlsaStatus:       finchgo.F(finchgo.SandboxDirectoryNewParamsBodyFlsaStatusExempt),
 			Gender:           finchgo.F(finchgo.SandboxDirectoryNewParamsBodyGenderFemale),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),

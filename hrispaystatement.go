@@ -5,10 +5,12 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -39,12 +41,13 @@ func NewHRISPayStatementService(opts ...option.RequestOption) (r *HRISPayStateme
 //
 // Deduction and contribution types are supported by the payroll systems that
 // supports Benefits.
-func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[PayStatementResponse], err error) {
+func (r *HRISPayStatementService) GetMany(ctx context.Context, params HRISPayStatementGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[PayStatementResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, params, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,28 +63,28 @@ func (r *HRISPayStatementService) GetMany(ctx context.Context, body HRISPayState
 //
 // Deduction and contribution types are supported by the payroll systems that
 // supports Benefits.
-func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, body HRISPayStatementGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[PayStatementResponse] {
-	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISPayStatementService) GetManyAutoPaging(ctx context.Context, params HRISPayStatementGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[PayStatementResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, params, opts...))
 }
 
 type PayStatement struct {
 	// The array of earnings objects associated with this pay statement
-	Earnings []PayStatementEarning `json:"earnings,required,nullable"`
+	Earnings []PayStatementEarning `json:"earnings" api:"required,nullable"`
 	// The array of deductions objects associated with this pay statement.
-	EmployeeDeductions    []PayStatementEmployeeDeduction    `json:"employee_deductions,required,nullable"`
-	EmployerContributions []PayStatementEmployerContribution `json:"employer_contributions,required,nullable"`
-	GrossPay              Money                              `json:"gross_pay,required,nullable"`
+	EmployeeDeductions    []PayStatementEmployeeDeduction    `json:"employee_deductions" api:"required,nullable"`
+	EmployerContributions []PayStatementEmployerContribution `json:"employer_contributions" api:"required,nullable"`
+	GrossPay              Money                              `json:"gross_pay" api:"required,nullable"`
 	// A stable Finch `id` (UUID v4) for an individual in the company
-	IndividualID string `json:"individual_id,required"`
-	NetPay       Money  `json:"net_pay,required,nullable"`
+	IndividualID string `json:"individual_id" api:"required"`
+	NetPay       Money  `json:"net_pay" api:"required,nullable"`
 	// The payment method.
-	PaymentMethod PayStatementPaymentMethod `json:"payment_method,required,nullable"`
+	PaymentMethod PayStatementPaymentMethod `json:"payment_method" api:"required,nullable"`
 	// The array of taxes objects associated with this pay statement.
-	Taxes []PayStatementTax `json:"taxes,required,nullable"`
+	Taxes []PayStatementTax `json:"taxes" api:"required,nullable"`
 	// The number of hours worked for this pay period
-	TotalHours float64 `json:"total_hours,required,nullable"`
+	TotalHours float64 `json:"total_hours" api:"required,nullable"`
 	// The type of the payment associated with the pay statement.
-	Type PayStatementType `json:"type,required,nullable"`
+	Type PayStatementType `json:"type" api:"required,nullable"`
 	JSON payStatementJSON `json:"-"`
 }
 
@@ -111,17 +114,17 @@ func (r payStatementJSON) RawJSON() string {
 
 type PayStatementEarning struct {
 	// The earnings amount in cents.
-	Amount int64 `json:"amount,required,nullable"`
+	Amount int64 `json:"amount" api:"required,nullable"`
 	// The earnings currency code.
-	Currency string `json:"currency,required,nullable"`
+	Currency string `json:"currency" api:"required,nullable"`
 	// The number of hours associated with this earning. (For salaried employees, this
 	// could be hours per pay period, `0` or `null`, depending on the provider).
-	Hours float64 `json:"hours,required,nullable"`
+	Hours float64 `json:"hours" api:"required,nullable"`
 	// The exact name of the deduction from the pay statement.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// The type of earning.
-	Type       PayStatementEarningsType       `json:"type,required,nullable"`
-	Attributes PayStatementEarningsAttributes `json:"attributes,nullable"`
+	Type       PayStatementEarningsType       `json:"type" api:"required,nullable"`
+	Attributes PayStatementEarningsAttributes `json:"attributes" api:"nullable"`
 	JSON       payStatementEarningJSON        `json:"-"`
 }
 
@@ -177,7 +180,7 @@ type PayStatementEarningsAttributes struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}             `json:"metadata,required"`
+	Metadata map[string]interface{}             `json:"metadata" api:"required"`
 	JSON     payStatementEarningsAttributesJSON `json:"-"`
 }
 
@@ -199,16 +202,16 @@ func (r payStatementEarningsAttributesJSON) RawJSON() string {
 
 type PayStatementEmployeeDeduction struct {
 	// The deduction amount in cents.
-	Amount int64 `json:"amount,required,nullable"`
+	Amount int64 `json:"amount" api:"required,nullable"`
 	// The deduction currency.
-	Currency string `json:"currency,required,nullable"`
+	Currency string `json:"currency" api:"required,nullable"`
 	// The deduction name from the pay statement.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// Boolean indicating if the deduction is pre-tax.
-	PreTax bool `json:"pre_tax,required,nullable"`
+	PreTax bool `json:"pre_tax" api:"required,nullable"`
 	// Type of benefit.
-	Type       BenefitType                              `json:"type,required,nullable"`
-	Attributes PayStatementEmployeeDeductionsAttributes `json:"attributes,nullable"`
+	Type       BenefitType                              `json:"type" api:"required,nullable"`
+	Attributes PayStatementEmployeeDeductionsAttributes `json:"attributes" api:"nullable"`
 	JSON       payStatementEmployeeDeductionJSON        `json:"-"`
 }
 
@@ -237,7 +240,7 @@ type PayStatementEmployeeDeductionsAttributes struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}                       `json:"metadata,required"`
+	Metadata map[string]interface{}                       `json:"metadata" api:"required"`
 	JSON     payStatementEmployeeDeductionsAttributesJSON `json:"-"`
 }
 
@@ -259,14 +262,14 @@ func (r payStatementEmployeeDeductionsAttributesJSON) RawJSON() string {
 
 type PayStatementEmployerContribution struct {
 	// The contribution currency.
-	Currency string `json:"currency,required,nullable"`
+	Currency string `json:"currency" api:"required,nullable"`
 	// The contribution name from the pay statement.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// Type of benefit.
-	Type BenefitType `json:"type,required,nullable"`
+	Type BenefitType `json:"type" api:"required,nullable"`
 	// The contribution amount in cents.
-	Amount     int64                                       `json:"amount,nullable"`
-	Attributes PayStatementEmployerContributionsAttributes `json:"attributes,nullable"`
+	Amount     int64                                       `json:"amount" api:"nullable"`
+	Attributes PayStatementEmployerContributionsAttributes `json:"attributes" api:"nullable"`
 	JSON       payStatementEmployerContributionJSON        `json:"-"`
 }
 
@@ -294,7 +297,7 @@ type PayStatementEmployerContributionsAttributes struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}                          `json:"metadata,required"`
+	Metadata map[string]interface{}                          `json:"metadata" api:"required"`
 	JSON     payStatementEmployerContributionsAttributesJSON `json:"-"`
 }
 
@@ -333,16 +336,16 @@ func (r PayStatementPaymentMethod) IsKnown() bool {
 
 type PayStatementTax struct {
 	// The currency code.
-	Currency string `json:"currency,required,nullable"`
+	Currency string `json:"currency" api:"required,nullable"`
 	// `true` if the amount is paid by the employers.
-	Employer bool `json:"employer,required,nullable"`
+	Employer bool `json:"employer" api:"required,nullable"`
 	// The exact name of tax from the pay statement.
-	Name string `json:"name,required,nullable"`
+	Name string `json:"name" api:"required,nullable"`
 	// The type of taxes.
-	Type PayStatementTaxesType `json:"type,required,nullable"`
+	Type PayStatementTaxesType `json:"type" api:"required,nullable"`
 	// The tax amount in cents.
-	Amount     int64                       `json:"amount,nullable"`
-	Attributes PayStatementTaxesAttributes `json:"attributes,nullable"`
+	Amount     int64                       `json:"amount" api:"nullable"`
+	Attributes PayStatementTaxesAttributes `json:"attributes" api:"nullable"`
 	JSON       payStatementTaxJSON         `json:"-"`
 }
 
@@ -388,7 +391,7 @@ type PayStatementTaxesAttributes struct {
 	// The metadata to be attached to the entity by existing rules. It is a key-value
 	// pairs where the values can be of any type (string, number, boolean, object,
 	// array, etc.).
-	Metadata map[string]interface{}          `json:"metadata,required"`
+	Metadata map[string]interface{}          `json:"metadata" api:"required"`
 	JSON     payStatementTaxesAttributesJSON `json:"-"`
 }
 
@@ -426,10 +429,10 @@ func (r PayStatementType) IsKnown() bool {
 }
 
 type PayStatementDataSyncInProgress struct {
-	Code      PayStatementDataSyncInProgressCode      `json:"code,required"`
-	FinchCode PayStatementDataSyncInProgressFinchCode `json:"finch_code,required"`
-	Message   PayStatementDataSyncInProgressMessage   `json:"message,required"`
-	Name      PayStatementDataSyncInProgressName      `json:"name,required"`
+	Code      PayStatementDataSyncInProgressCode      `json:"code" api:"required"`
+	FinchCode PayStatementDataSyncInProgressFinchCode `json:"finch_code" api:"required"`
+	Message   PayStatementDataSyncInProgressMessage   `json:"message" api:"required"`
+	Name      PayStatementDataSyncInProgressName      `json:"name" api:"required"`
 	JSON      payStatementDataSyncInProgressJSON      `json:"-"`
 }
 
@@ -511,9 +514,9 @@ func (r PayStatementDataSyncInProgressName) IsKnown() bool {
 }
 
 type PayStatementResponse struct {
-	Body      PayStatementResponseBody `json:"body,required"`
-	Code      int64                    `json:"code,required"`
-	PaymentID string                   `json:"payment_id,required"`
+	Body      PayStatementResponseBody `json:"body" api:"required"`
+	Code      int64                    `json:"code" api:"required"`
+	PaymentID string                   `json:"payment_id" api:"required"`
 	JSON      payStatementResponseJSON `json:"-"`
 }
 
@@ -609,9 +612,9 @@ func init() {
 }
 
 type PayStatementResponseBodyBatchError struct {
-	Code      float64                                `json:"code,required"`
-	Message   string                                 `json:"message,required"`
-	Name      string                                 `json:"name,required"`
+	Code      float64                                `json:"code" api:"required"`
+	Message   string                                 `json:"message" api:"required"`
+	Name      string                                 `json:"name" api:"required"`
 	FinchCode string                                 `json:"finch_code"`
 	JSON      payStatementResponseBodyBatchErrorJSON `json:"-"`
 }
@@ -639,16 +642,27 @@ func (r PayStatementResponseBodyBatchError) implementsPayStatementResponseBody()
 
 type HRISPayStatementGetManyParams struct {
 	// The array of batch requests.
-	Requests param.Field[[]HRISPayStatementGetManyParamsRequest] `json:"requests,required"`
+	Requests param.Field[[]HRISPayStatementGetManyParamsRequest] `json:"requests" api:"required"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 func (r HRISPayStatementGetManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// URLQuery serializes [HRISPayStatementGetManyParams]'s query parameters as
+// `url.Values`.
+func (r HRISPayStatementGetManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type HRISPayStatementGetManyParamsRequest struct {
 	// A stable Finch `id` (UUID v4) for a payment.
-	PaymentID param.Field[string] `json:"payment_id,required" format:"uuid"`
+	PaymentID param.Field[string] `json:"payment_id" api:"required" format:"uuid"`
 	// Number of pay statements to return (defaults to all).
 	Limit param.Field[int64] `json:"limit"`
 	// Index to start from.

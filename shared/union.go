@@ -14,16 +14,25 @@ func (UnionTime) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLas
 
 type UnionString string
 
-func (UnionString) ImplementsEmploymentDataObjectCustomFieldsValueUnion()           {}
-func (UnionString) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion() {}
+func (UnionString) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {}
+func (UnionString) ImplementsIntrospectionConnectionStatusLastSuccessfulSyncUnion()           {}
 func (UnionString) ImplementsIntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion() {
 }
-func (UnionString) ImplementsRequestForwardingForwardResponseRequestDataUnion() {}
+func (UnionString) ImplementsRequestForwardingForwardResponseRequestDataUnion()      {}
+func (UnionString) ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion()   {}
+func (UnionString) ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion() {}
+func (UnionString) ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion()   {}
 
 type UnionBool bool
 
-func (UnionBool) ImplementsEmploymentDataObjectCustomFieldsValueUnion() {}
+func (UnionBool) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {}
+func (UnionBool) ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion()            {}
+func (UnionBool) ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion()          {}
+func (UnionBool) ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion()            {}
 
 type UnionFloat float64
 
-func (UnionFloat) ImplementsEmploymentDataObjectCustomFieldsValueUnion() {}
+func (UnionFloat) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {}
+func (UnionFloat) ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion()            {}
+func (UnionFloat) ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion()          {}
+func (UnionFloat) ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion()            {}

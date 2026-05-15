@@ -34,10 +34,11 @@ func NewSandboxDirectoryService(opts ...option.RequestOption) (r *SandboxDirecto
 
 // Add new individuals to a sandbox company
 func (r *SandboxDirectoryService) New(ctx context.Context, body SandboxDirectoryNewParams, opts ...option.RequestOption) (res *[]SandboxDirectoryNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/directory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxDirectoryNewResponse = interface{}
@@ -65,8 +66,7 @@ type SandboxDirectoryNewParamsBody struct {
 	Emails     param.Field[[]SandboxDirectoryNewParamsBodyEmail]    `json:"emails"`
 	// The employment object.
 	Employment param.Field[SandboxDirectoryNewParamsBodyEmployment] `json:"employment"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus param.Field[SandboxDirectoryNewParamsBodyEmploymentStatus] `json:"employment_status"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
@@ -77,6 +77,9 @@ type SandboxDirectoryNewParamsBody struct {
 	Ethnicity param.Field[SandboxDirectoryNewParamsBodyEthnicity] `json:"ethnicity"`
 	// The legal first name of the individual.
 	FirstName param.Field[string] `json:"first_name"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus param.Field[SandboxDirectoryNewParamsBodyFlsaStatus] `json:"flsa_status"`
 	// The gender of the individual.
 	Gender param.Field[SandboxDirectoryNewParamsBodyGender] `json:"gender"`
 	// The employee's income as reported by the provider. This may not always be
@@ -116,12 +119,26 @@ func (r SandboxDirectoryNewParamsBody) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxDirectoryNewParamsBodyCustomField struct {
-	Name  param.Field[string]      `json:"name"`
-	Value param.Field[interface{}] `json:"value"`
+	Name  param.Field[string]                                              `json:"name"`
+	Value param.Field[SandboxDirectoryNewParamsBodyCustomFieldsValueUnion] `json:"value"`
 }
 
 func (r SandboxDirectoryNewParamsBodyCustomField) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Satisfied by [shared.UnionString],
+// [SandboxDirectoryNewParamsBodyCustomFieldsValueArray], [shared.UnionFloat],
+// [shared.UnionBool].
+//
+// Use [Raw()] to specify an arbitrary value for this param
+type SandboxDirectoryNewParamsBodyCustomFieldsValueUnion interface {
+	ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion()
+}
+
+type SandboxDirectoryNewParamsBodyCustomFieldsValueArray []interface{}
+
+func (r SandboxDirectoryNewParamsBodyCustomFieldsValueArray) ImplementsSandboxDirectoryNewParamsBodyCustomFieldsValueUnion() {
 }
 
 // The department object.
@@ -208,8 +225,7 @@ func (r SandboxDirectoryNewParamsBodyEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type SandboxDirectoryNewParamsBodyEmploymentStatus string
 
 const (
@@ -247,6 +263,24 @@ const (
 func (r SandboxDirectoryNewParamsBodyEthnicity) IsKnown() bool {
 	switch r {
 	case SandboxDirectoryNewParamsBodyEthnicityAsian, SandboxDirectoryNewParamsBodyEthnicityWhite, SandboxDirectoryNewParamsBodyEthnicityBlackOrAfricanAmerican, SandboxDirectoryNewParamsBodyEthnicityNativeHawaiianOrPacificIslander, SandboxDirectoryNewParamsBodyEthnicityAmericanIndianOrAlaskaNative, SandboxDirectoryNewParamsBodyEthnicityHispanicOrLatino, SandboxDirectoryNewParamsBodyEthnicityTwoOrMoreRaces, SandboxDirectoryNewParamsBodyEthnicityDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type SandboxDirectoryNewParamsBodyFlsaStatus string
+
+const (
+	SandboxDirectoryNewParamsBodyFlsaStatusExempt    SandboxDirectoryNewParamsBodyFlsaStatus = "exempt"
+	SandboxDirectoryNewParamsBodyFlsaStatusNonExempt SandboxDirectoryNewParamsBodyFlsaStatus = "non_exempt"
+	SandboxDirectoryNewParamsBodyFlsaStatusUnknown   SandboxDirectoryNewParamsBodyFlsaStatus = "unknown"
+)
+
+func (r SandboxDirectoryNewParamsBodyFlsaStatus) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyFlsaStatusExempt, SandboxDirectoryNewParamsBodyFlsaStatusNonExempt, SandboxDirectoryNewParamsBodyFlsaStatusUnknown:
 		return true
 	}
 	return false

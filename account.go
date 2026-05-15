@@ -9,6 +9,7 @@ import (
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
 	"github.com/Finch-API/finch-api-go/shared"
@@ -36,23 +37,57 @@ func NewAccountService(opts ...option.RequestOption) (r *AccountService) {
 
 // Disconnect one or more `access_token`s from your application.
 func (r *AccountService) Disconnect(ctx context.Context, opts ...option.RequestOption) (res *DisconnectResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "disconnect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
+	return res, err
+}
+
+// Disconnect entity(s) from a connection without affecting other entities
+// associated with the same connection.
+func (r *AccountService) DisconnectEntity(ctx context.Context, body AccountDisconnectEntityParams, opts ...option.RequestOption) (res *DisconnectEntityResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
+	path := "disconnect-entity"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return res, err
 }
 
 // Read account information associated with an `access_token`
 func (r *AccountService) Introspect(ctx context.Context, opts ...option.RequestOption) (res *Introspection, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "introspect"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
+}
+
+type DisconnectEntityResponse struct {
+	// If the request is successful, Finch will return "success" (HTTP 200 status).
+	Status string                       `json:"status" api:"required"`
+	JSON   disconnectEntityResponseJSON `json:"-"`
+}
+
+// disconnectEntityResponseJSON contains the JSON metadata for the struct
+// [DisconnectEntityResponse]
+type disconnectEntityResponseJSON struct {
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DisconnectEntityResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r disconnectEntityResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type DisconnectResponse struct {
 	// If the request is successful, Finch will return "success" (HTTP 200 status).
-	Status string                 `json:"status,required"`
+	Status string                 `json:"status" api:"required"`
 	JSON   disconnectResponseJSON `json:"-"`
 }
 
@@ -74,23 +109,23 @@ func (r disconnectResponseJSON) RawJSON() string {
 
 type Introspection struct {
 	// The Finch UUID of the token being introspected
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The client ID of the application associated with the `access_token`
-	ClientID string `json:"client_id,required"`
+	ClientID string `json:"client_id" api:"required"`
 	// The type of application associated with a token.
-	ClientType IntrospectionClientType `json:"client_type,required"`
+	ClientType IntrospectionClientType `json:"client_type" api:"required"`
 	// The Finch UUID of the connection associated with the `access_token`
-	ConnectionID     string                        `json:"connection_id,required"`
-	ConnectionStatus IntrospectionConnectionStatus `json:"connection_status,required"`
+	ConnectionID     string                        `json:"connection_id" api:"required"`
+	ConnectionStatus IntrospectionConnectionStatus `json:"connection_status" api:"required"`
 	// The type of the connection associated with the token.
 	//
 	// - `provider` - connection to an external provider
 	// - `finch` - finch-generated data.
-	ConnectionType IntrospectionConnectionType `json:"connection_type,required"`
+	ConnectionType IntrospectionConnectionType `json:"connection_type" api:"required"`
 	// An array of the authorized products associated with the `access_token`.
-	Products []string `json:"products,required"`
+	Products []string `json:"products" api:"required"`
 	// The ID of the provider associated with the `access_token`.
-	ProviderID string `json:"provider_id,required"`
+	ProviderID string `json:"provider_id" api:"required"`
 	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
 	// instead of this account ID
 	//
@@ -104,13 +139,16 @@ type Introspection struct {
 	CompanyID string `json:"company_id"`
 	// The email of your customer you provided to Finch when a connect session was
 	// created for this connection
-	CustomerEmail string `json:"customer_email,nullable"`
+	CustomerEmail string `json:"customer_email" api:"nullable"`
 	// The ID of your customer you provided to Finch when a connect session was created
 	// for this connection
-	CustomerID string `json:"customer_id,nullable"`
+	CustomerID string `json:"customer_id" api:"nullable"`
 	// The name of your customer you provided to Finch when a connect session was
 	// created for this connection
-	CustomerName string `json:"customer_name,nullable"`
+	CustomerName string `json:"customer_name" api:"nullable"`
+	// Array of detailed entity information for each connected account in multi-account
+	// mode
+	Entities []IntrospectionEntity `json:"entities"`
 	// Whether the connection associated with the `access_token` uses the Assisted
 	// Connect Flow. (`true` if using Assisted Connect, `false` if connection is
 	// automated)
@@ -121,7 +159,7 @@ type Introspection struct {
 	// Deprecated: deprecated
 	PayrollProviderID string `json:"payroll_provider_id"`
 	// The account username used for login associated with the `access_token`.
-	Username string            `json:"username,nullable"`
+	Username string            `json:"username" api:"nullable"`
 	JSON     introspectionJSON `json:"-"`
 }
 
@@ -141,6 +179,7 @@ type introspectionJSON struct {
 	CustomerEmail         apijson.Field
 	CustomerID            apijson.Field
 	CustomerName          apijson.Field
+	Entities              apijson.Field
 	Manual                apijson.Field
 	PayrollProviderID     apijson.Field
 	Username              apijson.Field
@@ -174,9 +213,9 @@ func (r IntrospectionClientType) IsKnown() bool {
 }
 
 type IntrospectionConnectionStatus struct {
-	Status shared.ConnectionStatusType `json:"status,required"`
+	Status shared.ConnectionStatusType `json:"status" api:"required"`
 	// The datetime when the connection was last successfully synced
-	LastSuccessfulSync IntrospectionConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync,nullable" format:"date-time"`
+	LastSuccessfulSync IntrospectionConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync" api:"nullable" format:"date-time"`
 	Message            string                                               `json:"message"`
 	JSON               introspectionConnectionStatusJSON                    `json:"-"`
 }
@@ -242,7 +281,7 @@ func (r IntrospectionConnectionType) IsKnown() bool {
 
 type IntrospectionAuthenticationMethod struct {
 	// The type of authentication method
-	Type             IntrospectionAuthenticationMethodsType             `json:"type,required"`
+	Type             IntrospectionAuthenticationMethodsType             `json:"type" api:"required"`
 	ConnectionStatus IntrospectionAuthenticationMethodsConnectionStatus `json:"connection_status"`
 	// An array of the authorized products associated with the `access_token`
 	Products []string                              `json:"products"`
@@ -287,9 +326,9 @@ func (r IntrospectionAuthenticationMethodsType) IsKnown() bool {
 }
 
 type IntrospectionAuthenticationMethodsConnectionStatus struct {
-	Status shared.ConnectionStatusType `json:"status,required"`
+	Status shared.ConnectionStatusType `json:"status" api:"required"`
 	// The datetime when the connection was last successfully synced
-	LastSuccessfulSync IntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync,nullable" format:"date-time"`
+	LastSuccessfulSync IntrospectionAuthenticationMethodsConnectionStatusLastSuccessfulSyncUnion `json:"last_successful_sync" api:"nullable" format:"date-time"`
 	Message            string                                                                    `json:"message"`
 	JSON               introspectionAuthenticationMethodsConnectionStatusJSON                    `json:"-"`
 }
@@ -332,4 +371,65 @@ func init() {
 			Type:       reflect.TypeOf(shared.UnionString("")),
 		},
 	)
+}
+
+type IntrospectionEntity struct {
+	// The connection account ID for this entity
+	ID string `json:"id" api:"required" format:"uuid"`
+	// The name of the entity (payroll provider company name)
+	Name string `json:"name" api:"required,nullable"`
+	// The source ID of the entity
+	SourceID string `json:"source_id" api:"required,nullable"`
+	// The status of the entity connection
+	Status IntrospectionEntitiesStatus `json:"status" api:"required"`
+	JSON   introspectionEntityJSON     `json:"-"`
+}
+
+// introspectionEntityJSON contains the JSON metadata for the struct
+// [IntrospectionEntity]
+type introspectionEntityJSON struct {
+	ID          apijson.Field
+	Name        apijson.Field
+	SourceID    apijson.Field
+	Status      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *IntrospectionEntity) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r introspectionEntityJSON) RawJSON() string {
+	return r.raw
+}
+
+// The status of the entity connection
+type IntrospectionEntitiesStatus string
+
+const (
+	IntrospectionEntitiesStatusPending             IntrospectionEntitiesStatus = "pending"
+	IntrospectionEntitiesStatusProcessing          IntrospectionEntitiesStatus = "processing"
+	IntrospectionEntitiesStatusConnected           IntrospectionEntitiesStatus = "connected"
+	IntrospectionEntitiesStatusErrorNoAccountSetup IntrospectionEntitiesStatus = "error_no_account_setup"
+	IntrospectionEntitiesStatusErrorPermissions    IntrospectionEntitiesStatus = "error_permissions"
+	IntrospectionEntitiesStatusReauth              IntrospectionEntitiesStatus = "reauth"
+	IntrospectionEntitiesStatusDisconnected        IntrospectionEntitiesStatus = "disconnected"
+)
+
+func (r IntrospectionEntitiesStatus) IsKnown() bool {
+	switch r {
+	case IntrospectionEntitiesStatusPending, IntrospectionEntitiesStatusProcessing, IntrospectionEntitiesStatusConnected, IntrospectionEntitiesStatusErrorNoAccountSetup, IntrospectionEntitiesStatusErrorPermissions, IntrospectionEntitiesStatusReauth, IntrospectionEntitiesStatusDisconnected:
+		return true
+	}
+	return false
+}
+
+type AccountDisconnectEntityParams struct {
+	// Array of entity UUIDs to disconnect. At least one entity ID must be provided.
+	EntityIDs param.Field[[]string] `json:"entity_ids" api:"required" format:"uuid"`
+}
+
+func (r AccountDisconnectEntityParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }

@@ -39,7 +39,8 @@ func NewHRISDirectoryService(opts ...option.RequestOption) (r *HRISDirectoryServ
 // Read company directory and organization structure
 func (r *HRISDirectoryService) List(ctx context.Context, query HRISDirectoryListParams, opts ...option.RequestOption) (res *IndividualsPage, err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/directory"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -64,7 +65,8 @@ func (r *HRISDirectoryService) ListAutoPaging(ctx context.Context, query HRISDir
 // Deprecated: use `List` instead
 func (r *HRISDirectoryService) ListIndividuals(ctx context.Context, body HRISDirectoryListIndividualsParams, opts ...option.RequestOption) (res *IndividualsPage, err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/directory"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, body, &res, opts...)
@@ -89,7 +91,7 @@ func (r *HRISDirectoryService) ListIndividualsAutoPaging(ctx context.Context, bo
 type IndividualsPage struct {
 	// The array of employees.
 	Individuals []IndividualInDirectory `json:"individuals"`
-	Paging      shared.Paging           `json:"paging,required"`
+	Paging      shared.Paging           `json:"paging" api:"required"`
 	JSON        individualsPageJSON     `json:"-"`
 	cfg         *requestconfig.RequestConfig
 	res         *http.Response
@@ -120,7 +122,9 @@ func (r *IndividualsPage) GetNextPage() (res *IndividualsPage, err error) {
 	}
 	cfg := r.cfg.Clone(r.cfg.Context)
 
-	next := r.Paging.Offset
+	offset := r.Paging.Offset
+	length := int64(len(r.Individuals))
+	next := offset + length
 
 	if next < r.Paging.Count && next != 0 {
 		err = cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))
@@ -195,19 +199,19 @@ func (r *IndividualsPageAutoPager) Index() int {
 
 type IndividualInDirectory struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// The department object.
-	Department IndividualInDirectoryDepartment `json:"department,required,nullable"`
+	Department IndividualInDirectoryDepartment `json:"department" api:"required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,required,nullable"`
+	FirstName string `json:"first_name" api:"required,nullable"`
 	// `true` if the individual is an active employee or contractor at the company.
-	IsActive bool `json:"is_active,required,nullable"`
+	IsActive bool `json:"is_active" api:"required,nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,required,nullable"`
+	LastName string `json:"last_name" api:"required,nullable"`
 	// The manager object.
-	Manager IndividualInDirectoryManager `json:"manager,required,nullable"`
+	Manager IndividualInDirectoryManager `json:"manager" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName string                    `json:"middle_name,required,nullable"`
+	MiddleName string                    `json:"middle_name" api:"required,nullable"`
 	JSON       individualInDirectoryJSON `json:"-"`
 }
 
@@ -236,7 +240,7 @@ func (r individualInDirectoryJSON) RawJSON() string {
 // The department object.
 type IndividualInDirectoryDepartment struct {
 	// The name of the department.
-	Name string                              `json:"name,nullable"`
+	Name string                              `json:"name" api:"nullable"`
 	JSON individualInDirectoryDepartmentJSON `json:"-"`
 }
 
@@ -259,7 +263,7 @@ func (r individualInDirectoryDepartmentJSON) RawJSON() string {
 // The manager object.
 type IndividualInDirectoryManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                           `json:"id,required" format:"uuid"`
+	ID   string                           `json:"id" api:"required" format:"uuid"`
 	JSON individualInDirectoryManagerJSON `json:"-"`
 }
 
@@ -280,6 +284,8 @@ func (r individualInDirectoryManagerJSON) RawJSON() string {
 }
 
 type HRISDirectoryListParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Number of employees to return (defaults to all)
 	Limit param.Field[int64] `query:"limit"`
 	// Index to start from (defaults to 0)
@@ -296,6 +302,8 @@ func (r HRISDirectoryListParams) URLQuery() (v url.Values) {
 }
 
 type HRISDirectoryListIndividualsParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Number of employees to return (defaults to all)
 	Limit param.Field[int64] `query:"limit"`
 	// Index to start from (defaults to 0)

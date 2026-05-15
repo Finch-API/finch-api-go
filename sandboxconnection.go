@@ -36,28 +36,31 @@ func NewSandboxConnectionService(opts ...option.RequestOption) (r *SandboxConnec
 
 // Create a new connection (new company/provider pair) with a new account
 func (r *SandboxConnectionService) New(ctx context.Context, body SandboxConnectionNewParams, opts ...option.RequestOption) (res *SandboxConnectionNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/connections"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxConnectionNewResponse struct {
-	AccessToken string `json:"access_token,required" format:"uuid"`
+	AccessToken string `json:"access_token" api:"required" format:"uuid"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
 	//
 	// Deprecated: deprecated
-	AccountID          string                                         `json:"account_id,required" format:"uuid"`
-	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type,required"`
+	AccountID          string                                         `json:"account_id" api:"required" format:"uuid"`
+	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type" api:"required"`
 	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
 	//
 	// Deprecated: deprecated
-	CompanyID string `json:"company_id,required" format:"uuid"`
+	CompanyID string `json:"company_id" api:"required" format:"uuid"`
 	// The ID of the new connection
-	ConnectionID string   `json:"connection_id,required" format:"uuid"`
-	Products     []string `json:"products,required"`
+	ConnectionID string `json:"connection_id" api:"required" format:"uuid"`
+	// The ID of the entity for this connection
+	EntityID string   `json:"entity_id" api:"required" format:"uuid"`
+	Products []string `json:"products" api:"required"`
 	// The ID of the provider associated with the `access_token`.
-	ProviderID string                           `json:"provider_id,required" format:"uuid"`
+	ProviderID string                           `json:"provider_id" api:"required" format:"uuid"`
 	TokenType  string                           `json:"token_type"`
 	JSON       sandboxConnectionNewResponseJSON `json:"-"`
 }
@@ -70,6 +73,7 @@ type sandboxConnectionNewResponseJSON struct {
 	AuthenticationType apijson.Field
 	CompanyID          apijson.Field
 	ConnectionID       apijson.Field
+	EntityID           apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
 	TokenType          apijson.Field
@@ -104,7 +108,7 @@ func (r SandboxConnectionNewResponseAuthenticationType) IsKnown() bool {
 
 type SandboxConnectionNewParams struct {
 	// The provider associated with the connection
-	ProviderID         param.Field[string]                                       `json:"provider_id,required"`
+	ProviderID         param.Field[string]                                       `json:"provider_id" api:"required"`
 	AuthenticationType param.Field[SandboxConnectionNewParamsAuthenticationType] `json:"authentication_type"`
 	// Optional: the size of the employer to be created with this connection. Defaults
 	// to 20. Note that if this is higher than 100, historical payroll data will not be

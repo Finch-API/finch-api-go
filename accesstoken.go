@@ -73,28 +73,30 @@ func (r *AccessTokenService) New(ctx context.Context, body AccessTokenNewParams,
 
 	path := "auth/token"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 
 }
 
 type CreateAccessTokenResponse struct {
 	// The access token for the connection
-	AccessToken string `json:"access_token,required"`
+	AccessToken string `json:"access_token" api:"required"`
 	// The type of application associated with a token.
-	ClientType CreateAccessTokenResponseClientType `json:"client_type,required"`
+	ClientType CreateAccessTokenResponseClientType `json:"client_type" api:"required"`
 	// The Finch UUID of the connection associated with the `access_token`
-	ConnectionID string `json:"connection_id,required"`
+	ConnectionID string `json:"connection_id" api:"required"`
 	// The type of the connection associated with the token.
 	//
 	// - `provider` - connection to an external provider
 	// - `finch` - finch-generated data.
-	ConnectionType CreateAccessTokenResponseConnectionType `json:"connection_type,required"`
+	ConnectionType CreateAccessTokenResponseConnectionType `json:"connection_type" api:"required"`
+	// An array of entity IDs that can be accessed with this access token
+	EntityIDs []string `json:"entity_ids" api:"required" format:"uuid"`
 	// An array of the authorized products associated with the `access_token`
-	Products []string `json:"products,required"`
+	Products []string `json:"products" api:"required"`
 	// The ID of the provider associated with the `access_token`
-	ProviderID string `json:"provider_id,required"`
+	ProviderID string `json:"provider_id" api:"required"`
 	// The RFC 8693 token type (Finch uses `bearer` tokens)
-	TokenType string `json:"token_type,required"`
+	TokenType string `json:"token_type" api:"required"`
 	// [DEPRECATED] Use `connection_id` to identify the connection instead of this
 	// account ID
 	//
@@ -107,8 +109,11 @@ type CreateAccessTokenResponse struct {
 	CompanyID string `json:"company_id"`
 	// The ID of your customer you provided to Finch when a connect session was created
 	// for this connection
-	CustomerID string                        `json:"customer_id,nullable"`
-	JSON       createAccessTokenResponseJSON `json:"-"`
+	CustomerID string `json:"customer_id" api:"nullable"`
+	// The name of your customer you provided to Finch when a connect session was
+	// created for this connection
+	CustomerName string                        `json:"customer_name" api:"nullable"`
+	JSON         createAccessTokenResponseJSON `json:"-"`
 }
 
 // createAccessTokenResponseJSON contains the JSON metadata for the struct
@@ -118,12 +123,14 @@ type createAccessTokenResponseJSON struct {
 	ClientType     apijson.Field
 	ConnectionID   apijson.Field
 	ConnectionType apijson.Field
+	EntityIDs      apijson.Field
 	Products       apijson.Field
 	ProviderID     apijson.Field
 	TokenType      apijson.Field
 	AccountID      apijson.Field
 	CompanyID      apijson.Field
 	CustomerID     apijson.Field
+	CustomerName   apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -174,7 +181,7 @@ func (r CreateAccessTokenResponseConnectionType) IsKnown() bool {
 
 type AccessTokenNewParams struct {
 	// The authorization code received from the authorization server
-	Code param.Field[string] `json:"code,required"`
+	Code param.Field[string] `json:"code" api:"required"`
 	// The client ID for your application
 	ClientID param.Field[string] `json:"client_id" format:"uuid"`
 	// The client secret for your application

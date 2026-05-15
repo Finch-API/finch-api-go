@@ -4,7 +4,6 @@ package option
 
 import (
 	"bytes"
-	"encoding/base64"
 	"fmt"
 	"io"
 	"net/http"
@@ -271,7 +270,7 @@ func WithEnvironmentProduction() RequestOption {
 func WithAccessToken(value string) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.AccessToken = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.AccessToken)))
+		return nil
 	})
 }
 
@@ -279,7 +278,7 @@ func WithAccessToken(value string) RequestOption {
 func WithClientID(value string) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.ClientID = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.ClientID+":"+r.ClientSecret)))))
+		return nil
 	})
 }
 
@@ -287,7 +286,7 @@ func WithClientID(value string) RequestOption {
 func WithClientSecret(value string) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.ClientSecret = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(r.ClientID+":"+r.ClientSecret)))))
+		return nil
 	})
 }
 

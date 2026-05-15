@@ -36,44 +36,45 @@ func NewSandboxIndividualService(opts ...option.RequestOption) (r *SandboxIndivi
 
 // Update sandbox individual
 func (r *SandboxIndividualService) Update(ctx context.Context, individualID string, body SandboxIndividualUpdateParams, opts ...option.RequestOption) (res *SandboxIndividualUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if individualID == "" {
 		err = errors.New("missing required individual_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("sandbox/individual/%s", individualID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxIndividualUpdateResponse struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID     string                                 `json:"id" format:"uuid"`
-	Dob    string                                 `json:"dob,nullable"`
-	Emails []SandboxIndividualUpdateResponseEmail `json:"emails,nullable"`
+	Dob    string                                 `json:"dob" api:"nullable"`
+	Emails []SandboxIndividualUpdateResponseEmail `json:"emails" api:"nullable"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
-	EncryptedSsn string `json:"encrypted_ssn,nullable"`
+	EncryptedSsn string `json:"encrypted_ssn" api:"nullable"`
 	// The EEOC-defined ethnicity of the individual.
-	Ethnicity SandboxIndividualUpdateResponseEthnicity `json:"ethnicity,nullable"`
+	Ethnicity SandboxIndividualUpdateResponseEthnicity `json:"ethnicity" api:"nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
 	// The gender of the individual.
-	Gender SandboxIndividualUpdateResponseGender `json:"gender,nullable"`
+	Gender SandboxIndividualUpdateResponseGender `json:"gender" api:"nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,nullable"`
+	LastName string `json:"last_name" api:"nullable"`
 	// The legal middle name of the individual.
-	MiddleName   string                                       `json:"middle_name,nullable"`
-	PhoneNumbers []SandboxIndividualUpdateResponsePhoneNumber `json:"phone_numbers,nullable"`
+	MiddleName   string                                       `json:"middle_name" api:"nullable"`
+	PhoneNumbers []SandboxIndividualUpdateResponsePhoneNumber `json:"phone_numbers" api:"nullable"`
 	// The preferred name of the individual.
-	PreferredName string   `json:"preferred_name,nullable"`
-	Residence     Location `json:"residence,nullable"`
+	PreferredName string   `json:"preferred_name" api:"nullable"`
+	Residence     Location `json:"residence" api:"nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
 	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
-	Ssn  string                              `json:"ssn,nullable"`
+	Ssn  string                              `json:"ssn" api:"nullable"`
 	JSON sandboxIndividualUpdateResponseJSON `json:"-"`
 }
 
@@ -107,7 +108,7 @@ func (r sandboxIndividualUpdateResponseJSON) RawJSON() string {
 
 type SandboxIndividualUpdateResponseEmail struct {
 	Data string                                    `json:"data"`
-	Type SandboxIndividualUpdateResponseEmailsType `json:"type,nullable"`
+	Type SandboxIndividualUpdateResponseEmailsType `json:"type" api:"nullable"`
 	JSON sandboxIndividualUpdateResponseEmailJSON  `json:"-"`
 }
 
@@ -184,8 +185,8 @@ func (r SandboxIndividualUpdateResponseGender) IsKnown() bool {
 }
 
 type SandboxIndividualUpdateResponsePhoneNumber struct {
-	Data string                                          `json:"data,nullable"`
-	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type,nullable"`
+	Data string                                          `json:"data" api:"nullable"`
+	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type" api:"nullable"`
 	JSON sandboxIndividualUpdateResponsePhoneNumberJSON  `json:"-"`
 }
 

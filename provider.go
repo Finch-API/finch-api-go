@@ -35,7 +35,8 @@ func NewProviderService(opts ...option.RequestOption) (r *ProviderService) {
 // Return details on all available payroll and HR systems.
 func (r *ProviderService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.SinglePage[ProviderListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "providers"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
@@ -57,11 +58,11 @@ func (r *ProviderService) ListAutoPaging(ctx context.Context, opts ...option.Req
 
 type ProviderListResponse struct {
 	// The id of the payroll provider used in Connect.
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// The display name of the payroll provider.
-	DisplayName string `json:"display_name,required"`
+	DisplayName string `json:"display_name" api:"required"`
 	// The list of Finch products supported on this payroll provider.
-	Products []string `json:"products,required"`
+	Products []string `json:"products" api:"required"`
 	// The authentication methods supported by the provider.
 	AuthenticationMethods []ProviderListResponseAuthenticationMethod `json:"authentication_methods"`
 	// `true` if the integration is in a beta state, `false` otherwise
@@ -110,7 +111,7 @@ func (r providerListResponseJSON) RawJSON() string {
 
 type ProviderListResponseAuthenticationMethod struct {
 	// The type of authentication method
-	Type ProviderListResponseAuthenticationMethodsType `json:"type,required"`
+	Type ProviderListResponseAuthenticationMethodsType `json:"type" api:"required"`
 	// The supported benefit types and their configurations
 	BenefitsSupport map[string]interface{} `json:"benefits_support"`
 	// The supported fields for each Finch product

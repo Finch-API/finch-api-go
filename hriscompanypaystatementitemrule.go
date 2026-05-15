@@ -7,10 +7,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"slices"
 	"time"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -36,40 +38,39 @@ func NewHRISCompanyPayStatementItemRuleService(opts ...option.RequestOption) (r 
 	return
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Custom rules can be created to associate
-// specific attributes to pay statement items depending on the use case. For
-// example, pay statement items that meet certain conditions can be labeled as a
-// pre-tax 401k. This metadata can be retrieved where pay statement item
-// information is available.
-func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, body HRISCompanyPayStatementItemRuleNewParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+// Custom rules can be created to associate specific attributes to pay statement
+// items depending on the use case. For example, pay statement items that meet
+// certain conditions can be labeled as a pre-tax 401k. This metadata can be
+// retrieved where pay statement item information is available.
+func (r *HRISCompanyPayStatementItemRuleService) New(ctx context.Context, params HRISCompanyPayStatementItemRuleNewParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleNewResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "employer/pay-statement-item/rule"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Update a rule for a pay statement item.
-func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, ruleID string, body HRISCompanyPayStatementItemRuleUpdateParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+// Update a rule for a pay statement item.
+func (r *HRISCompanyPayStatementItemRuleService) Update(ctx context.Context, ruleID string, params HRISCompanyPayStatementItemRuleUpdateParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleUpdateResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/pay-statement-item/rule/%s", ruleID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, params, &res, opts...)
+	return res, err
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon List all rules of a connection account.
-func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemRuleListResponse], err error) {
+// List all rules of a connection account.
+func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, query HRISCompanyPayStatementItemRuleListParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemRuleListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement-item/rule"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, nil, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,23 +82,22 @@ func (r *HRISCompanyPayStatementItemRuleService) List(ctx context.Context, opts 
 	return res, nil
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon List all rules of a connection account.
-func (r *HRISCompanyPayStatementItemRuleService) ListAutoPaging(ctx context.Context, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[HRISCompanyPayStatementItemRuleListResponse] {
-	return pagination.NewResponsesPageAutoPager(r.List(ctx, opts...))
+// List all rules of a connection account.
+func (r *HRISCompanyPayStatementItemRuleService) ListAutoPaging(ctx context.Context, query HRISCompanyPayStatementItemRuleListParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[HRISCompanyPayStatementItemRuleListResponse] {
+	return pagination.NewResponsesPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Delete a rule for a pay statement item.
-func (r *HRISCompanyPayStatementItemRuleService) Delete(ctx context.Context, ruleID string, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleDeleteResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+// Delete a rule for a pay statement item.
+func (r *HRISCompanyPayStatementItemRuleService) Delete(ctx context.Context, ruleID string, body HRISCompanyPayStatementItemRuleDeleteParams, opts ...option.RequestOption) (res *HRISCompanyPayStatementItemRuleDeleteResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if ruleID == "" {
 		err = errors.New("missing required rule_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/pay-statement-item/rule/%s", ruleID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, body, &res, opts...)
+	return res, err
 }
 
 type HRISCompanyPayStatementItemRuleNewResponse struct {
@@ -109,9 +109,9 @@ type HRISCompanyPayStatementItemRuleNewResponse struct {
 	// The datetime when the rule was created.
 	CreatedAt time.Time `json:"created_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleNewResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -236,9 +236,9 @@ type HRISCompanyPayStatementItemRuleUpdateResponse struct {
 	// The datetime when the rule was created.
 	CreatedAt time.Time `json:"created_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleUpdateResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -364,9 +364,9 @@ type HRISCompanyPayStatementItemRuleListResponse struct {
 	// The datetime when the rule was created.
 	CreatedAt time.Time `json:"created_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleListResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -493,9 +493,9 @@ type HRISCompanyPayStatementItemRuleDeleteResponse struct {
 	// The datetime when the rule was deleted.
 	DeletedAt time.Time `json:"deleted_at" format:"date-time"`
 	// Specifies when the rules should stop applying rules based on the date.
-	EffectiveEndDate string `json:"effective_end_date,nullable"`
+	EffectiveEndDate string `json:"effective_end_date" api:"nullable"`
 	// Specifies when the rule should begin applying based on the date.
-	EffectiveStartDate string `json:"effective_start_date,nullable"`
+	EffectiveStartDate string `json:"effective_start_date" api:"nullable"`
 	// The entity type to which the rule is applied.
 	EntityType HRISCompanyPayStatementItemRuleDeleteResponseEntityType `json:"entity_type"`
 	// The priority of the rule.
@@ -614,6 +614,8 @@ func (r HRISCompanyPayStatementItemRuleDeleteResponseEntityType) IsKnown() bool 
 }
 
 type HRISCompanyPayStatementItemRuleNewParams struct {
+	// The entity IDs to create the rule for.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Specifies the fields to be applied when the condition is met.
 	Attributes param.Field[HRISCompanyPayStatementItemRuleNewParamsAttributes]  `json:"attributes"`
 	Conditions param.Field[[]HRISCompanyPayStatementItemRuleNewParamsCondition] `json:"conditions"`
@@ -627,6 +629,15 @@ type HRISCompanyPayStatementItemRuleNewParams struct {
 
 func (r HRISCompanyPayStatementItemRuleNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISCompanyPayStatementItemRuleNewParams]'s query
+// parameters as `url.Values`.
+func (r HRISCompanyPayStatementItemRuleNewParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
 
 // Specifies the fields to be applied when the condition is met.
@@ -684,9 +695,48 @@ func (r HRISCompanyPayStatementItemRuleNewParamsEntityType) IsKnown() bool {
 }
 
 type HRISCompanyPayStatementItemRuleUpdateParams struct {
+	// The entity IDs to update the rule for.
+	EntityIDs        param.Field[[]string]    `query:"entity_ids" format:"uuid"`
 	OptionalProperty param.Field[interface{}] `json:"optionalProperty"`
 }
 
 func (r HRISCompanyPayStatementItemRuleUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISCompanyPayStatementItemRuleUpdateParams]'s query
+// parameters as `url.Values`.
+func (r HRISCompanyPayStatementItemRuleUpdateParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISCompanyPayStatementItemRuleListParams struct {
+	// The entity IDs to retrieve rules for.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [HRISCompanyPayStatementItemRuleListParams]'s query
+// parameters as `url.Values`.
+func (r HRISCompanyPayStatementItemRuleListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type HRISCompanyPayStatementItemRuleDeleteParams struct {
+	// The entity IDs to delete the rule for.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [HRISCompanyPayStatementItemRuleDeleteParams]'s query
+// parameters as `url.Values`.
+func (r HRISCompanyPayStatementItemRuleDeleteParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

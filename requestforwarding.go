@@ -40,26 +40,27 @@ func NewRequestForwardingService(opts ...option.RequestOption) (r *RequestForwar
 // Forward allows you to push or pull data models directly against an integration's
 // API.
 func (r *RequestForwardingService) Forward(ctx context.Context, body RequestForwardingForwardParams, opts ...option.RequestOption) (res *RequestForwardingForwardResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "forward"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type RequestForwardingForwardResponse struct {
 	// An object containing details of your original forwarded request, for your ease
 	// of reference.
-	Request RequestForwardingForwardResponseRequest `json:"request,required"`
+	Request RequestForwardingForwardResponseRequest `json:"request" api:"required"`
 	// The HTTP status code of the forwarded request's response, exactly received from
 	// the underlying integration's API. This value will be returned as an integer.
-	StatusCode int64 `json:"statusCode,required"`
+	StatusCode int64 `json:"statusCode" api:"required"`
 	// A string representation of the HTTP response body of the forwarded request's
 	// response received from the underlying integration's API. This field may be null
 	// in the case where the upstream system's response is empty.
-	Data string `json:"data,nullable"`
+	Data string `json:"data" api:"nullable"`
 	// The HTTP headers of the forwarded request's response, exactly as received from
 	// the underlying integration's API.
-	Headers map[string]interface{}               `json:"headers,nullable"`
+	Headers map[string]interface{}               `json:"headers" api:"nullable"`
 	JSON    requestForwardingForwardResponseJSON `json:"-"`
 }
 
@@ -87,15 +88,15 @@ func (r requestForwardingForwardResponseJSON) RawJSON() string {
 type RequestForwardingForwardResponseRequest struct {
 	// The HTTP method that was specified for the forwarded request. Valid values
 	// include: `GET` , `POST` , `PUT` , `DELETE` , and `PATCH`.
-	Method string `json:"method,required"`
+	Method string `json:"method" api:"required"`
 	// The URL route path that was specified for the forwarded request.
-	Route string `json:"route,required"`
+	Route string `json:"route" api:"required"`
 	// The body that was specified for the forwarded request.
-	Data RequestForwardingForwardResponseRequestDataUnion `json:"data,nullable"`
+	Data RequestForwardingForwardResponseRequestDataUnion `json:"data" api:"nullable"`
 	// The HTTP headers that were specified for the forwarded request.
-	Headers map[string]interface{} `json:"headers,nullable"`
+	Headers map[string]string `json:"headers" api:"nullable"`
 	// The query parameters that were specified for the forwarded request.
-	Params map[string]interface{}                      `json:"params,nullable"`
+	Params map[string]interface{}                      `json:"params" api:"nullable"`
 	JSON   requestForwardingForwardResponseRequestJSON `json:"-"`
 }
 
@@ -150,21 +151,21 @@ func (r RequestForwardingForwardResponseRequestDataMap) ImplementsRequestForward
 type RequestForwardingForwardParams struct {
 	// The HTTP method for the forwarded request. Valid values include: `GET` , `POST`
 	// , `PUT` , `DELETE` , and `PATCH`.
-	Method param.Field[string] `json:"method,required"`
+	Method param.Field[string] `json:"method" api:"required"`
 	// The URL route path for the forwarded request. This value must begin with a
 	// forward-slash ( / ) and may only contain alphanumeric characters, hyphens, and
 	// underscores.
-	Route param.Field[string] `json:"route,required"`
+	Route param.Field[string] `json:"route" api:"required"`
 	// The body for the forwarded request. This value must be specified as either a
 	// string or a valid JSON object.
 	Data param.Field[string] `json:"data"`
-	// The HTTP headers to include on the forwarded request. This value must be
-	// specified as an object of key-value pairs. Example:
-	// `{"Content-Type": "application/xml", "X-API-Version": "v1" }`
-	Headers param.Field[map[string]interface{}] `json:"headers"`
 	// The query parameters for the forwarded request. This value must be specified as
 	// a valid JSON object rather than a query string.
 	Params param.Field[map[string]interface{}] `json:"params"`
+	// The HTTP headers to include on the forwarded request. This value must be
+	// specified as an object of key-value pairs. Example:
+	// `{"Content-Type": "application/xml", "X-API-Version": "v1" }`
+	RequestHeaders param.Field[map[string]interface{}] `json:"request_headers"`
 }
 
 func (r RequestForwardingForwardParams) MarshalJSON() (data []byte, err error) {

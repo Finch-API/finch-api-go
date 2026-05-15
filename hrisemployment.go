@@ -5,10 +5,12 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -37,12 +39,13 @@ func NewHRISEmploymentService(opts ...option.RequestOption) (r *HRISEmploymentSe
 }
 
 // Read individual employment and income data
-func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[EmploymentDataResponse], err error) {
+func (r *HRISEmploymentService) GetMany(ctx context.Context, params HRISEmploymentGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[EmploymentDataResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/employment"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, params, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,56 +58,62 @@ func (r *HRISEmploymentService) GetMany(ctx context.Context, body HRISEmployment
 }
 
 // Read individual employment and income data
-func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, body HRISEmploymentGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[EmploymentDataResponse] {
-	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, params HRISEmploymentGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[EmploymentDataResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, params, opts...))
 }
 
 type EmploymentData struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" format:"uuid"`
 	// Worker's compensation classification code for this employee
-	ClassCode string  `json:"class_code,nullable"`
+	ClassCode string  `json:"class_code" api:"nullable"`
 	Code      float64 `json:"code"`
-	// This field can have the runtime type of [[]EmploymentDataObjectCustomField].
+	// This field can have the runtime type of
+	// [[]EmploymentDataEmploymentDataResponseBodyCustomField].
 	CustomFields interface{} `json:"custom_fields"`
-	// This field can have the runtime type of [EmploymentDataObjectDepartment].
+	// This field can have the runtime type of
+	// [EmploymentDataEmploymentDataResponseBodyDepartment].
 	Department interface{} `json:"department"`
-	// This field can have the runtime type of [EmploymentDataObjectEmployment].
+	// This field can have the runtime type of
+	// [EmploymentDataEmploymentDataResponseBodyEmployment].
 	Employment interface{} `json:"employment"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
-	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status,nullable"`
-	EndDate          string                         `json:"end_date,nullable"`
+	// The detailed employment status of the individual.
+	EmploymentStatus EmploymentDataEmploymentStatus `json:"employment_status" api:"nullable"`
+	EndDate          string                         `json:"end_date" api:"nullable"`
 	FinchCode        string                         `json:"finch_code"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus EmploymentDataFlsaStatus `json:"flsa_status" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
-	Income Income `json:"income,nullable"`
+	Income Income `json:"income" api:"nullable"`
 	// This field can have the runtime type of [[]Income].
 	IncomeHistory interface{} `json:"income_history"`
 	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
+	IsActive bool `json:"is_active" api:"nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,nullable"`
-	Location         Location `json:"location,nullable"`
-	// This field can have the runtime type of [EmploymentDataObjectManager].
+	LastName         string   `json:"last_name" api:"nullable"`
+	LatestRehireDate string   `json:"latest_rehire_date" api:"nullable"`
+	Location         Location `json:"location" api:"nullable"`
+	// This field can have the runtime type of
+	// [EmploymentDataEmploymentDataResponseBodyManager].
 	Manager interface{} `json:"manager"`
 	Message string      `json:"message"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	Name       string `json:"name"`
 	// The source system's unique employment identifier for this individual
-	SourceID  string `json:"source_id,nullable"`
-	StartDate string `json:"start_date,nullable"`
+	SourceID  string `json:"source_id" api:"nullable"`
+	StartDate string `json:"start_date" api:"nullable"`
 	// The current title of the individual.
-	Title string `json:"title,nullable"`
+	Title string `json:"title" api:"nullable"`
 	// This field is deprecated in favour of `source_id`
 	//
 	// Deprecated: deprecated
-	WorkID string             `json:"work_id,nullable"`
+	WorkID string             `json:"work_id" api:"nullable"`
 	JSON   employmentDataJSON `json:"-"`
 	union  EmploymentDataUnion
 }
@@ -121,6 +130,7 @@ type employmentDataJSON struct {
 	EndDate          apijson.Field
 	FinchCode        apijson.Field
 	FirstName        apijson.Field
+	FlsaStatus       apijson.Field
 	Income           apijson.Field
 	IncomeHistory    apijson.Field
 	IsActive         apijson.Field
@@ -155,13 +165,14 @@ func (r *EmploymentData) UnmarshalJSON(data []byte) (err error) {
 // AsUnion returns a [EmploymentDataUnion] interface which you can cast to the
 // specific types for more type safety.
 //
-// Possible runtime types of the union are [EmploymentDataObject],
-// [EmploymentDataBatchError].
+// Possible runtime types of the union are
+// [EmploymentDataEmploymentDataResponseBody], [EmploymentDataBatchError].
 func (r EmploymentData) AsUnion() EmploymentDataUnion {
 	return r.union
 }
 
-// Union satisfied by [EmploymentDataObject] or [EmploymentDataBatchError].
+// Union satisfied by [EmploymentDataEmploymentDataResponseBody] or
+// [EmploymentDataBatchError].
 type EmploymentDataUnion interface {
 	implementsEmploymentData()
 }
@@ -172,7 +183,7 @@ func init() {
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(EmploymentDataObject{}),
+			Type:       reflect.TypeOf(EmploymentDataEmploymentDataResponseBody{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
@@ -181,56 +192,58 @@ func init() {
 	)
 }
 
-type EmploymentDataObject struct {
+type EmploymentDataEmploymentDataResponseBody struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// Worker's compensation classification code for this employee
-	ClassCode string `json:"class_code,required,nullable"`
+	ClassCode string `json:"class_code" api:"required,nullable"`
 	// The department object.
-	Department EmploymentDataObjectDepartment `json:"department,required,nullable"`
+	Department EmploymentDataEmploymentDataResponseBodyDepartment `json:"department" api:"required,nullable"`
 	// The employment object.
-	Employment EmploymentDataObjectEmployment `json:"employment,required,nullable"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
-	EmploymentStatus EmploymentDataObjectEmploymentStatus `json:"employment_status,required,nullable"`
-	EndDate          string                               `json:"end_date,required,nullable"`
+	Employment EmploymentDataEmploymentDataResponseBodyEmployment `json:"employment" api:"required,nullable"`
+	// The detailed employment status of the individual.
+	EmploymentStatus EmploymentDataEmploymentDataResponseBodyEmploymentStatus `json:"employment_status" api:"required,nullable"`
+	EndDate          string                                                   `json:"end_date" api:"required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,required,nullable"`
+	FirstName string `json:"first_name" api:"required,nullable"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus EmploymentDataEmploymentDataResponseBodyFlsaStatus `json:"flsa_status" api:"required,nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,required,nullable"`
+	IsActive bool `json:"is_active" api:"required,nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,required,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,required,nullable"`
-	Location         Location `json:"location,required,nullable"`
+	LastName         string   `json:"last_name" api:"required,nullable"`
+	LatestRehireDate string   `json:"latest_rehire_date" api:"required,nullable"`
+	Location         Location `json:"location" api:"required,nullable"`
 	// The manager object representing the manager of the individual within the org.
-	Manager EmploymentDataObjectManager `json:"manager,required,nullable"`
+	Manager EmploymentDataEmploymentDataResponseBodyManager `json:"manager" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,required,nullable"`
-	StartDate  string `json:"start_date,required,nullable"`
+	MiddleName string `json:"middle_name" api:"required,nullable"`
+	StartDate  string `json:"start_date" api:"required,nullable"`
 	// The current title of the individual.
-	Title string `json:"title,required,nullable"`
+	Title string `json:"title" api:"required,nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
 	// employer in the system. Custom fields are not currently supported for assisted
 	// connections.
-	CustomFields []EmploymentDataObjectCustomField `json:"custom_fields,nullable"`
+	CustomFields []EmploymentDataEmploymentDataResponseBodyCustomField `json:"custom_fields" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
-	Income Income `json:"income,nullable"`
+	Income Income `json:"income" api:"nullable"`
 	// The array of income history.
-	IncomeHistory []Income `json:"income_history,nullable"`
+	IncomeHistory []Income `json:"income_history" api:"nullable"`
 	// The source system's unique employment identifier for this individual
-	SourceID string `json:"source_id,nullable"`
+	SourceID string `json:"source_id" api:"nullable"`
 	// This field is deprecated in favour of `source_id`
 	//
 	// Deprecated: deprecated
-	WorkID string                   `json:"work_id,nullable"`
-	JSON   employmentDataObjectJSON `json:"-"`
+	WorkID string                                       `json:"work_id" api:"nullable"`
+	JSON   employmentDataEmploymentDataResponseBodyJSON `json:"-"`
 }
 
-// employmentDataObjectJSON contains the JSON metadata for the struct
-// [EmploymentDataObject]
-type employmentDataObjectJSON struct {
+// employmentDataEmploymentDataResponseBodyJSON contains the JSON metadata for the
+// struct [EmploymentDataEmploymentDataResponseBody]
+type employmentDataEmploymentDataResponseBodyJSON struct {
 	ID               apijson.Field
 	ClassCode        apijson.Field
 	Department       apijson.Field
@@ -238,6 +251,7 @@ type employmentDataObjectJSON struct {
 	EmploymentStatus apijson.Field
 	EndDate          apijson.Field
 	FirstName        apijson.Field
+	FlsaStatus       apijson.Field
 	IsActive         apijson.Field
 	LastName         apijson.Field
 	LatestRehireDate apijson.Field
@@ -255,181 +269,198 @@ type employmentDataObjectJSON struct {
 	ExtraFields      map[string]apijson.Field
 }
 
-func (r *EmploymentDataObject) UnmarshalJSON(data []byte) (err error) {
+func (r *EmploymentDataEmploymentDataResponseBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r employmentDataObjectJSON) RawJSON() string {
+func (r employmentDataEmploymentDataResponseBodyJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r EmploymentDataObject) implementsEmploymentData() {}
+func (r EmploymentDataEmploymentDataResponseBody) implementsEmploymentData() {}
 
 // The department object.
-type EmploymentDataObjectDepartment struct {
+type EmploymentDataEmploymentDataResponseBodyDepartment struct {
 	// The name of the department associated with the individual.
-	Name string                             `json:"name,required,nullable"`
-	JSON employmentDataObjectDepartmentJSON `json:"-"`
+	Name string                                                 `json:"name" api:"required,nullable"`
+	JSON employmentDataEmploymentDataResponseBodyDepartmentJSON `json:"-"`
 }
 
-// employmentDataObjectDepartmentJSON contains the JSON metadata for the struct
-// [EmploymentDataObjectDepartment]
-type employmentDataObjectDepartmentJSON struct {
+// employmentDataEmploymentDataResponseBodyDepartmentJSON contains the JSON
+// metadata for the struct [EmploymentDataEmploymentDataResponseBodyDepartment]
+type employmentDataEmploymentDataResponseBodyDepartmentJSON struct {
 	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *EmploymentDataObjectDepartment) UnmarshalJSON(data []byte) (err error) {
+func (r *EmploymentDataEmploymentDataResponseBodyDepartment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r employmentDataObjectDepartmentJSON) RawJSON() string {
+func (r employmentDataEmploymentDataResponseBodyDepartmentJSON) RawJSON() string {
 	return r.raw
 }
 
 // The employment object.
-type EmploymentDataObjectEmployment struct {
+type EmploymentDataEmploymentDataResponseBodyEmployment struct {
 	// The secondary employment type of the individual. Options: `full_time`,
 	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
-	Subtype EmploymentDataObjectEmploymentSubtype `json:"subtype,required,nullable"`
+	Subtype EmploymentDataEmploymentDataResponseBodyEmploymentSubtype `json:"subtype" api:"required,nullable"`
 	// The main employment type of the individual.
-	Type EmploymentDataObjectEmploymentType `json:"type,required,nullable"`
-	JSON employmentDataObjectEmploymentJSON `json:"-"`
+	Type EmploymentDataEmploymentDataResponseBodyEmploymentType `json:"type" api:"required,nullable"`
+	JSON employmentDataEmploymentDataResponseBodyEmploymentJSON `json:"-"`
 }
 
-// employmentDataObjectEmploymentJSON contains the JSON metadata for the struct
-// [EmploymentDataObjectEmployment]
-type employmentDataObjectEmploymentJSON struct {
+// employmentDataEmploymentDataResponseBodyEmploymentJSON contains the JSON
+// metadata for the struct [EmploymentDataEmploymentDataResponseBodyEmployment]
+type employmentDataEmploymentDataResponseBodyEmploymentJSON struct {
 	Subtype     apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *EmploymentDataObjectEmployment) UnmarshalJSON(data []byte) (err error) {
+func (r *EmploymentDataEmploymentDataResponseBodyEmployment) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r employmentDataObjectEmploymentJSON) RawJSON() string {
+func (r employmentDataEmploymentDataResponseBodyEmploymentJSON) RawJSON() string {
 	return r.raw
 }
 
 // The secondary employment type of the individual. Options: `full_time`,
 // `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
-type EmploymentDataObjectEmploymentSubtype string
+type EmploymentDataEmploymentDataResponseBodyEmploymentSubtype string
 
 const (
-	EmploymentDataObjectEmploymentSubtypeFullTime             EmploymentDataObjectEmploymentSubtype = "full_time"
-	EmploymentDataObjectEmploymentSubtypeIntern               EmploymentDataObjectEmploymentSubtype = "intern"
-	EmploymentDataObjectEmploymentSubtypePartTime             EmploymentDataObjectEmploymentSubtype = "part_time"
-	EmploymentDataObjectEmploymentSubtypeTemp                 EmploymentDataObjectEmploymentSubtype = "temp"
-	EmploymentDataObjectEmploymentSubtypeSeasonal             EmploymentDataObjectEmploymentSubtype = "seasonal"
-	EmploymentDataObjectEmploymentSubtypeIndividualContractor EmploymentDataObjectEmploymentSubtype = "individual_contractor"
+	EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeFullTime             EmploymentDataEmploymentDataResponseBodyEmploymentSubtype = "full_time"
+	EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeIntern               EmploymentDataEmploymentDataResponseBodyEmploymentSubtype = "intern"
+	EmploymentDataEmploymentDataResponseBodyEmploymentSubtypePartTime             EmploymentDataEmploymentDataResponseBodyEmploymentSubtype = "part_time"
+	EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeTemp                 EmploymentDataEmploymentDataResponseBodyEmploymentSubtype = "temp"
+	EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeSeasonal             EmploymentDataEmploymentDataResponseBodyEmploymentSubtype = "seasonal"
+	EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeIndividualContractor EmploymentDataEmploymentDataResponseBodyEmploymentSubtype = "individual_contractor"
 )
 
-func (r EmploymentDataObjectEmploymentSubtype) IsKnown() bool {
+func (r EmploymentDataEmploymentDataResponseBodyEmploymentSubtype) IsKnown() bool {
 	switch r {
-	case EmploymentDataObjectEmploymentSubtypeFullTime, EmploymentDataObjectEmploymentSubtypeIntern, EmploymentDataObjectEmploymentSubtypePartTime, EmploymentDataObjectEmploymentSubtypeTemp, EmploymentDataObjectEmploymentSubtypeSeasonal, EmploymentDataObjectEmploymentSubtypeIndividualContractor:
+	case EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeFullTime, EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeIntern, EmploymentDataEmploymentDataResponseBodyEmploymentSubtypePartTime, EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeTemp, EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeSeasonal, EmploymentDataEmploymentDataResponseBodyEmploymentSubtypeIndividualContractor:
 		return true
 	}
 	return false
 }
 
 // The main employment type of the individual.
-type EmploymentDataObjectEmploymentType string
+type EmploymentDataEmploymentDataResponseBodyEmploymentType string
 
 const (
-	EmploymentDataObjectEmploymentTypeEmployee   EmploymentDataObjectEmploymentType = "employee"
-	EmploymentDataObjectEmploymentTypeContractor EmploymentDataObjectEmploymentType = "contractor"
+	EmploymentDataEmploymentDataResponseBodyEmploymentTypeEmployee   EmploymentDataEmploymentDataResponseBodyEmploymentType = "employee"
+	EmploymentDataEmploymentDataResponseBodyEmploymentTypeContractor EmploymentDataEmploymentDataResponseBodyEmploymentType = "contractor"
 )
 
-func (r EmploymentDataObjectEmploymentType) IsKnown() bool {
+func (r EmploymentDataEmploymentDataResponseBodyEmploymentType) IsKnown() bool {
 	switch r {
-	case EmploymentDataObjectEmploymentTypeEmployee, EmploymentDataObjectEmploymentTypeContractor:
+	case EmploymentDataEmploymentDataResponseBodyEmploymentTypeEmployee, EmploymentDataEmploymentDataResponseBodyEmploymentTypeContractor:
 		return true
 	}
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
-type EmploymentDataObjectEmploymentStatus string
+// The detailed employment status of the individual.
+type EmploymentDataEmploymentDataResponseBodyEmploymentStatus string
 
 const (
-	EmploymentDataObjectEmploymentStatusActive     EmploymentDataObjectEmploymentStatus = "active"
-	EmploymentDataObjectEmploymentStatusDeceased   EmploymentDataObjectEmploymentStatus = "deceased"
-	EmploymentDataObjectEmploymentStatusLeave      EmploymentDataObjectEmploymentStatus = "leave"
-	EmploymentDataObjectEmploymentStatusOnboarding EmploymentDataObjectEmploymentStatus = "onboarding"
-	EmploymentDataObjectEmploymentStatusPrehire    EmploymentDataObjectEmploymentStatus = "prehire"
-	EmploymentDataObjectEmploymentStatusRetired    EmploymentDataObjectEmploymentStatus = "retired"
-	EmploymentDataObjectEmploymentStatusTerminated EmploymentDataObjectEmploymentStatus = "terminated"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusActive     EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "active"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusDeceased   EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "deceased"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusLeave      EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "leave"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusOnboarding EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "onboarding"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusPrehire    EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "prehire"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusRetired    EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "retired"
+	EmploymentDataEmploymentDataResponseBodyEmploymentStatusTerminated EmploymentDataEmploymentDataResponseBodyEmploymentStatus = "terminated"
 )
 
-func (r EmploymentDataObjectEmploymentStatus) IsKnown() bool {
+func (r EmploymentDataEmploymentDataResponseBodyEmploymentStatus) IsKnown() bool {
 	switch r {
-	case EmploymentDataObjectEmploymentStatusActive, EmploymentDataObjectEmploymentStatusDeceased, EmploymentDataObjectEmploymentStatusLeave, EmploymentDataObjectEmploymentStatusOnboarding, EmploymentDataObjectEmploymentStatusPrehire, EmploymentDataObjectEmploymentStatusRetired, EmploymentDataObjectEmploymentStatusTerminated:
+	case EmploymentDataEmploymentDataResponseBodyEmploymentStatusActive, EmploymentDataEmploymentDataResponseBodyEmploymentStatusDeceased, EmploymentDataEmploymentDataResponseBodyEmploymentStatusLeave, EmploymentDataEmploymentDataResponseBodyEmploymentStatusOnboarding, EmploymentDataEmploymentDataResponseBodyEmploymentStatusPrehire, EmploymentDataEmploymentDataResponseBodyEmploymentStatusRetired, EmploymentDataEmploymentDataResponseBodyEmploymentStatusTerminated:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type EmploymentDataEmploymentDataResponseBodyFlsaStatus string
+
+const (
+	EmploymentDataEmploymentDataResponseBodyFlsaStatusExempt    EmploymentDataEmploymentDataResponseBodyFlsaStatus = "exempt"
+	EmploymentDataEmploymentDataResponseBodyFlsaStatusNonExempt EmploymentDataEmploymentDataResponseBodyFlsaStatus = "non_exempt"
+	EmploymentDataEmploymentDataResponseBodyFlsaStatusUnknown   EmploymentDataEmploymentDataResponseBodyFlsaStatus = "unknown"
+)
+
+func (r EmploymentDataEmploymentDataResponseBodyFlsaStatus) IsKnown() bool {
+	switch r {
+	case EmploymentDataEmploymentDataResponseBodyFlsaStatusExempt, EmploymentDataEmploymentDataResponseBodyFlsaStatusNonExempt, EmploymentDataEmploymentDataResponseBodyFlsaStatusUnknown:
 		return true
 	}
 	return false
 }
 
 // The manager object representing the manager of the individual within the org.
-type EmploymentDataObjectManager struct {
+type EmploymentDataEmploymentDataResponseBodyManager struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID   string                          `json:"id,required" format:"uuid"`
-	JSON employmentDataObjectManagerJSON `json:"-"`
+	ID   string                                              `json:"id" api:"required" format:"uuid"`
+	JSON employmentDataEmploymentDataResponseBodyManagerJSON `json:"-"`
 }
 
-// employmentDataObjectManagerJSON contains the JSON metadata for the struct
-// [EmploymentDataObjectManager]
-type employmentDataObjectManagerJSON struct {
+// employmentDataEmploymentDataResponseBodyManagerJSON contains the JSON metadata
+// for the struct [EmploymentDataEmploymentDataResponseBodyManager]
+type employmentDataEmploymentDataResponseBodyManagerJSON struct {
 	ID          apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *EmploymentDataObjectManager) UnmarshalJSON(data []byte) (err error) {
+func (r *EmploymentDataEmploymentDataResponseBodyManager) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r employmentDataObjectManagerJSON) RawJSON() string {
+func (r employmentDataEmploymentDataResponseBodyManagerJSON) RawJSON() string {
 	return r.raw
 }
 
-type EmploymentDataObjectCustomField struct {
-	Name  string                                     `json:"name,nullable"`
-	Value EmploymentDataObjectCustomFieldsValueUnion `json:"value,nullable"`
-	JSON  employmentDataObjectCustomFieldJSON        `json:"-"`
+type EmploymentDataEmploymentDataResponseBodyCustomField struct {
+	Name  string                                                         `json:"name" api:"nullable"`
+	Value EmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion `json:"value" api:"nullable"`
+	JSON  employmentDataEmploymentDataResponseBodyCustomFieldJSON        `json:"-"`
 }
 
-// employmentDataObjectCustomFieldJSON contains the JSON metadata for the struct
-// [EmploymentDataObjectCustomField]
-type employmentDataObjectCustomFieldJSON struct {
+// employmentDataEmploymentDataResponseBodyCustomFieldJSON contains the JSON
+// metadata for the struct [EmploymentDataEmploymentDataResponseBodyCustomField]
+type employmentDataEmploymentDataResponseBodyCustomFieldJSON struct {
 	Name        apijson.Field
 	Value       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *EmploymentDataObjectCustomField) UnmarshalJSON(data []byte) (err error) {
+func (r *EmploymentDataEmploymentDataResponseBodyCustomField) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r employmentDataObjectCustomFieldJSON) RawJSON() string {
+func (r employmentDataEmploymentDataResponseBodyCustomFieldJSON) RawJSON() string {
 	return r.raw
 }
 
 // Union satisfied by [shared.UnionString],
-// [EmploymentDataObjectCustomFieldsValueArray], [shared.UnionFloat] or
-// [shared.UnionBool].
-type EmploymentDataObjectCustomFieldsValueUnion interface {
-	ImplementsEmploymentDataObjectCustomFieldsValueUnion()
+// [EmploymentDataEmploymentDataResponseBodyCustomFieldsValueArray],
+// [shared.UnionFloat] or [shared.UnionBool].
+type EmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion interface {
+	ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*EmploymentDataObjectCustomFieldsValueUnion)(nil)).Elem(),
+		reflect.TypeOf((*EmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion)(nil)).Elem(),
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.String,
@@ -437,7 +468,7 @@ func init() {
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(EmploymentDataObjectCustomFieldsValueArray{}),
+			Type:       reflect.TypeOf(EmploymentDataEmploymentDataResponseBodyCustomFieldsValueArray{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.Number,
@@ -454,15 +485,15 @@ func init() {
 	)
 }
 
-type EmploymentDataObjectCustomFieldsValueArray []interface{}
+type EmploymentDataEmploymentDataResponseBodyCustomFieldsValueArray []interface{}
 
-func (r EmploymentDataObjectCustomFieldsValueArray) ImplementsEmploymentDataObjectCustomFieldsValueUnion() {
+func (r EmploymentDataEmploymentDataResponseBodyCustomFieldsValueArray) ImplementsEmploymentDataEmploymentDataResponseBodyCustomFieldsValueUnion() {
 }
 
 type EmploymentDataBatchError struct {
-	Code      float64                      `json:"code,required"`
-	Message   string                       `json:"message,required"`
-	Name      string                       `json:"name,required"`
+	Code      float64                      `json:"code" api:"required"`
+	Message   string                       `json:"message" api:"required"`
+	Name      string                       `json:"name" api:"required"`
 	FinchCode string                       `json:"finch_code"`
 	JSON      employmentDataBatchErrorJSON `json:"-"`
 }
@@ -488,8 +519,7 @@ func (r employmentDataBatchErrorJSON) RawJSON() string {
 
 func (r EmploymentDataBatchError) implementsEmploymentData() {}
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type EmploymentDataEmploymentStatus string
 
 const (
@@ -510,11 +540,29 @@ func (r EmploymentDataEmploymentStatus) IsKnown() bool {
 	return false
 }
 
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type EmploymentDataFlsaStatus string
+
+const (
+	EmploymentDataFlsaStatusExempt    EmploymentDataFlsaStatus = "exempt"
+	EmploymentDataFlsaStatusNonExempt EmploymentDataFlsaStatus = "non_exempt"
+	EmploymentDataFlsaStatusUnknown   EmploymentDataFlsaStatus = "unknown"
+)
+
+func (r EmploymentDataFlsaStatus) IsKnown() bool {
+	switch r {
+	case EmploymentDataFlsaStatusExempt, EmploymentDataFlsaStatusNonExempt, EmploymentDataFlsaStatusUnknown:
+		return true
+	}
+	return false
+}
+
 type EmploymentDataResponse struct {
-	Body EmploymentData `json:"body,required"`
-	Code int64          `json:"code,required"`
+	Body EmploymentData `json:"body" api:"required"`
+	Code int64          `json:"code" api:"required"`
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	IndividualID string                     `json:"individual_id,required" format:"uuid"`
+	IndividualID string                     `json:"individual_id" api:"required" format:"uuid"`
 	JSON         employmentDataResponseJSON `json:"-"`
 }
 
@@ -538,18 +586,29 @@ func (r employmentDataResponseJSON) RawJSON() string {
 
 type HRISEmploymentGetManyParams struct {
 	// The array of batch requests.
-	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests,required"`
+	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests" api:"required"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
 func (r HRISEmploymentGetManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// URLQuery serializes [HRISEmploymentGetManyParams]'s query parameters as
+// `url.Values`.
+func (r HRISEmploymentGetManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type HRISEmploymentGetManyParamsRequest struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company. There is no
 	// limit to the number of `individual_id` to send per request. It is preferantial
 	// to send all ids in a single request for Finch to optimize provider rate-limits.
-	IndividualID param.Field[string] `json:"individual_id,required"`
+	IndividualID param.Field[string] `json:"individual_id" api:"required"`
 }
 
 func (r HRISEmploymentGetManyParamsRequest) MarshalJSON() (data []byte, err error) {

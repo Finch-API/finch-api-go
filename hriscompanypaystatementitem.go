@@ -38,12 +38,12 @@ func NewHRISCompanyPayStatementItemService(opts ...option.RequestOption) (r *HRI
 	return
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Retrieve a list of detailed pay statement
-// items for the access token's connection account.
+// Retrieve a list of detailed pay statement items for the access token's
+// connection account.
 func (r *HRISCompanyPayStatementItemService) List(ctx context.Context, query HRISCompanyPayStatementItemListParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[HRISCompanyPayStatementItemListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-statement-item"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -58,20 +58,19 @@ func (r *HRISCompanyPayStatementItemService) List(ctx context.Context, query HRI
 	return res, nil
 }
 
-// **Beta:** this endpoint currently serves employers onboarded after March 4th and
-// historical support will be added soon Retrieve a list of detailed pay statement
-// items for the access token's connection account.
+// Retrieve a list of detailed pay statement items for the access token's
+// connection account.
 func (r *HRISCompanyPayStatementItemService) ListAutoPaging(ctx context.Context, query HRISCompanyPayStatementItemListParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[HRISCompanyPayStatementItemListResponse] {
 	return pagination.NewResponsesPageAutoPager(r.List(ctx, query, opts...))
 }
 
 type HRISCompanyPayStatementItemListResponse struct {
 	// The attributes of the pay statement item.
-	Attributes HRISCompanyPayStatementItemListResponseAttributes `json:"attributes,required"`
+	Attributes HRISCompanyPayStatementItemListResponseAttributes `json:"attributes" api:"required"`
 	// The category of the pay statement item.
-	Category HRISCompanyPayStatementItemListResponseCategory `json:"category,required"`
+	Category HRISCompanyPayStatementItemListResponseCategory `json:"category" api:"required"`
 	// The name of the pay statement item.
-	Name string                                      `json:"name,required"`
+	Name string                                      `json:"name" api:"required"`
 	JSON hrisCompanyPayStatementItemListResponseJSON `json:"-"`
 }
 
@@ -97,15 +96,15 @@ func (r hrisCompanyPayStatementItemListResponseJSON) RawJSON() string {
 type HRISCompanyPayStatementItemListResponseAttributes struct {
 	// The metadata of the pay statement item derived by the rules engine if available.
 	// Each attribute will be a key-value pair defined by a rule.
-	Metadata map[string]interface{} `json:"metadata,required,nullable"`
+	Metadata map[string]interface{} `json:"metadata" api:"required,nullable"`
 	// `true` if the amount is paid by the employers. This field is only available for
 	// taxes.
-	Employer bool `json:"employer,nullable"`
+	Employer bool `json:"employer" api:"nullable"`
 	// `true` if the pay statement item is pre-tax. This field is only available for
 	// employee deductions.
-	PreTax bool `json:"pre_tax,nullable"`
+	PreTax bool `json:"pre_tax" api:"nullable"`
 	// The type of the pay statement item.
-	Type string                                                `json:"type,nullable"`
+	Type string                                                `json:"type" api:"nullable"`
 	JSON hrisCompanyPayStatementItemListResponseAttributesJSON `json:"-"`
 }
 
@@ -153,6 +152,8 @@ type HRISCompanyPayStatementItemListParams struct {
 	// The end date to retrieve pay statement items by via their last seen pay date in
 	// `YYYY-MM-DD` format.
 	EndDate param.Field[time.Time] `query:"end_date" format:"date"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Case-insensitive partial match search by pay statement item name.
 	Name param.Field[string] `query:"name"`
 	// The start date to retrieve pay statement items by via their last seen pay date

@@ -35,17 +35,18 @@ func NewSandboxPaymentService(opts ...option.RequestOption) (r *SandboxPaymentSe
 
 // Add a new sandbox payment
 func (r *SandboxPaymentService) New(ctx context.Context, body SandboxPaymentNewParams, opts ...option.RequestOption) (res *SandboxPaymentNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "sandbox/payment"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxPaymentNewResponse struct {
 	// The date of the payment.
-	PayDate string `json:"pay_date,required"`
+	PayDate string `json:"pay_date" api:"required"`
 	// The ID of the payment.
-	PaymentID string                        `json:"payment_id,required"`
+	PaymentID string                        `json:"payment_id" api:"required"`
 	JSON      sandboxPaymentNewResponseJSON `json:"-"`
 }
 
@@ -78,7 +79,7 @@ func (r SandboxPaymentNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxPaymentNewParamsPayStatement struct {
-	IndividualID          param.Field[string]                                                     `json:"individual_id,required" format:"uuid"`
+	IndividualID          param.Field[string]                                                     `json:"individual_id" api:"required" format:"uuid"`
 	Earnings              param.Field[[]SandboxPaymentNewParamsPayStatementsEarning]              `json:"earnings"`
 	EmployeeDeductions    param.Field[[]SandboxPaymentNewParamsPayStatementsEmployeeDeduction]    `json:"employee_deductions"`
 	EmployerContributions param.Field[[]SandboxPaymentNewParamsPayStatementsEmployerContribution] `json:"employer_contributions"`
@@ -132,7 +133,8 @@ func (r SandboxPaymentNewParamsPayStatementsEarningsType) IsKnown() bool {
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployeeDeduction struct {
-	Amount param.Field[int64]                                                      `json:"amount"`
+	Amount param.Field[int64] `json:"amount"`
+	// The deduction name. Required when type is specified.
 	Name   param.Field[string]                                                     `json:"name"`
 	PreTax param.Field[bool]                                                       `json:"pre_tax"`
 	Type   param.Field[SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType] `json:"type"`
@@ -175,9 +177,10 @@ func (r SandboxPaymentNewParamsPayStatementsEmployeeDeductionsType) IsKnown() bo
 }
 
 type SandboxPaymentNewParamsPayStatementsEmployerContribution struct {
-	Amount param.Field[int64]                                                         `json:"amount"`
-	Name   param.Field[string]                                                        `json:"name"`
-	Type   param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsType] `json:"type"`
+	Amount param.Field[int64] `json:"amount"`
+	// The contribution name. Required when type is specified.
+	Name param.Field[string]                                                        `json:"name"`
+	Type param.Field[SandboxPaymentNewParamsPayStatementsEmployerContributionsType] `json:"type"`
 }
 
 func (r SandboxPaymentNewParamsPayStatementsEmployerContribution) MarshalJSON() (data []byte, err error) {

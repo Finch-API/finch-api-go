@@ -52,56 +52,59 @@ func NewJobAutomatedService(opts ...option.RequestOption) (r *JobAutomatedServic
 // This endpoint is available for _Scale_ tier customers as an add-on. To request
 // access to this endpoint, please contact your Finch account manager.
 func (r *JobAutomatedService) New(ctx context.Context, body JobAutomatedNewParams, opts ...option.RequestOption) (res *JobAutomatedNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "jobs/automated"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Get an automated job by `job_id`.
 func (r *JobAutomatedService) Get(ctx context.Context, jobID string, opts ...option.RequestOption) (res *AutomatedAsyncJob, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if jobID == "" {
 		err = errors.New("missing required job_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("jobs/automated/%s", jobID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Get all automated jobs. Automated jobs are completed by a machine. By default,
 // jobs are sorted in descending order by submission time. For scheduled jobs such
 // as data syncs, only the next scheduled job is shown.
 func (r *JobAutomatedService) List(ctx context.Context, query JobAutomatedListParams, opts ...option.RequestOption) (res *JobAutomatedListResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "jobs/automated"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type AutomatedAsyncJob struct {
 	// The datetime the job completed.
-	CompletedAt time.Time `json:"completed_at,required,nullable" format:"date-time"`
+	CompletedAt time.Time `json:"completed_at" api:"required,nullable" format:"date-time"`
 	// The datetime when the job was created. for scheduled jobs, this will be the
 	// initial connection time. For ad-hoc jobs, this will be the time the creation
 	// request was received.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// The id of the job that has been created.
-	JobID string `json:"job_id,required" format:"uuid"`
+	JobID string `json:"job_id" api:"required" format:"uuid"`
 	// The url that can be used to retrieve the job status
-	JobURL string `json:"job_url,required"`
+	JobURL string `json:"job_url" api:"required"`
 	// The input parameters for the job.
-	Params AutomatedAsyncJobParams `json:"params,required,nullable"`
+	Params AutomatedAsyncJobParams `json:"params" api:"required,nullable"`
 	// The datetime a job is scheduled to be run. For scheduled jobs, this datetime can
 	// be in the future if the job has not yet been enqueued. For ad-hoc jobs, this
 	// field will be null.
-	ScheduledAt time.Time `json:"scheduled_at,required,nullable" format:"date-time"`
+	ScheduledAt time.Time `json:"scheduled_at" api:"required,nullable" format:"date-time"`
 	// The datetime a job entered into the job queue.
-	StartedAt time.Time               `json:"started_at,required,nullable" format:"date-time"`
-	Status    AutomatedAsyncJobStatus `json:"status,required"`
+	StartedAt time.Time               `json:"started_at" api:"required,nullable" format:"date-time"`
+	Status    AutomatedAsyncJobStatus `json:"status" api:"required"`
 	// The type of automated job
-	Type AutomatedAsyncJobType `json:"type,required"`
+	Type AutomatedAsyncJobType `json:"type" api:"required"`
 	JSON automatedAsyncJobJSON `json:"-"`
 }
 
@@ -189,9 +192,9 @@ func (r AutomatedAsyncJobType) IsKnown() bool {
 
 type JobAutomatedNewResponse struct {
 	// The number of allowed refreshes per hour (per hour, fixed window)
-	AllowedRefreshes int64 `json:"allowed_refreshes,required"`
+	AllowedRefreshes int64 `json:"allowed_refreshes" api:"required"`
 	// The number of remaining refreshes available (per hour, fixed window)
-	RemainingRefreshes int64 `json:"remaining_refreshes,required"`
+	RemainingRefreshes int64 `json:"remaining_refreshes" api:"required"`
 	// The id of the job that has been created.
 	JobID string `json:"job_id" format:"uuid"`
 	// The url that can be used to retrieve the job status
@@ -222,8 +225,8 @@ func (r jobAutomatedNewResponseJSON) RawJSON() string {
 }
 
 type JobAutomatedListResponse struct {
-	Data []AutomatedAsyncJob          `json:"data,required"`
-	Meta JobAutomatedListResponseMeta `json:"meta,required"`
+	Data []AutomatedAsyncJob          `json:"data" api:"required"`
+	Meta JobAutomatedListResponseMeta `json:"meta" api:"required"`
 	JSON jobAutomatedListResponseJSON `json:"-"`
 }
 
@@ -325,7 +328,7 @@ type JobAutomatedNewParams interface {
 
 type JobAutomatedNewParamsDataSyncAll struct {
 	// The type of job to start.
-	Type param.Field[JobAutomatedNewParamsDataSyncAllType] `json:"type,required"`
+	Type param.Field[JobAutomatedNewParamsDataSyncAllType] `json:"type" api:"required"`
 }
 
 func (r JobAutomatedNewParamsDataSyncAll) MarshalJSON() (data []byte, err error) {
@@ -352,9 +355,9 @@ func (r JobAutomatedNewParamsDataSyncAllType) IsKnown() bool {
 }
 
 type JobAutomatedNewParamsW4FormEmployeeSync struct {
-	Params param.Field[JobAutomatedNewParamsW4FormEmployeeSyncParams] `json:"params,required"`
+	Params param.Field[JobAutomatedNewParamsW4FormEmployeeSyncParams] `json:"params" api:"required"`
 	// The type of job to start.
-	Type param.Field[JobAutomatedNewParamsW4FormEmployeeSyncType] `json:"type,required"`
+	Type param.Field[JobAutomatedNewParamsW4FormEmployeeSyncType] `json:"type" api:"required"`
 }
 
 func (r JobAutomatedNewParamsW4FormEmployeeSync) MarshalJSON() (data []byte, err error) {
@@ -367,7 +370,7 @@ func (JobAutomatedNewParamsW4FormEmployeeSync) ImplementsJobAutomatedNewParams()
 
 type JobAutomatedNewParamsW4FormEmployeeSyncParams struct {
 	// The unique ID of the individual for W-4 data sync.
-	IndividualID param.Field[string] `json:"individual_id,required"`
+	IndividualID param.Field[string] `json:"individual_id" api:"required"`
 }
 
 func (r JobAutomatedNewParamsW4FormEmployeeSyncParams) MarshalJSON() (data []byte, err error) {

@@ -210,7 +210,7 @@ func (r *ResponsesPageAutoPager[T]) Index() int {
 
 type Page[T any] struct {
 	Data   []T           `json:"data"`
-	Paging shared.Paging `json:"paging,required"`
+	Paging shared.Paging `json:"paging" api:"required"`
 	JSON   pageJSON      `json:"-"`
 	cfg    *requestconfig.RequestConfig
 	res    *http.Response
@@ -241,7 +241,9 @@ func (r *Page[T]) GetNextPage() (res *Page[T], err error) {
 	}
 	cfg := r.cfg.Clone(r.cfg.Context)
 
-	next := r.Paging.Offset
+	offset := r.Paging.Offset
+	length := int64(len(r.Data))
+	next := offset + length
 
 	if next < r.Paging.Count && next != 0 {
 		err = cfg.Apply(option.WithQuery("offset", strconv.FormatInt(next, 10)))

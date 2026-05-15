@@ -143,8 +143,8 @@ func (r accountUpdateEventJSON) RawJSON() string {
 func (r AccountUpdateEvent) implementsWebhookEventUnion() {}
 
 type AccountUpdateEventData struct {
-	AuthenticationMethod AccountUpdateEventDataAuthenticationMethod `json:"authentication_method,required"`
-	Status               shared.ConnectionStatusType                `json:"status,required"`
+	AuthenticationMethod AccountUpdateEventDataAuthenticationMethod `json:"authentication_method" api:"required"`
+	Status               shared.ConnectionStatusType                `json:"status" api:"required"`
 	JSON                 accountUpdateEventDataJSON                 `json:"-"`
 }
 
@@ -168,9 +168,9 @@ func (r accountUpdateEventDataJSON) RawJSON() string {
 type AccountUpdateEventDataAuthenticationMethod struct {
 	// Each benefit type and their supported features. If the benefit type is not
 	// supported, the property will be null
-	BenefitsSupport BenefitsSupport `json:"benefits_support,nullable"`
+	BenefitsSupport BenefitsSupport `json:"benefits_support" api:"nullable"`
 	// The supported data fields returned by our HR and payroll endpoints
-	SupportedFields AccountUpdateEventDataAuthenticationMethodSupportedFields `json:"supported_fields,nullable"`
+	SupportedFields AccountUpdateEventDataAuthenticationMethodSupportedFields `json:"supported_fields" api:"nullable"`
 	// The type of authentication method.
 	Type AccountUpdateEventDataAuthenticationMethodType `json:"type"`
 	JSON accountUpdateEventDataAuthenticationMethodJSON `json:"-"`
@@ -862,8 +862,8 @@ func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementJSO
 }
 
 type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPaging struct {
-	Count  bool                                                                            `json:"count,required"`
-	Offset bool                                                                            `json:"offset,required"`
+	Count  bool                                                                            `json:"count" api:"required"`
+	Offset bool                                                                            `json:"offset" api:"required"`
 	JSON   accountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatementPagingJSON `json:"-"`
 }
 
@@ -1146,15 +1146,17 @@ type BaseWebhookEvent struct {
 	// with this event.
 	//
 	// Deprecated: deprecated
-	AccountID string `json:"account_id,required"`
+	AccountID string `json:"account_id" api:"required"`
 	// [DEPRECATED] Unique Finch ID of the company for which data has been updated. Use
 	// `connection_id` instead to identify the connection associated with this event.
 	//
 	// Deprecated: deprecated
-	CompanyID string `json:"company_id,required"`
+	CompanyID string `json:"company_id" api:"required"`
 	// Unique Finch ID of the connection associated with the webhook event.
-	ConnectionID string               `json:"connection_id"`
-	JSON         baseWebhookEventJSON `json:"-"`
+	ConnectionID string `json:"connection_id"`
+	// Unique Finch id of the entity for which data has been updated.
+	EntityID string               `json:"entity_id"`
+	JSON     baseWebhookEventJSON `json:"-"`
 }
 
 // baseWebhookEventJSON contains the JSON metadata for the struct
@@ -1163,6 +1165,7 @@ type baseWebhookEventJSON struct {
 	AccountID    apijson.Field
 	CompanyID    apijson.Field
 	ConnectionID apijson.Field
+	EntityID     apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -1176,7 +1179,7 @@ func (r baseWebhookEventJSON) RawJSON() string {
 }
 
 type CompanyEvent struct {
-	Data      map[string]interface{} `json:"data,nullable"`
+	Data      map[string]interface{} `json:"data" api:"nullable"`
 	EventType CompanyEventEventType  `json:"event_type"`
 	JSON      companyEventJSON       `json:"-"`
 	BaseWebhookEvent
@@ -1431,9 +1434,9 @@ func (r JobCompletionEvent) implementsWebhookEventUnion() {}
 
 type JobCompletionEventData struct {
 	// The id of the job which has completed.
-	JobID string `json:"job_id,required"`
+	JobID string `json:"job_id" api:"required"`
 	// The url to query the result of the job.
-	JobURL string                     `json:"job_url,required"`
+	JobURL string                     `json:"job_url" api:"required"`
 	JSON   jobCompletionEventDataJSON `json:"-"`
 }
 
@@ -1457,17 +1460,20 @@ func (r jobCompletionEventDataJSON) RawJSON() string {
 type JobCompletionEventEventType string
 
 const (
-	JobCompletionEventEventTypeJobBenefitCreateCompleted   JobCompletionEventEventType = "job.benefit_create.completed"
-	JobCompletionEventEventTypeJobBenefitEnrollCompleted   JobCompletionEventEventType = "job.benefit_enroll.completed"
-	JobCompletionEventEventTypeJobBenefitRegisterCompleted JobCompletionEventEventType = "job.benefit_register.completed"
-	JobCompletionEventEventTypeJobBenefitUnenrollCompleted JobCompletionEventEventType = "job.benefit_unenroll.completed"
-	JobCompletionEventEventTypeJobBenefitUpdateCompleted   JobCompletionEventEventType = "job.benefit_update.completed"
-	JobCompletionEventEventTypeJobDataSyncAllCompleted     JobCompletionEventEventType = "job.data_sync_all.completed"
+	JobCompletionEventEventTypeJobBenefitCreateCompleted          JobCompletionEventEventType = "job.benefit_create.completed"
+	JobCompletionEventEventTypeJobBenefitEnrollCompleted          JobCompletionEventEventType = "job.benefit_enroll.completed"
+	JobCompletionEventEventTypeJobBenefitRegisterCompleted        JobCompletionEventEventType = "job.benefit_register.completed"
+	JobCompletionEventEventTypeJobBenefitUnenrollCompleted        JobCompletionEventEventType = "job.benefit_unenroll.completed"
+	JobCompletionEventEventTypeJobBenefitUpdateCompleted          JobCompletionEventEventType = "job.benefit_update.completed"
+	JobCompletionEventEventTypeJobDataSyncAllCompleted            JobCompletionEventEventType = "job.data_sync_all.completed"
+	JobCompletionEventEventTypeJobW4FormEmployeeSyncCompleted     JobCompletionEventEventType = "job.w4_form_employee_sync.completed"
+	JobCompletionEventEventTypeJobInitialDataSyncOrgSucceeded     JobCompletionEventEventType = "job.initial_data_sync_org.succeeded"
+	JobCompletionEventEventTypeJobInitialDataSyncPayrollSucceeded JobCompletionEventEventType = "job.initial_data_sync_payroll.succeeded"
 )
 
 func (r JobCompletionEventEventType) IsKnown() bool {
 	switch r {
-	case JobCompletionEventEventTypeJobBenefitCreateCompleted, JobCompletionEventEventTypeJobBenefitEnrollCompleted, JobCompletionEventEventTypeJobBenefitRegisterCompleted, JobCompletionEventEventTypeJobBenefitUnenrollCompleted, JobCompletionEventEventTypeJobBenefitUpdateCompleted, JobCompletionEventEventTypeJobDataSyncAllCompleted:
+	case JobCompletionEventEventTypeJobBenefitCreateCompleted, JobCompletionEventEventTypeJobBenefitEnrollCompleted, JobCompletionEventEventTypeJobBenefitRegisterCompleted, JobCompletionEventEventTypeJobBenefitUnenrollCompleted, JobCompletionEventEventTypeJobBenefitUpdateCompleted, JobCompletionEventEventTypeJobDataSyncAllCompleted, JobCompletionEventEventTypeJobW4FormEmployeeSyncCompleted, JobCompletionEventEventTypeJobInitialDataSyncOrgSucceeded, JobCompletionEventEventTypeJobInitialDataSyncPayrollSucceeded:
 		return true
 	}
 	return false
@@ -1567,9 +1573,9 @@ func (r PaymentEvent) implementsWebhookEventUnion() {}
 
 type PaymentEventData struct {
 	// The date of the payment.
-	PayDate string `json:"pay_date,required"`
+	PayDate string `json:"pay_date" api:"required"`
 	// The ID of the payment.
-	PaymentID string               `json:"payment_id,required"`
+	PaymentID string               `json:"payment_id" api:"required"`
 	JSON      paymentEventDataJSON `json:"-"`
 }
 
@@ -1651,6 +1657,21 @@ func init() {
 			TypeFilter:         gjson.JSON,
 			Type:               reflect.TypeOf(JobCompletionEvent{}),
 			DiscriminatorValue: "job.data_sync_all.completed",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.w4_form_employee_sync.completed",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.initial_data_sync_org.succeeded",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(JobCompletionEvent{}),
+			DiscriminatorValue: "job.initial_data_sync_payroll.succeeded",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,

@@ -34,25 +34,27 @@ func NewConnectSessionService(opts ...option.RequestOption) (r *ConnectSessionSe
 
 // Create a new connect session for an employer
 func (r *ConnectSessionService) New(ctx context.Context, body ConnectSessionNewParams, opts ...option.RequestOption) (res *ConnectSessionNewResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "connect/sessions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Create a new Connect session for reauthenticating an existing connection
 func (r *ConnectSessionService) Reauthenticate(ctx context.Context, body ConnectSessionReauthenticateParams, opts ...option.RequestOption) (res *ConnectSessionReauthenticateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBasicAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	path := "connect/sessions/reauthenticate"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type ConnectSessionNewResponse struct {
 	// The Connect URL to redirect the user to for authentication
-	ConnectURL string `json:"connect_url,required" format:"uri"`
+	ConnectURL string `json:"connect_url" api:"required" format:"uri"`
 	// The unique identifier for the created connect session
-	SessionID string                        `json:"session_id,required"`
+	SessionID string                        `json:"session_id" api:"required"`
 	JSON      connectSessionNewResponseJSON `json:"-"`
 }
 
@@ -75,9 +77,9 @@ func (r connectSessionNewResponseJSON) RawJSON() string {
 
 type ConnectSessionReauthenticateResponse struct {
 	// The Connect URL to redirect the user to for reauthentication
-	ConnectURL string `json:"connect_url,required" format:"uri"`
+	ConnectURL string `json:"connect_url" api:"required" format:"uri"`
 	// The unique identifier for the created connect session
-	SessionID string                                   `json:"session_id,required"`
+	SessionID string                                   `json:"session_id" api:"required"`
 	JSON      connectSessionReauthenticateResponseJSON `json:"-"`
 }
 
@@ -99,37 +101,62 @@ func (r connectSessionReauthenticateResponseJSON) RawJSON() string {
 }
 
 type ConnectSessionNewParams struct {
-	// Email address of the customer
-	CustomerEmail param.Field[string] `json:"customer_email,required" format:"email"`
 	// Unique identifier for the customer
-	CustomerID param.Field[string] `json:"customer_id,required"`
+	CustomerID param.Field[string] `json:"customer_id" api:"required"`
 	// Name of the customer
-	CustomerName param.Field[string] `json:"customer_name,required"`
+	CustomerName param.Field[string] `json:"customer_name" api:"required"`
+	// The Finch products to request access to. Use `benefits` to access deductions
+	// endpoints — `deduction` is a deprecated alias that is still accepted but should
+	// not be combined with `benefits`.
+	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products" api:"required"`
+	// Email address of the customer
+	CustomerEmail param.Field[string] `json:"customer_email" format:"email"`
 	// Integration configuration for the connect session
-	Integration param.Field[ConnectSessionNewParamsIntegration] `json:"integration,required"`
+	Integration param.Field[ConnectSessionNewParamsIntegration] `json:"integration"`
 	// Enable manual authentication mode
-	Manual param.Field[bool] `json:"manual,required"`
+	Manual param.Field[bool] `json:"manual"`
 	// The number of minutes until the session expires (defaults to 129,600, which is
 	// 90 days)
-	MinutesToExpire param.Field[float64] `json:"minutes_to_expire,required"`
-	// The Finch products to request access to
-	Products param.Field[[]ConnectSessionNewParamsProduct] `json:"products,required"`
+	MinutesToExpire param.Field[float64] `json:"minutes_to_expire"`
 	// The URI to redirect to after the Connect flow is completed
-	RedirectUri param.Field[string] `json:"redirect_uri,required"`
+	RedirectUri param.Field[string] `json:"redirect_uri"`
 	// Sandbox mode for testing
-	Sandbox param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox,required"`
+	Sandbox param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox"`
 }
 
 func (r ConnectSessionNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+type ConnectSessionNewParamsProduct string
+
+const (
+	ConnectSessionNewParamsProductBenefits     ConnectSessionNewParamsProduct = "benefits"
+	ConnectSessionNewParamsProductCompany      ConnectSessionNewParamsProduct = "company"
+	ConnectSessionNewParamsProductDeduction    ConnectSessionNewParamsProduct = "deduction"
+	ConnectSessionNewParamsProductDirectory    ConnectSessionNewParamsProduct = "directory"
+	ConnectSessionNewParamsProductDocuments    ConnectSessionNewParamsProduct = "documents"
+	ConnectSessionNewParamsProductEmployment   ConnectSessionNewParamsProduct = "employment"
+	ConnectSessionNewParamsProductIndividual   ConnectSessionNewParamsProduct = "individual"
+	ConnectSessionNewParamsProductPayment      ConnectSessionNewParamsProduct = "payment"
+	ConnectSessionNewParamsProductPayStatement ConnectSessionNewParamsProduct = "pay_statement"
+	ConnectSessionNewParamsProductSsn          ConnectSessionNewParamsProduct = "ssn"
+)
+
+func (r ConnectSessionNewParamsProduct) IsKnown() bool {
+	switch r {
+	case ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDeduction, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductDocuments, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductSsn:
+		return true
+	}
+	return false
+}
+
 // Integration configuration for the connect session
 type ConnectSessionNewParamsIntegration struct {
-	// The authentication method to use
-	AuthMethod param.Field[ConnectSessionNewParamsIntegrationAuthMethod] `json:"auth_method,required"`
 	// The provider to integrate with
-	Provider param.Field[string] `json:"provider,required"`
+	Provider param.Field[string] `json:"provider" api:"required"`
+	// The authentication method to use
+	AuthMethod param.Field[ConnectSessionNewParamsIntegrationAuthMethod] `json:"auth_method"`
 }
 
 func (r ConnectSessionNewParamsIntegration) MarshalJSON() (data []byte, err error) {
@@ -154,30 +181,6 @@ func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
 	return false
 }
 
-// The Finch products that can be requested during the Connect flow.
-type ConnectSessionNewParamsProduct string
-
-const (
-	ConnectSessionNewParamsProductBenefits     ConnectSessionNewParamsProduct = "benefits"
-	ConnectSessionNewParamsProductCompany      ConnectSessionNewParamsProduct = "company"
-	ConnectSessionNewParamsProductDeduction    ConnectSessionNewParamsProduct = "deduction"
-	ConnectSessionNewParamsProductDirectory    ConnectSessionNewParamsProduct = "directory"
-	ConnectSessionNewParamsProductDocuments    ConnectSessionNewParamsProduct = "documents"
-	ConnectSessionNewParamsProductEmployment   ConnectSessionNewParamsProduct = "employment"
-	ConnectSessionNewParamsProductIndividual   ConnectSessionNewParamsProduct = "individual"
-	ConnectSessionNewParamsProductPayment      ConnectSessionNewParamsProduct = "payment"
-	ConnectSessionNewParamsProductPayStatement ConnectSessionNewParamsProduct = "pay_statement"
-	ConnectSessionNewParamsProductSsn          ConnectSessionNewParamsProduct = "ssn"
-)
-
-func (r ConnectSessionNewParamsProduct) IsKnown() bool {
-	switch r {
-	case ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDeduction, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductDocuments, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductSsn:
-		return true
-	}
-	return false
-}
-
 // Sandbox mode for testing
 type ConnectSessionNewParamsSandbox string
 
@@ -196,21 +199,22 @@ func (r ConnectSessionNewParamsSandbox) IsKnown() bool {
 
 type ConnectSessionReauthenticateParams struct {
 	// The ID of the existing connection to reauthenticate
-	ConnectionID param.Field[string] `json:"connection_id,required"`
+	ConnectionID param.Field[string] `json:"connection_id" api:"required"`
 	// The number of minutes until the session expires (defaults to 43,200, which is 30
 	// days)
-	MinutesToExpire param.Field[int64] `json:"minutes_to_expire,required"`
-	// The products to request access to (optional for reauthentication)
-	Products param.Field[[]ConnectSessionReauthenticateParamsProduct] `json:"products,required"`
+	MinutesToExpire param.Field[int64] `json:"minutes_to_expire"`
+	// The products to request access to (optional for reauthentication). Use
+	// `benefits` to access deductions endpoints — `deduction` is a deprecated alias
+	// that is still accepted but should not be combined with `benefits`.
+	Products param.Field[[]ConnectSessionReauthenticateParamsProduct] `json:"products"`
 	// The URI to redirect to after the Connect flow is completed
-	RedirectUri param.Field[string] `json:"redirect_uri,required" format:"uri"`
+	RedirectUri param.Field[string] `json:"redirect_uri" format:"uri"`
 }
 
 func (r ConnectSessionReauthenticateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// The Finch products that can be requested during the Connect flow.
 type ConnectSessionReauthenticateParamsProduct string
 
 const (

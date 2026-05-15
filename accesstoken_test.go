@@ -14,6 +14,7 @@ import (
 )
 
 func TestAccessTokenNewWithOptionalParams(t *testing.T) {
+	t.Skip("prism doesnt like the format for the API-Version header")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,6 +25,8 @@ func TestAccessTokenNewWithOptionalParams(t *testing.T) {
 	client := finchgo.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAccessToken("My Access Token"),
+		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
+		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.AccessTokens.New(context.TODO(), finchgo.AccessTokenNewParams{
 		Code:         finchgo.F("code"),

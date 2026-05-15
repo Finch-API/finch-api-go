@@ -5,10 +5,12 @@ package finchgo
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/internal/apiquery"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
@@ -36,12 +38,13 @@ func NewHRISIndividualService(opts ...option.RequestOption) (r *HRISIndividualSe
 }
 
 // Read individual data, excluding income and employment data
-func (r *HRISIndividualService) GetMany(ctx context.Context, body HRISIndividualGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[IndividualResponse], err error) {
+func (r *HRISIndividualService) GetMany(ctx context.Context, params HRISIndividualGetManyParams, opts ...option.RequestOption) (res *pagination.ResponsesPage[IndividualResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/individual"
-	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, params, &res, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -54,44 +57,46 @@ func (r *HRISIndividualService) GetMany(ctx context.Context, body HRISIndividual
 }
 
 // Read individual data, excluding income and employment data
-func (r *HRISIndividualService) GetManyAutoPaging(ctx context.Context, body HRISIndividualGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[IndividualResponse] {
-	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, body, opts...))
+func (r *HRISIndividualService) GetManyAutoPaging(ctx context.Context, params HRISIndividualGetManyParams, opts ...option.RequestOption) *pagination.ResponsesPageAutoPager[IndividualResponse] {
+	return pagination.NewResponsesPageAutoPager(r.GetMany(ctx, params, opts...))
 }
 
 type Individual struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID   string  `json:"id" format:"uuid"`
 	Code float64 `json:"code"`
-	Dob  string  `json:"dob,nullable"`
-	// This field can have the runtime type of [[]IndividualObjectEmail].
+	Dob  string  `json:"dob" api:"nullable"`
+	// This field can have the runtime type of
+	// [[]IndividualIndividualResponseBodyEmail].
 	Emails interface{} `json:"emails"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
-	EncryptedSsn string `json:"encrypted_ssn,nullable"`
+	EncryptedSsn string `json:"encrypted_ssn" api:"nullable"`
 	// The EEOC-defined ethnicity of the individual.
-	Ethnicity IndividualEthnicity `json:"ethnicity,nullable"`
+	Ethnicity IndividualEthnicity `json:"ethnicity" api:"nullable"`
 	FinchCode string              `json:"finch_code"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
 	// The gender of the individual.
-	Gender IndividualGender `json:"gender,nullable"`
+	Gender IndividualGender `json:"gender" api:"nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,nullable"`
+	LastName string `json:"last_name" api:"nullable"`
 	Message  string `json:"message"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	Name       string `json:"name"`
-	// This field can have the runtime type of [[]IndividualObjectPhoneNumber].
+	// This field can have the runtime type of
+	// [[]IndividualIndividualResponseBodyPhoneNumber].
 	PhoneNumbers interface{} `json:"phone_numbers"`
 	// The preferred name of the individual.
-	PreferredName string   `json:"preferred_name,nullable"`
-	Residence     Location `json:"residence,nullable"`
+	PreferredName string   `json:"preferred_name" api:"nullable"`
+	Residence     Location `json:"residence" api:"nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
 	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
-	Ssn   string         `json:"ssn,nullable"`
+	Ssn   string         `json:"ssn" api:"nullable"`
 	JSON  individualJSON `json:"-"`
 	union IndividualUnion
 }
@@ -135,13 +140,13 @@ func (r *Individual) UnmarshalJSON(data []byte) (err error) {
 // AsUnion returns a [IndividualUnion] interface which you can cast to the specific
 // types for more type safety.
 //
-// Possible runtime types of the union are [IndividualObject],
+// Possible runtime types of the union are [IndividualIndividualResponseBody],
 // [IndividualBatchError].
 func (r Individual) AsUnion() IndividualUnion {
 	return r.union
 }
 
-// Union satisfied by [IndividualObject] or [IndividualBatchError].
+// Union satisfied by [IndividualIndividualResponseBody] or [IndividualBatchError].
 type IndividualUnion interface {
 	implementsIndividual()
 }
@@ -152,7 +157,7 @@ func init() {
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(IndividualObject{}),
+			Type:       reflect.TypeOf(IndividualIndividualResponseBody{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
@@ -161,40 +166,40 @@ func init() {
 	)
 }
 
-type IndividualObject struct {
+type IndividualIndividualResponseBody struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
-	ID  string `json:"id,required" format:"uuid"`
-	Dob string `json:"dob,required,nullable"`
+	ID  string `json:"id" api:"required" format:"uuid"`
+	Dob string `json:"dob" api:"required,nullable"`
 	// The EEOC-defined ethnicity of the individual.
-	Ethnicity IndividualObjectEthnicity `json:"ethnicity,required,nullable"`
+	Ethnicity IndividualIndividualResponseBodyEthnicity `json:"ethnicity" api:"required,nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,required,nullable"`
+	FirstName string `json:"first_name" api:"required,nullable"`
 	// The gender of the individual.
-	Gender IndividualObjectGender `json:"gender,required,nullable"`
+	Gender IndividualIndividualResponseBodyGender `json:"gender" api:"required,nullable"`
 	// The legal last name of the individual.
-	LastName string `json:"last_name,required,nullable"`
+	LastName string `json:"last_name" api:"required,nullable"`
 	// The legal middle name of the individual.
-	MiddleName   string                        `json:"middle_name,required,nullable"`
-	PhoneNumbers []IndividualObjectPhoneNumber `json:"phone_numbers,required,nullable"`
+	MiddleName   string                                        `json:"middle_name" api:"required,nullable"`
+	PhoneNumbers []IndividualIndividualResponseBodyPhoneNumber `json:"phone_numbers" api:"required,nullable"`
 	// The preferred name of the individual.
-	PreferredName string                  `json:"preferred_name,required,nullable"`
-	Residence     Location                `json:"residence,required,nullable"`
-	Emails        []IndividualObjectEmail `json:"emails,nullable"`
+	PreferredName string                                  `json:"preferred_name" api:"required,nullable"`
+	Residence     Location                                `json:"residence" api:"required,nullable"`
+	Emails        []IndividualIndividualResponseBodyEmail `json:"emails" api:"nullable"`
 	// Social Security Number of the individual in **encrypted** format. This field is
 	// only available with the `ssn` scope enabled and the
 	// `options: { include: ['ssn'] }` param set in the body.
-	EncryptedSsn string `json:"encrypted_ssn,nullable"`
+	EncryptedSsn string `json:"encrypted_ssn" api:"nullable"`
 	// Social Security Number of the individual. This field is only available with the
 	// `ssn` scope enabled and the `options: { include: ['ssn'] }` param set in the
 	// body.
 	// [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).
-	Ssn  string               `json:"ssn,nullable"`
-	JSON individualObjectJSON `json:"-"`
+	Ssn  string                               `json:"ssn" api:"nullable"`
+	JSON individualIndividualResponseBodyJSON `json:"-"`
 }
 
-// individualObjectJSON contains the JSON metadata for the struct
-// [IndividualObject]
-type individualObjectJSON struct {
+// individualIndividualResponseBodyJSON contains the JSON metadata for the struct
+// [IndividualIndividualResponseBody]
+type individualIndividualResponseBodyJSON struct {
 	ID            apijson.Field
 	Dob           apijson.Field
 	Ethnicity     apijson.Field
@@ -212,136 +217,136 @@ type individualObjectJSON struct {
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *IndividualObject) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualIndividualResponseBody) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualObjectJSON) RawJSON() string {
+func (r individualIndividualResponseBodyJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r IndividualObject) implementsIndividual() {}
+func (r IndividualIndividualResponseBody) implementsIndividual() {}
 
 // The EEOC-defined ethnicity of the individual.
-type IndividualObjectEthnicity string
+type IndividualIndividualResponseBodyEthnicity string
 
 const (
-	IndividualObjectEthnicityAsian                           IndividualObjectEthnicity = "asian"
-	IndividualObjectEthnicityWhite                           IndividualObjectEthnicity = "white"
-	IndividualObjectEthnicityBlackOrAfricanAmerican          IndividualObjectEthnicity = "black_or_african_american"
-	IndividualObjectEthnicityNativeHawaiianOrPacificIslander IndividualObjectEthnicity = "native_hawaiian_or_pacific_islander"
-	IndividualObjectEthnicityAmericanIndianOrAlaskaNative    IndividualObjectEthnicity = "american_indian_or_alaska_native"
-	IndividualObjectEthnicityHispanicOrLatino                IndividualObjectEthnicity = "hispanic_or_latino"
-	IndividualObjectEthnicityTwoOrMoreRaces                  IndividualObjectEthnicity = "two_or_more_races"
-	IndividualObjectEthnicityDeclineToSpecify                IndividualObjectEthnicity = "decline_to_specify"
+	IndividualIndividualResponseBodyEthnicityAsian                           IndividualIndividualResponseBodyEthnicity = "asian"
+	IndividualIndividualResponseBodyEthnicityWhite                           IndividualIndividualResponseBodyEthnicity = "white"
+	IndividualIndividualResponseBodyEthnicityBlackOrAfricanAmerican          IndividualIndividualResponseBodyEthnicity = "black_or_african_american"
+	IndividualIndividualResponseBodyEthnicityNativeHawaiianOrPacificIslander IndividualIndividualResponseBodyEthnicity = "native_hawaiian_or_pacific_islander"
+	IndividualIndividualResponseBodyEthnicityAmericanIndianOrAlaskaNative    IndividualIndividualResponseBodyEthnicity = "american_indian_or_alaska_native"
+	IndividualIndividualResponseBodyEthnicityHispanicOrLatino                IndividualIndividualResponseBodyEthnicity = "hispanic_or_latino"
+	IndividualIndividualResponseBodyEthnicityTwoOrMoreRaces                  IndividualIndividualResponseBodyEthnicity = "two_or_more_races"
+	IndividualIndividualResponseBodyEthnicityDeclineToSpecify                IndividualIndividualResponseBodyEthnicity = "decline_to_specify"
 )
 
-func (r IndividualObjectEthnicity) IsKnown() bool {
+func (r IndividualIndividualResponseBodyEthnicity) IsKnown() bool {
 	switch r {
-	case IndividualObjectEthnicityAsian, IndividualObjectEthnicityWhite, IndividualObjectEthnicityBlackOrAfricanAmerican, IndividualObjectEthnicityNativeHawaiianOrPacificIslander, IndividualObjectEthnicityAmericanIndianOrAlaskaNative, IndividualObjectEthnicityHispanicOrLatino, IndividualObjectEthnicityTwoOrMoreRaces, IndividualObjectEthnicityDeclineToSpecify:
+	case IndividualIndividualResponseBodyEthnicityAsian, IndividualIndividualResponseBodyEthnicityWhite, IndividualIndividualResponseBodyEthnicityBlackOrAfricanAmerican, IndividualIndividualResponseBodyEthnicityNativeHawaiianOrPacificIslander, IndividualIndividualResponseBodyEthnicityAmericanIndianOrAlaskaNative, IndividualIndividualResponseBodyEthnicityHispanicOrLatino, IndividualIndividualResponseBodyEthnicityTwoOrMoreRaces, IndividualIndividualResponseBodyEthnicityDeclineToSpecify:
 		return true
 	}
 	return false
 }
 
 // The gender of the individual.
-type IndividualObjectGender string
+type IndividualIndividualResponseBodyGender string
 
 const (
-	IndividualObjectGenderFemale           IndividualObjectGender = "female"
-	IndividualObjectGenderMale             IndividualObjectGender = "male"
-	IndividualObjectGenderOther            IndividualObjectGender = "other"
-	IndividualObjectGenderDeclineToSpecify IndividualObjectGender = "decline_to_specify"
+	IndividualIndividualResponseBodyGenderFemale           IndividualIndividualResponseBodyGender = "female"
+	IndividualIndividualResponseBodyGenderMale             IndividualIndividualResponseBodyGender = "male"
+	IndividualIndividualResponseBodyGenderOther            IndividualIndividualResponseBodyGender = "other"
+	IndividualIndividualResponseBodyGenderDeclineToSpecify IndividualIndividualResponseBodyGender = "decline_to_specify"
 )
 
-func (r IndividualObjectGender) IsKnown() bool {
+func (r IndividualIndividualResponseBodyGender) IsKnown() bool {
 	switch r {
-	case IndividualObjectGenderFemale, IndividualObjectGenderMale, IndividualObjectGenderOther, IndividualObjectGenderDeclineToSpecify:
+	case IndividualIndividualResponseBodyGenderFemale, IndividualIndividualResponseBodyGenderMale, IndividualIndividualResponseBodyGenderOther, IndividualIndividualResponseBodyGenderDeclineToSpecify:
 		return true
 	}
 	return false
 }
 
-type IndividualObjectPhoneNumber struct {
-	Data string                           `json:"data,required,nullable"`
-	Type IndividualObjectPhoneNumbersType `json:"type,required,nullable"`
-	JSON individualObjectPhoneNumberJSON  `json:"-"`
+type IndividualIndividualResponseBodyPhoneNumber struct {
+	Data string                                           `json:"data" api:"required,nullable"`
+	Type IndividualIndividualResponseBodyPhoneNumbersType `json:"type" api:"required,nullable"`
+	JSON individualIndividualResponseBodyPhoneNumberJSON  `json:"-"`
 }
 
-// individualObjectPhoneNumberJSON contains the JSON metadata for the struct
-// [IndividualObjectPhoneNumber]
-type individualObjectPhoneNumberJSON struct {
+// individualIndividualResponseBodyPhoneNumberJSON contains the JSON metadata for
+// the struct [IndividualIndividualResponseBodyPhoneNumber]
+type individualIndividualResponseBodyPhoneNumberJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualObjectPhoneNumber) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualIndividualResponseBodyPhoneNumber) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualObjectPhoneNumberJSON) RawJSON() string {
+func (r individualIndividualResponseBodyPhoneNumberJSON) RawJSON() string {
 	return r.raw
 }
 
-type IndividualObjectPhoneNumbersType string
+type IndividualIndividualResponseBodyPhoneNumbersType string
 
 const (
-	IndividualObjectPhoneNumbersTypeWork     IndividualObjectPhoneNumbersType = "work"
-	IndividualObjectPhoneNumbersTypePersonal IndividualObjectPhoneNumbersType = "personal"
+	IndividualIndividualResponseBodyPhoneNumbersTypeWork     IndividualIndividualResponseBodyPhoneNumbersType = "work"
+	IndividualIndividualResponseBodyPhoneNumbersTypePersonal IndividualIndividualResponseBodyPhoneNumbersType = "personal"
 )
 
-func (r IndividualObjectPhoneNumbersType) IsKnown() bool {
+func (r IndividualIndividualResponseBodyPhoneNumbersType) IsKnown() bool {
 	switch r {
-	case IndividualObjectPhoneNumbersTypeWork, IndividualObjectPhoneNumbersTypePersonal:
+	case IndividualIndividualResponseBodyPhoneNumbersTypeWork, IndividualIndividualResponseBodyPhoneNumbersTypePersonal:
 		return true
 	}
 	return false
 }
 
-type IndividualObjectEmail struct {
-	Data string                     `json:"data,required"`
-	Type IndividualObjectEmailsType `json:"type,required,nullable"`
-	JSON individualObjectEmailJSON  `json:"-"`
+type IndividualIndividualResponseBodyEmail struct {
+	Data string                                     `json:"data" api:"required"`
+	Type IndividualIndividualResponseBodyEmailsType `json:"type" api:"required,nullable"`
+	JSON individualIndividualResponseBodyEmailJSON  `json:"-"`
 }
 
-// individualObjectEmailJSON contains the JSON metadata for the struct
-// [IndividualObjectEmail]
-type individualObjectEmailJSON struct {
+// individualIndividualResponseBodyEmailJSON contains the JSON metadata for the
+// struct [IndividualIndividualResponseBodyEmail]
+type individualIndividualResponseBodyEmailJSON struct {
 	Data        apijson.Field
 	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *IndividualObjectEmail) UnmarshalJSON(data []byte) (err error) {
+func (r *IndividualIndividualResponseBodyEmail) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r individualObjectEmailJSON) RawJSON() string {
+func (r individualIndividualResponseBodyEmailJSON) RawJSON() string {
 	return r.raw
 }
 
-type IndividualObjectEmailsType string
+type IndividualIndividualResponseBodyEmailsType string
 
 const (
-	IndividualObjectEmailsTypeWork     IndividualObjectEmailsType = "work"
-	IndividualObjectEmailsTypePersonal IndividualObjectEmailsType = "personal"
+	IndividualIndividualResponseBodyEmailsTypeWork     IndividualIndividualResponseBodyEmailsType = "work"
+	IndividualIndividualResponseBodyEmailsTypePersonal IndividualIndividualResponseBodyEmailsType = "personal"
 )
 
-func (r IndividualObjectEmailsType) IsKnown() bool {
+func (r IndividualIndividualResponseBodyEmailsType) IsKnown() bool {
 	switch r {
-	case IndividualObjectEmailsTypeWork, IndividualObjectEmailsTypePersonal:
+	case IndividualIndividualResponseBodyEmailsTypeWork, IndividualIndividualResponseBodyEmailsTypePersonal:
 		return true
 	}
 	return false
 }
 
 type IndividualBatchError struct {
-	Code      float64                  `json:"code,required"`
-	Message   string                   `json:"message,required"`
-	Name      string                   `json:"name,required"`
+	Code      float64                  `json:"code" api:"required"`
+	Message   string                   `json:"message" api:"required"`
+	Name      string                   `json:"name" api:"required"`
 	FinchCode string                   `json:"finch_code"`
 	JSON      individualBatchErrorJSON `json:"-"`
 }
@@ -408,9 +413,9 @@ func (r IndividualGender) IsKnown() bool {
 }
 
 type IndividualResponse struct {
-	Body         Individual             `json:"body,required"`
-	Code         int64                  `json:"code,required"`
-	IndividualID string                 `json:"individual_id,required"`
+	Body         Individual             `json:"body" api:"required"`
+	Code         int64                  `json:"code" api:"required"`
+	IndividualID string                 `json:"individual_id" api:"required"`
 	JSON         individualResponseJSON `json:"-"`
 }
 
@@ -433,12 +438,23 @@ func (r individualResponseJSON) RawJSON() string {
 }
 
 type HRISIndividualGetManyParams struct {
-	Options  param.Field[HRISIndividualGetManyParamsOptions]   `json:"options"`
-	Requests param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests"`
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string]                             `query:"entity_ids" format:"uuid"`
+	Options   param.Field[HRISIndividualGetManyParamsOptions]   `json:"options"`
+	Requests  param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests"`
 }
 
 func (r HRISIndividualGetManyParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// URLQuery serializes [HRISIndividualGetManyParams]'s query parameters as
+// `url.Values`.
+func (r HRISIndividualGetManyParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
 
 type HRISIndividualGetManyParamsOptions struct {

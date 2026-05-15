@@ -7,12 +7,15 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"reflect"
 	"slices"
 
 	"github.com/Finch-API/finch-api-go/internal/apijson"
 	"github.com/Finch-API/finch-api-go/internal/param"
 	"github.com/Finch-API/finch-api-go/internal/requestconfig"
 	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/shared"
+	"github.com/tidwall/gjson"
 )
 
 // SandboxEmploymentService contains methods and other services that help with
@@ -36,56 +39,59 @@ func NewSandboxEmploymentService(opts ...option.RequestOption) (r *SandboxEmploy
 
 // Update sandbox employment
 func (r *SandboxEmploymentService) Update(ctx context.Context, individualID string, body SandboxEmploymentUpdateParams, opts ...option.RequestOption) (res *SandboxEmploymentUpdateResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if individualID == "" {
 		err = errors.New("missing required individual_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("sandbox/employment/%s", individualID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 type SandboxEmploymentUpdateResponse struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" format:"uuid"`
 	// Worker's compensation classification code for this employee
-	ClassCode string `json:"class_code,nullable"`
+	ClassCode string `json:"class_code" api:"nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
 	// employer in the system. Custom fields are not currently supported for assisted
 	// connections.
-	CustomFields []SandboxEmploymentUpdateResponseCustomField `json:"custom_fields,nullable"`
+	CustomFields []SandboxEmploymentUpdateResponseCustomField `json:"custom_fields" api:"nullable"`
 	// The department object.
-	Department SandboxEmploymentUpdateResponseDepartment `json:"department,nullable"`
+	Department SandboxEmploymentUpdateResponseDepartment `json:"department" api:"nullable"`
 	// The employment object.
-	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment,nullable"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
-	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status,nullable"`
-	EndDate          string                                          `json:"end_date,nullable"`
+	Employment SandboxEmploymentUpdateResponseEmployment `json:"employment" api:"nullable"`
+	// The detailed employment status of the individual.
+	EmploymentStatus SandboxEmploymentUpdateResponseEmploymentStatus `json:"employment_status" api:"nullable"`
+	EndDate          string                                          `json:"end_date" api:"nullable"`
 	// The legal first name of the individual.
-	FirstName string `json:"first_name,nullable"`
+	FirstName string `json:"first_name" api:"nullable"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus SandboxEmploymentUpdateResponseFlsaStatus `json:"flsa_status" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
-	Income Income `json:"income,nullable"`
+	Income Income `json:"income" api:"nullable"`
 	// The array of income history.
-	IncomeHistory []Income `json:"income_history,nullable"`
+	IncomeHistory []Income `json:"income_history" api:"nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
-	IsActive bool `json:"is_active,nullable"`
+	IsActive bool `json:"is_active" api:"nullable"`
 	// The legal last name of the individual.
-	LastName         string   `json:"last_name,nullable"`
-	LatestRehireDate string   `json:"latest_rehire_date,nullable"`
-	Location         Location `json:"location,nullable"`
+	LastName         string   `json:"last_name" api:"nullable"`
+	LatestRehireDate string   `json:"latest_rehire_date" api:"nullable"`
+	Location         Location `json:"location" api:"nullable"`
 	// The manager object representing the manager of the individual within the org.
-	Manager SandboxEmploymentUpdateResponseManager `json:"manager,nullable"`
+	Manager SandboxEmploymentUpdateResponseManager `json:"manager" api:"nullable"`
 	// The legal middle name of the individual.
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	// The source system's unique employment identifier for this individual
-	SourceID  string `json:"source_id,nullable"`
-	StartDate string `json:"start_date,nullable"`
+	SourceID  string `json:"source_id" api:"nullable"`
+	StartDate string `json:"start_date" api:"nullable"`
 	// The current title of the individual.
-	Title string                              `json:"title,nullable"`
+	Title string                              `json:"title" api:"nullable"`
 	JSON  sandboxEmploymentUpdateResponseJSON `json:"-"`
 }
 
@@ -100,6 +106,7 @@ type sandboxEmploymentUpdateResponseJSON struct {
 	EmploymentStatus apijson.Field
 	EndDate          apijson.Field
 	FirstName        apijson.Field
+	FlsaStatus       apijson.Field
 	Income           apijson.Field
 	IncomeHistory    apijson.Field
 	IsActive         apijson.Field
@@ -124,9 +131,9 @@ func (r sandboxEmploymentUpdateResponseJSON) RawJSON() string {
 }
 
 type SandboxEmploymentUpdateResponseCustomField struct {
-	Name  string                                         `json:"name,nullable"`
-	Value interface{}                                    `json:"value"`
-	JSON  sandboxEmploymentUpdateResponseCustomFieldJSON `json:"-"`
+	Name  string                                                `json:"name" api:"nullable"`
+	Value SandboxEmploymentUpdateResponseCustomFieldsValueUnion `json:"value" api:"nullable"`
+	JSON  sandboxEmploymentUpdateResponseCustomFieldJSON        `json:"-"`
 }
 
 // sandboxEmploymentUpdateResponseCustomFieldJSON contains the JSON metadata for
@@ -146,10 +153,49 @@ func (r sandboxEmploymentUpdateResponseCustomFieldJSON) RawJSON() string {
 	return r.raw
 }
 
+// Union satisfied by [shared.UnionString],
+// [SandboxEmploymentUpdateResponseCustomFieldsValueArray], [shared.UnionFloat] or
+// [shared.UnionBool].
+type SandboxEmploymentUpdateResponseCustomFieldsValueUnion interface {
+	ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*SandboxEmploymentUpdateResponseCustomFieldsValueUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.String,
+			Type:       reflect.TypeOf(shared.UnionString("")),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(SandboxEmploymentUpdateResponseCustomFieldsValueArray{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.Number,
+			Type:       reflect.TypeOf(shared.UnionFloat(0)),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.True,
+			Type:       reflect.TypeOf(shared.UnionBool(false)),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.False,
+			Type:       reflect.TypeOf(shared.UnionBool(false)),
+		},
+	)
+}
+
+type SandboxEmploymentUpdateResponseCustomFieldsValueArray []interface{}
+
+func (r SandboxEmploymentUpdateResponseCustomFieldsValueArray) ImplementsSandboxEmploymentUpdateResponseCustomFieldsValueUnion() {
+}
+
 // The department object.
 type SandboxEmploymentUpdateResponseDepartment struct {
 	// The name of the department associated with the individual.
-	Name string                                        `json:"name,nullable"`
+	Name string                                        `json:"name" api:"nullable"`
 	JSON sandboxEmploymentUpdateResponseDepartmentJSON `json:"-"`
 }
 
@@ -173,9 +219,9 @@ func (r sandboxEmploymentUpdateResponseDepartmentJSON) RawJSON() string {
 type SandboxEmploymentUpdateResponseEmployment struct {
 	// The secondary employment type of the individual. Options: `full_time`,
 	// `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.
-	Subtype SandboxEmploymentUpdateResponseEmploymentSubtype `json:"subtype,nullable"`
+	Subtype SandboxEmploymentUpdateResponseEmploymentSubtype `json:"subtype" api:"nullable"`
 	// The main employment type of the individual.
-	Type SandboxEmploymentUpdateResponseEmploymentType `json:"type,nullable"`
+	Type SandboxEmploymentUpdateResponseEmploymentType `json:"type" api:"nullable"`
 	JSON sandboxEmploymentUpdateResponseEmploymentJSON `json:"-"`
 }
 
@@ -233,8 +279,7 @@ func (r SandboxEmploymentUpdateResponseEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type SandboxEmploymentUpdateResponseEmploymentStatus string
 
 const (
@@ -250,6 +295,24 @@ const (
 func (r SandboxEmploymentUpdateResponseEmploymentStatus) IsKnown() bool {
 	switch r {
 	case SandboxEmploymentUpdateResponseEmploymentStatusActive, SandboxEmploymentUpdateResponseEmploymentStatusDeceased, SandboxEmploymentUpdateResponseEmploymentStatusLeave, SandboxEmploymentUpdateResponseEmploymentStatusOnboarding, SandboxEmploymentUpdateResponseEmploymentStatusPrehire, SandboxEmploymentUpdateResponseEmploymentStatusRetired, SandboxEmploymentUpdateResponseEmploymentStatusTerminated:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type SandboxEmploymentUpdateResponseFlsaStatus string
+
+const (
+	SandboxEmploymentUpdateResponseFlsaStatusExempt    SandboxEmploymentUpdateResponseFlsaStatus = "exempt"
+	SandboxEmploymentUpdateResponseFlsaStatusNonExempt SandboxEmploymentUpdateResponseFlsaStatus = "non_exempt"
+	SandboxEmploymentUpdateResponseFlsaStatusUnknown   SandboxEmploymentUpdateResponseFlsaStatus = "unknown"
+)
+
+func (r SandboxEmploymentUpdateResponseFlsaStatus) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateResponseFlsaStatusExempt, SandboxEmploymentUpdateResponseFlsaStatusNonExempt, SandboxEmploymentUpdateResponseFlsaStatusUnknown:
 		return true
 	}
 	return false
@@ -289,12 +352,14 @@ type SandboxEmploymentUpdateParams struct {
 	Department param.Field[SandboxEmploymentUpdateParamsDepartment] `json:"department"`
 	// The employment object.
 	Employment param.Field[SandboxEmploymentUpdateParamsEmployment] `json:"employment"`
-	// The detailed employment status of the individual. Available options: `active`,
-	// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+	// The detailed employment status of the individual.
 	EmploymentStatus param.Field[SandboxEmploymentUpdateParamsEmploymentStatus] `json:"employment_status"`
 	EndDate          param.Field[string]                                        `json:"end_date"`
 	// The legal first name of the individual.
 	FirstName param.Field[string] `json:"first_name"`
+	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+	// `unknown`.
+	FlsaStatus param.Field[SandboxEmploymentUpdateParamsFlsaStatus] `json:"flsa_status"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -323,12 +388,26 @@ func (r SandboxEmploymentUpdateParams) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxEmploymentUpdateParamsCustomField struct {
-	Name  param.Field[string]      `json:"name"`
-	Value param.Field[interface{}] `json:"value"`
+	Name  param.Field[string]                                              `json:"name"`
+	Value param.Field[SandboxEmploymentUpdateParamsCustomFieldsValueUnion] `json:"value"`
 }
 
 func (r SandboxEmploymentUpdateParamsCustomField) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// Satisfied by [shared.UnionString],
+// [SandboxEmploymentUpdateParamsCustomFieldsValueArray], [shared.UnionFloat],
+// [shared.UnionBool].
+//
+// Use [Raw()] to specify an arbitrary value for this param
+type SandboxEmploymentUpdateParamsCustomFieldsValueUnion interface {
+	ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion()
+}
+
+type SandboxEmploymentUpdateParamsCustomFieldsValueArray []interface{}
+
+func (r SandboxEmploymentUpdateParamsCustomFieldsValueArray) ImplementsSandboxEmploymentUpdateParamsCustomFieldsValueUnion() {
 }
 
 // The department object.
@@ -391,8 +470,7 @@ func (r SandboxEmploymentUpdateParamsEmploymentType) IsKnown() bool {
 	return false
 }
 
-// The detailed employment status of the individual. Available options: `active`,
-// `deceased`, `leave`, `onboarding`, `prehire`, `retired`, `terminated`.
+// The detailed employment status of the individual.
 type SandboxEmploymentUpdateParamsEmploymentStatus string
 
 const (
@@ -408,6 +486,24 @@ const (
 func (r SandboxEmploymentUpdateParamsEmploymentStatus) IsKnown() bool {
 	switch r {
 	case SandboxEmploymentUpdateParamsEmploymentStatusActive, SandboxEmploymentUpdateParamsEmploymentStatusDeceased, SandboxEmploymentUpdateParamsEmploymentStatusLeave, SandboxEmploymentUpdateParamsEmploymentStatusOnboarding, SandboxEmploymentUpdateParamsEmploymentStatusPrehire, SandboxEmploymentUpdateParamsEmploymentStatusRetired, SandboxEmploymentUpdateParamsEmploymentStatusTerminated:
+		return true
+	}
+	return false
+}
+
+// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
+// `unknown`.
+type SandboxEmploymentUpdateParamsFlsaStatus string
+
+const (
+	SandboxEmploymentUpdateParamsFlsaStatusExempt    SandboxEmploymentUpdateParamsFlsaStatus = "exempt"
+	SandboxEmploymentUpdateParamsFlsaStatusNonExempt SandboxEmploymentUpdateParamsFlsaStatus = "non_exempt"
+	SandboxEmploymentUpdateParamsFlsaStatusUnknown   SandboxEmploymentUpdateParamsFlsaStatus = "unknown"
+)
+
+func (r SandboxEmploymentUpdateParamsFlsaStatus) IsKnown() bool {
+	switch r {
+	case SandboxEmploymentUpdateParamsFlsaStatusExempt, SandboxEmploymentUpdateParamsFlsaStatusNonExempt, SandboxEmploymentUpdateParamsFlsaStatusUnknown:
 		return true
 	}
 	return false

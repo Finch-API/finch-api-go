@@ -1,5 +1,94 @@
 # Changelog
 
+## 1.35.0 (2026-05-13)
+
+Full Changelog: [v1.34.1...v1.35.0](https://github.com/Finch-API/finch-api-go/compare/v1.34.1...v1.35.0)
+
+### Features
+
+* **api:** add per endpoint security ([4f6a61c](https://github.com/Finch-API/finch-api-go/commit/4f6a61cb9e3290136a7c3d8564ebb4ce0b493c55))
+* **api:** add register benefits method ([be108cc](https://github.com/Finch-API/finch-api-go/commit/be108cc33180f7e0b54b104de0cdf2e59a9dcb31))
+* **api:** api update ([9e53333](https://github.com/Finch-API/finch-api-go/commit/9e53333d990dda00cfb819b3ac069a2254f68ea5))
+* **api:** api update ([4263048](https://github.com/Finch-API/finch-api-go/commit/4263048f6d00c65b4b52b942fe3dd8b80a46f371))
+* **api:** api update ([b0aa765](https://github.com/Finch-API/finch-api-go/commit/b0aa76565c99ff56b69a5acd326f96782f25602b))
+* **api:** api update ([bf87e6f](https://github.com/Finch-API/finch-api-go/commit/bf87e6fb3eecb38486fcc1f43f192437d8302ef2))
+* **api:** api update ([498a799](https://github.com/Finch-API/finch-api-go/commit/498a799c62561b2b03e7140a6b5545e1d8744232))
+* **api:** api update ([9dc8e01](https://github.com/Finch-API/finch-api-go/commit/9dc8e015f0f6f97ba58817fba474bbaf27f3581e))
+* **api:** api update ([d869d30](https://github.com/Finch-API/finch-api-go/commit/d869d30065f591dea7781b6dc3124306e26e88fe))
+* **api:** api update ([0e69b17](https://github.com/Finch-API/finch-api-go/commit/0e69b1715d0da0aaba88240f51dc8950bb893015))
+* **api:** api update ([6708aac](https://github.com/Finch-API/finch-api-go/commit/6708aacc01982e5141ac1ca52412987994f3aecd))
+* **api:** api update ([e4f5130](https://github.com/Finch-API/finch-api-go/commit/e4f5130e25eb506c09204f69d6085e9b243cfd76))
+* **api:** api update ([f5c5bbc](https://github.com/Finch-API/finch-api-go/commit/f5c5bbcf3cf0d07df31e2330159de37d36e946f2))
+* **api:** api update ([6385a1f](https://github.com/Finch-API/finch-api-go/commit/6385a1ff8de901c11dd7452adc89f44542144247))
+* **api:** api update ([60a3e0c](https://github.com/Finch-API/finch-api-go/commit/60a3e0c4abdcac96bb7ca1a5ce64f99367fb5a12))
+* **api:** api update ([66108ba](https://github.com/Finch-API/finch-api-go/commit/66108ba1d8a47acf7663432e1d9b5744800575e6))
+* **api:** change auth to npm to oidc ([e5c1a0d](https://github.com/Finch-API/finch-api-go/commit/e5c1a0d20beaccb40e034af4ac54c282cc1ef103))
+* **api:** manual updates ([a7620d2](https://github.com/Finch-API/finch-api-go/commit/a7620d229ae967e7c06e853eeccf8a56881195d3))
+* **api:** manual updates ([1ed52cf](https://github.com/Finch-API/finch-api-go/commit/1ed52cffc078b436f3899b736e5deb7e8cb5f703))
+* **api:** update automated code reviewer selection ([03c7271](https://github.com/Finch-API/finch-api-go/commit/03c7271b89082892da533f8e9fb102ce18de39da))
+* **go:** add default http client with timeout ([cf3dcb3](https://github.com/Finch-API/finch-api-go/commit/cf3dcb3d1ddf6c1136e53dd57a93f7facd23a58f))
+* **internal:** support comma format in multipart form encoding ([59dc2b9](https://github.com/Finch-API/finch-api-go/commit/59dc2b9dce285eb80a691ca90e9ac97229034ff6))
+* support setting headers via env ([1e3953b](https://github.com/Finch-API/finch-api-go/commit/1e3953bccd8b1cbc8f77d404779a392aba709ed9))
+
+
+### Bug Fixes
+
+* **aliases:** resolve broken types for alias methods with pagination ([5eb0ac9](https://github.com/Finch-API/finch-api-go/commit/5eb0ac9e24a960fdd768f749babe93b523a4ca1f))
+* allow canceling a request while it is waiting to retry ([e6db22d](https://github.com/Finch-API/finch-api-go/commit/e6db22de47e89efee09be198a42e7c02200e364b))
+* **api:** remove invalid transform config ([d5b60bf](https://github.com/Finch-API/finch-api-go/commit/d5b60bfaa7cbf1aa7c55fbe24f58ebe0474754fe))
+* **client:** send correct authentication methods ([1e5ccd8](https://github.com/Finch-API/finch-api-go/commit/1e5ccd8416ee5a97e58656d59c2cf9c3980cf446))
+* **docs:** add missing pointer prefix to api.md return types ([5aba5fa](https://github.com/Finch-API/finch-api-go/commit/5aba5fa426a29a3084302bc382a7d15af2eb8bea))
+* **docs:** fix mcp installation instructions for remote servers ([ad830d2](https://github.com/Finch-API/finch-api-go/commit/ad830d20499fffdd11c6b197f921177b4abd65f3))
+* **go:** avoid panic when http.DefaultTransport is wrapped ([7fa82db](https://github.com/Finch-API/finch-api-go/commit/7fa82dbdfe66f9394927ab9b86c612df1c171e17))
+* **java:** Resolve name collisions ([0844ac5](https://github.com/Finch-API/finch-api-go/commit/0844ac58ae69b2d0c1274bac8cf7c1ee0eb8e349))
+* **mcp:** correct code tool API endpoint ([78d27b1](https://github.com/Finch-API/finch-api-go/commit/78d27b1c7b5a74781897a42d948994a923957e28))
+* prevent duplicate ? in query params ([e8c398d](https://github.com/Finch-API/finch-api-go/commit/e8c398dcf6b5418f188cf388fdbb16d39b71e97e))
+* rename param to avoid collision ([a23c9b2](https://github.com/Finch-API/finch-api-go/commit/a23c9b2b69248225624750994cc66775535fe3f9))
+* **tests:** skip broken date validation test ([2a9c325](https://github.com/Finch-API/finch-api-go/commit/2a9c325c2352c3b2cd113b412c621cf611cecd3a))
+* **types:** generate shared enum types that are not referenced by other schemas ([8f1aae5](https://github.com/Finch-API/finch-api-go/commit/8f1aae5f99d7632660d3eeb0f25d86e0416212b1))
+
+
+### Chores
+
+* avoid embedding reflect.Type for dead code elimination ([e97e7d8](https://github.com/Finch-API/finch-api-go/commit/e97e7d864ba1f7532a1a6d3cf78cf17b11c383a6))
+* **ci:** skip lint on metadata-only changes ([9da39dd](https://github.com/Finch-API/finch-api-go/commit/9da39ddbd53e1a4ab93d8dfb1977294882210ad0))
+* **ci:** skip uploading artifacts on stainless-internal branches ([4365581](https://github.com/Finch-API/finch-api-go/commit/43655817dc1d53427fe0eb41ee6bef24f6ea8340))
+* **ci:** support opting out of skipping builds on metadata-only commits ([5734b45](https://github.com/Finch-API/finch-api-go/commit/5734b45a802b756182f81689f6eac0fa19f72ea0))
+* elide duplicate aliases ([fe9cc50](https://github.com/Finch-API/finch-api-go/commit/fe9cc50323a51a6caafe44cebf2628f3dd788c4a))
+* **internal:** codegen related update ([28a26e6](https://github.com/Finch-API/finch-api-go/commit/28a26e60952b98adc9b0236e808671c562f892ac))
+* **internal:** codegen related update ([513bd70](https://github.com/Finch-API/finch-api-go/commit/513bd70b2b8fa7d55c23e6ee3d80f025a47e96e9))
+* **internal:** codegen related update ([97407f5](https://github.com/Finch-API/finch-api-go/commit/97407f552709b01565f5f627a182ac3bebbb2ed4))
+* **internal:** codegen related update ([2e87c84](https://github.com/Finch-API/finch-api-go/commit/2e87c84e8db41801091a7d05df535abe45831140))
+* **internal:** codegen related update ([da796cf](https://github.com/Finch-API/finch-api-go/commit/da796cf9a6f4f8bb56d92c6a13707a1eb3c8e762))
+* **internal:** minor cleanup ([30717c9](https://github.com/Finch-API/finch-api-go/commit/30717c9086ae53b1cfeb4212f3197f1f2a22ee25))
+* **internal:** more robust bootstrap script ([4567209](https://github.com/Finch-API/finch-api-go/commit/45672092de0a9c9277bc500e3f9a184ac3349926))
+* **internal:** move custom custom `json` tags to `api` ([1969766](https://github.com/Finch-API/finch-api-go/commit/1969766dcd2efdebf079bd7500b39805036c7bb1))
+* **internal:** tweak CI branches ([49d5d5f](https://github.com/Finch-API/finch-api-go/commit/49d5d5f7c566775bc52728b6e63f3ae5af8a5b99))
+* **internal:** update `actions/checkout` version ([842d28f](https://github.com/Finch-API/finch-api-go/commit/842d28fa959584aef8f23bb9e7984295faf61980))
+* **internal:** update gitignore ([ff360d9](https://github.com/Finch-API/finch-api-go/commit/ff360d9cc7a273133dc43807eb5eb0b7b380fc8c))
+* **internal:** use explicit returns ([50598bc](https://github.com/Finch-API/finch-api-go/commit/50598bc2920ffe7720f4610df198b161e7f3d07d))
+* **internal:** use explicit returns in more places ([d3df8e0](https://github.com/Finch-API/finch-api-go/commit/d3df8e00450d15b7ce72981a833409246f5c69fb))
+* redact api-key headers in debug logs ([b14a3e2](https://github.com/Finch-API/finch-api-go/commit/b14a3e2098028267d2d0c0c40ac42f3a9497a709))
+* remove unnecessary error check for url parsing ([1edfaa7](https://github.com/Finch-API/finch-api-go/commit/1edfaa775dfacad3af6bec607e7f8cbee34beb14))
+* **tests:** bump steady to v0.19.4 ([6612aa2](https://github.com/Finch-API/finch-api-go/commit/6612aa2d1245057a8e457df53056e084aaad3f22))
+* **tests:** bump steady to v0.19.5 ([7f24bb0](https://github.com/Finch-API/finch-api-go/commit/7f24bb0ff1a37cbedf05981b10d860f2f3034a15))
+* **tests:** bump steady to v0.19.6 ([ccb5268](https://github.com/Finch-API/finch-api-go/commit/ccb5268248f77e85c2873cb3c5df85cf91d69098))
+* **tests:** bump steady to v0.19.7 ([e14f2c7](https://github.com/Finch-API/finch-api-go/commit/e14f2c77eba0497a647d4716541e60a28707d000))
+* **tests:** bump steady to v0.20.1 ([ac6482c](https://github.com/Finch-API/finch-api-go/commit/ac6482cfa68f67125bb869a3175bbbd96f2b980a))
+* **tests:** bump steady to v0.20.2 ([b74a347](https://github.com/Finch-API/finch-api-go/commit/b74a347b3c26a85eb5e1e1735484af1f66f37ade))
+* **tests:** bump steady to v0.22.1 ([d53b177](https://github.com/Finch-API/finch-api-go/commit/d53b1771929eaba7226b50fe268445f1043b57f0))
+* update mock server docs ([55defed](https://github.com/Finch-API/finch-api-go/commit/55defede58d60e846a93fdc7623e2dea863a1e9e))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([8d0c7b6](https://github.com/Finch-API/finch-api-go/commit/8d0c7b66a2c2dc08f0d93b299416c76e7fc4dd90))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([484a07b](https://github.com/Finch-API/finch-api-go/commit/484a07bb959e9640ec3205ced8eed62f58c4a25f))
+
 ## 1.34.1 (2025-10-31)
 
 Full Changelog: [v1.34.0...v1.34.1](https://github.com/Finch-API/finch-api-go/compare/v1.34.0...v1.34.1)

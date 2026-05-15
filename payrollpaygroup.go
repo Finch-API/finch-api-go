@@ -38,21 +38,23 @@ func NewPayrollPayGroupService(opts ...option.RequestOption) (r *PayrollPayGroup
 }
 
 // Read information from a single pay group
-func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, opts ...option.RequestOption) (res *PayrollPayGroupGetResponse, err error) {
-	opts = slices.Concat(r.Options, opts)
+func (r *PayrollPayGroupService) Get(ctx context.Context, payGroupID string, query PayrollPayGroupGetParams, opts ...option.RequestOption) (res *PayrollPayGroupGetResponse, err error) {
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	if payGroupID == "" {
 		err = errors.New("missing required pay_group_id parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("employer/pay-groups/%s", payGroupID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return res, err
 }
 
 // Read company pay groups and frequencies
 func (r *PayrollPayGroupService) List(ctx context.Context, query PayrollPayGroupListParams, opts ...option.RequestOption) (res *pagination.SinglePage[PayrollPayGroupListResponse], err error) {
 	var raw *http.Response
-	opts = slices.Concat(r.Options, opts)
+	var preClientOpts = []option.RequestOption{requestconfig.WithBearerAuthSecurity()}
+	opts = slices.Concat(preClientOpts, r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "employer/pay-groups"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
@@ -74,12 +76,12 @@ func (r *PayrollPayGroupService) ListAutoPaging(ctx context.Context, query Payro
 
 type PayrollPayGroupGetResponse struct {
 	// Finch id (uuidv4) for the pay group
-	ID            string   `json:"id,required" format:"uuid"`
-	IndividualIDs []string `json:"individual_ids,required" format:"uuid"`
+	ID            string   `json:"id" api:"required" format:"uuid"`
+	IndividualIDs []string `json:"individual_ids" api:"required" format:"uuid"`
 	// Name of the pay group
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// List of pay frequencies associated with this pay group
-	PayFrequencies []PayrollPayGroupGetResponsePayFrequency `json:"pay_frequencies,required"`
+	PayFrequencies []PayrollPayGroupGetResponsePayFrequency `json:"pay_frequencies" api:"required"`
 	JSON           payrollPayGroupGetResponseJSON           `json:"-"`
 }
 
@@ -126,11 +128,11 @@ func (r PayrollPayGroupGetResponsePayFrequency) IsKnown() bool {
 
 type PayrollPayGroupListResponse struct {
 	// Finch id (uuidv4) for the pay group
-	ID string `json:"id,required" format:"uuid"`
+	ID string `json:"id" api:"required" format:"uuid"`
 	// Name of the pay group
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// List of pay frequencies associated with this pay group
-	PayFrequencies []PayrollPayGroupListResponsePayFrequency `json:"pay_frequencies,required"`
+	PayFrequencies []PayrollPayGroupListResponsePayFrequency `json:"pay_frequencies" api:"required"`
 	JSON           payrollPayGroupListResponseJSON           `json:"-"`
 }
 
@@ -174,7 +176,23 @@ func (r PayrollPayGroupListResponsePayFrequency) IsKnown() bool {
 	return false
 }
 
+type PayrollPayGroupGetParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
+}
+
+// URLQuery serializes [PayrollPayGroupGetParams]'s query parameters as
+// `url.Values`.
+func (r PayrollPayGroupGetParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatBrackets,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
 type PayrollPayGroupListParams struct {
+	// The entity IDs to specify which entities' data to access.
+	EntityIDs      param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	IndividualID   param.Field[string]   `query:"individual_id" format:"uuid"`
 	PayFrequencies param.Field[[]string] `query:"pay_frequencies"`
 }
