@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.37.0 (2026-06-09)
+
+Full Changelog: [v1.36.0...v1.37.0](https://github.com/Finch-API/finch-api-go/compare/v1.36.0...v1.37.0)
+
+### Features
+
+* **api:** api update ([e90c969](https://github.com/Finch-API/finch-api-go/commit/e90c9690f5a3966b6e6ea060ad01edff85fac1d7))
+
 ## 1.36.0 (2026-05-15)
 
 Full Changelog: [v1.35.0...v1.36.0](https://github.com/Finch-API/finch-api-go/compare/v1.35.0...v1.36.0)
