@@ -22,8 +22,7 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewHRISCompanyService] method instead.
 type HRISCompanyService struct {
-	Options          []option.RequestOption
-	PayStatementItem *HRISCompanyPayStatementItemService
+	Options []option.RequestOption
 }
 
 // NewHRISCompanyService generates a new service that applies the given options to
@@ -32,7 +31,6 @@ type HRISCompanyService struct {
 func NewHRISCompanyService(opts ...option.RequestOption) (r *HRISCompanyService) {
 	r = &HRISCompanyService{}
 	r.Options = opts
-	r.PayStatementItem = NewHRISCompanyPayStatementItemService(opts...)
 	return
 }
 

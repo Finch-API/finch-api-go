@@ -17,15 +17,16 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewHRISService] method instead.
 type HRISService struct {
-	Options       []option.RequestOption
-	Company       *HRISCompanyService
-	Directory     *HRISDirectoryService
-	Individuals   *HRISIndividualService
-	Employments   *HRISEmploymentService
-	Payments      *HRISPaymentService
-	PayStatements *HRISPayStatementService
-	Documents     *HRISDocumentService
-	Benefits      *HRISBenefitService
+	Options          []option.RequestOption
+	Company          *HRISCompanyService
+	PayStatementItem *HRISPayStatementItemService
+	Directory        *HRISDirectoryService
+	Individuals      *HRISIndividualService
+	Employments      *HRISEmploymentService
+	Payments         *HRISPaymentService
+	PayStatements    *HRISPayStatementService
+	Documents        *HRISDocumentService
+	Benefits         *HRISBenefitService
 }
 
 // NewHRISService generates a new service that applies the given options to each
@@ -35,6 +36,7 @@ func NewHRISService(opts ...option.RequestOption) (r *HRISService) {
 	r = &HRISService{}
 	r.Options = opts
 	r.Company = NewHRISCompanyService(opts...)
+	r.PayStatementItem = NewHRISPayStatementItemService(opts...)
 	r.Directory = NewHRISDirectoryService(opts...)
 	r.Individuals = NewHRISIndividualService(opts...)
 	r.Employments = NewHRISEmploymentService(opts...)
