@@ -14,7 +14,7 @@ import (
 	"github.com/Finch-API/finch-api-go/option"
 )
 
-func TestHRISCompanyPayStatementItemListWithOptionalParams(t *testing.T) {
+func TestHRISPayStatementItemListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -28,8 +28,8 @@ func TestHRISCompanyPayStatementItemListWithOptionalParams(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.List(context.TODO(), finchgo.HRISCompanyPayStatementItemListParams{
-		Categories: finchgo.F([]finchgo.HRISCompanyPayStatementItemListParamsCategory{finchgo.HRISCompanyPayStatementItemListParamsCategoryEarnings}),
+	_, err := client.HRIS.PayStatementItem.List(context.TODO(), finchgo.HRISPayStatementItemListParams{
+		Categories: finchgo.F([]finchgo.HRISPayStatementItemListParamsCategory{finchgo.HRISPayStatementItemListParamsCategoryEarnings}),
 		EndDate:    finchgo.F(time.Now()),
 		EntityIDs:  finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		Name:       finchgo.F("name"),
