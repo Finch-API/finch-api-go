@@ -1,7 +1,7 @@
 package finchgo
 
 import (
-	"github.com/Finch-API/finch-api-go/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
 	"io"
 )
 

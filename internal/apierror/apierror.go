@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/v2/internal/apijson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is

@@ -13,7 +13,7 @@ import (
 
 	"github.com/tidwall/sjson"
 
-	"github.com/Finch-API/finch-api-go/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

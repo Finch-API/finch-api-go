@@ -19,11 +19,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Finch-API/finch-api-go/internal"
-	"github.com/Finch-API/finch-api-go/internal/apierror"
-	"github.com/Finch-API/finch-api-go/internal/apiform"
-	"github.com/Finch-API/finch-api-go/internal/apiquery"
-	"github.com/Finch-API/finch-api-go/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal"
+	"github.com/Finch-API/finch-api-go/v2/internal/apierror"
+	"github.com/Finch-API/finch-api-go/v2/internal/apiform"
+	"github.com/Finch-API/finch-api-go/v2/internal/apiquery"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
 )
 
 func getDefaultHeaders() map[string]string {

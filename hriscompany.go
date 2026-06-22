@@ -8,11 +8,11 @@ import (
 	"net/url"
 	"slices"
 
-	"github.com/Finch-API/finch-api-go/internal/apijson"
-	"github.com/Finch-API/finch-api-go/internal/apiquery"
-	"github.com/Finch-API/finch-api-go/internal/param"
-	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2/internal/apijson"
+	"github.com/Finch-API/finch-api-go/v2/internal/apiquery"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 // HRISCompanyService contains methods and other services that help with
@@ -22,8 +22,7 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewHRISCompanyService] method instead.
 type HRISCompanyService struct {
-	Options          []option.RequestOption
-	PayStatementItem *HRISCompanyPayStatementItemService
+	Options []option.RequestOption
 }
 
 // NewHRISCompanyService generates a new service that applies the given options to
@@ -32,7 +31,6 @@ type HRISCompanyService struct {
 func NewHRISCompanyService(opts ...option.RequestOption) (r *HRISCompanyService) {
 	r = &HRISCompanyService{}
 	r.Options = opts
-	r.PayStatementItem = NewHRISCompanyPayStatementItemService(opts...)
 	return
 }
 

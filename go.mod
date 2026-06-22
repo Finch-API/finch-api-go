@@ -1,4 +1,4 @@
-module github.com/Finch-API/finch-api-go
+module github.com/Finch-API/finch-api-go/v2
 
 go 1.22
 

@@ -3,8 +3,8 @@
 package finchgo
 
 import (
-	"github.com/Finch-API/finch-api-go/internal/apierror"
-	"github.com/Finch-API/finch-api-go/shared"
+	"github.com/Finch-API/finch-api-go/v2/internal/apierror"
+	"github.com/Finch-API/finch-api-go/v2/shared"
 )
 
 type Error = apierror.Error

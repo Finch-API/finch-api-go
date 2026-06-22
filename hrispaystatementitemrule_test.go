@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Finch-API/finch-api-go"
-	"github.com/Finch-API/finch-api-go/internal/testutil"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2"
+	"github.com/Finch-API/finch-api-go/v2/internal/testutil"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
-func TestHRISCompanyPayStatementItemRuleNewWithOptionalParams(t *testing.T) {
+func TestHRISPayStatementItemRuleNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -27,21 +27,21 @@ func TestHRISCompanyPayStatementItemRuleNewWithOptionalParams(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.Rules.New(context.TODO(), finchgo.HRISCompanyPayStatementItemRuleNewParams{
+	_, err := client.HRIS.PayStatementItem.Rules.New(context.TODO(), finchgo.HRISPayStatementItemRuleNewParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
-		Attributes: finchgo.F(finchgo.HRISCompanyPayStatementItemRuleNewParamsAttributes{
+		Attributes: finchgo.F(finchgo.HRISPayStatementItemRuleNewParamsAttributes{
 			Metadata: finchgo.F(map[string]interface{}{
 				"foo": "bar",
 			}),
 		}),
-		Conditions: finchgo.F([]finchgo.HRISCompanyPayStatementItemRuleNewParamsCondition{{
+		Conditions: finchgo.F([]finchgo.HRISPayStatementItemRuleNewParamsCondition{{
 			Field:    finchgo.F("field"),
-			Operator: finchgo.F(finchgo.HRISCompanyPayStatementItemRuleNewParamsConditionsOperatorEquals),
+			Operator: finchgo.F(finchgo.HRISPayStatementItemRuleNewParamsConditionsOperatorEquals),
 			Value:    finchgo.F("value"),
 		}}),
 		EffectiveEndDate:   finchgo.F("effective_end_date"),
 		EffectiveStartDate: finchgo.F("effective_start_date"),
-		EntityType:         finchgo.F(finchgo.HRISCompanyPayStatementItemRuleNewParamsEntityTypePayStatementItem),
+		EntityType:         finchgo.F(finchgo.HRISPayStatementItemRuleNewParamsEntityTypePayStatementItem),
 	})
 	if err != nil {
 		var apierr *finchgo.Error
@@ -52,7 +52,7 @@ func TestHRISCompanyPayStatementItemRuleNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISCompanyPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
+func TestHRISPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -66,10 +66,10 @@ func TestHRISCompanyPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.Rules.Update(
+	_, err := client.HRIS.PayStatementItem.Rules.Update(
 		context.TODO(),
 		"rule_id",
-		finchgo.HRISCompanyPayStatementItemRuleUpdateParams{
+		finchgo.HRISPayStatementItemRuleUpdateParams{
 			EntityIDs:        finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 			OptionalProperty: finchgo.F[any](map[string]interface{}{}),
 		},
@@ -83,7 +83,7 @@ func TestHRISCompanyPayStatementItemRuleUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISCompanyPayStatementItemRuleListWithOptionalParams(t *testing.T) {
+func TestHRISPayStatementItemRuleListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -97,7 +97,7 @@ func TestHRISCompanyPayStatementItemRuleListWithOptionalParams(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.Rules.List(context.TODO(), finchgo.HRISCompanyPayStatementItemRuleListParams{
+	_, err := client.HRIS.PayStatementItem.Rules.List(context.TODO(), finchgo.HRISPayStatementItemRuleListParams{
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 	})
 	if err != nil {
@@ -109,7 +109,7 @@ func TestHRISCompanyPayStatementItemRuleListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestHRISCompanyPayStatementItemRuleDeleteWithOptionalParams(t *testing.T) {
+func TestHRISPayStatementItemRuleDeleteWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -123,10 +123,10 @@ func TestHRISCompanyPayStatementItemRuleDeleteWithOptionalParams(t *testing.T) {
 		option.WithClientID("4ab15e51-11ad-49f4-acae-f343b7794375"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	_, err := client.HRIS.Company.PayStatementItem.Rules.Delete(
+	_, err := client.HRIS.PayStatementItem.Rules.Delete(
 		context.TODO(),
 		"rule_id",
-		finchgo.HRISCompanyPayStatementItemRuleDeleteParams{
+		finchgo.HRISPayStatementItemRuleDeleteParams{
 			EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		},
 	)
