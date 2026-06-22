@@ -428,6 +428,56 @@ func (r PayStatementType) IsKnown() bool {
 	return false
 }
 
+type PayStatementData struct {
+	Paging        PayStatementDataPaging `json:"paging" api:"required"`
+	PayStatements []PayStatement         `json:"pay_statements" api:"required"`
+	JSON          payStatementDataJSON   `json:"-"`
+}
+
+// payStatementDataJSON contains the JSON metadata for the struct
+// [PayStatementData]
+type payStatementDataJSON struct {
+	Paging        apijson.Field
+	PayStatements apijson.Field
+	raw           string
+	ExtraFields   map[string]apijson.Field
+}
+
+func (r *PayStatementData) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementDataJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r PayStatementData) implementsPayStatementResponseBody() {}
+
+type PayStatementDataPaging struct {
+	// The current start index of the returned list of elements
+	Offset int64 `json:"offset" api:"required"`
+	// The total number of elements for the entire query (not just the given page)
+	Count int64                      `json:"count"`
+	JSON  payStatementDataPagingJSON `json:"-"`
+}
+
+// payStatementDataPagingJSON contains the JSON metadata for the struct
+// [PayStatementDataPaging]
+type payStatementDataPagingJSON struct {
+	Offset      apijson.Field
+	Count       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PayStatementDataPaging) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r payStatementDataPagingJSON) RawJSON() string {
+	return r.raw
+}
+
 type PayStatementDataSyncInProgress struct {
 	Code      PayStatementDataSyncInProgressCode      `json:"code" api:"required"`
 	FinchCode PayStatementDataSyncInProgressFinchCode `json:"finch_code" api:"required"`
@@ -543,7 +593,7 @@ type PayStatementResponseBody struct {
 	FinchCode string  `json:"finch_code"`
 	Message   string  `json:"message"`
 	Name      string  `json:"name"`
-	// This field can have the runtime type of [PayStatementResponseBodyPaging].
+	// This field can have the runtime type of [PayStatementDataPaging].
 	Paging interface{} `json:"paging"`
 	// This field can have the runtime type of [[]PayStatement].
 	PayStatements interface{}                  `json:"pay_statements"`
@@ -580,14 +630,14 @@ func (r *PayStatementResponseBody) UnmarshalJSON(data []byte) (err error) {
 // AsUnion returns a [PayStatementResponseBodyUnion] interface which you can cast
 // to the specific types for more type safety.
 //
-// Possible runtime types of the union are [PayStatementResponseBody],
+// Possible runtime types of the union are [PayStatementData],
 // [PayStatementResponseBodyBatchError], [PayStatementDataSyncInProgress].
 func (r PayStatementResponseBody) AsUnion() PayStatementResponseBodyUnion {
 	return r.union
 }
 
-// Union satisfied by [PayStatementResponseBody],
-// [PayStatementResponseBodyBatchError] or [PayStatementDataSyncInProgress].
+// Union satisfied by [PayStatementData], [PayStatementResponseBodyBatchError] or
+// [PayStatementDataSyncInProgress].
 type PayStatementResponseBodyUnion interface {
 	implementsPayStatementResponseBody()
 }
@@ -598,7 +648,7 @@ func init() {
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(PayStatementResponseBody{}),
+			Type:       reflect.TypeOf(PayStatementData{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
