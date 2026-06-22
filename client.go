@@ -9,8 +9,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 // Client creates a struct with services and top level methods that help with

@@ -1,6 +1,6 @@
 # Finch Go API Library
 
-<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go"><img src="https://pkg.go.dev/badge/github.com/Finch-API/finch-api-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/Finch-API/finch-api-go/v2"><img src="https://pkg.go.dev/badge/github.com/Finch-API/finch-api-go/v2.svg" alt="Go Reference"></a>
 
 The Finch Go library provides convenient access to the [Finch REST API](https://developer.tryfinch.com/)
 from applications written in Go.
@@ -22,7 +22,7 @@ Use the Finch MCP Server to enable AI assistants to interact with this API, allo
 
 ```go
 import (
-	"github.com/Finch-API/finch-api-go" // imported as finchgo
+	"github.com/Finch-API/finch-api-go/v2" // imported as finchgo
 )
 ```
 
@@ -33,7 +33,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/Finch-API/finch-api-go@v1.38.0'
+go get -u 'github.com/Finch-API/finch-api-go/v2@v2.0.0'
 ```
 
 <!-- x-release-please-end -->
@@ -53,8 +53,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Finch-API/finch-api-go"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 func main() {
@@ -162,7 +162,7 @@ client.HRIS.Directory.List(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/Finch-API/finch-api-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/Finch-API/finch-api-go/v2/option).
 
 ### Pagination
 

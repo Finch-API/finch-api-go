@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"slices"
 
-	"github.com/Finch-API/finch-api-go/internal/apijson"
-	"github.com/Finch-API/finch-api-go/internal/param"
-	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2/internal/apijson"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 // SandboxJobService contains methods and other services that help with interacting

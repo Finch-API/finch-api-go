@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Finch-API/finch-api-go"
-	"github.com/Finch-API/finch-api-go/internal"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2"
+	"github.com/Finch-API/finch-api-go/v2/internal"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 type closureTransport struct {

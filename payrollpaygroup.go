@@ -10,12 +10,12 @@ import (
 	"net/url"
 	"slices"
 
-	"github.com/Finch-API/finch-api-go/internal/apijson"
-	"github.com/Finch-API/finch-api-go/internal/apiquery"
-	"github.com/Finch-API/finch-api-go/internal/param"
-	"github.com/Finch-API/finch-api-go/internal/requestconfig"
-	"github.com/Finch-API/finch-api-go/option"
-	"github.com/Finch-API/finch-api-go/packages/pagination"
+	"github.com/Finch-API/finch-api-go/v2/internal/apijson"
+	"github.com/Finch-API/finch-api-go/v2/internal/apiquery"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/v2/option"
+	"github.com/Finch-API/finch-api-go/v2/packages/pagination"
 )
 
 // PayrollPayGroupService contains methods and other services that help with

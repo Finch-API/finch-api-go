@@ -3,7 +3,7 @@
 package shared
 
 import (
-	"github.com/Finch-API/finch-api-go/internal/apijson"
+	"github.com/Finch-API/finch-api-go/v2/internal/apijson"
 )
 
 type ConnectionStatusType string

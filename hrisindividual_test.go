@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Finch-API/finch-api-go"
-	"github.com/Finch-API/finch-api-go/internal/testutil"
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2"
+	"github.com/Finch-API/finch-api-go/v2/internal/testutil"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
