@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	finch "github.com/Finch-API/finch-api-go"
-	"github.com/Finch-API/finch-api-go/option"
+	finch "github.com/Finch-API/finch-api-go/v2"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 func main() {

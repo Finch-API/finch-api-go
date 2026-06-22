@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Finch-API/finch-api-go/internal/requestconfig"
+	"github.com/Finch-API/finch-api-go/v2/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 

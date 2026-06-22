@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Finch-API/finch-api-go/internal/param"
+	"github.com/Finch-API/finch-api-go/v2/internal/param"
 )
 
 type Struct struct {

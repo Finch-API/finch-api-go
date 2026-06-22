@@ -3,7 +3,7 @@
 package finchgo
 
 import (
-	"github.com/Finch-API/finch-api-go/option"
+	"github.com/Finch-API/finch-api-go/v2/option"
 )
 
 // SandboxService contains methods and other services that help with interacting

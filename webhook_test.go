@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Finch-API/finch-api-go"
+	"github.com/Finch-API/finch-api-go/v2"
 )
 
 func TestVerifySignature(t *testing.T) {
