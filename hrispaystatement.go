@@ -120,7 +120,7 @@ type PayStatementEarning struct {
 	// The number of hours associated with this earning. (For salaried employees, this
 	// could be hours per pay period, `0` or `null`, depending on the provider).
 	Hours float64 `json:"hours" api:"required,nullable"`
-	// The exact name of the deduction from the pay statement.
+	// The exact name of the earning from the pay statement.
 	Name string `json:"name" api:"required,nullable"`
 	// The type of earning.
 	Type       PayStatementEarningsType       `json:"type" api:"required,nullable"`
