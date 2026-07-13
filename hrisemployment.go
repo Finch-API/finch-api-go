@@ -585,7 +585,7 @@ func (r employmentDataResponseJSON) RawJSON() string {
 }
 
 type HRISEmploymentGetManyParams struct {
-	// The array of batch requests.
+	// The array of batch requests. Maximum 10000 items per request.
 	Requests param.Field[[]HRISEmploymentGetManyParamsRequest] `json:"requests" api:"required"`
 	// The entity IDs to specify which entities' data to access.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
@@ -605,9 +605,7 @@ func (r HRISEmploymentGetManyParams) URLQuery() (v url.Values) {
 }
 
 type HRISEmploymentGetManyParamsRequest struct {
-	// A stable Finch `id` (UUID v4) for an individual in the company. There is no
-	// limit to the number of `individual_id` to send per request. It is preferantial
-	// to send all ids in a single request for Finch to optimize provider rate-limits.
+	// A stable Finch `id` (UUID v4) for an individual in the company.
 	IndividualID param.Field[string] `json:"individual_id" api:"required"`
 }
 
