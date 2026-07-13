@@ -438,10 +438,11 @@ func (r individualResponseJSON) RawJSON() string {
 }
 
 type HRISIndividualGetManyParams struct {
+	// The array of batch requests. Maximum 10000 items per request.
+	Requests param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests" api:"required"`
 	// The entity IDs to specify which entities' data to access.
-	EntityIDs param.Field[[]string]                             `query:"entity_ids" format:"uuid"`
-	Options   param.Field[HRISIndividualGetManyParamsOptions]   `json:"options"`
-	Requests  param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests"`
+	EntityIDs param.Field[[]string]                           `query:"entity_ids" format:"uuid"`
+	Options   param.Field[HRISIndividualGetManyParamsOptions] `json:"options"`
 }
 
 func (r HRISIndividualGetManyParams) MarshalJSON() (data []byte, err error) {
@@ -457,18 +458,18 @@ func (r HRISIndividualGetManyParams) URLQuery() (v url.Values) {
 	})
 }
 
+type HRISIndividualGetManyParamsRequest struct {
+	IndividualID param.Field[string] `json:"individual_id" api:"required"`
+}
+
+func (r HRISIndividualGetManyParamsRequest) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
 type HRISIndividualGetManyParamsOptions struct {
 	Include param.Field[[]string] `json:"include"`
 }
 
 func (r HRISIndividualGetManyParamsOptions) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-type HRISIndividualGetManyParamsRequest struct {
-	IndividualID param.Field[string] `json:"individual_id"`
-}
-
-func (r HRISIndividualGetManyParamsRequest) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

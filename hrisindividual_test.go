@@ -28,13 +28,13 @@ func TestHRISIndividualGetManyWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{
+		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequest{{
+			IndividualID: finchgo.F("individual_id"),
+		}}),
 		EntityIDs: finchgo.F([]string{"550e8400-e29b-41d4-a716-446655440000"}),
 		Options: finchgo.F(finchgo.HRISIndividualGetManyParamsOptions{
 			Include: finchgo.F([]string{"string"}),
 		}),
-		Requests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequest{{
-			IndividualID: finchgo.F("individual_id"),
-		}}),
 	})
 	if err != nil {
 		var apierr *finchgo.Error

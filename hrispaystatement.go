@@ -691,7 +691,7 @@ func (r payStatementResponseBodyBatchErrorJSON) RawJSON() string {
 func (r PayStatementResponseBodyBatchError) implementsPayStatementResponseBody() {}
 
 type HRISPayStatementGetManyParams struct {
-	// The array of batch requests.
+	// The array of batch requests. Maximum 10 payment_ids per request.
 	Requests param.Field[[]HRISPayStatementGetManyParamsRequest] `json:"requests" api:"required"`
 	// The entity IDs to specify which entities' data to access.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
@@ -713,7 +713,7 @@ func (r HRISPayStatementGetManyParams) URLQuery() (v url.Values) {
 type HRISPayStatementGetManyParamsRequest struct {
 	// A stable Finch `id` (UUID v4) for a payment.
 	PaymentID param.Field[string] `json:"payment_id" api:"required" format:"uuid"`
-	// Number of pay statements to return (defaults to all).
+	// Number of pay statements to return (defaults to 100, maximum 5000).
 	Limit param.Field[int64] `json:"limit"`
 	// Index to start from.
 	Offset param.Field[int64] `json:"offset"`
