@@ -530,7 +530,8 @@ func (r updateCompanyBenefitResponseJSON) RawJSON() string {
 }
 
 type HRISBenefitNewParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// The company match for this benefit.
 	CompanyContribution param.Field[HRISBenefitNewParamsCompanyContribution] `json:"company_contribution"`
@@ -590,7 +591,8 @@ func (r HRISBenefitNewParamsCompanyContributionType) IsKnown() bool {
 }
 
 type HRISBenefitGetParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
@@ -603,7 +605,8 @@ func (r HRISBenefitGetParams) URLQuery() (v url.Values) {
 }
 
 type HRISBenefitUpdateParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Updated name or description.
 	Description param.Field[string] `json:"description"`
@@ -623,7 +626,8 @@ func (r HRISBenefitUpdateParams) URLQuery() (v url.Values) {
 }
 
 type HRISBenefitListParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
@@ -636,7 +640,8 @@ func (r HRISBenefitListParams) URLQuery() (v url.Values) {
 }
 
 type HRISBenefitListSupportedBenefitsParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
@@ -650,7 +655,8 @@ func (r HRISBenefitListSupportedBenefitsParams) URLQuery() (v url.Values) {
 }
 
 type HRISBenefitRegisterParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs   param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	Description param.Field[string]   `json:"description"`
 	// The frequency of the benefit deduction/contribution.

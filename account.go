@@ -132,10 +132,7 @@ type Introspection struct {
 	// Deprecated: deprecated
 	AccountID             string                              `json:"account_id"`
 	AuthenticationMethods []IntrospectionAuthenticationMethod `json:"authentication_methods"`
-	// [DEPRECATED] Use `connection_id` to associate tokens with a Finch connection
-	// instead of this company ID
-	//
-	// Deprecated: deprecated
+	// The Finch UUID of the company associated with the `access_token`.
 	CompanyID string `json:"company_id"`
 	// The email of your customer you provided to Finch when a connect session was
 	// created for this connection
