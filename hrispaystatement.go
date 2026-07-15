@@ -693,7 +693,8 @@ func (r PayStatementResponseBodyBatchError) implementsPayStatementResponseBody()
 type HRISPayStatementGetManyParams struct {
 	// The array of batch requests. Maximum 10 payment_ids per request.
 	Requests param.Field[[]HRISPayStatementGetManyParamsRequest] `json:"requests" api:"required"`
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 

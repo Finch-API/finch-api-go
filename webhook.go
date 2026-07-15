@@ -1147,10 +1147,7 @@ type BaseWebhookEvent struct {
 	//
 	// Deprecated: deprecated
 	AccountID string `json:"account_id" api:"required"`
-	// [DEPRECATED] Unique Finch ID of the company for which data has been updated. Use
-	// `connection_id` instead to identify the connection associated with this event.
-	//
-	// Deprecated: deprecated
+	// Unique Finch ID of the company for which data has been updated.
 	CompanyID string `json:"company_id" api:"required"`
 	// Unique Finch ID of the connection associated with the webhook event.
 	ConnectionID string `json:"connection_id"`

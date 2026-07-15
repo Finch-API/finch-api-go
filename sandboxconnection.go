@@ -50,9 +50,7 @@ type SandboxConnectionNewResponse struct {
 	// Deprecated: deprecated
 	AccountID          string                                         `json:"account_id" api:"required" format:"uuid"`
 	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type" api:"required"`
-	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
-	//
-	// Deprecated: deprecated
+	// The Finch UUID of the company associated with the `access_token`.
 	CompanyID string `json:"company_id" api:"required" format:"uuid"`
 	// The ID of the new connection
 	ConnectionID string `json:"connection_id" api:"required" format:"uuid"`
