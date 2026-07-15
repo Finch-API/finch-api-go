@@ -177,7 +177,8 @@ func (r PayrollPayGroupListResponsePayFrequency) IsKnown() bool {
 }
 
 type PayrollPayGroupGetParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
@@ -191,7 +192,8 @@ func (r PayrollPayGroupGetParams) URLQuery() (v url.Values) {
 }
 
 type PayrollPayGroupListParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs      param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	IndividualID   param.Field[string]   `query:"individual_id" format:"uuid"`
 	PayFrequencies param.Field[[]string] `query:"pay_frequencies"`

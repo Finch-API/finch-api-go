@@ -152,7 +152,8 @@ type HRISPayStatementItemListParams struct {
 	// The end date to retrieve pay statement items by via their last seen pay date in
 	// `YYYY-MM-DD` format.
 	EndDate param.Field[time.Time] `query:"end_date" format:"date"`
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Case-insensitive partial match search by pay statement item name.
 	Name param.Field[string] `query:"name"`

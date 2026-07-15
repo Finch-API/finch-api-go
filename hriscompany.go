@@ -250,7 +250,8 @@ func (r CompanyEntityType) IsKnown() bool {
 }
 
 type HRISCompanyGetParams struct {
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 

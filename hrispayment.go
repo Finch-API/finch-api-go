@@ -160,7 +160,8 @@ type HRISPaymentListParams struct {
 	// The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD`
 	// format. Filters payments by their **pay_date** field.
 	StartDate param.Field[time.Time] `query:"start_date" api:"required" format:"date"`
-	// The entity IDs to specify which entities' data to access.
+	// The entity IDs to specify which entities' data to access. Provide exactly one
+	// entity ID per request; a maximum of one is accepted.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
