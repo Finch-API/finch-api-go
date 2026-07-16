@@ -82,6 +82,9 @@ type SandboxDirectoryNewParamsBody struct {
 	FlsaStatus param.Field[SandboxDirectoryNewParamsBodyFlsaStatus] `json:"flsa_status"`
 	// The gender of the individual.
 	Gender param.Field[SandboxDirectoryNewParamsBodyGender] `json:"gender"`
+	// IRS flag indicating whether the employee is classified as a Highly Compensated
+	// Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+	HighlyCompensatedEmployee param.Field[bool] `json:"highly_compensated_employee"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -90,12 +93,18 @@ type SandboxDirectoryNewParamsBody struct {
 	IncomeHistory param.Field[[]IncomeParam] `json:"income_history"`
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive param.Field[bool] `json:"is_active"`
+	// IRS flag indicating whether the employee is classified as a Key Employee for
+	// top-heavy testing purposes. US-only.
+	KeyEmployee param.Field[bool] `json:"key_employee"`
 	// The legal last name of the individual.
 	LastName         param.Field[string]        `json:"last_name"`
 	LatestRehireDate param.Field[string]        `json:"latest_rehire_date"`
 	Location         param.Field[LocationParam] `json:"location"`
 	// The manager object representing the manager of the individual within the org.
 	Manager param.Field[SandboxDirectoryNewParamsBodyManager] `json:"manager"`
+	// The employee's marital status, used for beneficiary designation and spousal
+	// consent workflows.
+	MaritalStatus param.Field[SandboxDirectoryNewParamsBodyMaritalStatus] `json:"marital_status"`
 	// The legal middle name of the individual.
 	MiddleName   param.Field[string]                                     `json:"middle_name"`
 	PhoneNumbers param.Field[[]SandboxDirectoryNewParamsBodyPhoneNumber] `json:"phone_numbers"`
@@ -112,6 +121,11 @@ type SandboxDirectoryNewParamsBody struct {
 	StartDate param.Field[string] `json:"start_date"`
 	// The current title of the individual.
 	Title param.Field[string] `json:"title"`
+	// The code identifying the union the employee is a member of, as configured in the
+	// payroll system.
+	UnionCode param.Field[string] `json:"union_code"`
+	// The local chapter or local number within the employee's union.
+	UnionLocal param.Field[string] `json:"union_local"`
 }
 
 func (r SandboxDirectoryNewParamsBody) MarshalJSON() (data []byte, err error) {
@@ -312,6 +326,27 @@ type SandboxDirectoryNewParamsBodyManager struct {
 
 func (r SandboxDirectoryNewParamsBodyManager) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The employee's marital status, used for beneficiary designation and spousal
+// consent workflows.
+type SandboxDirectoryNewParamsBodyMaritalStatus string
+
+const (
+	SandboxDirectoryNewParamsBodyMaritalStatusSingle          SandboxDirectoryNewParamsBodyMaritalStatus = "single"
+	SandboxDirectoryNewParamsBodyMaritalStatusMarried         SandboxDirectoryNewParamsBodyMaritalStatus = "married"
+	SandboxDirectoryNewParamsBodyMaritalStatusDivorced        SandboxDirectoryNewParamsBodyMaritalStatus = "divorced"
+	SandboxDirectoryNewParamsBodyMaritalStatusWidowed         SandboxDirectoryNewParamsBodyMaritalStatus = "widowed"
+	SandboxDirectoryNewParamsBodyMaritalStatusDomesticPartner SandboxDirectoryNewParamsBodyMaritalStatus = "domestic_partner"
+	SandboxDirectoryNewParamsBodyMaritalStatusUnknown         SandboxDirectoryNewParamsBodyMaritalStatus = "unknown"
+)
+
+func (r SandboxDirectoryNewParamsBodyMaritalStatus) IsKnown() bool {
+	switch r {
+	case SandboxDirectoryNewParamsBodyMaritalStatusSingle, SandboxDirectoryNewParamsBodyMaritalStatusMarried, SandboxDirectoryNewParamsBodyMaritalStatusDivorced, SandboxDirectoryNewParamsBodyMaritalStatusWidowed, SandboxDirectoryNewParamsBodyMaritalStatusDomesticPartner, SandboxDirectoryNewParamsBodyMaritalStatusUnknown:
+		return true
+	}
+	return false
 }
 
 type SandboxDirectoryNewParamsBodyPhoneNumber struct {

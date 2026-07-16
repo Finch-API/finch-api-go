@@ -71,6 +71,9 @@ type SandboxEmploymentUpdateResponse struct {
 	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
 	// `unknown`.
 	FlsaStatus SandboxEmploymentUpdateResponseFlsaStatus `json:"flsa_status" api:"nullable"`
+	// IRS flag indicating whether the employee is classified as a Highly Compensated
+	// Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+	HighlyCompensatedEmployee bool `json:"highly_compensated_employee" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -79,6 +82,9 @@ type SandboxEmploymentUpdateResponse struct {
 	IncomeHistory []Income `json:"income_history" api:"nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active" api:"nullable"`
+	// IRS flag indicating whether the employee is classified as a Key Employee for
+	// top-heavy testing purposes. US-only.
+	KeyEmployee bool `json:"key_employee" api:"nullable"`
 	// The legal last name of the individual.
 	LastName         string   `json:"last_name" api:"nullable"`
 	LatestRehireDate string   `json:"latest_rehire_date" api:"nullable"`
@@ -91,35 +97,44 @@ type SandboxEmploymentUpdateResponse struct {
 	SourceID  string `json:"source_id" api:"nullable"`
 	StartDate string `json:"start_date" api:"nullable"`
 	// The current title of the individual.
-	Title string                              `json:"title" api:"nullable"`
-	JSON  sandboxEmploymentUpdateResponseJSON `json:"-"`
+	Title string `json:"title" api:"nullable"`
+	// The code identifying the union the employee is a member of, as configured in the
+	// payroll system.
+	UnionCode string `json:"union_code" api:"nullable"`
+	// The local chapter or local number within the employee's union.
+	UnionLocal string                              `json:"union_local" api:"nullable"`
+	JSON       sandboxEmploymentUpdateResponseJSON `json:"-"`
 }
 
 // sandboxEmploymentUpdateResponseJSON contains the JSON metadata for the struct
 // [SandboxEmploymentUpdateResponse]
 type sandboxEmploymentUpdateResponseJSON struct {
-	ID               apijson.Field
-	ClassCode        apijson.Field
-	CustomFields     apijson.Field
-	Department       apijson.Field
-	Employment       apijson.Field
-	EmploymentStatus apijson.Field
-	EndDate          apijson.Field
-	FirstName        apijson.Field
-	FlsaStatus       apijson.Field
-	Income           apijson.Field
-	IncomeHistory    apijson.Field
-	IsActive         apijson.Field
-	LastName         apijson.Field
-	LatestRehireDate apijson.Field
-	Location         apijson.Field
-	Manager          apijson.Field
-	MiddleName       apijson.Field
-	SourceID         apijson.Field
-	StartDate        apijson.Field
-	Title            apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	ID                        apijson.Field
+	ClassCode                 apijson.Field
+	CustomFields              apijson.Field
+	Department                apijson.Field
+	Employment                apijson.Field
+	EmploymentStatus          apijson.Field
+	EndDate                   apijson.Field
+	FirstName                 apijson.Field
+	FlsaStatus                apijson.Field
+	HighlyCompensatedEmployee apijson.Field
+	Income                    apijson.Field
+	IncomeHistory             apijson.Field
+	IsActive                  apijson.Field
+	KeyEmployee               apijson.Field
+	LastName                  apijson.Field
+	LatestRehireDate          apijson.Field
+	Location                  apijson.Field
+	Manager                   apijson.Field
+	MiddleName                apijson.Field
+	SourceID                  apijson.Field
+	StartDate                 apijson.Field
+	Title                     apijson.Field
+	UnionCode                 apijson.Field
+	UnionLocal                apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *SandboxEmploymentUpdateResponse) UnmarshalJSON(data []byte) (err error) {
@@ -360,6 +375,9 @@ type SandboxEmploymentUpdateParams struct {
 	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
 	// `unknown`.
 	FlsaStatus param.Field[SandboxEmploymentUpdateParamsFlsaStatus] `json:"flsa_status"`
+	// IRS flag indicating whether the employee is classified as a Highly Compensated
+	// Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+	HighlyCompensatedEmployee param.Field[bool] `json:"highly_compensated_employee"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -368,6 +386,9 @@ type SandboxEmploymentUpdateParams struct {
 	IncomeHistory param.Field[[]IncomeParam] `json:"income_history"`
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive param.Field[bool] `json:"is_active"`
+	// IRS flag indicating whether the employee is classified as a Key Employee for
+	// top-heavy testing purposes. US-only.
+	KeyEmployee param.Field[bool] `json:"key_employee"`
 	// The legal last name of the individual.
 	LastName         param.Field[string]        `json:"last_name"`
 	LatestRehireDate param.Field[string]        `json:"latest_rehire_date"`
@@ -381,6 +402,11 @@ type SandboxEmploymentUpdateParams struct {
 	StartDate param.Field[string] `json:"start_date"`
 	// The current title of the individual.
 	Title param.Field[string] `json:"title"`
+	// The code identifying the union the employee is a member of, as configured in the
+	// payroll system.
+	UnionCode param.Field[string] `json:"union_code"`
+	// The local chapter or local number within the employee's union.
+	UnionLocal param.Field[string] `json:"union_local"`
 }
 
 func (r SandboxEmploymentUpdateParams) MarshalJSON() (data []byte, err error) {

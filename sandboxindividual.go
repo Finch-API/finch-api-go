@@ -64,6 +64,9 @@ type SandboxIndividualUpdateResponse struct {
 	Gender SandboxIndividualUpdateResponseGender `json:"gender" api:"nullable"`
 	// The legal last name of the individual.
 	LastName string `json:"last_name" api:"nullable"`
+	// The employee's marital status, used for beneficiary designation and spousal
+	// consent workflows.
+	MaritalStatus SandboxIndividualUpdateResponseMaritalStatus `json:"marital_status" api:"nullable"`
 	// The legal middle name of the individual.
 	MiddleName   string                                       `json:"middle_name" api:"nullable"`
 	PhoneNumbers []SandboxIndividualUpdateResponsePhoneNumber `json:"phone_numbers" api:"nullable"`
@@ -89,6 +92,7 @@ type sandboxIndividualUpdateResponseJSON struct {
 	FirstName     apijson.Field
 	Gender        apijson.Field
 	LastName      apijson.Field
+	MaritalStatus apijson.Field
 	MiddleName    apijson.Field
 	PhoneNumbers  apijson.Field
 	PreferredName apijson.Field
@@ -184,6 +188,27 @@ func (r SandboxIndividualUpdateResponseGender) IsKnown() bool {
 	return false
 }
 
+// The employee's marital status, used for beneficiary designation and spousal
+// consent workflows.
+type SandboxIndividualUpdateResponseMaritalStatus string
+
+const (
+	SandboxIndividualUpdateResponseMaritalStatusSingle          SandboxIndividualUpdateResponseMaritalStatus = "single"
+	SandboxIndividualUpdateResponseMaritalStatusMarried         SandboxIndividualUpdateResponseMaritalStatus = "married"
+	SandboxIndividualUpdateResponseMaritalStatusDivorced        SandboxIndividualUpdateResponseMaritalStatus = "divorced"
+	SandboxIndividualUpdateResponseMaritalStatusWidowed         SandboxIndividualUpdateResponseMaritalStatus = "widowed"
+	SandboxIndividualUpdateResponseMaritalStatusDomesticPartner SandboxIndividualUpdateResponseMaritalStatus = "domestic_partner"
+	SandboxIndividualUpdateResponseMaritalStatusUnknown         SandboxIndividualUpdateResponseMaritalStatus = "unknown"
+)
+
+func (r SandboxIndividualUpdateResponseMaritalStatus) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateResponseMaritalStatusSingle, SandboxIndividualUpdateResponseMaritalStatusMarried, SandboxIndividualUpdateResponseMaritalStatusDivorced, SandboxIndividualUpdateResponseMaritalStatusWidowed, SandboxIndividualUpdateResponseMaritalStatusDomesticPartner, SandboxIndividualUpdateResponseMaritalStatusUnknown:
+		return true
+	}
+	return false
+}
+
 type SandboxIndividualUpdateResponsePhoneNumber struct {
 	Data string                                          `json:"data" api:"nullable"`
 	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type" api:"nullable"`
@@ -237,6 +262,9 @@ type SandboxIndividualUpdateParams struct {
 	Gender param.Field[SandboxIndividualUpdateParamsGender] `json:"gender"`
 	// The legal last name of the individual.
 	LastName param.Field[string] `json:"last_name"`
+	// The employee's marital status, used for beneficiary designation and spousal
+	// consent workflows.
+	MaritalStatus param.Field[SandboxIndividualUpdateParamsMaritalStatus] `json:"marital_status"`
 	// The legal middle name of the individual.
 	MiddleName   param.Field[string]                                     `json:"middle_name"`
 	PhoneNumbers param.Field[[]SandboxIndividualUpdateParamsPhoneNumber] `json:"phone_numbers"`
@@ -313,6 +341,27 @@ const (
 func (r SandboxIndividualUpdateParamsGender) IsKnown() bool {
 	switch r {
 	case SandboxIndividualUpdateParamsGenderFemale, SandboxIndividualUpdateParamsGenderMale, SandboxIndividualUpdateParamsGenderOther, SandboxIndividualUpdateParamsGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
+// The employee's marital status, used for beneficiary designation and spousal
+// consent workflows.
+type SandboxIndividualUpdateParamsMaritalStatus string
+
+const (
+	SandboxIndividualUpdateParamsMaritalStatusSingle          SandboxIndividualUpdateParamsMaritalStatus = "single"
+	SandboxIndividualUpdateParamsMaritalStatusMarried         SandboxIndividualUpdateParamsMaritalStatus = "married"
+	SandboxIndividualUpdateParamsMaritalStatusDivorced        SandboxIndividualUpdateParamsMaritalStatus = "divorced"
+	SandboxIndividualUpdateParamsMaritalStatusWidowed         SandboxIndividualUpdateParamsMaritalStatus = "widowed"
+	SandboxIndividualUpdateParamsMaritalStatusDomesticPartner SandboxIndividualUpdateParamsMaritalStatus = "domestic_partner"
+	SandboxIndividualUpdateParamsMaritalStatusUnknown         SandboxIndividualUpdateParamsMaritalStatus = "unknown"
+)
+
+func (r SandboxIndividualUpdateParamsMaritalStatus) IsKnown() bool {
+	switch r {
+	case SandboxIndividualUpdateParamsMaritalStatusSingle, SandboxIndividualUpdateParamsMaritalStatusMarried, SandboxIndividualUpdateParamsMaritalStatusDivorced, SandboxIndividualUpdateParamsMaritalStatusWidowed, SandboxIndividualUpdateParamsMaritalStatusDomesticPartner, SandboxIndividualUpdateParamsMaritalStatusUnknown:
 		return true
 	}
 	return false
