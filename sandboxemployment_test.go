@@ -45,10 +45,11 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 				Subtype: finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentSubtypeFullTime),
 				Type:    finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentTypeEmployee),
 			}),
-			EmploymentStatus: finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentStatusActive),
-			EndDate:          finchgo.F("end_date"),
-			FirstName:        finchgo.F("first_name"),
-			FlsaStatus:       finchgo.F(finchgo.SandboxEmploymentUpdateParamsFlsaStatusExempt),
+			EmploymentStatus:          finchgo.F(finchgo.SandboxEmploymentUpdateParamsEmploymentStatusActive),
+			EndDate:                   finchgo.F("end_date"),
+			FirstName:                 finchgo.F("first_name"),
+			FlsaStatus:                finchgo.F(finchgo.SandboxEmploymentUpdateParamsFlsaStatusExempt),
+			HighlyCompensatedEmployee: finchgo.F(true),
 			Income: finchgo.F(finchgo.IncomeParam{
 				Amount:        finchgo.F(int64(0)),
 				Currency:      finchgo.F("currency"),
@@ -62,6 +63,7 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 				Unit:          finchgo.F(finchgo.IncomeUnitYearly),
 			}}),
 			IsActive:         finchgo.F(true),
+			KeyEmployee:      finchgo.F(true),
 			LastName:         finchgo.F("last_name"),
 			LatestRehireDate: finchgo.F("latest_rehire_date"),
 			Location: finchgo.F(finchgo.LocationParam{
@@ -81,6 +83,8 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 			SourceID:   finchgo.F("source_id"),
 			StartDate:  finchgo.F("3/4/2020"),
 			Title:      finchgo.F("title"),
+			UnionCode:  finchgo.F("union_code"),
+			UnionLocal: finchgo.F("union_local"),
 		},
 	)
 	if err != nil {

@@ -82,7 +82,10 @@ type Individual struct {
 	Gender IndividualGender `json:"gender" api:"nullable"`
 	// The legal last name of the individual.
 	LastName string `json:"last_name" api:"nullable"`
-	Message  string `json:"message"`
+	// The employee's marital status, used for beneficiary designation and spousal
+	// consent workflows.
+	MaritalStatus IndividualMaritalStatus `json:"marital_status" api:"nullable"`
+	Message       string                  `json:"message"`
 	// The legal middle name of the individual.
 	MiddleName string `json:"middle_name" api:"nullable"`
 	Name       string `json:"name"`
@@ -113,6 +116,7 @@ type individualJSON struct {
 	FirstName     apijson.Field
 	Gender        apijson.Field
 	LastName      apijson.Field
+	MaritalStatus apijson.Field
 	Message       apijson.Field
 	MiddleName    apijson.Field
 	Name          apijson.Field
@@ -178,6 +182,9 @@ type IndividualIndividualResponseBody struct {
 	Gender IndividualIndividualResponseBodyGender `json:"gender" api:"required,nullable"`
 	// The legal last name of the individual.
 	LastName string `json:"last_name" api:"required,nullable"`
+	// The employee's marital status, used for beneficiary designation and spousal
+	// consent workflows.
+	MaritalStatus IndividualIndividualResponseBodyMaritalStatus `json:"marital_status" api:"required,nullable"`
 	// The legal middle name of the individual.
 	MiddleName   string                                        `json:"middle_name" api:"required,nullable"`
 	PhoneNumbers []IndividualIndividualResponseBodyPhoneNumber `json:"phone_numbers" api:"required,nullable"`
@@ -206,6 +213,7 @@ type individualIndividualResponseBodyJSON struct {
 	FirstName     apijson.Field
 	Gender        apijson.Field
 	LastName      apijson.Field
+	MaritalStatus apijson.Field
 	MiddleName    apijson.Field
 	PhoneNumbers  apijson.Field
 	PreferredName apijson.Field
@@ -262,6 +270,27 @@ const (
 func (r IndividualIndividualResponseBodyGender) IsKnown() bool {
 	switch r {
 	case IndividualIndividualResponseBodyGenderFemale, IndividualIndividualResponseBodyGenderMale, IndividualIndividualResponseBodyGenderOther, IndividualIndividualResponseBodyGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
+// The employee's marital status, used for beneficiary designation and spousal
+// consent workflows.
+type IndividualIndividualResponseBodyMaritalStatus string
+
+const (
+	IndividualIndividualResponseBodyMaritalStatusSingle          IndividualIndividualResponseBodyMaritalStatus = "single"
+	IndividualIndividualResponseBodyMaritalStatusMarried         IndividualIndividualResponseBodyMaritalStatus = "married"
+	IndividualIndividualResponseBodyMaritalStatusDivorced        IndividualIndividualResponseBodyMaritalStatus = "divorced"
+	IndividualIndividualResponseBodyMaritalStatusWidowed         IndividualIndividualResponseBodyMaritalStatus = "widowed"
+	IndividualIndividualResponseBodyMaritalStatusDomesticPartner IndividualIndividualResponseBodyMaritalStatus = "domestic_partner"
+	IndividualIndividualResponseBodyMaritalStatusUnknown         IndividualIndividualResponseBodyMaritalStatus = "unknown"
+)
+
+func (r IndividualIndividualResponseBodyMaritalStatus) IsKnown() bool {
+	switch r {
+	case IndividualIndividualResponseBodyMaritalStatusSingle, IndividualIndividualResponseBodyMaritalStatusMarried, IndividualIndividualResponseBodyMaritalStatusDivorced, IndividualIndividualResponseBodyMaritalStatusWidowed, IndividualIndividualResponseBodyMaritalStatusDomesticPartner, IndividualIndividualResponseBodyMaritalStatusUnknown:
 		return true
 	}
 	return false
@@ -407,6 +436,27 @@ const (
 func (r IndividualGender) IsKnown() bool {
 	switch r {
 	case IndividualGenderFemale, IndividualGenderMale, IndividualGenderOther, IndividualGenderDeclineToSpecify:
+		return true
+	}
+	return false
+}
+
+// The employee's marital status, used for beneficiary designation and spousal
+// consent workflows.
+type IndividualMaritalStatus string
+
+const (
+	IndividualMaritalStatusSingle          IndividualMaritalStatus = "single"
+	IndividualMaritalStatusMarried         IndividualMaritalStatus = "married"
+	IndividualMaritalStatusDivorced        IndividualMaritalStatus = "divorced"
+	IndividualMaritalStatusWidowed         IndividualMaritalStatus = "widowed"
+	IndividualMaritalStatusDomesticPartner IndividualMaritalStatus = "domestic_partner"
+	IndividualMaritalStatusUnknown         IndividualMaritalStatus = "unknown"
+)
+
+func (r IndividualMaritalStatus) IsKnown() bool {
+	switch r {
+	case IndividualMaritalStatusSingle, IndividualMaritalStatusMarried, IndividualMaritalStatusDivorced, IndividualMaritalStatusWidowed, IndividualMaritalStatusDomesticPartner, IndividualMaritalStatusUnknown:
 		return true
 	}
 	return false
