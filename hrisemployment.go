@@ -86,6 +86,9 @@ type EmploymentData struct {
 	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
 	// `unknown`.
 	FlsaStatus EmploymentDataFlsaStatus `json:"flsa_status" api:"nullable"`
+	// IRS flag indicating whether the employee is classified as a Highly Compensated
+	// Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+	HighlyCompensatedEmployee bool `json:"highly_compensated_employee" api:"nullable"`
 	// The employee's income as reported by the provider. This may not always be
 	// annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc,
 	// depending on what information the provider returns.
@@ -94,6 +97,9 @@ type EmploymentData struct {
 	IncomeHistory interface{} `json:"income_history"`
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active" api:"nullable"`
+	// IRS flag indicating whether the employee is classified as a Key Employee for
+	// top-heavy testing purposes. US-only.
+	KeyEmployee bool `json:"key_employee" api:"nullable"`
 	// The legal last name of the individual.
 	LastName         string   `json:"last_name" api:"nullable"`
 	LatestRehireDate string   `json:"latest_rehire_date" api:"nullable"`
@@ -110,6 +116,11 @@ type EmploymentData struct {
 	StartDate string `json:"start_date" api:"nullable"`
 	// The current title of the individual.
 	Title string `json:"title" api:"nullable"`
+	// The code identifying the union the employee is a member of, as configured in the
+	// payroll system.
+	UnionCode string `json:"union_code" api:"nullable"`
+	// The local chapter or local number within the employee's union.
+	UnionLocal string `json:"union_local" api:"nullable"`
 	// This field is deprecated in favour of `source_id`
 	//
 	// Deprecated: deprecated
@@ -120,33 +131,37 @@ type EmploymentData struct {
 
 // employmentDataJSON contains the JSON metadata for the struct [EmploymentData]
 type employmentDataJSON struct {
-	ID               apijson.Field
-	ClassCode        apijson.Field
-	Code             apijson.Field
-	CustomFields     apijson.Field
-	Department       apijson.Field
-	Employment       apijson.Field
-	EmploymentStatus apijson.Field
-	EndDate          apijson.Field
-	FinchCode        apijson.Field
-	FirstName        apijson.Field
-	FlsaStatus       apijson.Field
-	Income           apijson.Field
-	IncomeHistory    apijson.Field
-	IsActive         apijson.Field
-	LastName         apijson.Field
-	LatestRehireDate apijson.Field
-	Location         apijson.Field
-	Manager          apijson.Field
-	Message          apijson.Field
-	MiddleName       apijson.Field
-	Name             apijson.Field
-	SourceID         apijson.Field
-	StartDate        apijson.Field
-	Title            apijson.Field
-	WorkID           apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	ID                        apijson.Field
+	ClassCode                 apijson.Field
+	Code                      apijson.Field
+	CustomFields              apijson.Field
+	Department                apijson.Field
+	Employment                apijson.Field
+	EmploymentStatus          apijson.Field
+	EndDate                   apijson.Field
+	FinchCode                 apijson.Field
+	FirstName                 apijson.Field
+	FlsaStatus                apijson.Field
+	HighlyCompensatedEmployee apijson.Field
+	Income                    apijson.Field
+	IncomeHistory             apijson.Field
+	IsActive                  apijson.Field
+	KeyEmployee               apijson.Field
+	LastName                  apijson.Field
+	LatestRehireDate          apijson.Field
+	Location                  apijson.Field
+	Manager                   apijson.Field
+	Message                   apijson.Field
+	MiddleName                apijson.Field
+	Name                      apijson.Field
+	SourceID                  apijson.Field
+	StartDate                 apijson.Field
+	Title                     apijson.Field
+	UnionCode                 apijson.Field
+	UnionLocal                apijson.Field
+	WorkID                    apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r employmentDataJSON) RawJSON() string {
@@ -209,8 +224,14 @@ type EmploymentDataEmploymentDataResponseBody struct {
 	// The FLSA status of the individual. Available options: `exempt`, `non_exempt`,
 	// `unknown`.
 	FlsaStatus EmploymentDataEmploymentDataResponseBodyFlsaStatus `json:"flsa_status" api:"required,nullable"`
+	// IRS flag indicating whether the employee is classified as a Highly Compensated
+	// Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+	HighlyCompensatedEmployee bool `json:"highly_compensated_employee" api:"required,nullable"`
 	// `true` if the individual an an active employee or contractor at the company.
 	IsActive bool `json:"is_active" api:"required,nullable"`
+	// IRS flag indicating whether the employee is classified as a Key Employee for
+	// top-heavy testing purposes. US-only.
+	KeyEmployee bool `json:"key_employee" api:"required,nullable"`
 	// The legal last name of the individual.
 	LastName         string   `json:"last_name" api:"required,nullable"`
 	LatestRehireDate string   `json:"latest_rehire_date" api:"required,nullable"`
@@ -222,6 +243,11 @@ type EmploymentDataEmploymentDataResponseBody struct {
 	StartDate  string `json:"start_date" api:"required,nullable"`
 	// The current title of the individual.
 	Title string `json:"title" api:"required,nullable"`
+	// The code identifying the union the employee is a member of, as configured in the
+	// payroll system.
+	UnionCode string `json:"union_code" api:"required,nullable"`
+	// The local chapter or local number within the employee's union.
+	UnionLocal string `json:"union_local" api:"required,nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
 	// employer in the system. Custom fields are not currently supported for assisted
 	// connections.
@@ -244,29 +270,33 @@ type EmploymentDataEmploymentDataResponseBody struct {
 // employmentDataEmploymentDataResponseBodyJSON contains the JSON metadata for the
 // struct [EmploymentDataEmploymentDataResponseBody]
 type employmentDataEmploymentDataResponseBodyJSON struct {
-	ID               apijson.Field
-	ClassCode        apijson.Field
-	Department       apijson.Field
-	Employment       apijson.Field
-	EmploymentStatus apijson.Field
-	EndDate          apijson.Field
-	FirstName        apijson.Field
-	FlsaStatus       apijson.Field
-	IsActive         apijson.Field
-	LastName         apijson.Field
-	LatestRehireDate apijson.Field
-	Location         apijson.Field
-	Manager          apijson.Field
-	MiddleName       apijson.Field
-	StartDate        apijson.Field
-	Title            apijson.Field
-	CustomFields     apijson.Field
-	Income           apijson.Field
-	IncomeHistory    apijson.Field
-	SourceID         apijson.Field
-	WorkID           apijson.Field
-	raw              string
-	ExtraFields      map[string]apijson.Field
+	ID                        apijson.Field
+	ClassCode                 apijson.Field
+	Department                apijson.Field
+	Employment                apijson.Field
+	EmploymentStatus          apijson.Field
+	EndDate                   apijson.Field
+	FirstName                 apijson.Field
+	FlsaStatus                apijson.Field
+	HighlyCompensatedEmployee apijson.Field
+	IsActive                  apijson.Field
+	KeyEmployee               apijson.Field
+	LastName                  apijson.Field
+	LatestRehireDate          apijson.Field
+	Location                  apijson.Field
+	Manager                   apijson.Field
+	MiddleName                apijson.Field
+	StartDate                 apijson.Field
+	Title                     apijson.Field
+	UnionCode                 apijson.Field
+	UnionLocal                apijson.Field
+	CustomFields              apijson.Field
+	Income                    apijson.Field
+	IncomeHistory             apijson.Field
+	SourceID                  apijson.Field
+	WorkID                    apijson.Field
+	raw                       string
+	ExtraFields               map[string]apijson.Field
 }
 
 func (r *EmploymentDataEmploymentDataResponseBody) UnmarshalJSON(data []byte) (err error) {
