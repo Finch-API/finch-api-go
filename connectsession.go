@@ -131,22 +131,25 @@ func (r ConnectSessionNewParams) MarshalJSON() (data []byte, err error) {
 type ConnectSessionNewParamsProduct string
 
 const (
-	ConnectSessionNewParamsProductBenefits      ConnectSessionNewParamsProduct = "benefits"
-	ConnectSessionNewParamsProductCompany       ConnectSessionNewParamsProduct = "company"
-	ConnectSessionNewParamsProductDeduction     ConnectSessionNewParamsProduct = "deduction"
-	ConnectSessionNewParamsProductDirectory     ConnectSessionNewParamsProduct = "directory"
-	ConnectSessionNewParamsProductDocuments     ConnectSessionNewParamsProduct = "documents"
-	ConnectSessionNewParamsProductEmployment    ConnectSessionNewParamsProduct = "employment"
-	ConnectSessionNewParamsProductIndividual    ConnectSessionNewParamsProduct = "individual"
-	ConnectSessionNewParamsProductPayment       ConnectSessionNewParamsProduct = "payment"
-	ConnectSessionNewParamsProductPayStatement  ConnectSessionNewParamsProduct = "pay_statement"
-	ConnectSessionNewParamsProductRecordkeeping ConnectSessionNewParamsProduct = "recordkeeping"
-	ConnectSessionNewParamsProductSsn           ConnectSessionNewParamsProduct = "ssn"
+	ConnectSessionNewParamsProductBenefits         ConnectSessionNewParamsProduct = "benefits"
+	ConnectSessionNewParamsProductCompany          ConnectSessionNewParamsProduct = "company"
+	ConnectSessionNewParamsProductDeduction        ConnectSessionNewParamsProduct = "deduction"
+	ConnectSessionNewParamsProductDirectory        ConnectSessionNewParamsProduct = "directory"
+	ConnectSessionNewParamsProductDocuments        ConnectSessionNewParamsProduct = "documents"
+	ConnectSessionNewParamsProductEmployment       ConnectSessionNewParamsProduct = "employment"
+	ConnectSessionNewParamsProductIndividual       ConnectSessionNewParamsProduct = "individual"
+	ConnectSessionNewParamsProductPayment          ConnectSessionNewParamsProduct = "payment"
+	ConnectSessionNewParamsProductPayStatement     ConnectSessionNewParamsProduct = "pay_statement"
+	ConnectSessionNewParamsProductPlans            ConnectSessionNewParamsProduct = "plans"
+	ConnectSessionNewParamsProductPlansDependents  ConnectSessionNewParamsProduct = "plans_dependents"
+	ConnectSessionNewParamsProductPlansEnrollments ConnectSessionNewParamsProduct = "plans_enrollments"
+	ConnectSessionNewParamsProductRecordkeeping    ConnectSessionNewParamsProduct = "recordkeeping"
+	ConnectSessionNewParamsProductSsn              ConnectSessionNewParamsProduct = "ssn"
 )
 
 func (r ConnectSessionNewParamsProduct) IsKnown() bool {
 	switch r {
-	case ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDeduction, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductDocuments, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductRecordkeeping, ConnectSessionNewParamsProductSsn:
+	case ConnectSessionNewParamsProductBenefits, ConnectSessionNewParamsProductCompany, ConnectSessionNewParamsProductDeduction, ConnectSessionNewParamsProductDirectory, ConnectSessionNewParamsProductDocuments, ConnectSessionNewParamsProductEmployment, ConnectSessionNewParamsProductIndividual, ConnectSessionNewParamsProductPayment, ConnectSessionNewParamsProductPayStatement, ConnectSessionNewParamsProductPlans, ConnectSessionNewParamsProductPlansDependents, ConnectSessionNewParamsProductPlansEnrollments, ConnectSessionNewParamsProductRecordkeeping, ConnectSessionNewParamsProductSsn:
 		return true
 	}
 	return false
@@ -219,22 +222,25 @@ func (r ConnectSessionReauthenticateParams) MarshalJSON() (data []byte, err erro
 type ConnectSessionReauthenticateParamsProduct string
 
 const (
-	ConnectSessionReauthenticateParamsProductBenefits      ConnectSessionReauthenticateParamsProduct = "benefits"
-	ConnectSessionReauthenticateParamsProductCompany       ConnectSessionReauthenticateParamsProduct = "company"
-	ConnectSessionReauthenticateParamsProductDeduction     ConnectSessionReauthenticateParamsProduct = "deduction"
-	ConnectSessionReauthenticateParamsProductDirectory     ConnectSessionReauthenticateParamsProduct = "directory"
-	ConnectSessionReauthenticateParamsProductDocuments     ConnectSessionReauthenticateParamsProduct = "documents"
-	ConnectSessionReauthenticateParamsProductEmployment    ConnectSessionReauthenticateParamsProduct = "employment"
-	ConnectSessionReauthenticateParamsProductIndividual    ConnectSessionReauthenticateParamsProduct = "individual"
-	ConnectSessionReauthenticateParamsProductPayment       ConnectSessionReauthenticateParamsProduct = "payment"
-	ConnectSessionReauthenticateParamsProductPayStatement  ConnectSessionReauthenticateParamsProduct = "pay_statement"
-	ConnectSessionReauthenticateParamsProductRecordkeeping ConnectSessionReauthenticateParamsProduct = "recordkeeping"
-	ConnectSessionReauthenticateParamsProductSsn           ConnectSessionReauthenticateParamsProduct = "ssn"
+	ConnectSessionReauthenticateParamsProductBenefits         ConnectSessionReauthenticateParamsProduct = "benefits"
+	ConnectSessionReauthenticateParamsProductCompany          ConnectSessionReauthenticateParamsProduct = "company"
+	ConnectSessionReauthenticateParamsProductDeduction        ConnectSessionReauthenticateParamsProduct = "deduction"
+	ConnectSessionReauthenticateParamsProductDirectory        ConnectSessionReauthenticateParamsProduct = "directory"
+	ConnectSessionReauthenticateParamsProductDocuments        ConnectSessionReauthenticateParamsProduct = "documents"
+	ConnectSessionReauthenticateParamsProductEmployment       ConnectSessionReauthenticateParamsProduct = "employment"
+	ConnectSessionReauthenticateParamsProductIndividual       ConnectSessionReauthenticateParamsProduct = "individual"
+	ConnectSessionReauthenticateParamsProductPayment          ConnectSessionReauthenticateParamsProduct = "payment"
+	ConnectSessionReauthenticateParamsProductPayStatement     ConnectSessionReauthenticateParamsProduct = "pay_statement"
+	ConnectSessionReauthenticateParamsProductPlans            ConnectSessionReauthenticateParamsProduct = "plans"
+	ConnectSessionReauthenticateParamsProductPlansDependents  ConnectSessionReauthenticateParamsProduct = "plans_dependents"
+	ConnectSessionReauthenticateParamsProductPlansEnrollments ConnectSessionReauthenticateParamsProduct = "plans_enrollments"
+	ConnectSessionReauthenticateParamsProductRecordkeeping    ConnectSessionReauthenticateParamsProduct = "recordkeeping"
+	ConnectSessionReauthenticateParamsProductSsn              ConnectSessionReauthenticateParamsProduct = "ssn"
 )
 
 func (r ConnectSessionReauthenticateParamsProduct) IsKnown() bool {
 	switch r {
-	case ConnectSessionReauthenticateParamsProductBenefits, ConnectSessionReauthenticateParamsProductCompany, ConnectSessionReauthenticateParamsProductDeduction, ConnectSessionReauthenticateParamsProductDirectory, ConnectSessionReauthenticateParamsProductDocuments, ConnectSessionReauthenticateParamsProductEmployment, ConnectSessionReauthenticateParamsProductIndividual, ConnectSessionReauthenticateParamsProductPayment, ConnectSessionReauthenticateParamsProductPayStatement, ConnectSessionReauthenticateParamsProductRecordkeeping, ConnectSessionReauthenticateParamsProductSsn:
+	case ConnectSessionReauthenticateParamsProductBenefits, ConnectSessionReauthenticateParamsProductCompany, ConnectSessionReauthenticateParamsProductDeduction, ConnectSessionReauthenticateParamsProductDirectory, ConnectSessionReauthenticateParamsProductDocuments, ConnectSessionReauthenticateParamsProductEmployment, ConnectSessionReauthenticateParamsProductIndividual, ConnectSessionReauthenticateParamsProductPayment, ConnectSessionReauthenticateParamsProductPayStatement, ConnectSessionReauthenticateParamsProductPlans, ConnectSessionReauthenticateParamsProductPlansDependents, ConnectSessionReauthenticateParamsProductPlansEnrollments, ConnectSessionReauthenticateParamsProductRecordkeeping, ConnectSessionReauthenticateParamsProductSsn:
 		return true
 	}
 	return false
