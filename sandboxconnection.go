@@ -47,12 +47,12 @@ type SandboxConnectionNewResponse struct {
 	AccessToken        string                                         `json:"access_token" api:"required"`
 	AccountID          string                                         `json:"account_id" api:"required" format:"uuid"`
 	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type" api:"required"`
-	CompanyID          string                                         `json:"company_id" api:"required,nullable" format:"uuid"`
 	ConnectionID       string                                         `json:"connection_id" api:"required"`
 	EntityID           string                                         `json:"entity_id" api:"required"`
 	Products           []string                                       `json:"products" api:"required"`
 	ProviderID         string                                         `json:"provider_id" api:"required"`
 	TokenType          string                                         `json:"token_type" api:"required"`
+	CompanyID          string                                         `json:"company_id" api:"nullable" format:"uuid"`
 	JSON               sandboxConnectionNewResponseJSON               `json:"-"`
 }
 
@@ -62,12 +62,12 @@ type sandboxConnectionNewResponseJSON struct {
 	AccessToken        apijson.Field
 	AccountID          apijson.Field
 	AuthenticationType apijson.Field
-	CompanyID          apijson.Field
 	ConnectionID       apijson.Field
 	EntityID           apijson.Field
 	Products           apijson.Field
 	ProviderID         apijson.Field
 	TokenType          apijson.Field
+	CompanyID          apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
