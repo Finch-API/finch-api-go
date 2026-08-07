@@ -44,23 +44,16 @@ func (r *SandboxConnectionService) New(ctx context.Context, body SandboxConnecti
 }
 
 type SandboxConnectionNewResponse struct {
-	AccessToken string `json:"access_token" api:"required" format:"uuid"`
-	// [DEPRECATED] Use `connection_id` to associate a connection with an access token
-	//
-	// Deprecated: deprecated
+	AccessToken        string                                         `json:"access_token" api:"required"`
 	AccountID          string                                         `json:"account_id" api:"required" format:"uuid"`
 	AuthenticationType SandboxConnectionNewResponseAuthenticationType `json:"authentication_type" api:"required"`
-	// The Finch UUID of the company associated with the `access_token`.
-	CompanyID string `json:"company_id" api:"required" format:"uuid"`
-	// The ID of the new connection
-	ConnectionID string `json:"connection_id" api:"required" format:"uuid"`
-	// The ID of the entity for this connection
-	EntityID string   `json:"entity_id" api:"required" format:"uuid"`
-	Products []string `json:"products" api:"required"`
-	// The ID of the provider associated with the `access_token`.
-	ProviderID string                           `json:"provider_id" api:"required" format:"uuid"`
-	TokenType  string                           `json:"token_type"`
-	JSON       sandboxConnectionNewResponseJSON `json:"-"`
+	CompanyID          string                                         `json:"company_id" api:"required,nullable" format:"uuid"`
+	ConnectionID       string                                         `json:"connection_id" api:"required"`
+	EntityID           string                                         `json:"entity_id" api:"required"`
+	Products           []string                                       `json:"products" api:"required"`
+	ProviderID         string                                         `json:"provider_id" api:"required"`
+	TokenType          string                                         `json:"token_type" api:"required"`
+	JSON               sandboxConnectionNewResponseJSON               `json:"-"`
 }
 
 // sandboxConnectionNewResponseJSON contains the JSON metadata for the struct
@@ -90,15 +83,15 @@ func (r sandboxConnectionNewResponseJSON) RawJSON() string {
 type SandboxConnectionNewResponseAuthenticationType string
 
 const (
-	SandboxConnectionNewResponseAuthenticationTypeCredential SandboxConnectionNewResponseAuthenticationType = "credential"
 	SandboxConnectionNewResponseAuthenticationTypeAPIToken   SandboxConnectionNewResponseAuthenticationType = "api_token"
-	SandboxConnectionNewResponseAuthenticationTypeOAuth      SandboxConnectionNewResponseAuthenticationType = "oauth"
 	SandboxConnectionNewResponseAuthenticationTypeAssisted   SandboxConnectionNewResponseAuthenticationType = "assisted"
+	SandboxConnectionNewResponseAuthenticationTypeCredential SandboxConnectionNewResponseAuthenticationType = "credential"
+	SandboxConnectionNewResponseAuthenticationTypeOAuth      SandboxConnectionNewResponseAuthenticationType = "oauth"
 )
 
 func (r SandboxConnectionNewResponseAuthenticationType) IsKnown() bool {
 	switch r {
-	case SandboxConnectionNewResponseAuthenticationTypeCredential, SandboxConnectionNewResponseAuthenticationTypeAPIToken, SandboxConnectionNewResponseAuthenticationTypeOAuth, SandboxConnectionNewResponseAuthenticationTypeAssisted:
+	case SandboxConnectionNewResponseAuthenticationTypeAPIToken, SandboxConnectionNewResponseAuthenticationTypeAssisted, SandboxConnectionNewResponseAuthenticationTypeCredential, SandboxConnectionNewResponseAuthenticationTypeOAuth:
 		return true
 	}
 	return false
@@ -122,15 +115,15 @@ func (r SandboxConnectionNewParams) MarshalJSON() (data []byte, err error) {
 type SandboxConnectionNewParamsAuthenticationType string
 
 const (
-	SandboxConnectionNewParamsAuthenticationTypeCredential SandboxConnectionNewParamsAuthenticationType = "credential"
 	SandboxConnectionNewParamsAuthenticationTypeAPIToken   SandboxConnectionNewParamsAuthenticationType = "api_token"
-	SandboxConnectionNewParamsAuthenticationTypeOAuth      SandboxConnectionNewParamsAuthenticationType = "oauth"
 	SandboxConnectionNewParamsAuthenticationTypeAssisted   SandboxConnectionNewParamsAuthenticationType = "assisted"
+	SandboxConnectionNewParamsAuthenticationTypeCredential SandboxConnectionNewParamsAuthenticationType = "credential"
+	SandboxConnectionNewParamsAuthenticationTypeOAuth      SandboxConnectionNewParamsAuthenticationType = "oauth"
 )
 
 func (r SandboxConnectionNewParamsAuthenticationType) IsKnown() bool {
 	switch r {
-	case SandboxConnectionNewParamsAuthenticationTypeCredential, SandboxConnectionNewParamsAuthenticationTypeAPIToken, SandboxConnectionNewParamsAuthenticationTypeOAuth, SandboxConnectionNewParamsAuthenticationTypeAssisted:
+	case SandboxConnectionNewParamsAuthenticationTypeAPIToken, SandboxConnectionNewParamsAuthenticationTypeAssisted, SandboxConnectionNewParamsAuthenticationTypeCredential, SandboxConnectionNewParamsAuthenticationTypeOAuth:
 		return true
 	}
 	return false
