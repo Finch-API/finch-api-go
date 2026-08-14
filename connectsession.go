@@ -120,7 +120,7 @@ type ConnectSessionNewParams struct {
 	MinutesToExpire param.Field[float64] `json:"minutes_to_expire"`
 	// Optional recordkeeping configuration. Can only be provided when the
 	// `recordkeeping` product is requested. Currently supports `recordkeeper` set to
-	// `voya`.
+	// `voya` or `empower`.
 	Recordkeeping param.Field[ConnectSessionNewParamsRecordkeeping] `json:"recordkeeping"`
 	// The URI to redirect to after the Connect flow is completed
 	RedirectUri param.Field[string] `json:"redirect_uri"`
@@ -191,12 +191,12 @@ func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
 
 // Optional recordkeeping configuration. Can only be provided when the
 // `recordkeeping` product is requested. Currently supports `recordkeeper` set to
-// `voya`.
+// `voya` or `empower`.
 type ConnectSessionNewParamsRecordkeeping struct {
-	// The plan identifier used by the recordkeeper
-	PlanID param.Field[string] `json:"plan_id" api:"required"`
 	// The recordkeeper to configure for this connection
 	Recordkeeper param.Field[ConnectSessionNewParamsRecordkeepingRecordkeeper] `json:"recordkeeper" api:"required"`
+	// The plan identifier used by the recordkeeper
+	PlanID param.Field[string] `json:"plan_id"`
 }
 
 func (r ConnectSessionNewParamsRecordkeeping) MarshalJSON() (data []byte, err error) {
@@ -207,12 +207,13 @@ func (r ConnectSessionNewParamsRecordkeeping) MarshalJSON() (data []byte, err er
 type ConnectSessionNewParamsRecordkeepingRecordkeeper string
 
 const (
-	ConnectSessionNewParamsRecordkeepingRecordkeeperVoya ConnectSessionNewParamsRecordkeepingRecordkeeper = "voya"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperVoya    ConnectSessionNewParamsRecordkeepingRecordkeeper = "voya"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower ConnectSessionNewParamsRecordkeepingRecordkeeper = "empower"
 )
 
 func (r ConnectSessionNewParamsRecordkeepingRecordkeeper) IsKnown() bool {
 	switch r {
-	case ConnectSessionNewParamsRecordkeepingRecordkeeperVoya:
+	case ConnectSessionNewParamsRecordkeepingRecordkeeperVoya, ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower:
 		return true
 	}
 	return false
