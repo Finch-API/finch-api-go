@@ -40,8 +40,8 @@ func TestConnectSessionNewWithOptionalParams(t *testing.T) {
 		Manual:          finchgo.F(true),
 		MinutesToExpire: finchgo.F(1.000000),
 		Recordkeeping: finchgo.F(finchgo.ConnectSessionNewParamsRecordkeeping{
-			PlanID:       finchgo.F("x"),
 			Recordkeeper: finchgo.F(finchgo.ConnectSessionNewParamsRecordkeepingRecordkeeperVoya),
+			PlanID:       finchgo.F("x"),
 		}),
 		RedirectUri: finchgo.F("redirect_uri"),
 		Sandbox:     finchgo.F(finchgo.ConnectSessionNewParamsSandboxFinch),
