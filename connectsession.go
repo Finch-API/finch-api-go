@@ -120,7 +120,7 @@ type ConnectSessionNewParams struct {
 	MinutesToExpire param.Field[float64] `json:"minutes_to_expire"`
 	// Optional recordkeeping configuration. Can only be provided when the
 	// `recordkeeping` product is requested. Currently supports `recordkeeper` set to
-	// `voya` or `empower`.
+	// `voya`, `empower`, `fidelity`, or `transamerica`.
 	Recordkeeping param.Field[ConnectSessionNewParamsRecordkeeping] `json:"recordkeeping"`
 	// The URI to redirect to after the Connect flow is completed
 	RedirectUri param.Field[string] `json:"redirect_uri"`
@@ -191,7 +191,7 @@ func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
 
 // Optional recordkeeping configuration. Can only be provided when the
 // `recordkeeping` product is requested. Currently supports `recordkeeper` set to
-// `voya` or `empower`.
+// `voya`, `empower`, `fidelity`, or `transamerica`.
 type ConnectSessionNewParamsRecordkeeping struct {
 	// The recordkeeper to configure for this connection
 	Recordkeeper param.Field[ConnectSessionNewParamsRecordkeepingRecordkeeper] `json:"recordkeeper" api:"required"`
@@ -207,13 +207,15 @@ func (r ConnectSessionNewParamsRecordkeeping) MarshalJSON() (data []byte, err er
 type ConnectSessionNewParamsRecordkeepingRecordkeeper string
 
 const (
-	ConnectSessionNewParamsRecordkeepingRecordkeeperVoya    ConnectSessionNewParamsRecordkeepingRecordkeeper = "voya"
-	ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower ConnectSessionNewParamsRecordkeepingRecordkeeper = "empower"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperVoya         ConnectSessionNewParamsRecordkeepingRecordkeeper = "voya"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower      ConnectSessionNewParamsRecordkeepingRecordkeeper = "empower"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperFidelity     ConnectSessionNewParamsRecordkeepingRecordkeeper = "fidelity"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperTransamerica ConnectSessionNewParamsRecordkeepingRecordkeeper = "transamerica"
 )
 
 func (r ConnectSessionNewParamsRecordkeepingRecordkeeper) IsKnown() bool {
 	switch r {
-	case ConnectSessionNewParamsRecordkeepingRecordkeeperVoya, ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower:
+	case ConnectSessionNewParamsRecordkeepingRecordkeeperVoya, ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower, ConnectSessionNewParamsRecordkeepingRecordkeeperFidelity, ConnectSessionNewParamsRecordkeepingRecordkeeperTransamerica:
 		return true
 	}
 	return false
