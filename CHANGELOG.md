@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.8.0](https://github.com/Finch-API/finch-api-go/compare/v2.7.0...v2.8.0) (2026-08-20)
+
+
+### Features
+
+* accept fidelity and transamerica recordkeepers ([5ced2d9](https://github.com/Finch-API/finch-api-go/commit/5ced2d9914a46f0c9bc3e8c6b56111cab447582d))
+* accept recordkeeping param and 16 ledger entry types ([677e0f6](https://github.com/Finch-API/finch-api-go/commit/677e0f69ac7f7e82e27313723de0b7bfc2048a4c))
+* add stlc promote and back-sync workflows ([83a0e61](https://github.com/Finch-API/finch-api-go/commit/83a0e6156490ff074b051fae0be5d3008285a99b))
+* **stainless:** migrate SDK generation from Stainless SaaS to self-hosted stlc - PLAT-3989 ([bd21a4b](https://github.com/Finch-API/finch-api-go/commit/bd21a4b12db2b944d0981365455fbd801cc31ae9))
+
+
+### Bug Fixes
+
+* restore /v2 module path in README ([de4a290](https://github.com/Finch-API/finch-api-go/commit/de4a290f8a208f6dfb75655b9786dfc70c3a4785))
+
+
+### Chores
+
+* drop stlc workflows pending re-seal as custom code ([b296490](https://github.com/Finch-API/finch-api-go/commit/b296490b9a798cde8195be859069bd9ac1a1022a))
+
 ## 2.7.0 (2026-08-07)
 
 Full Changelog: [v2.6.0...v2.7.0](https://github.com/Finch-API/finch-api-go/compare/v2.6.0...v2.7.0)
