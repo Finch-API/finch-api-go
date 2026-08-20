@@ -118,6 +118,10 @@ type ConnectSessionNewParams struct {
 	// The number of minutes until the session expires (defaults to 129,600, which is
 	// 90 days)
 	MinutesToExpire param.Field[float64] `json:"minutes_to_expire"`
+	// Optional recordkeeping configuration. Can only be provided when the
+	// `recordkeeping` product is requested. Currently supports `recordkeeper` set to
+	// `voya`, `empower`, `fidelity`, or `transamerica`.
+	Recordkeeping param.Field[ConnectSessionNewParamsRecordkeeping] `json:"recordkeeping"`
 	// The URI to redirect to after the Connect flow is completed
 	RedirectUri param.Field[string] `json:"redirect_uri"`
 	// Sandbox mode for testing
@@ -180,6 +184,38 @@ const (
 func (r ConnectSessionNewParamsIntegrationAuthMethod) IsKnown() bool {
 	switch r {
 	case ConnectSessionNewParamsIntegrationAuthMethodAssisted, ConnectSessionNewParamsIntegrationAuthMethodCredential, ConnectSessionNewParamsIntegrationAuthMethodOAuth, ConnectSessionNewParamsIntegrationAuthMethodAPIToken:
+		return true
+	}
+	return false
+}
+
+// Optional recordkeeping configuration. Can only be provided when the
+// `recordkeeping` product is requested. Currently supports `recordkeeper` set to
+// `voya`, `empower`, `fidelity`, or `transamerica`.
+type ConnectSessionNewParamsRecordkeeping struct {
+	// The recordkeeper to configure for this connection
+	Recordkeeper param.Field[ConnectSessionNewParamsRecordkeepingRecordkeeper] `json:"recordkeeper" api:"required"`
+	// The plan identifier used by the recordkeeper
+	PlanID param.Field[string] `json:"plan_id"`
+}
+
+func (r ConnectSessionNewParamsRecordkeeping) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The recordkeeper to configure for this connection
+type ConnectSessionNewParamsRecordkeepingRecordkeeper string
+
+const (
+	ConnectSessionNewParamsRecordkeepingRecordkeeperVoya         ConnectSessionNewParamsRecordkeepingRecordkeeper = "voya"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower      ConnectSessionNewParamsRecordkeepingRecordkeeper = "empower"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperFidelity     ConnectSessionNewParamsRecordkeepingRecordkeeper = "fidelity"
+	ConnectSessionNewParamsRecordkeepingRecordkeeperTransamerica ConnectSessionNewParamsRecordkeepingRecordkeeper = "transamerica"
+)
+
+func (r ConnectSessionNewParamsRecordkeepingRecordkeeper) IsKnown() bool {
+	switch r {
+	case ConnectSessionNewParamsRecordkeepingRecordkeeperVoya, ConnectSessionNewParamsRecordkeepingRecordkeeperEmpower, ConnectSessionNewParamsRecordkeepingRecordkeeperFidelity, ConnectSessionNewParamsRecordkeepingRecordkeeperTransamerica:
 		return true
 	}
 	return false
