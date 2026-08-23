@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.1](https://github.com/Finch-API/finch-api-go/compare/v2.8.0...v2.8.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **stainless:** prevent codegen release deadlock - PLAT-3989 ([09f7c8b](https://github.com/Finch-API/finch-api-go/commit/09f7c8be09dac2b469d119230e008e25c80a597f))
+
 ## [2.8.0](https://github.com/Finch-API/finch-api-go/compare/v2.7.0...v2.8.0) (2026-08-20)
 
 
