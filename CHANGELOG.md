@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.2](https://github.com/Finch-API/finch-api-go/compare/v2.8.1...v2.8.2) (2026-09-15)
+
+
+### Bug Fixes
+
+* **sdk:** restore basic authentication for providers ([385398f](https://github.com/Finch-API/finch-api-go/commit/385398fb3ca4522070906ac28c0d532ed88ad426))
+
 ## [2.8.1](https://github.com/Finch-API/finch-api-go/compare/v2.8.0...v2.8.1) (2026-08-21)
 
 
