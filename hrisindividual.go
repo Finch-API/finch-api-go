@@ -297,6 +297,9 @@ func (r IndividualIndividualResponseBodyMaritalStatus) IsKnown() bool {
 }
 
 type IndividualIndividualResponseBodyPhoneNumber struct {
+	// The phone number. Format: E.164, with extension where applicable, e.g.
+	// `+NNNNNNNNNNN xExtension`. If the number cannot be parsed, the raw value from
+	// the provider is returned.
 	Data string                                           `json:"data" api:"required,nullable"`
 	Type IndividualIndividualResponseBodyPhoneNumbersType `json:"type" api:"required,nullable"`
 	JSON individualIndividualResponseBodyPhoneNumberJSON  `json:"-"`
