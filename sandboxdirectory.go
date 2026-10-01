@@ -350,6 +350,9 @@ func (r SandboxDirectoryNewParamsBodyMaritalStatus) IsKnown() bool {
 }
 
 type SandboxDirectoryNewParamsBodyPhoneNumber struct {
+	// The phone number. Format: E.164, with extension where applicable, e.g.
+	// `+NNNNNNNNNNN xExtension`. If the number cannot be parsed, the raw value from
+	// the provider is returned.
 	Data param.Field[string]                                        `json:"data"`
 	Type param.Field[SandboxDirectoryNewParamsBodyPhoneNumbersType] `json:"type"`
 }

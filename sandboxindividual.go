@@ -210,6 +210,9 @@ func (r SandboxIndividualUpdateResponseMaritalStatus) IsKnown() bool {
 }
 
 type SandboxIndividualUpdateResponsePhoneNumber struct {
+	// The phone number. Format: E.164, with extension where applicable, e.g.
+	// `+NNNNNNNNNNN xExtension`. If the number cannot be parsed, the raw value from
+	// the provider is returned.
 	Data string                                          `json:"data" api:"nullable"`
 	Type SandboxIndividualUpdateResponsePhoneNumbersType `json:"type" api:"nullable"`
 	JSON sandboxIndividualUpdateResponsePhoneNumberJSON  `json:"-"`
@@ -368,6 +371,9 @@ func (r SandboxIndividualUpdateParamsMaritalStatus) IsKnown() bool {
 }
 
 type SandboxIndividualUpdateParamsPhoneNumber struct {
+	// The phone number. Format: E.164, with extension where applicable, e.g.
+	// `+NNNNNNNNNNN xExtension`. If the number cannot be parsed, the raw value from
+	// the provider is returned.
 	Data param.Field[string]                                        `json:"data"`
 	Type param.Field[SandboxIndividualUpdateParamsPhoneNumbersType] `json:"type"`
 }
