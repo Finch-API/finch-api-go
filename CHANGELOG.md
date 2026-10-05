@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.3](https://github.com/Finch-API/finch-api-go/compare/v2.8.2...v2.8.3) (2026-10-01)
+
+
+### Documentation
+
+* **spec:** document phone number format on individual phone_numbers ([1a79d0c](https://github.com/Finch-API/finch-api-go/commit/1a79d0cce5db1d305dfa463a86632ec81aeacef0))
+
 ## [2.8.2](https://github.com/Finch-API/finch-api-go/compare/v2.8.1...v2.8.2) (2026-09-15)
 
 
