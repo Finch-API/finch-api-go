@@ -169,7 +169,7 @@ type AccountUpdateEventDataAuthenticationMethod struct {
 	// Each benefit type and their supported features. If the benefit type is not
 	// supported, the property will be null
 	BenefitsSupport BenefitsSupport `json:"benefits_support" api:"nullable"`
-	// The supported data fields returned by our HR and payroll endpoints
+	// The supported data fields returned by our HR, payroll, and benefits endpoints
 	SupportedFields AccountUpdateEventDataAuthenticationMethodSupportedFields `json:"supported_fields" api:"nullable"`
 	// The type of authentication method.
 	Type AccountUpdateEventDataAuthenticationMethodType `json:"type"`
@@ -194,31 +194,37 @@ func (r accountUpdateEventDataAuthenticationMethodJSON) RawJSON() string {
 	return r.raw
 }
 
-// The supported data fields returned by our HR and payroll endpoints
+// The supported data fields returned by our HR, payroll, and benefits endpoints
 type AccountUpdateEventDataAuthenticationMethodSupportedFields struct {
-	Company      AccountUpdateEventDataAuthenticationMethodSupportedFieldsCompany      `json:"company"`
-	Directory    AccountUpdateEventDataAuthenticationMethodSupportedFieldsDirectory    `json:"directory"`
-	Employment   AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmployment   `json:"employment"`
-	Individual   AccountUpdateEventDataAuthenticationMethodSupportedFieldsIndividual   `json:"individual"`
-	PayGroup     AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroup     `json:"pay_group"`
-	PayStatement AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatement `json:"pay_statement"`
-	Payment      AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayment      `json:"payment"`
-	JSON         accountUpdateEventDataAuthenticationMethodSupportedFieldsJSON         `json:"-"`
+	Company         AccountUpdateEventDataAuthenticationMethodSupportedFieldsCompany         `json:"company"`
+	Directory       AccountUpdateEventDataAuthenticationMethodSupportedFieldsDirectory       `json:"directory"`
+	Employment      AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmployment      `json:"employment"`
+	Individual      AccountUpdateEventDataAuthenticationMethodSupportedFieldsIndividual      `json:"individual"`
+	PayGroup        AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayGroup        `json:"pay_group"`
+	PayStatement    AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayStatement    `json:"pay_statement"`
+	Payment         AccountUpdateEventDataAuthenticationMethodSupportedFieldsPayment         `json:"payment"`
+	PlanDependents  AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependents  `json:"plan_dependents"`
+	PlanEnrollments AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollments `json:"plan_enrollments"`
+	Plans           AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlans           `json:"plans"`
+	JSON            accountUpdateEventDataAuthenticationMethodSupportedFieldsJSON            `json:"-"`
 }
 
 // accountUpdateEventDataAuthenticationMethodSupportedFieldsJSON contains the JSON
 // metadata for the struct
 // [AccountUpdateEventDataAuthenticationMethodSupportedFields]
 type accountUpdateEventDataAuthenticationMethodSupportedFieldsJSON struct {
-	Company      apijson.Field
-	Directory    apijson.Field
-	Employment   apijson.Field
-	Individual   apijson.Field
-	PayGroup     apijson.Field
-	PayStatement apijson.Field
-	Payment      apijson.Field
-	raw          string
-	ExtraFields  map[string]apijson.Field
+	Company         apijson.Field
+	Directory       apijson.Field
+	Employment      apijson.Field
+	Individual      apijson.Field
+	PayGroup        apijson.Field
+	PayStatement    apijson.Field
+	Payment         apijson.Field
+	PlanDependents  apijson.Field
+	PlanEnrollments apijson.Field
+	Plans           apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
 }
 
 func (r *AccountUpdateEventDataAuthenticationMethodSupportedFields) UnmarshalJSON(data []byte) (err error) {
@@ -425,7 +431,7 @@ func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsDirectoryJSON) 
 
 type AccountUpdateEventDataAuthenticationMethodSupportedFieldsDirectoryIndividuals struct {
 	ID         bool                                                                                 `json:"id"`
-	Department bool                                                                                 `json:"department"`
+	Department bool                                                                                 `json:"department" api:"nullable"`
 	FirstName  bool                                                                                 `json:"first_name"`
 	IsActive   bool                                                                                 `json:"is_active"`
 	LastName   bool                                                                                 `json:"last_name"`
@@ -517,7 +523,7 @@ type AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmployment struct 
 	IsActive         bool                                                                          `json:"is_active"`
 	LastName         bool                                                                          `json:"last_name"`
 	Location         AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmploymentLocation   `json:"location"`
-	Manager          AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmploymentManager    `json:"manager"`
+	Manager          AccountUpdateEventDataAuthenticationMethodSupportedFieldsEmploymentManager    `json:"manager" api:"nullable"`
 	MiddleName       bool                                                                          `json:"middle_name"`
 	StartDate        bool                                                                          `json:"start_date"`
 	Title            bool                                                                          `json:"title"`
@@ -1104,6 +1110,268 @@ func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentPayPeri
 }
 
 func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPaymentPayPeriodJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependents struct {
+	Coverage    AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverage `json:"coverage"`
+	DateOfBirth bool                                                                            `json:"date_of_birth"`
+	DependentID bool                                                                            `json:"dependent_id"`
+	FirstName   bool                                                                            `json:"first_name"`
+	Gender      bool                                                                            `json:"gender"`
+	LastName    bool                                                                            `json:"last_name"`
+	MiddleName  bool                                                                            `json:"middle_name"`
+	Ssn         bool                                                                            `json:"ssn"`
+	JSON        accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsJSON     `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependents]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsJSON struct {
+	Coverage    apijson.Field
+	DateOfBirth apijson.Field
+	DependentID apijson.Field
+	FirstName   apijson.Field
+	Gender      apijson.Field
+	LastName    apijson.Field
+	MiddleName  apijson.Field
+	Ssn         apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependents) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverage struct {
+	Enrollments              AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollments `json:"enrollments"`
+	IndividualID             bool                                                                                       `json:"individual_id"`
+	RelationshipToIndividual bool                                                                                       `json:"relationship_to_individual"`
+	JSON                     accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageJSON        `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverage]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageJSON struct {
+	Enrollments              apijson.Field
+	IndividualID             apijson.Field
+	RelationshipToIndividual apijson.Field
+	raw                      string
+	ExtraFields              map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverage) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollments struct {
+	ID   bool                                                                                           `json:"id"`
+	Type bool                                                                                           `json:"type"`
+	JSON accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollmentsJSON `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollmentsJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollments]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollmentsJSON struct {
+	ID          apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollments) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanDependentsCoverageEnrollmentsJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollments struct {
+	ID                bool                                                                                  `json:"id"`
+	Contributions     AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributions `json:"contributions"`
+	CoverageEndDate   bool                                                                                  `json:"coverage_end_date"`
+	CoverageStartDate bool                                                                                  `json:"coverage_start_date"`
+	CoverageTier      bool                                                                                  `json:"coverage_tier"`
+	DependentIDs      bool                                                                                  `json:"dependent_ids"`
+	IndividualID      bool                                                                                  `json:"individual_id"`
+	PlanID            bool                                                                                  `json:"plan_id"`
+	Status            bool                                                                                  `json:"status"`
+	JSON              accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsJSON          `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollments]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsJSON struct {
+	ID                apijson.Field
+	Contributions     apijson.Field
+	CoverageEndDate   apijson.Field
+	CoverageStartDate apijson.Field
+	CoverageTier      apijson.Field
+	DependentIDs      apijson.Field
+	IndividualID      apijson.Field
+	PlanID            apijson.Field
+	Status            apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollments) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributions struct {
+	EmployeeContribution AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContribution `json:"employee_contribution"`
+	EmployerContribution AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContribution `json:"employer_contribution"`
+	Frequency            bool                                                                                                      `json:"frequency"`
+	JSON                 accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsJSON                 `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributions]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsJSON struct {
+	EmployeeContribution apijson.Field
+	EmployerContribution apijson.Field
+	Frequency            apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributions) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContribution struct {
+	Amount   bool                                                                                                          `json:"amount"`
+	Currency bool                                                                                                          `json:"currency"`
+	JSON     accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContributionJSON `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContributionJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContribution]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContributionJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContribution) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployeeContributionJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContribution struct {
+	Amount   bool                                                                                                          `json:"amount"`
+	Currency bool                                                                                                          `json:"currency"`
+	JSON     accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContributionJSON `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContributionJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContribution]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContributionJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContribution) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlanEnrollmentsContributionsEmployerContributionJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlans struct {
+	ID             bool                                                                  `json:"id"`
+	Carrier        AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrier `json:"carrier"`
+	CoverageTiers  bool                                                                  `json:"coverage_tiers"`
+	DeductionCodes bool                                                                  `json:"deduction_codes"`
+	Description    bool                                                                  `json:"description"`
+	EndDate        bool                                                                  `json:"end_date"`
+	Name           bool                                                                  `json:"name"`
+	NetworkType    bool                                                                  `json:"network_type"`
+	StartDate      bool                                                                  `json:"start_date"`
+	Type           bool                                                                  `json:"type"`
+	JSON           accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansJSON    `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansJSON contains the
+// JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlans]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansJSON struct {
+	ID             apijson.Field
+	Carrier        apijson.Field
+	CoverageTiers  apijson.Field
+	DeductionCodes apijson.Field
+	Description    apijson.Field
+	EndDate        apijson.Field
+	Name           apijson.Field
+	NetworkType    apijson.Field
+	StartDate      apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlans) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansJSON) RawJSON() string {
+	return r.raw
+}
+
+type AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrier struct {
+	ID   bool                                                                      `json:"id"`
+	Name bool                                                                      `json:"name"`
+	JSON accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrierJSON `json:"-"`
+}
+
+// accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrierJSON
+// contains the JSON metadata for the struct
+// [AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrier]
+type accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrierJSON struct {
+	ID          apijson.Field
+	Name        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AccountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrier) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r accountUpdateEventDataAuthenticationMethodSupportedFieldsPlansCarrierJSON) RawJSON() string {
 	return r.raw
 }
 
