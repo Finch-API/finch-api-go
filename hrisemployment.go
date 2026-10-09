@@ -65,6 +65,10 @@ func (r *HRISEmploymentService) GetManyAutoPaging(ctx context.Context, params HR
 type EmploymentData struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" format:"uuid"`
+	// The employer defined benefit eligibility class that groups an employee into a
+	// set of eligible benefit plans, as stored by the provider. Null when not
+	// configured.
+	BenefitEligibilityClass string `json:"benefit_eligibility_class" api:"nullable"`
 	// Worker's compensation classification code for this employee
 	ClassCode string  `json:"class_code" api:"nullable"`
 	Code      float64 `json:"code"`
@@ -132,6 +136,7 @@ type EmploymentData struct {
 // employmentDataJSON contains the JSON metadata for the struct [EmploymentData]
 type employmentDataJSON struct {
 	ID                        apijson.Field
+	BenefitEligibilityClass   apijson.Field
 	ClassCode                 apijson.Field
 	Code                      apijson.Field
 	CustomFields              apijson.Field
@@ -210,6 +215,10 @@ func init() {
 type EmploymentDataEmploymentDataResponseBody struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" api:"required" format:"uuid"`
+	// The employer defined benefit eligibility class that groups an employee into a
+	// set of eligible benefit plans, as stored by the provider. Null when not
+	// configured.
+	BenefitEligibilityClass string `json:"benefit_eligibility_class" api:"required,nullable"`
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code" api:"required,nullable"`
 	// The department object.
@@ -271,6 +280,7 @@ type EmploymentDataEmploymentDataResponseBody struct {
 // struct [EmploymentDataEmploymentDataResponseBody]
 type employmentDataEmploymentDataResponseBodyJSON struct {
 	ID                        apijson.Field
+	BenefitEligibilityClass   apijson.Field
 	ClassCode                 apijson.Field
 	Department                apijson.Field
 	Employment                apijson.Field

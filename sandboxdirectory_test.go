@@ -31,7 +31,8 @@ func TestSandboxDirectoryNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Sandbox.Directory.New(context.TODO(), finchgo.SandboxDirectoryNewParams{
 		Body: []finchgo.SandboxDirectoryNewParamsBody{{
-			ClassCode: finchgo.F("class_code"),
+			BenefitEligibilityClass: finchgo.F("benefit_eligibility_class"),
+			ClassCode:               finchgo.F("class_code"),
 			CustomFields: finchgo.F([]finchgo.SandboxDirectoryNewParamsBodyCustomField{{
 				Name:  finchgo.F("name"),
 				Value: finchgo.F[finchgo.SandboxDirectoryNewParamsBodyCustomFieldsValueUnion](shared.UnionString("string")),
