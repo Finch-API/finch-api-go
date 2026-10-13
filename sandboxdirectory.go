@@ -54,6 +54,10 @@ func (r SandboxDirectoryNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type SandboxDirectoryNewParamsBody struct {
+	// The employer defined benefit eligibility class that groups an employee into a
+	// set of eligible benefit plans, as stored by the provider. Null when not
+	// configured.
+	BenefitEligibilityClass param.Field[string] `json:"benefit_eligibility_class"`
 	// Worker's compensation classification code for this employee
 	ClassCode param.Field[string] `json:"class_code"`
 	// Custom fields for the individual. These are fields which are defined by the

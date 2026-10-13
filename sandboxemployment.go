@@ -53,6 +53,10 @@ func (r *SandboxEmploymentService) Update(ctx context.Context, individualID stri
 type SandboxEmploymentUpdateResponse struct {
 	// A stable Finch `id` (UUID v4) for an individual in the company.
 	ID string `json:"id" format:"uuid"`
+	// The employer defined benefit eligibility class that groups an employee into a
+	// set of eligible benefit plans, as stored by the provider. Null when not
+	// configured.
+	BenefitEligibilityClass string `json:"benefit_eligibility_class" api:"nullable"`
 	// Worker's compensation classification code for this employee
 	ClassCode string `json:"class_code" api:"nullable"`
 	// Custom fields for the individual. These are fields which are defined by the
@@ -110,6 +114,7 @@ type SandboxEmploymentUpdateResponse struct {
 // [SandboxEmploymentUpdateResponse]
 type sandboxEmploymentUpdateResponseJSON struct {
 	ID                        apijson.Field
+	BenefitEligibilityClass   apijson.Field
 	ClassCode                 apijson.Field
 	CustomFields              apijson.Field
 	Department                apijson.Field
@@ -357,6 +362,10 @@ func (r sandboxEmploymentUpdateResponseManagerJSON) RawJSON() string {
 }
 
 type SandboxEmploymentUpdateParams struct {
+	// The employer defined benefit eligibility class that groups an employee into a
+	// set of eligible benefit plans, as stored by the provider. Null when not
+	// configured.
+	BenefitEligibilityClass param.Field[string] `json:"benefit_eligibility_class"`
 	// Worker's compensation classification code for this employee
 	ClassCode param.Field[string] `json:"class_code"`
 	// Custom fields for the individual. These are fields which are defined by the

@@ -33,7 +33,8 @@ func TestSandboxEmploymentUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"individual_id",
 		finchgo.SandboxEmploymentUpdateParams{
-			ClassCode: finchgo.F("class_code"),
+			BenefitEligibilityClass: finchgo.F("benefit_eligibility_class"),
+			ClassCode:               finchgo.F("class_code"),
 			CustomFields: finchgo.F([]finchgo.SandboxEmploymentUpdateParamsCustomField{{
 				Name:  finchgo.F("name"),
 				Value: finchgo.F[finchgo.SandboxEmploymentUpdateParamsCustomFieldsValueUnion](shared.UnionString("string")),
