@@ -494,7 +494,9 @@ type HRISIndividualGetManyParams struct {
 	// The array of batch requests. Maximum 10000 items per request.
 	Requests param.Field[[]HRISIndividualGetManyParamsRequest] `json:"requests" api:"required"`
 	// The entity IDs to specify which entities' data to access. Provide exactly one
-	// entity ID per request; a maximum of one is accepted.
+	// entity ID per request; a maximum of one is accepted. Required when the
+	// connection has more than one entity — omitting it returns a `400`
+	// `invalid_request_error`. Optional for single-entity connections.
 	EntityIDs param.Field[[]string]                           `query:"entity_ids" format:"uuid"`
 	Options   param.Field[HRISIndividualGetManyParamsOptions] `json:"options"`
 }

@@ -285,7 +285,9 @@ func (r individualInDirectoryManagerJSON) RawJSON() string {
 
 type HRISDirectoryListParams struct {
 	// The entity IDs to specify which entities' data to access. Provide exactly one
-	// entity ID per request; a maximum of one is accepted.
+	// entity ID per request; a maximum of one is accepted. Required when the
+	// connection has more than one entity — omitting it returns a `400`
+	// `invalid_request_error`. Optional for single-entity connections.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Number of employees to return (defaults to 100, maximum 10000)
 	Limit param.Field[int64] `query:"limit"`
@@ -304,7 +306,9 @@ func (r HRISDirectoryListParams) URLQuery() (v url.Values) {
 
 type HRISDirectoryListIndividualsParams struct {
 	// The entity IDs to specify which entities' data to access. Provide exactly one
-	// entity ID per request; a maximum of one is accepted.
+	// entity ID per request; a maximum of one is accepted. Required when the
+	// connection has more than one entity — omitting it returns a `400`
+	// `invalid_request_error`. Optional for single-entity connections.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Number of employees to return (defaults to 100, maximum 10000)
 	Limit param.Field[int64] `query:"limit"`

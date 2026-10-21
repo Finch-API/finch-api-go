@@ -613,7 +613,9 @@ func (r HRISPayStatementItemRuleDeleteResponseEntityType) IsKnown() bool {
 
 type HRISPayStatementItemRuleNewParams struct {
 	// The entity IDs to create the rule for. Provide exactly one entity ID per
-	// request; a maximum of one is accepted.
+	// request; a maximum of one is accepted. Required when the connection has more
+	// than one entity — omitting it returns a `400` `invalid_request_error`. Optional
+	// for single-entity connections.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 	// Specifies the fields to be applied when the condition is met.
 	Attributes param.Field[HRISPayStatementItemRuleNewParamsAttributes]  `json:"attributes"`
@@ -695,7 +697,9 @@ func (r HRISPayStatementItemRuleNewParamsEntityType) IsKnown() bool {
 
 type HRISPayStatementItemRuleUpdateParams struct {
 	// The entity IDs to update the rule for. Provide exactly one entity ID per
-	// request; a maximum of one is accepted.
+	// request; a maximum of one is accepted. Required when the connection has more
+	// than one entity — omitting it returns a `400` `invalid_request_error`. Optional
+	// for single-entity connections.
 	EntityIDs        param.Field[[]string]    `query:"entity_ids" format:"uuid"`
 	OptionalProperty param.Field[interface{}] `json:"optionalProperty"`
 }
@@ -715,7 +719,9 @@ func (r HRISPayStatementItemRuleUpdateParams) URLQuery() (v url.Values) {
 
 type HRISPayStatementItemRuleListParams struct {
 	// The entity IDs to retrieve rules for. Provide exactly one entity ID per request;
-	// a maximum of one is accepted.
+	// a maximum of one is accepted. Required when the connection has more than one
+	// entity — omitting it returns a `400` `invalid_request_error`. Optional for
+	// single-entity connections.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
@@ -730,7 +736,9 @@ func (r HRISPayStatementItemRuleListParams) URLQuery() (v url.Values) {
 
 type HRISPayStatementItemRuleDeleteParams struct {
 	// The entity IDs to delete the rule for. Provide exactly one entity ID per
-	// request; a maximum of one is accepted.
+	// request; a maximum of one is accepted. Required when the connection has more
+	// than one entity — omitting it returns a `400` `invalid_request_error`. Optional
+	// for single-entity connections.
 	EntityIDs param.Field[[]string] `query:"entity_ids" format:"uuid"`
 }
 
