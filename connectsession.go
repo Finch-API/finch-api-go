@@ -122,7 +122,9 @@ type ConnectSessionNewParams struct {
 	// `recordkeeping` product is requested. Currently supports `recordkeeper` set to
 	// `voya`, `empower`, `fidelity`, or `transamerica`.
 	Recordkeeping param.Field[ConnectSessionNewParamsRecordkeeping] `json:"recordkeeping"`
-	// The URI to redirect to after the Connect flow is completed
+	// The URI to redirect to after the Connect flow is completed. Required if you use
+	// the redirect flow, and it must be registered on the Credentials tab of the Finch
+	// Developer Dashboard. Omit it for the embedded flow (Connect SDK).
 	RedirectUri param.Field[string] `json:"redirect_uri"`
 	// Sandbox mode for testing
 	Sandbox param.Field[ConnectSessionNewParamsSandbox] `json:"sandbox"`
@@ -247,7 +249,9 @@ type ConnectSessionReauthenticateParams struct {
 	// `benefits` to access deductions endpoints — `deduction` is a deprecated alias
 	// that is still accepted but should not be combined with `benefits`.
 	Products param.Field[[]ConnectSessionReauthenticateParamsProduct] `json:"products"`
-	// The URI to redirect to after the Connect flow is completed
+	// The URI to redirect to after the Connect flow is completed. Required if you use
+	// the redirect flow, and it must be registered on the Credentials tab of the Finch
+	// Developer Dashboard. Omit it for the embedded flow (Connect SDK).
 	RedirectUri param.Field[string] `json:"redirect_uri" format:"uri"`
 }
 
