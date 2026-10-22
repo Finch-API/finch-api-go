@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.9.1](https://github.com/Finch-API/finch-api-go/compare/v2.9.0...v2.9.1) (2026-10-22)
+
+
+### Documentation
+
+* **spec:** clarify redirect_uri requirement on connect and token endpoints [DDR-1050] ([ce0023d](https://github.com/Finch-API/finch-api-go/commit/ce0023da078540e4231e4269e4ebf05ef84ba59e))
+* **spec:** document missing entity_ids error for multi-entity connections [DDR-1051] ([9d84028](https://github.com/Finch-API/finch-api-go/commit/9d84028ddcc3c32f801e1fa89eccfbb56815694f))
+
 ## [2.9.0](https://github.com/Finch-API/finch-api-go/compare/v2.8.3...v2.9.0) (2026-10-13)
 
 
