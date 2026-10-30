@@ -243,7 +243,7 @@ type ConnectSessionReauthenticateParams struct {
 	// The ID of the existing connection to reauthenticate
 	ConnectionID param.Field[string] `json:"connection_id" api:"required"`
 	// The number of minutes until the session expires (defaults to 43,200, which is 30
-	// days)
+	// days). Must be between 1 and 129,600 (90 days).
 	MinutesToExpire param.Field[int64] `json:"minutes_to_expire"`
 	// The products to request access to (optional for reauthentication). Use
 	// `benefits` to access deductions endpoints — `deduction` is a deprecated alias
