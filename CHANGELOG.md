@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.10.0](https://github.com/Finch-API/finch-api-go/compare/v2.9.2...v2.10.0) (2026-11-13)
+
+
+### Features
+
+* **benefit-plan-admin:** accept coverage date, individual and plan filters on the list endpoints [DDR-1177] ([55a5bfe](https://github.com/Finch-API/finch-api-go/commit/55a5bfe52864b794a582af7879f73badc01a9bd6))
+
+
+### Chores
+
+* **codeowners:** DEVOPS-390 Transfer SDK ownership to Data Delivery ([#429](https://github.com/Finch-API/finch-api-go/issues/429)) ([0fa1512](https://github.com/Finch-API/finch-api-go/commit/0fa15124c5d8d1c75f6cffe25109a025659808ea))
+* **codeowners:** transfer ownership to data delivery ([0fa1512](https://github.com/Finch-API/finch-api-go/commit/0fa15124c5d8d1c75f6cffe25109a025659808ea))
+
 ## [2.9.2](https://github.com/Finch-API/finch-api-go/compare/v2.9.1...v2.9.2) (2026-10-30)
 
 
