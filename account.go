@@ -130,10 +130,10 @@ type Introspection struct {
 	// instead of this account ID
 	//
 	// Deprecated: deprecated
-	AccountID             string                              `json:"account_id"`
+	AccountID             string                              `json:"account_id" api:"nullable"`
 	AuthenticationMethods []IntrospectionAuthenticationMethod `json:"authentication_methods"`
 	// The Finch UUID of the company associated with the `access_token`.
-	CompanyID string `json:"company_id"`
+	CompanyID string `json:"company_id" api:"nullable"`
 	// The email of your customer you provided to Finch when a connect session was
 	// created for this connection
 	CustomerEmail string `json:"customer_email" api:"nullable"`
