@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"slices"
+	"time"
 
 	"github.com/Finch-API/finch-api-go/v2/internal/apijson"
 	"github.com/Finch-API/finch-api-go/v2/internal/requestconfig"
@@ -49,16 +50,20 @@ func (r *JobManualService) Get(ctx context.Context, jobID string, opts ...option
 
 type ManualAsyncJob struct {
 	// Specific information about the job, such as individual statuses for batch jobs.
-	Body   []interface{}        `json:"body" api:"required,nullable"`
-	JobID  string               `json:"job_id" api:"required" format:"uuid"`
-	Status ManualAsyncJobStatus `json:"status" api:"required"`
-	JSON   manualAsyncJobJSON   `json:"-"`
+	Body  []interface{} `json:"body" api:"required,nullable"`
+	JobID string        `json:"job_id" api:"required" format:"uuid"`
+	// The datetime by which the job is expected to be completed. Only returned for
+	// jobs that include requests Finch processes manually (assisted).
+	SlaDeadline time.Time            `json:"sla_deadline" api:"required" format:"date-time"`
+	Status      ManualAsyncJobStatus `json:"status" api:"required"`
+	JSON        manualAsyncJobJSON   `json:"-"`
 }
 
 // manualAsyncJobJSON contains the JSON metadata for the struct [ManualAsyncJob]
 type manualAsyncJobJSON struct {
 	Body        apijson.Field
 	JobID       apijson.Field
+	SlaDeadline apijson.Field
 	Status      apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
