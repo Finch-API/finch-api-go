@@ -101,9 +101,9 @@ type CreateAccessTokenResponse struct {
 	// account ID
 	//
 	// Deprecated: deprecated
-	AccountID string `json:"account_id"`
+	AccountID string `json:"account_id" api:"nullable"`
 	// The Finch UUID of the company associated with the `access_token`.
-	CompanyID string `json:"company_id"`
+	CompanyID string `json:"company_id" api:"nullable"`
 	// The ID of your customer you provided to Finch when a connect session was created
 	// for this connection
 	CustomerID string `json:"customer_id" api:"nullable"`
